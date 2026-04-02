@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — The Insight</title>
+
+  <!-- Google Fonts — Cormorant Garamond (serif), Outfit (sans), Space Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Section-specific: churn stat callout block */
+    .churn-callout {
+      display: flex;
+      gap: var(--space-6);
+      margin: var(--space-6) 0;
+    }
+
+    .churn-stat {
+      text-align: center;
+      flex: 1;
+      padding: var(--space-5) var(--space-4);
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+    }
+
+    .churn-stat__number {
+      font-family: var(--font-mono);
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--terra);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .churn-stat__label {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--stone);
+      margin-top: var(--space-2);
+      line-height: 1.35;
+    }
+
+    /* Fragmented stack visual */
+    .frag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin: var(--space-5) 0;
+    }
+
+    .frag-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      color: var(--deep-70);
+    }
+
+    .frag-item__price {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--terra);
+      white-space: nowrap;
+    }
+
+    .frag-caption {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-3);
+    }
+
+    .frag-caption__line {
+      width: 24px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .frag-caption__text {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--stone);
+      letter-spacing: 0.02em;
+    }
+
+    /* Forces grid */
+    .forces-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-5) 0;
+    }
+
+    .force-card {
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5) var(--space-4);
+      border-top: 2px solid var(--amber-20);
+    }
+
+    .force-card__number {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--amber);
+      margin-bottom: var(--space-1);
+    }
+
+    .force-card__stat {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      line-height: 1.2;
+      margin-bottom: var(--space-1);
+    }
+
+    .force-card__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+
+    .force-card__source {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      color: var(--stone);
+      margin-top: var(--space-2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Insight<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[01] The Insight</span>
+      <h1 class="section-header__title"><strong>The Longevity Paradox</strong></h1>
+      <p class="section-header__subtitle">People who want to age well have been forced to become full-time project managers of their own health.</p>
+    </div>
+
+    <!-- Editorial Opening -->
+    <div class="prose mb-7">
+      <p class="lead">The majority of consumers now rank healthy aging as their top priority. Yet the average health-conscious person manages eight disconnected apps, three supplement subscriptions, and zero integrated guidance.</p>
+
+      <p>Longevity is no longer inaccessible. It is overwhelming. Consumers are not struggling to find options -- they are struggling to decide what is worth trusting, combining, and repeating. The problem is not lack of supply. It is lack of intelligent selection.</p>
+
+      <p><strong>People became project managers of their own health.</strong> Every abandoned Oura ring, cancelled CGM subscription, and unopened wellness app represents a person who cared enough to try and was handed a dashboard instead of direction. These are not lost users. They are our addressable market.</p>
+    </div>
+
+    <!-- Churn Data Callout -->
+    <div class="churn-callout">
+      <div class="churn-stat">
+        <div class="churn-stat__number">77%</div>
+        <div class="churn-stat__label">of health app users<br>churn by Day 3</div>
+      </div>
+      <div class="churn-stat">
+        <div class="churn-stat__number">44%</div>
+        <div class="churn-stat__label">cancel within<br>first 90 days</div>
+      </div>
+    </div>
+
+    <!-- The Fragmented Stack -->
+    <div class="section-label mt-6">The Fragmented Stack</div>
+    <div class="frag-grid">
+      <div class="frag-item">Wearable sub <span class="frag-item__price">&euro;10/mo</span></div>
+      <div class="frag-item">Meditation app <span class="frag-item__price">&euro;15/mo</span></div>
+      <div class="frag-item">Supplements <span class="frag-item__price">&euro;40/mo</span></div>
+      <div class="frag-item">Gym membership <span class="frag-item__price">&euro;50/mo</span></div>
+      <div class="frag-item">Recovery session <span class="frag-item__price">&euro;60/mo</span></div>
+      <div class="frag-item">Bloodwork panel <span class="frag-item__price">&euro;80/test</span></div>
+      <div class="frag-item">Health apps (3-5) <span class="frag-item__price">&euro;15-50/mo</span></div>
+      <div class="frag-item">CGM tracking <span class="frag-item__price">&euro;199/mo</span></div>
+    </div>
+    <div class="frag-caption">
+      <div class="frag-caption__line"></div>
+      <span class="frag-caption__text">&euro;126-295/mo across 6-8 disconnected providers. No integration. No coherence.</span>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">02</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Insight<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Three Converging Forces -->
+    <div class="section-label">Why This Matters Now</div>
+    <h2 class="mb-5"><strong>Three forces converging</strong></h2>
+
+    <div class="forces-grid">
+      <div class="force-card">
+        <div class="force-card__number">84%</div>
+        <div class="force-card__stat">say wellness is their top priority</div>
+        <div class="force-card__body">Attia's <em>Outlive</em> became a bestseller. Huberman reaches 10M+ followers. Euromonitor named healthspan the top global consumer trend for 2025. The demand exploded. The supply side is still stuck in 2018.</div>
+        <div class="force-card__source">McKinsey Future of Wellness 2025</div>
+      </div>
+
+      <div class="force-card">
+        <div class="force-card__number">4.8%</div>
+        <div class="force-card__stat">of health spend goes to prevention</div>
+        <div class="force-card__body">Germany spends 12.3% of GDP on healthcare -- the highest in the EU. Only 4.8% goes to prevention. 7.7 hospital beds per 1,000 people, nearly double the OECD average. A system built to treat illness, not prevent it.</div>
+        <div class="force-card__source">OECD Health at a Glance 2025 / Destatis 2023</div>
+      </div>
+
+      <div class="force-card">
+        <div class="force-card__number">0</div>
+        <div class="force-card__stat">have integrated the full stack</div>
+        <div class="force-card__body">CGM sensors, AI protocols, wearables, functional nutrition -- all clinically validated. All existing in disconnected silos across dozens of providers. The technology is finally ready. Nobody has connected it.</div>
+        <div class="force-card__source">Competitive analysis: 30+ companies, Feb 2026</div>
+      </div>
+    </div>
+
+    <div class="sep mb-6"></div>
+
+    <!-- Graveyard Rule #3 — Pull Quote -->
+    <div class="pull-quote">
+      <div class="pull-quote__text">"Arivale's CEO said he did not believe there was a market for preventing future disease. He was right about the framing -- and wrong about the opportunity."</div>
+      <div class="pull-quote__attribution">What $1.4B in failures taught us</div>
+    </div>
+
+    <div class="prose mt-5">
+      <p>The graveyard of preventive health startups holds a clear lesson: people do not pay to prevent disease they cannot feel. But they will pay to feel better today. We sell how you <strong>feel</strong> today, not disease prevention tomorrow.</p>
+    </div>
+
+    <div class="sep mt-6 mb-6"></div>
+
+    <!-- Founder Voice Closing -->
+    <div class="prose">
+      <p><em>We experienced this ourselves. Two founders spending hundreds of euros a month on disconnected tools, wearables, and supplements -- with no integrated view of whether any of it works. The first brand to structure this behavior will define the category.</em></p>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      Euromonitor 2025 / McKinsey Future of Wellness 2025 / OECD Health at a Glance 2025 / Destatis 2023 / AppsFlyer Health App Retention Benchmarks 2024
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">03</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

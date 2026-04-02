@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | The Market</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 20px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .total-row td { border-top: 2px solid rgba(44,36,24,0.15); font-weight: 600; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">03 &mdash; The Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Market Opportunity</div>
+    <div class="action-title">Germany's EUR 495B healthcare system spends 4.8% on prevention -- consumers are filling the gap at EUR 126-295/mo out of pocket.</div>
+
+    <!-- German Health Paradox -->
+    <div class="callout-box">
+      <div class="callout-box-title">The German Health Paradox</div>
+      <div class="callout-box-body">
+        Germany spends EUR 495B on healthcare annually (12.3% of GDP) -- the highest in the EU. Only 4.8% goes to prevention. With 7.7 hospital beds per 1,000 people (OECD average: 4.2), the system was architecturally built to treat illness, not prevent it. Consumers are filling the gap themselves.
+      </div>
+    </div>
+
+    <!-- Health Spend Comparison -->
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th style="text-align: right;">Health Spend (% GDP)</th>
+          <th style="text-align: right;">Life Expectancy</th>
+          <th>Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td class="bold">Germany</td>
+          <td class="number">12.3%</td>
+          <td class="number">81.1 yrs</td>
+          <td>#1 EU spend, below 5 cheaper systems</td>
+        </tr>
+        <tr>
+          <td>Switzerland</td>
+          <td class="number">11.3%</td>
+          <td class="number">83.4 yrs</td>
+          <td>+2.3 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td>France</td>
+          <td class="number">12.1%</td>
+          <td class="number">82.2 yrs</td>
+          <td>+1.1 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td>Japan</td>
+          <td class="number">11.5%</td>
+          <td class="number">84.5 yrs</td>
+          <td>+3.4 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td style="color: rgba(44,36,24,0.5);">OECD Average</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">9.3%</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">80.3 yrs</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- TAM / SAM / SOM -->
+    <div class="section-label" style="margin-top: 8px;">Market Sizing</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th style="text-align: right;">Value</th>
+          <th>Definition</th>
+          <th style="text-align: right;">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color: rgba(44,36,24,0.5);">TAM</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">$6.3T</td>
+          <td style="color: rgba(44,36,24,0.5);">Global wellness economy. Context marker -- not a revenue claim.</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">GWI 2024</td>
+        </tr>
+        <tr>
+          <td class="bold">SAM</td>
+          <td class="number bold">EUR 3.2-4.1B</td>
+          <td>Germany: supplements (EUR 2.67B) + functional beverages (EUR 2.8-3.2B) + digital health apps (EUR 263M) + premium wellness (EUR 300-500M)</td>
+          <td class="number">Statista / Euromonitor</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">SOM</td>
+          <td class="number bold">145 subscribers</td>
+          <td>Break-even target from 108K Mitte residents aged 30-44. 0.13% penetration. Conservative Y1: 300 members. Base case: 600.</td>
+          <td class="number">Internal model</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">Assumption: SOM is the break-even point, not a revenue aspiration. alche consolidates existing spend rather than creating new demand.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">OECD Health at a Glance 2025 / Destatis 2023 / GWI 2024 / Statista 2024 / Euromonitor 2024</div>
+      <div class="page-footer-num">09</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">03 &mdash; The Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">Europe is not behind on longevity -- it is structurally different, creating advantages for a GDPR-native, culturally adapted platform.</div>
+
+    <!-- European Structural Advantages -->
+    <table>
+      <thead>
+        <tr>
+          <th>Structural Advantage</th>
+          <th>Detail</th>
+          <th>Implication for alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Insurance covers prevention</td>
+          <td>PKV (8.73M holders) reimburses EUR 200-500/yr in wellness. US consumers pay 100% out-of-pocket.</td>
+          <td>Partial reimbursement reduces effective customer cost</td>
+        </tr>
+        <tr>
+          <td class="bold">Kur culture / apothecary tradition</td>
+          <td>European wellness built on centuries of apothecary traditions, thermal baths, and preventive health culture</td>
+          <td>alche speaks to existing cultural infrastructure</td>
+        </tr>
+        <tr>
+          <td class="bold">GDPR as trust differentiator</td>
+          <td>Only 8% of EU consumers share health data with third parties (BEUC 2024)</td>
+          <td>GDPR-native architecture is a feature, not a compliance cost</td>
+        </tr>
+        <tr>
+          <td class="bold">European pricing norms</td>
+          <td>EUR 19-99/mo matches European willingness to pay. US players at $199/mo feel overpriced.</td>
+          <td>Local pricing creates natural barrier to US entry</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- German Wellness Market Growth -->
+    <div class="section-label" style="margin-top: 12px;">German Wellness Market Trajectory</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th style="text-align: right;">Market Size (Germany)</th>
+          <th style="text-align: right;">Growth</th>
+          <th>Relevance to alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Supplements market</td>
+          <td class="number">EUR 2.67B</td>
+          <td class="number">3.3% CAGR</td>
+          <td>Product layer (curated, protocol-linked)</td>
+        </tr>
+        <tr>
+          <td class="bold">Functional beverages</td>
+          <td class="number">EUR 2.8-3.2B</td>
+          <td class="number">Growing</td>
+          <td>Physical space revenue (Alche Potions)</td>
+        </tr>
+        <tr>
+          <td class="bold">Digital health apps</td>
+          <td class="number">EUR 263M</td>
+          <td class="number">High growth</td>
+          <td>Core subscription platform</td>
+        </tr>
+        <tr>
+          <td class="bold">Premium wellness services</td>
+          <td class="number">EUR 300-500M</td>
+          <td class="number">Growing</td>
+          <td>LED, recovery, community events</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">Note: German wellness market growth of 3.3% CAGR is for the overall market. Digital health and premium wellness segments are growing faster.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Timing callout -->
+    <div class="callout-box">
+      <div class="callout-box-title">Market timing: 12-18 month window</div>
+      <div class="callout-box-body">
+        $8.49B flowed into longevity in 2024 (2x YoY). Oura has not localized beyond hardware retail. Hims EU expansion is nascent. Levels and Function Health are US-only. Neko Health (Spotify founder) focuses on scanning, not integrated wellness. The full-stack European longevity platform is wide open, but the window closes as US players begin DACH localization.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">PKV-Verband 2024 / BEUC 2024 / Statista 2024 / Euromonitor 2024 / Longevity.Technology 2024 Funding Report / DSSV 2024</div>
+      <div class="page-footer-num">10</div>
+    </div>
+  </div>
+
+</body>
+</html>

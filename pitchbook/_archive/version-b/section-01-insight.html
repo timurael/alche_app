@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche // The Insight</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* ================================================================
+       SECTION 01: THE INSIGHT // Section-specific styles
+       ================================================================ */
+
+    /* ── Page 1: Hero Quote ── */
+    .hero-quote {
+      font-family: var(--font-serif);
+      font-size: var(--text-4xl);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.2;
+      color: var(--deep);
+      max-width: 580px;
+      padding: var(--space-12) 0 var(--space-10) 0;
+      letter-spacing: -0.005em;
+    }
+
+    .hero-quote .highlight {
+      color: var(--amber);
+    }
+
+    .insight-prose {
+      max-width: 520px;
+      margin-bottom: var(--space-8);
+    }
+
+    .insight-prose p {
+      font-size: var(--text-base);
+      line-height: 1.75;
+      color: var(--deep-70);
+    }
+
+    .framing-lines {
+      margin-top: var(--space-6);
+    }
+
+    .framing-lines p {
+      font-family: var(--font-sans);
+      font-size: var(--text-lg);
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--deep-70);
+      margin-bottom: var(--space-2);
+    }
+
+    .framing-lines p.emphasis {
+      font-weight: 600;
+      color: var(--amber);
+    }
+
+    .section-tag {
+      position: absolute;
+      bottom: 60px;
+      left: var(--page-margin-x);
+    }
+
+    .section-tag__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    /* ── Page 2: Descent Journey ── */
+    .descent {
+      position: relative;
+      padding-left: 0;
+    }
+
+    .descent-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-3) var(--space-4);
+      margin-bottom: 2px;
+      border-radius: var(--radius-sm);
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .descent-step__number {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      padding-top: 2px;
+    }
+
+    .descent-step__content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .descent-step__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--deep);
+    }
+
+    .descent-step__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      color: var(--deep-70);
+    }
+
+    /* Color progression: excitement to abandonment */
+    .descent-step--1 {
+      background: rgba(139, 158, 124, 0.08);
+    }
+    .descent-step--1 .descent-step__number { color: var(--sage); }
+
+    .descent-step--2 {
+      background: rgba(196, 149, 106, 0.08);
+    }
+    .descent-step--2 .descent-step__number { color: var(--amber); }
+
+    .descent-step--3 {
+      background: rgba(196, 149, 106, 0.06);
+    }
+    .descent-step--3 .descent-step__number { color: var(--amber); opacity: 0.7; }
+
+    .descent-step--4 {
+      background: rgba(158, 148, 138, 0.08);
+    }
+    .descent-step--4 .descent-step__number { color: var(--stone); }
+
+    .descent-step--5 {
+      background: rgba(196, 122, 138, 0.08);
+    }
+    .descent-step--5 .descent-step__number { color: var(--rose); }
+
+    .descent-step--6 {
+      background: rgba(184, 107, 74, 0.10);
+      border: 1px solid var(--terra-15);
+    }
+    .descent-step--6 .descent-step__number { color: var(--terra); }
+    .descent-step--6 .descent-step__title { color: var(--terra); }
+
+    .descent-callout {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-top: var(--space-6);
+      padding: var(--space-5) var(--space-6);
+      background: var(--glass-strong);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: var(--radius-lg);
+      border-left: 3px solid var(--terra);
+    }
+
+    .descent-callout__stat {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--terra);
+      line-height: 1;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .descent-callout__text {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.55;
+      color: var(--deep-70);
+    }
+
+    .descent-callout__text strong {
+      color: var(--deep);
+      font-weight: 600;
+    }
+
+    /* ── Page 3: Three Forces ── */
+    .force-card {
+      padding: var(--space-5) var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+
+    .force-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--deep);
+      margin-bottom: var(--space-3);
+    }
+
+    .force-card__bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .force-card__bullets li {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: 1.55;
+      color: var(--deep-70);
+      padding: 3px 0;
+      padding-left: var(--space-4);
+      position: relative;
+    }
+
+    .force-card__bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--deep-30);
+    }
+
+    .force-card__bullets li strong {
+      font-weight: 600;
+      color: var(--deep);
+    }
+
+    .force-card__coda {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      font-style: italic;
+      color: var(--deep);
+      margin-top: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 0.5px solid var(--deep-08);
+      line-height: 1.5;
+    }
+
+    /* ── Page 4: The Gap + Painkiller ── */
+    .gap-visual {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr 1fr;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      max-width: 100%;
+    }
+
+    .gap-card {
+      padding: var(--space-4) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+    }
+
+    .gap-card--muted {
+      opacity: 0.7;
+    }
+
+    .gap-card--center {
+      opacity: 1;
+      background: var(--glass-strong);
+      border: 2px solid var(--amber);
+      box-shadow: 0 4px 20px rgba(196, 149, 106, 0.12);
+    }
+
+    .gap-card__label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+    }
+
+    .gap-card--muted .gap-card__label {
+      color: var(--stone);
+    }
+
+    .gap-card--center .gap-card__label {
+      color: var(--amber);
+    }
+
+    .gap-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: var(--space-2);
+      line-height: 1.2;
+    }
+
+    .gap-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .gap-card__list li {
+      font-family: var(--font-sans);
+      font-size: 9.5px;
+      line-height: 1.5;
+      color: var(--deep-70);
+      padding: 2px 0;
+      padding-left: var(--space-3);
+      position: relative;
+    }
+
+    .gap-card__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+
+    .gap-card--muted .gap-card__list li::before {
+      background: var(--stone);
+      opacity: 0.5;
+    }
+
+    .gap-card--center .gap-card__list li::before {
+      background: var(--amber);
+    }
+
+    .gap-card--center .gap-card__list li {
+      color: var(--deep);
+      font-weight: 400;
+    }
+
+    .gap-card__coda {
+      font-family: var(--font-serif);
+      font-size: var(--text-sm);
+      font-style: italic;
+      color: var(--deep);
+      margin-top: var(--space-3);
+      padding-top: var(--space-2);
+      border-top: 0.5px solid var(--deep-08);
+    }
+
+    .painkiller-answer {
+      text-align: center;
+      padding: var(--space-4) 0 var(--space-2) 0;
+    }
+
+    .painkiller-answer__text {
+      font-family: var(--font-serif);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--terra);
+      letter-spacing: -0.01em;
+    }
+
+    .closing-statement {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: 1.65;
+      color: var(--deep-70);
+      max-width: 520px;
+      margin: var(--space-4) auto 0 auto;
+      text-align: center;
+    }
+
+    .closing-statement strong {
+      color: var(--deep);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- ====================================================================
+     PAGE 1 (pg 02): THE INSIGHT
+     ==================================================================== -->
+<div class="page">
+  <header class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">The Insight / February 2026 // Confidential</div>
+  </header>
+
+  <div class="hero-quote">
+    "People who want to age well are forced to become <span class="highlight">full-time project managers</span> of their own health."
+  </div>
+
+  <div class="sep--amber" style="height: 0.5px; background: linear-gradient(90deg, var(--amber-20), transparent); max-width: 120px; margin-bottom: var(--space-7);"></div>
+
+  <div class="insight-prose">
+    <p>
+      In an environment of infinite wellness options, trusted curation becomes more valuable than product proliferation. Longevity is no longer inaccessible. It is overwhelming. Consumers are not struggling to find options. They are struggling to decide what is worth trusting, combining, and repeating.
+    </p>
+  </div>
+
+  <div class="framing-lines">
+    <p>The problem is not lack of supply.</p>
+    <p class="emphasis">It is lack of intelligent, taste-driven curation developed in consultation with medical professionals.</p>
+  </div>
+
+  <div class="section-tag">
+    <span class="section-tag__label">[01] The Insight</span>
+  </div>
+
+  <footer class="page-footer">
+    <div class="page-footer__number">02</div>
+    <div class="page-footer__confidential">Confidential</div>
+  </footer>
+</div>
+
+
+<!-- ====================================================================
+     PAGE 2 (pg 03): THE MOMENT SOMEONE GIVES UP
+     ==================================================================== -->
+<div class="page">
+  <header class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">The Insight / February 2026 // Confidential</div>
+  </header>
+
+  <div class="section-header" style="margin-bottom: var(--space-5);">
+    <span class="section-header__number">[01] The Insight</span>
+    <h2 class="section-header__title">What is broken about how people engage with longevity?</h2>
+  </div>
+
+  <div class="descent">
+
+    <div class="descent-step descent-step--1">
+      <div class="descent-step__number">01</div>
+      <div class="descent-step__content">
+        <div class="descent-step__title">Discovery</div>
+        <div class="descent-step__desc">Hears about longevity from a podcast, book, or friend. Excitement peaks.</div>
+      </div>
+    </div>
+
+    <div class="descent-step descent-step--2">
+      <div class="descent-step__number">02</div>
+      <div class="descent-step__content">
+        <div class="descent-step__title">Research</div>
+        <div class="descent-step__desc">Finds 300,000+ supplement SKUs, contradictory protocols, influencer advice. Overwhelm begins.</div>
+      </div>
+    </div>
+
+    <div class="descent-step descent-step--3">
+      <div class="descent-step__number">03</div>
+      <div class="descent-step__content">
+        <div class="descent-step__title">Scattered Purchases</div>
+        <div class="descent-step__desc">Buys from 4 to 6 different brands. Downloads 2 to 3 apps. No connection between them.</div>
+      </div>
+    </div>
+
+    <div class="descent-step descent-step--4">
+      <div class="descent-step__number">04</div>
+      <div class="descent-step__content">
+        <div class="descent-step__title">Self-Curation</div>
+        <div class="descent-step__desc">Attempts to build their own stack. Spends EUR 150 to 400/mo across fragmented services.</div>
+      </div>
+    </div>
+
+    <div class="descent-step descent-step--5">
+      <div class="descent-step__number">05</div>
+      <div class="descent-step__content">
+        <div class="descent-step__title">Decision Fatigue</div>
+        <div class="descent-step__desc">Cannot evaluate quality, dosage, interactions, or timing. Guilt replaces excitement.</div>
+      </div>
+    </div>
+
+    <div class="descent-step descent-step--6">
+      <div class="descent-step__number">06</div>
+      <div class="descent-step__content">
+        <div class="descent-step__title">Abandonment</div>
+        <div class="descent-step__desc">Gives up within 60 days. Returns to old habits. 96% digital health app churn rate.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="descent-callout">
+    <div>
+      <div class="descent-callout__stat">66</div>
+      <div style="font-family: var(--font-mono); font-size: 9px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;">days</div>
+    </div>
+    <div class="descent-callout__text">
+      <strong>66 days to form a health habit.</strong> 96% of users churn before they get there. The window between initial motivation and lasting behavior change is where nearly every wellness product fails.
+    </div>
+  </div>
+
+  <div class="sources" style="margin-top: var(--space-5);">
+    Lally et al. (2010), European Journal of Social Psychology; Baumel et al. (2019), Journal of Medical Internet Research; RevenueCat State of Subscription Apps (2025).
+  </div>
+
+  <footer class="page-footer">
+    <div class="page-footer__number">03</div>
+    <div class="page-footer__confidential">Confidential</div>
+  </footer>
+</div>
+
+
+<!-- ====================================================================
+     PAGE 3 (pg 04): THREE FORCES CONVERGING
+     ==================================================================== -->
+<div class="page">
+  <header class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">The Insight / February 2026 // Confidential</div>
+  </header>
+
+  <div class="section-header" style="margin-bottom: var(--space-6);">
+    <span class="section-header__number">[01] The Insight</span>
+    <h2 class="section-header__title">Why <strong>now</strong>?</h2>
+    <p class="section-header__subtitle">Three forces have converged to create a once-in-a-decade entry point.</p>
+  </div>
+
+  <!-- Force 1: Demand -->
+  <div class="glass-accent glass-accent--amber force-card">
+    <h3 class="force-card__title">Force 1: Demand exploded. Infrastructure did not.</h3>
+    <ul class="force-card__bullets">
+      <li>Peter Attia's <strong>Outlive</strong>: #1 NYT bestseller, sold 3M+ copies globally</li>
+      <li>Andrew Huberman: <strong>10M+ followers</strong> across platforms</li>
+      <li>Bryan Johnson: made anti-aging cultural, mainstream media coverage worldwide</li>
+      <li>Euromonitor 2025: healthspan ranked <strong>#1 global consumer trend</strong></li>
+      <li><strong>84% of consumers</strong> now rank wellness as a top priority (GWI 2024)</li>
+    </ul>
+    <p class="force-card__coda">"Consumer awareness has outpaced every product category built to serve it."</p>
+  </div>
+
+  <!-- Force 2: Germany's Gap -->
+  <div class="glass-accent glass-accent--terra force-card">
+    <h3 class="force-card__title">Force 2: Germany's prevention gap is an open market.</h3>
+    <ul class="force-card__bullets">
+      <li><strong>EUR 474B</strong> spent on healthcare annually (12.3% of GDP)</li>
+      <li>Only <strong>3.1%</strong> allocated to prevention</li>
+      <li>7.8 hospital beds per 1,000 population (OECD average: 4.2)</li>
+      <li><strong>62% of Germans</strong> say the system focuses too much on treatment</li>
+    </ul>
+    <p class="force-card__coda">"The gap is not a policy debate. It is an open market."</p>
+  </div>
+
+  <!-- Force 3: Technology -->
+  <div class="glass-accent glass-accent--sage force-card">
+    <h3 class="force-card__title">Force 3: Technology is ready. Nobody has integrated it.</h3>
+    <ul class="force-card__bullets">
+      <li><strong>CGM sensors:</strong> real-time metabolic tracking, consumer-grade</li>
+      <li><strong>AI:</strong> personalized protocol generation at scale</li>
+      <li><strong>Wearables:</strong> sleep, HRV, stress monitoring (validated accuracy)</li>
+      <li><strong>Red light therapy:</strong> clinically validated, growing adoption</li>
+      <li><strong>Functional nutrition:</strong> proven category, fragmented delivery</li>
+    </ul>
+    <p class="force-card__coda">"All the pieces exist. No one has assembled them."</p>
+  </div>
+
+  <div class="sources">
+    Euromonitor International (2025); OECD Health at a Glance (2023); Destatis (2023); Global Wellness Institute (2024).
+  </div>
+
+  <footer class="page-footer">
+    <div class="page-footer__number">04</div>
+    <div class="page-footer__confidential">Confidential</div>
+  </footer>
+</div>
+
+
+<!-- ====================================================================
+     PAGE 4 (pg 05): WHO IS LEFT OUT + VITAMIN OR PAINKILLER?
+     ==================================================================== -->
+<div class="page">
+  <header class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">The Insight / February 2026 // Confidential</div>
+  </header>
+
+  <div class="section-header" style="margin-bottom: var(--space-5);">
+    <span class="section-header__number">[01] The Insight</span>
+    <h2 class="section-header__title">Who is <strong>left out</strong>?</h2>
+  </div>
+
+  <!-- Gap Visual: Three columns -->
+  <div class="gap-visual">
+
+    <!-- Left: Clinical Biohackers -->
+    <div class="gap-card gap-card--muted">
+      <div class="gap-card__label">Served (Niche)</div>
+      <div class="gap-card__title">Clinical Biohackers</div>
+      <ul class="gap-card__list">
+        <li>Build their own complex stacks</li>
+        <li>Technical, intimidating</li>
+        <li>Requires extensive self-education</li>
+      </ul>
+    </div>
+
+    <!-- Center: The Missing Consumer -->
+    <div class="gap-card gap-card--center">
+      <div class="gap-card__label">Unserved</div>
+      <div class="gap-card__title">The Missing Consumer</div>
+      <ul class="gap-card__list">
+        <li>Fewer options, better selected</li>
+        <li>Integrated rituals, not scattered products</li>
+        <li>Authority without medical intimidation</li>
+        <li>Taste without pseudoscience</li>
+        <li>Has purchasing power, aesthetic sensitivity, high LTV</li>
+      </ul>
+      <div class="gap-card__coda">"No ecosystem built for them."</div>
+    </div>
+
+    <!-- Right: Mass-Market -->
+    <div class="gap-card gap-card--muted">
+      <div class="gap-card__label">Served (Mass)</div>
+      <div class="gap-card__title">Mass-Market Consumers</div>
+      <ul class="gap-card__list">
+        <li>Buy trend-driven products</li>
+        <li>No structure or integration</li>
+        <li>Short-lived experimentation</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Separator -->
+  <div class="sep"></div>
+
+  <!-- Is this a vitamin or a painkiller? -->
+  <h4 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 400; color: var(--deep-50); text-align: center; margin-bottom: var(--space-3); letter-spacing: 0.01em;">
+    Is this a vitamin or a painkiller?
+  </h4>
+
+  <div class="painkiller-answer">
+    <span class="painkiller-answer__text">This is a painkiller.</span>
+  </div>
+
+  <!-- KPI Grid -->
+  <div class="kpi-grid kpi-grid--3" style="margin-top: var(--space-4);">
+    <div class="kpi-grid__item">
+      <div class="kpi-grid__value kpi-grid__value--accent">EUR 8.9-21.1K</div>
+      <div class="kpi-grid__label">Spent per user/year on<br>fragmented alternatives</div>
+      <div class="kpi-grid__note">Real spend, not theoretical</div>
+    </div>
+    <div class="kpi-grid__item">
+      <div class="kpi-grid__value" style="color: var(--terra);">96%</div>
+      <div class="kpi-grid__label">Digital health app churn rate<br>before 66-day habit threshold</div>
+      <div class="kpi-grid__note">RevenueCat 2025</div>
+    </div>
+    <div class="kpi-grid__item">
+      <div class="kpi-grid__value" style="color: var(--rose);">62%</div>
+      <div class="kpi-grid__label">Of Germans say healthcare<br>system fails at prevention</div>
+      <div class="kpi-grid__note">Destatis 2023</div>
+    </div>
+  </div>
+
+  <!-- Closing Statement -->
+  <p class="closing-statement" style="margin-top: var(--space-5);">
+    alche is a painkiller for a population hemorrhaging time, money, and motivation on wellness fragmentation. The pain is measurable. The market is quantifiable. The timing window is <strong>18 to 24 months</strong> before US players localize to DACH.
+  </p>
+
+  <div class="sources" style="text-align: center; margin-top: var(--space-4);">
+    Sources: Euromonitor International (2025); OECD Health at a Glance (2023); Destatis (2023); RevenueCat (2025); Lally et al. (2010); Baumel et al. (2019); Global Wellness Institute (2024).
+  </div>
+
+  <footer class="page-footer">
+    <div class="page-footer__number">05</div>
+    <div class="page-footer__confidential">Confidential</div>
+  </footer>
+</div>
+
+
+</body>
+</html>

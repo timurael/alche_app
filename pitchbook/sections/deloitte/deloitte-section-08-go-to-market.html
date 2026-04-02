@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | Go-to-Market</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 16px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .total-row td { border-top: 2px solid rgba(44,36,24,0.15); font-weight: 600; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+
+    /* Process flow */
+    .process-flow { display: flex; align-items: stretch; gap: 2px; margin: 16px 0; }
+    .process-step { flex: 1; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; padding: 10px 8px; text-align: center; position: relative; }
+    .process-step-num { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(44,36,24,0.35); margin-bottom: 4px; }
+    .process-step-name { font-size: 9px; font-weight: 600; margin-bottom: 4px; }
+    .process-step-detail { font-size: 8px; color: rgba(44,36,24,0.5); line-height: 1.35; }
+    .process-arrow { display: flex; align-items: center; font-family: 'Space Mono', monospace; font-size: 12px; color: rgba(44,36,24,0.2); }
+
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">08 &mdash; Go-to-Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Go-to-Market Strategy</div>
+    <div class="action-title">Content-first GTM: build the audience at EUR 0 capital cost, convert to subscribers when the product ships.</div>
+    <div class="action-subtitle">Most startups spend money to find customers. We find customers for free, then spend money to build what they already want.</div>
+
+    <!-- GTM Process Flow -->
+    <div class="process-flow">
+      <div class="process-step" style="border-top: 3px solid #C4956A;">
+        <div class="process-step-num">01</div>
+        <div class="process-step-name">Content</div>
+        <div class="process-step-detail">3-5 short-form videos/week. Radical honesty science format.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-step-num">02</div>
+        <div class="process-step-name">Audience</div>
+        <div class="process-step-detail">Social + newsletter growth. Email = owned asset.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-step-num">03</div>
+        <div class="process-step-name">Community</div>
+        <div class="process-step-detail">Events, DMs, meetups. Trust before product.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-step-num">04</div>
+        <div class="process-step-name">Waitlist</div>
+        <div class="process-step-detail">Capture intent. Pre-launch demand proof.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step" style="border-top: 3px solid #8B9E7C;">
+        <div class="process-step-num">05</div>
+        <div class="process-step-name">Conversion</div>
+        <div class="process-step-detail">App launch. Founding member pricing: EUR 19/mo locked.</div>
+      </div>
+    </div>
+
+    <!-- Channel Strategy -->
+    <div class="section-label" style="margin-top: 8px;">Channel Strategy</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Role</th>
+          <th>Frequency</th>
+          <th style="text-align: right;">Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Short-form video (TikTok + Reels)</td>
+          <td>Primary acquisition. Radical honesty science content. First piece: collagen deep dive across 23 studies.</td>
+          <td>3-5 posts/week</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">Newsletter (Substack/Beehiiv)</td>
+          <td>Owned audience. Email is the only asset algorithms cannot take. Conversion happens here.</td>
+          <td>Weekly</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">YouTube long-form</td>
+          <td>Evergreen SEO pillars. 10-20 min deep research. The moat no short-form competitor builds.</td>
+          <td>Monthly</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">Berlin events (Alche Salon)</td>
+          <td>Physical trust signal. 30-40 attendees. Each event produces 3-4 weeks of content. Biohackers Berlin (2,213 members) is warm audience.</td>
+          <td>Quarterly</td>
+          <td class="number">EUR 200-500/event</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">*EUR 0 paid acquisition. Content cost is founder labor, not capital. Timur has managed EUR 1.8M in Meta ad spend -- choosing to spend EUR 0 is a strategic decision, not a budget constraint.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 12 Month Milestone Table -->
+    <div class="section-label" style="margin-top: 8px;">Target Metrics by Quarter</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th style="text-align: right;">Q1 (M1-3)</th>
+          <th style="text-align: right;">Q2 (M4-6)</th>
+          <th style="text-align: right;">Q3 (M7-9)</th>
+          <th style="text-align: right;">Q4 (M10-12)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Social followers</td><td class="number">1-2K</td><td class="number">3-5K</td><td class="number">8-12K</td><td class="number">15-20K</td></tr>
+        <tr><td class="bold">Newsletter subs</td><td class="number">300</td><td class="number">1,000</td><td class="number">2,500</td><td class="number">5,000</td></tr>
+        <tr><td class="bold">Waitlist signups</td><td class="number">&mdash;</td><td class="number">500</td><td class="number">1,500</td><td class="number">(converts)</td></tr>
+        <tr><td class="bold">Event attendees</td><td class="number">&mdash;</td><td class="number">35</td><td class="number">250</td><td class="number">500+</td></tr>
+        <tr class="highlight-row"><td class="bold">Paying subscribers</td><td class="number">&mdash;</td><td class="number">&mdash;</td><td class="number">&mdash;</td><td class="number bold">50-100</td></tr>
+        <tr><td class="bold">Content pieces published</td><td class="number">~60</td><td class="number">~120</td><td class="number">~180</td><td class="number">~240</td></tr>
+        <tr class="assumption-row">
+          <td colspan="5">Q1-Q2 pre-funding. Q3-Q4 post-funding. Paying subscribers begin in Q4 with beta launch to founding members from waitlist.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Biohackers Berlin Meetup / GruendungsBONUS Plus Program / RevenueCat 2025 Benchmarks</div>
+      <div class="page-footer-num">19</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Execution Roadmap -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">08 &mdash; Go-to-Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">12 months to product-market fit, structured in four phases with defined milestones at each gate.</div>
+
+    <!-- Roadmap Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Timeline</th>
+          <th>Key Activities</th>
+          <th style="text-align: right;">Budget</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold" style="color: #8B9E7C;">Foundation</td>
+          <td>Q1 (M1-3)</td>
+          <td>Launch @alche.space. 3-5 short-form videos/week. Launch newsletter (Week 2). Goal: 300 subs. 10 informal customer discovery conversations from social DMs and meetup contacts.</td>
+          <td class="number">EUR 0</td>
+        </tr>
+        <tr>
+          <td class="bold" style="color: #C4956A;">Traction Proof</td>
+          <td>Q2 (M4-6)</td>
+          <td>First Alche Salon event (30-40 people). Open waitlist landing page. Goal: 500 signups. Begin GmbH formation. Apply to GruendungsBONUS Plus (EUR 50K non-dilutive Berlin grant).</td>
+          <td class="number">EUR 200-500</td>
+        </tr>
+        <tr>
+          <td class="bold" style="color: #B86B4A;">Fundraise + Build</td>
+          <td>Q3 (M7-9)</td>
+          <td>Pitch with real numbers: followers, newsletter subs, waitlist, event attendees. Post-funding: hire CTO / dev lead. Begin MVP development. Events scale to monthly (60-80 attendees).</td>
+          <td class="number">Post-funding</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Beta Launch</td>
+          <td>Q4 (M10-12)</td>
+          <td>MVP beta to first 50-100 users from waitlist. Founding member pricing: EUR 19/mo, locked. Content evolves to product teasers, beta stories, "building in public." Physical space search begins.</td>
+          <td class="number">Post-funding</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Two Flywheels -->
+    <div class="section-label" style="margin-top: 12px;">Two Flywheels, Sequenced</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #8B9E7C; border-radius: 2px; padding: 12px 14px;">
+        <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #8B9E7C; margin-bottom: 6px;">Flywheel 1 -- Running Now (Pre-Funding)</div>
+        <div style="font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5;">Create radical-honesty science content &rarr; attract health-curious audience &rarr; they engage and share &rarr; we learn what they need &rarr; create sharper content. No product needed. No funding needed.</div>
+      </div>
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px;">
+        <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #C4956A; margin-bottom: 6px;">Flywheel 2 -- Activated by Funding</div>
+        <div style="font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5;">Know your body (data) &rarr; Do the protocols (action) &rarr; Get what you need (products) &rarr; Belong with others (community). Funding builds the product for an audience that already exists and trusts us.</div>
+      </div>
+    </div>
+
+    <!-- Key GTM advantage -->
+    <div class="callout-box">
+      <div class="callout-box-title">Why content-first reduces risk for investors</div>
+      <div class="callout-box-body">
+        By the time funding closes, the content engine has been running for 6+ months. The investor sees real audience data (followers, newsletter subs, waitlist signups, event attendance) before writing a check. If the content fails to build an audience, the investment thesis fails before capital is deployed. This is a feature, not a risk.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Content strategy benchmarks / Biohackers Berlin Meetup / GruendungsBONUS Plus</div>
+      <div class="page-footer-num">20</div>
+    </div>
+  </div>
+
+</body>
+</html>

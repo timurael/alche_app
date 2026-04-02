@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alche: Functional Potions Prototype</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-darker: #020617;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+
+            /* Potion Accents */
+            --accent-focus: #10b981;
+            /* Green/Matcha */
+            --accent-reset: #ef4444;
+            /* Tart Cherry/Red */
+            --accent-cellular: #8b5cf6;
+            /* Berry/Purple */
+
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, var(--bg-darker) 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-8);
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.05em;
+            margin-bottom: var(--space-4);
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .potions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-6);
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .potion-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: var(--space-6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .potion-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            transition: height 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .potion-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .potion-card:hover::before {
+            height: 6px;
+        }
+
+        /* Individual Card Accents */
+        .card-focus {
+            --accent: var(--accent-focus);
+        }
+
+        .card-reset {
+            --accent: var(--accent-reset);
+        }
+
+        .card-cellular {
+            --accent: var(--accent-cellular);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-4);
+        }
+
+        .potion-number {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .potion-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin: 8px 0;
+        }
+
+        .potion-target {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .ingredients {
+            margin-top: var(--space-6);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: var(--space-4);
+        }
+
+        .ingredient-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .ingredient-name {
+            color: #e2e8f0;
+        }
+
+        .ingredient-dose {
+            color: var(--accent);
+            font-family: monospace;
+        }
+
+        .science-drawer {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .potion-card.active .science-drawer {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: var(--space-4);
+            padding-top: var(--space-4);
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .science-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+            margin-right: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .biomarker {
+            background: rgba(var(--accent), 0.1);
+            border-color: rgba(var(--accent), 0.3);
+        }
+
+        .efsa-note {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: var(--space-4);
+            font-style: italic;
+        }
+
+        .toggle-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: var(--space-4);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn:hover {
+            background: var(--accent);
+            color: var(--bg-darker);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Alche Functional Potions</h1>
+        <p>Science-backed, EFSA-compliant formulations designed for imperfect longevity seekers. Click a potion to view
+            the underlying clinical mapping.</p>
+    </header>
+
+    <div class="potions-grid">
+
+        <!-- Potion 1 -->
+        <div class="potion-card card-focus" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <div>
+                    <div class="potion-number">01</div>
+                    <h2 class="potion-title">The Focus Alchemist</h2>
+                    <div class="potion-target">Cognitive Longevity & Neurogenesis</div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">A daily driver for deep work. Replaces the crash of
+                a second coffee with sustained alpha-wave focus.</p>
+
+            <div class="ingredients">
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Lion's Mane (Fruiting Body)</span>
+                    <span class="ingredient-dose">1500mg</span>
+                </div>
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Citicoline</span>
+                    <span class="ingredient-dose">250mg</span>
+                </div>
+                <div class="ingredient-item">
+                    <span class="ingredient-name">L-Theanine</span>
+                    <span class="ingredient-dose">200mg</span>
+                </div>
+            </div>
+
+            <button class="toggle-btn">View Scientific Mapping</button>
+
+            <div class="science-drawer">
+                <div>
+                    <span class="science-tag">DOI: 10.1002/ptr.2634</span>
+                    <span class="science-tag biomarker" style="--accent: 16, 185, 129;">Target: Daytime HRV
+                        (Oura)</span>
+                </div>
+                <p class="efsa-note"><strong>Mechanism:</strong> Triggers Nerve Growth Factor (NGF).
+                    <br><br><strong>EFSA Compliance:</strong> Strictly utilizes 100% fruiting body extract (legal
+                    history of consumption) instead of novel mycelium.</p>
+            </div>
+        </div>
+
+        <!-- Potion 2 -->
+        <div class="potion-card card-reset" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <div>
+                    <div class="potion-number">02</div>
+                    <h2 class="potion-title">The Sunday Reset</h2>
+                    <div class="potion-target">Inflammation & Alcohol Mitigation</div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">The ultimate antidote to a late Saturday night.
+                Down-regulates systemic stress so you don't miss Monday.</p>
+
+            <div class="ingredients">
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Curcumin + Piperine</span>
+                    <span class="ingredient-dose">500mg</span>
+                </div>
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Tart Cherry Extract</span>
+                    <span class="ingredient-dose">480mg</span>
+                </div>
+                <div class="ingredient-item">
+                    <span class="ingredient-name">DHM (Dihydromyricetin)</span>
+                    <span class="ingredient-dose">300mg</span>
+                </div>
+            </div>
+
+            <button class="toggle-btn" style="border-color: var(--accent-reset); color: var(--accent-reset)">View
+                Scientific Mapping</button>
+
+            <div class="science-drawer">
+                <div>
+                    <span class="science-tag">NCT02922920</span>
+                    <span class="science-tag biomarker" style="--accent: 239, 68, 68;">Target: Blood hs-CRP & Uric
+                        Acid</span>
+                </div>
+                <p class="efsa-note"><strong>Mechanism:</strong> Curcumin targets NF-κB pathways while DHM enhances
+                    liver alcohol metabolism enzymes (ADH/ALDH).</p>
+            </div>
+        </div>
+
+        <!-- Potion 3 -->
+        <div class="potion-card card-cellular" onclick="this.classList.toggle('active')">
+            <div class="card-header">
+                <div>
+                    <div class="potion-number">03</div>
+                    <h2 class="potion-title">Deep Cellular</h2>
+                    <div class="potion-target">Autophagy & Overnight Repair</div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">The longevity cornerstone. Optimized for pre-sleep
+                ingestion to maximize overnight cellular clean-up.</p>
+
+            <div class="ingredients">
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Spermidine Extract</span>
+                    <span class="ingredient-dose">6mg</span>
+                </div>
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Trans-Resveratrol</span>
+                    <span class="ingredient-dose">250mg</span>
+                </div>
+                <div class="ingredient-item">
+                    <span class="ingredient-name">Apigenin</span>
+                    <span class="ingredient-dose">50mg</span>
+                </div>
+            </div>
+
+            <button class="toggle-btn" style="border-color: var(--accent-cellular); color: var(--accent-cellular)">View
+                Scientific Mapping</button>
+
+            <div class="science-drawer">
+                <div>
+                    <span class="science-tag">DOI: 10.1038/s43587-022-00322-9</span>
+                    <span class="science-tag biomarker" style="--accent: 139, 92, 246;">Target: Deep Sleep
+                        Latency</span>
+                </div>
+                <p class="efsa-note"><strong>Mechanism:</strong> Induces autophagy and activates SIRT1 pathways.
+                    <br><br><strong>EFSA Compliance:</strong> Formulated precisely to the 6mg maximum EU daily limit
+                    under Regulation 2020/443 for Spermidine-rich wheat germ extract.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

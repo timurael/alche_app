@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alche P&L Investor Brief</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Core */
+            --cream: #F5F0E8;
+            --cream-mid: #EDE7DC;
+            --deep: #2C2418;
+            --deep-90: rgba(44, 36, 24, 0.9);
+            --deep-70: rgba(44, 36, 24, 0.7);
+            --deep-50: rgba(44, 36, 24, 0.5);
+            --deep-30: rgba(44, 36, 24, 0.3);
+            --deep-15: rgba(44, 36, 24, 0.15);
+            --deep-08: rgba(44, 36, 24, 0.08);
+
+            /* Accent */
+            --amber: #C4956A;
+            --sage: #8B9E7C;
+            --terra: #B86B4A;
+            --rose: #C47A8A;
+            --stone: #9E948A;
+
+            /* Glass */
+            --glass: rgba(255, 252, 246, 0.55);
+            --glass-strong: rgba(255, 252, 246, 0.75);
+            --glass-border: rgba(196, 149, 106, 0.18);
+            --glass-border-strong: rgba(196, 149, 106, 0.3);
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            color: var(--deep);
+            background: var(--cream);
+            position: relative;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(196, 149, 106, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 80%, rgba(139, 158, 124, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(184, 107, 74, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 22mm;
+            position: relative;
+            page-break-after: always;
+            background: transparent;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .page-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: 38px;
+            line-height: 1.2;
+            color: var(--deep);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--deep-70);
+            margin-bottom: 32px;
+        }
+
+        .label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--amber);
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 1.3;
+            color: var(--deep);
+            margin-bottom: 20px;
+            margin-top: 36px;
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 1.4;
+            color: var(--deep);
+            margin-bottom: 16px;
+            margin-top: 28px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--deep);
+            margin-bottom: 16px;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        em {
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+        }
+
+        /* Glass cards */
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .glass-elevated {
+            background: var(--glass-strong);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border-strong);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(44, 36, 24, 0.06), 0 2px 8px rgba(44, 36, 24, 0.03);
+            padding: 28px;
+            margin-bottom: 28px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            margin-bottom: 24px;
+        }
+
+        thead {
+            border-bottom: 2px solid var(--deep-15);
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--deep-70);
+        }
+
+        td {
+            padding: 14px 16px;
+            color: var(--deep);
+            border-bottom: 1px solid var(--deep-08);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:first-child {
+            font-weight: 700;
+        }
+
+        .metric-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Q&A Section */
+        .qa-item {
+            margin-bottom: 24px;
+            page-break-inside: avoid;
+        }
+
+        .question {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--deep);
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--deep-90);
+            padding-left: 20px;
+            border-left: 2px solid var(--amber);
+        }
+
+        /* Divider */
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--deep-15), transparent);
+            margin: 36px 0;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--deep);
+        }
+
+        ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--amber);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Source citation */
+        .source {
+            font-size: 11px;
+            font-style: italic;
+            color: var(--deep-50);
+            margin-top: 48px;
+            padding-top: 20px;
+            border-top: 1px solid var(--deep-08);
+        }
+
+        /* Compact tables for metrics */
+        .metrics-table {
+            font-size: 13px;
+        }
+
+        .metrics-table td {
+            padding: 10px 16px;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: var(--glass-strong);
+            border-left: 3px solid var(--amber);
+            padding: 18px 20px;
+            margin: 24px 0;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--deep);
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="page-content">
+            <h1>alche P&L Investor Brief</h1>
+            <p class="subtitle"><strong>For Daria</strong> | Read on a plane, arrive ready to walk any investor through the numbers.</p>
+
+            <hr>
+
+            <h2>The Business in Numbers</h2>
+
+            <div class="glass-elevated">
+                <span class="label">The Ask</span>
+                <p style="font-size: 15px; line-height: 1.6; margin-bottom: 0;">
+                    EUR 500K pre-seed at EUR 2.5M valuation cap. [Detailed allocation shared separately upon request.]
+                </p>
+            </div>
+
+            <h3>Revenue Model: 6 Streams</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stream</th>
+                        <th style="text-align: right;">% of Revenue (M24)</th>
+                        <th>Why It Matters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Retail Products</strong></td>
+                        <td class="metric-value" style="text-align: right;">~81%</td>
+                        <td>Curated longevity supplements. EUR 49/unit, 52% margin. The revenue engine.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Smoothie Bar</strong></td>
+                        <td class="metric-value" style="text-align: right;">~7%</td>
+                        <td>EUR 9.67 avg, 65% margin. Drives foot traffic.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LED Therapy</strong></td>
+                        <td class="metric-value" style="text-align: right;">~5%</td>
+                        <td>EUR 45/session, 44% margin. Space utilization play.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Subscriptions</strong></td>
+                        <td class="metric-value" style="text-align: right;">~5%</td>
+                        <td>EUR 19/49/99 tiers. The retention + data engine, not the revenue engine.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Events</strong></td>
+                        <td class="metric-value" style="text-align: right;">~2%</td>
+                        <td>Community building. EUR 35/ticket.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doctor SaaS</strong></td>
+                        <td class="metric-value" style="text-align: right;">~1%</td>
+                        <td>EUR 99/mo per clinic, max 20 clinics. Legally safe (StGB 299a).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>The honest story:</strong> This is a product commerce business with a subscription wrapper for retention and data. Retail drives revenue; subscriptions drive stickiness.
+            </div>
+
+            <h3>Key Milestones</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Phase</th>
+                        <th>What Happens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>M1-M3</strong></td>
+                        <td>Pre-launch. GmbH formed, legal/regulatory setup, app development. No subscribers, no revenue. Burning ~EUR 18-20K/mo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>M4</strong></td>
+                        <td>Physical space opens. All 6 revenue streams activate. Subscribers start at 15/mo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>M11-M13</strong></td>
+                        <td>EBITDA break-even zone. Revenue overtakes costs.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>M17-M18</strong></td>
+                        <td>CTO recruited (EUR 18K fee) and onboarded.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>M24</strong></td>
+                        <td>~EUR 277K/mo revenue. ~339 subscribers. Cumulative cash ~EUR 585-600K (P&L basis).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Numbers to Memorize</h3>
+
+            <table class="metrics-table">
+                <tbody>
+                    <tr>
+                        <td>M24 monthly revenue</td>
+                        <td class="metric-value">~EUR 277K</td>
+                    </tr>
+                    <tr>
+                        <td>M24 cumulative cash (P&L)</td>
+                        <td class="metric-value">~EUR 585-600K</td>
+                    </tr>
+                    <tr>
+                        <td>M24 total subscribers</td>
+                        <td class="metric-value">~339</td>
+                    </tr>
+                    <tr>
+                        <td>True subscription ARPU</td>
+                        <td class="metric-value">EUR 38.44 (not EUR 49 -- tier mix)</td>
+                    </tr>
+                    <tr>
+                        <td>Blended gross margin</td>
+                        <td class="metric-value">45-55%</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly churn</td>
+                        <td class="metric-value">8% (locked, industry benchmark)</td>
+                    </tr>
+                    <tr>
+                        <td>Total CapEx</td>
+                        <td class="metric-value">~EUR 98K (up from EUR 83K, includes app design)</td>
+                    </tr>
+                    <tr>
+                        <td>Lowest cash point</td>
+                        <td class="metric-value">~EUR 237-260K around M12</td>
+                    </tr>
+                    <tr>
+                        <td>24-mo total revenue</td>
+                        <td class="metric-value">~EUR 2.8-3.0M</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="page-content">
+            <h2>What Investors Will Ask (and Your Answers)</h2>
+
+            <div class="qa-item">
+                <div class="question">"Where's the break-even?"</div>
+                <div class="answer">
+                    EBITDA break-even around M11-13. Cumulative cash break-even (where cash exceeds EUR 500K starting point) around M23-24. The business is profitable operationally well before M24.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">"Is EUR 500K enough?"</div>
+                <div class="answer">
+                    Yes. Minimum cash never goes below ~EUR 237-260K (around M12, the deepest trough before revenue ramp catches up). Even in the bear case (0.6x revenue), cash stays positive. That said, the Cash Flow sheet shows ~EUR 218K less actual cash than the P&L suggests due to working capital tied up in inventory. Actual M24 cash is closer to EUR 377K.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">"Why so much retail vs subscriptions?"</div>
+                <div class="answer">
+                    Physical space drives foot traffic. Walk-in customers buy products. Subscriptions are the retention engine (keep people coming back, collect data, personalize recommendations). Retail is the revenue engine. Think Aesop with a membership layer, not Netflix with a store.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">"What about the doctor thing?"</div>
+                <div class="answer">
+                    Commission-based referral fees are illegal in Germany (StGB 299a/299b). We switched to a SaaS model at EUR 99/mo per clinic, following Doctolib precedent (EUR 139-475/mo). Smaller revenue but legally bulletproof.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">"Why no CGM?"</div>
+                <div class="answer">
+                    ZOE dropped CGM hardware in Sept 2025. Supersapiens shut down Feb 2024. Hardware-as-a-service is dead industry-wide. We do software-only BYOD (bring your own device) via Dexcom API and Apple Health. 80-90% margins on software interpretation vs thin/negative margins on hardware logistics. The greyed-out EUR 0 row in the model shows this was deliberate.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">"What's your biggest risk?"</div>
+                <div class="answer">
+                    Retail volume at M24: 4,600 units/month with only 339 subscribers. That means ~92% of product sales come from non-subscribers (walk-in, e-commerce, B2B). Mitigant: curated Berlin wellness space with high foot traffic + planned e-commerce expansion + potential B2B wholesale channel.
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">"How is this model different from typical pre-seed decks?"</div>
+                <div class="answer">
+                    <ul>
+                        <li><strong>123 assumptions</strong>, every one sourced to research documents or expert audits</li>
+                        <li><strong>7 expert persona audits</strong> (angel investor, tax advisor, operations manager, food safety inspector, growth CFO, compliance lawyer, HR manager) -- all findings incorporated</li>
+                        <li><strong>German-specific costs modeled</strong>: Gewerbesteuer, Nebenkosten, GEMA, HACCP, DSB (data protection officer), Rundfunkbeitrag, KSK levy, Verpackungsgesetz. Most pre-seed models skip all of these.</li>
+                        <li><strong>Cash Flow sheet</strong> showing the EUR 218K working capital gap that P&L hides</li>
+                        <li><strong>Tax provision</strong> follows actual German GmbH rules (~30% combined rate, only when cumulative profits turn positive)</li>
+                        <li><strong>Illegal revenue models caught and fixed</strong> (doctor commission → SaaS)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>If They Push on Valuation Multiples</h3>
+            <p>
+                Subscription businesses: 8-15x ARR. Product commerce: 2-4x revenue. We're economically a product commerce business (only ~5% subscription revenue). But the subscription layer is the data moat and retention mechanism that makes the product commerce defensible. Frame it as: "product commerce margins with subscription economics on retention."
+            </p>
+
+            <p class="source">
+                Source: Condensed from the full 912-line PNL_EXPLANATION_GUIDE.md. All numbers trace to <code style="font-family: 'Space Mono', monospace; font-size: 10px; background: var(--deep-08); padding: 2px 6px; border-radius: 4px;">alche-pnl-24mo-v3.xlsx</code> generated by <code style="font-family: 'Space Mono', monospace; font-size: 10px; background: var(--deep-08); padding: 2px 6px; border-radius: 4px;">build_excel_pnl_v3.py</code>.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

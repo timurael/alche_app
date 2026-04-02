@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche — The Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+
+:root {
+  --cream: #F5F0EB;
+  --deep: #1A1A2E;
+  --amber: #C4944A;
+  --sage: #7A8B6F;
+  --terra: #B85C38;
+  --stone: #8A8578;
+  --soft-line: rgba(26,26,46,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #e8e3dd;
+  color: var(--deep);
+  line-height: 1.6;
+  font-size: 13px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 24px auto;
+  background: var(--cream);
+  padding: 52px 56px 48px;
+  position: relative;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+.page-num {
+  position: absolute;
+  bottom: 32px;
+  right: 56px;
+  font-size: 9px;
+  color: var(--stone);
+  letter-spacing: 0.06em;
+}
+.page-foot {
+  position: absolute;
+  bottom: 32px;
+  left: 56px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px;
+  color: var(--stone);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+h1 em { font-style: italic; font-weight: 400; }
+.page-subtitle {
+  font-size: 14px;
+  color: var(--stone);
+  font-weight: 300;
+  margin-bottom: 36px;
+  line-height: 1.5;
+}
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--stone);
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+p { margin-bottom: 12px; line-height: 1.65; }
+
+/* OVERVIEW */
+.overview-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  margin: 32px 0 8px;
+  border: 1px solid var(--soft-line);
+}
+.ov-cell {
+  padding: 14px 14px 12px;
+  border-right: 1px solid var(--soft-line);
+}
+.ov-cell:last-child { border-right: none; }
+.ov-phase {
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+.ov-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+.ov-time { font-size: 10px; color: var(--stone); }
+.ov-metric {
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.ov-metric-label { font-size: 9px; color: var(--stone); margin-top: 2px; }
+
+.timeline-bar {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 3fr 3fr;
+  height: 4px;
+  margin: 0 0 32px;
+  gap: 2px;
+}
+.tb-seg { height: 100%; }
+.tb-0 { background: var(--amber); }
+.tb-1 { background: var(--sage); }
+.tb-2 { background: var(--terra); }
+.tb-3 { background: var(--deep); opacity: 0.6; }
+.tb-4 { background: var(--deep); opacity: 0.3; }
+
+/* DECISIONS TABLE */
+.kd-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.kd-table th {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 2px solid rgba(26,26,46,0.1);
+}
+.kd-table td {
+  padding: 8px 10px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--soft-line);
+  vertical-align: top;
+}
+.kd-table td:first-child { font-weight: 500; white-space: nowrap; }
+.kd-table td:last-child { color: var(--stone); }
+
+/* PHASE DETAIL */
+.phase {
+  margin-top: 32px;
+  padding: 0 0 24px;
+  border-bottom: 1px solid var(--soft-line);
+}
+.phase:last-of-type { border-bottom: none; }
+.phase-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.phase-tag {
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+}
+.phase-tag-0 { background: var(--amber); color: white; }
+.phase-tag-1 { background: var(--sage); color: white; }
+.phase-tag-2 { background: var(--terra); color: white; }
+.phase-tag-3 { background: var(--deep); color: var(--cream); opacity:0.7; }
+.phase-tag-4 { background: var(--deep); color: var(--cream); opacity:0.4; }
+.phase-time { font-size: 11px; color: var(--stone); }
+.phase-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.phase-body {
+  font-size: 13px;
+  line-height: 1.65;
+  max-width: 580px;
+}
+
+.ms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 20px;
+  margin-top: 14px;
+}
+.ms-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px dotted rgba(26,26,46,0.1);
+}
+.ms-action { font-size: 12px; font-weight: 500; }
+.ms-metric { font-size: 11px; color: var(--stone); text-align: right; }
+
+/* FUNDS */
+.funds-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.funds-table th {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+  text-align: left;
+  padding: 7px 0;
+  border-bottom: 2px solid rgba(26,26,46,0.1);
+}
+.funds-table th:nth-child(2),
+.funds-table th:nth-child(3) { text-align: right; }
+.funds-table td {
+  padding: 8px 0;
+  font-size: 12px;
+  border-bottom: 1px solid var(--soft-line);
+}
+.funds-table td:nth-child(2),
+.funds-table td:nth-child(3) { text-align: right; font-variant-numeric: tabular-nums; }
+.funds-table .total td {
+  border-top: 2px solid var(--deep);
+  border-bottom: none;
+  font-weight: 600;
+  padding-top: 10px;
+}
+.funds-bar {
+  height: 6px;
+  display: flex;
+  gap: 2px;
+  margin: 8px 0 20px;
+}
+.fb-seg { height: 100%; }
+
+/* CALLOUT */
+.callout {
+  margin: 24px 0;
+  padding: 18px 22px;
+  border-left: 3px solid var(--amber);
+  background: rgba(196,148,74,0.04);
+}
+.callout p { margin-bottom: 0; font-size: 12px; line-height: 1.6; }
+.callout strong { font-weight: 600; }
+
+/* GROWTH ARC */
+.arc {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  height: 100px;
+  margin: 20px 0 8px;
+  padding: 0 4px;
+}
+.arc-bar {
+  flex: 1;
+  background: var(--sage);
+  position: relative;
+  margin: 0 2px;
+  min-width: 0;
+}
+.arc-bar.projected { background: rgba(122,139,111,0.3); }
+.arc-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: var(--stone);
+  white-space: nowrap;
+}
+.arc-val {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.arc-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  font-size: 9px;
+  color: var(--stone);
+}
+.arc-legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+@media print {
+  body { background: white; }
+  .page {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    padding: 44px 48px 40px;
+  }
+  .page:last-child { page-break-after: auto; }
+}
+
+.fi { opacity: 0; transform: translateY(12px); transition: all 0.5s ease; }
+.fi.vis { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 1: OVERVIEW -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+
+  <h1 class="fi">The <em>Roadmap</em></h1>
+  <p class="page-subtitle fi">EUR 500K pre-seed. 18 months to seed-ready.<br>Every phase unlocks the next. Every metric is measurable.</p>
+
+  <div class="overview-strip fi">
+    <div class="ov-cell">
+      <div class="ov-phase">Phase 0</div>
+      <div class="ov-name">Foundation</div>
+      <div class="ov-time">Month 0-1</div>
+      <div class="ov-metric" style="color:var(--amber)">50+</div>
+      <div class="ov-metric-label">interviews</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-phase">Phase 1</div>
+      <div class="ov-name">Build + Audience</div>
+      <div class="ov-time">Month 1-3</div>
+      <div class="ov-metric" style="color:var(--sage)">50K</div>
+      <div class="ov-metric-label">combined reach</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-phase">Phase 2</div>
+      <div class="ov-name">Launch + Validate</div>
+      <div class="ov-time">Month 4-6</div>
+      <div class="ov-metric" style="color:var(--terra)">100</div>
+      <div class="ov-metric-label">paying subscribers</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-phase">Phase 3</div>
+      <div class="ov-name">Optimize + Grow</div>
+      <div class="ov-time">Month 8-11</div>
+      <div class="ov-metric">300+</div>
+      <div class="ov-metric-label">paying subscribers</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-phase">Phase 4</div>
+      <div class="ov-name">Seed-Ready</div>
+      <div class="ov-time">Month 12-18</div>
+      <div class="ov-metric">500+</div>
+      <div class="ov-metric-label">paying subscribers</div>
+    </div>
+  </div>
+
+  <div class="timeline-bar fi">
+    <div class="tb-seg tb-0"></div>
+    <div class="tb-seg tb-1"></div>
+    <div class="tb-seg tb-2"></div>
+    <div class="tb-seg tb-3"></div>
+    <div class="tb-seg tb-4"></div>
+  </div>
+
+  <h3 class="fi">Key decisions locked</h3>
+  <table class="kd-table fi">
+    <thead>
+      <tr><th>Decision</th><th>Choice</th><th>Rationale</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Model</td>
+        <td>Digital-first platform</td>
+        <td>App is the business. Lower burn, faster iteration, scalable from day one.</td>
+      </tr>
+      <tr>
+        <td>Tech build</td>
+        <td>Dev agency</td>
+        <td>Speed to market. CTO hire when product-market fit is proven.</td>
+      </tr>
+      <tr>
+        <td>Physician</td>
+        <td>Medical advisor</td>
+        <td>Clean cap table. Clinical credibility without co-founder complexity.</td>
+      </tr>
+      <tr>
+        <td>CGM integration</td>
+        <td>At launch</td>
+        <td>Core differentiator. Glucose data from day one via aggregator API.</td>
+      </tr>
+      <tr>
+        <td>Content strategy</td>
+        <td>Social-first</td>
+        <td>Founders build in public. Audience exists before the product does.</td>
+      </tr>
+      <tr>
+        <td>Seed target</td>
+        <td>EUR 3M+</td>
+        <td>18 months of traction data. Raise from evidence, not thesis.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout fi">
+    <p><strong>The sequence matters.</strong> Content runs 3 months before product. The audience that watches us build is the audience that converts on launch day. By month 4, the question isn't "will anyone use this" -- it's how fast we onboard people already waiting.</p>
+  </div>
+
+  <div class="page-foot">Alche</div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 2: PHASE DETAILS -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="phase fi">
+    <div class="phase-header">
+      <span class="phase-tag phase-tag-0">Phase 0</span>
+      <span class="phase-time">Month 0-1</span>
+    </div>
+    <div class="phase-title">Foundation</div>
+    <div class="phase-body">
+      GmbH formed. Agency contracted for MVP build. 50+ customer discovery interviews completed and documented. Content engine starts -- founders building in public on personal accounts, @alche.daily growing as brand channel. Physician role formalized as medical advisor.
+    </div>
+    <div class="ms-grid">
+      <div class="ms-row">
+        <span class="ms-action">GmbH registered</span>
+        <span class="ms-metric">Legal entity live</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Agency contracted</span>
+        <span class="ms-metric">LOI or contract signed</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Customer interviews</span>
+        <span class="ms-metric">50+ completed</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">@alche.daily</span>
+        <span class="ms-metric">Publishing daily</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase fi">
+    <div class="phase-header">
+      <span class="phase-tag phase-tag-1">Phase 1</span>
+      <span class="phase-time">Month 1-3</span>
+    </div>
+    <div class="phase-title">Build + Audience</div>
+    <div class="phase-body">
+      Two parallel tracks. Track A: MVP in development -- membership, biomarker tracking, CGM integration, community features, and QA. Track B: Social-first content flywheel at scale. Founders build in public on personal accounts while @alche.daily grows as the brand channel -- 50K combined reach across all accounts and 10K waitlist signups before the app exists. First community event in Berlin. No waitlist promotion until month 2 -- the first month is pure content, pure trust-building.
+    </div>
+    <div class="ms-grid">
+      <div class="ms-row">
+        <span class="ms-action">MVP beta</span>
+        <span class="ms-metric">Core features running</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Combined audience</span>
+        <span class="ms-metric">50K across founder + brand accounts</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Waitlist</span>
+        <span class="ms-metric">10K signups</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Community event</span>
+        <span class="ms-metric">50+ attendees, Berlin</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase fi">
+    <div class="phase-header">
+      <span class="phase-tag phase-tag-2">Phase 2</span>
+      <span class="phase-time">Month 4-6</span>
+    </div>
+    <div class="phase-title">Launch + Validate</div>
+    <div class="phase-body">
+      App goes live. Founding member pricing to drive first 100 paid subscribers -- discounted tiers to reward early adopters and accelerate feedback loops. CGM integration live from day one. Real usage data flowing. Subscription tiers active. Community events continuing in Berlin to drive organic acquisition and retention.
+    </div>
+    <div class="ms-grid">
+      <div class="ms-row">
+        <span class="ms-action">Paying subscribers</span>
+        <span class="ms-metric">100</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Monthly revenue</span>
+        <span class="ms-metric">EUR 3-5K MRR</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Day-30 retention</span>
+        <span class="ms-metric">40-50%</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Brand partnerships</span>
+        <span class="ms-metric">First signed</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase fi">
+    <div class="phase-header">
+      <span class="phase-tag phase-tag-3">Phase 3</span>
+      <span class="phase-time">Month 8-11</span>
+    </div>
+    <div class="phase-title">Optimize + Grow</div>
+    <div class="phase-body">
+      Real data replaces assumptions. V1 intelligence features ship based on actual user behavior -- AI concierge, glucose-lifestyle correlations, smart replenishment, curated protocols. Flywheel compounding: content drives signups, community drives retention, data drives product. Founding member pricing transitions to standard tiers.
+    </div>
+    <div class="ms-grid">
+      <div class="ms-row">
+        <span class="ms-action">Paying subscribers</span>
+        <span class="ms-metric">300+</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Unit economics</span>
+        <span class="ms-metric">LTV:CAC above 3:1</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Monthly churn</span>
+        <span class="ms-metric">Under 8%</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">V1 features</span>
+        <span class="ms-metric">AI + smart protocols live</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase fi">
+    <div class="phase-header">
+      <span class="phase-tag phase-tag-4">Phase 4</span>
+      <span class="phase-time">Month 12-18</span>
+    </div>
+    <div class="phase-title">Seed-Ready</div>
+    <div class="phase-body">
+      Raising EUR 3M+ seed from a position of traction. 500+ paying subscribers. Revenue at or approaching break-even. Community established in Berlin and growing organically. Every number in the seed deck is real, not projected.
+    </div>
+    <div class="ms-grid">
+      <div class="ms-row">
+        <span class="ms-action">Paying subscribers</span>
+        <span class="ms-metric">500+</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Revenue</span>
+        <span class="ms-metric">Break-even or path to it</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Seed raise</span>
+        <span class="ms-metric">EUR 3M+ on real metrics</span>
+      </div>
+      <div class="ms-row">
+        <span class="ms-action">Expansion</span>
+        <span class="ms-metric">Second market scoped</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Alche</div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 3: FINANCIALS + GROWTH ARC -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page">
+
+  <h2 class="fi">Use of Funds</h2>
+  <p class="fi" style="font-size:12px;color:var(--stone);margin-bottom:4px;">EUR 500K allocated across four categories. 18+ months runway.</p>
+
+  <div class="funds-bar fi">
+    <div class="fb-seg" style="flex:46;background:var(--deep);" title="Product & Tech"></div>
+    <div class="fb-seg" style="flex:14.4;background:var(--sage);" title="Team"></div>
+    <div class="fb-seg" style="flex:18;background:var(--amber);" title="Marketing & Community"></div>
+    <div class="fb-seg" style="flex:9;background:var(--stone);" title="Ops & Legal"></div>
+    <div class="fb-seg" style="flex:12.6;background:rgba(26,26,46,0.15);" title="Buffer"></div>
+  </div>
+
+  <table class="funds-table fi">
+    <thead>
+      <tr><th>Category</th><th>EUR</th><th>% of raise</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Product & Tech <span style="color:var(--stone);font-size:11px;"> -- MVP, CGM integration, infrastructure, iteration</span></td>
+        <td>230,000</td>
+        <td>46%</td>
+      </tr>
+      <tr>
+        <td>Team <span style="color:var(--stone);font-size:11px;"> -- founder salaries, 12 months</span></td>
+        <td>72,000</td>
+        <td>14%</td>
+      </tr>
+      <tr>
+        <td>Marketing & Community <span style="color:var(--stone);font-size:11px;"> -- content production, events, paid social, partnerships</span></td>
+        <td>90,000</td>
+        <td>18%</td>
+      </tr>
+      <tr>
+        <td>Operations & Legal <span style="color:var(--stone);font-size:11px;"> -- GmbH, accounting, SaaS, GDPR</span></td>
+        <td>45,000</td>
+        <td>9%</td>
+      </tr>
+      <tr>
+        <td>Buffer</td>
+        <td>63,000</td>
+        <td>13%</td>
+      </tr>
+      <tr class="total">
+        <td>Total</td>
+        <td>500,000</td>
+        <td>100%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout fi" style="border-left-color:var(--sage);background:rgba(122,139,111,0.04);">
+    <p><strong>Digital-first means longer runway.</strong> No lease, no buildout, no physical overhead. The EUR 115K that would go to a space goes into product and community instead -- more engineering cycles, more content, more events, more iteration. The result: 18+ months of runway versus 12, and a leaner path to proving unit economics.</p>
+  </div>
+
+  <!-- GROWTH ARC -->
+  <h2 class="fi" style="margin-top:28px;">Growth Arc</h2>
+  <p class="fi" style="font-size:12px;color:var(--stone);margin-bottom:4px;">Paying subscribers by quarter. Break-even at ~145 subscribers.</p>
+
+  <div class="arc fi">
+    <div class="arc-bar" style="height:0%;"><div class="arc-label">Q1</div><div class="arc-val">0</div></div>
+    <div class="arc-bar" style="height:20%;"><div class="arc-label">Q2</div><div class="arc-val">100</div></div>
+    <div class="arc-bar" style="height:40%;"><div class="arc-label">Q3</div><div class="arc-val">200</div></div>
+    <div class="arc-bar" style="height:60%;"><div class="arc-label">Q4</div><div class="arc-val">300</div></div>
+    <div class="arc-bar projected" style="height:80%;"><div class="arc-label">Q5</div><div class="arc-val">400</div></div>
+    <div class="arc-bar projected" style="height:100%;"><div class="arc-label">Q6</div><div class="arc-val">500+</div></div>
+  </div>
+  <div class="arc-legend fi">
+    <span><span class="arc-legend-dot" style="background:var(--sage);"></span> Pre-seed period (actual)</span>
+    <span><span class="arc-legend-dot" style="background:rgba(122,139,111,0.3);"></span> Seed-ready (projected)</span>
+  </div>
+
+  <div class="callout fi" style="margin-top:28px;">
+    <p><strong>Revenue model.</strong> Founding member pricing at launch -- discounted tiers to accelerate adoption and lock in early community. Expected EUR 3-5K MRR at 100 subscribers (blended discount). Transitions to standard EUR 19/49/99 tiers as product matures. At 500 subscribers on standard pricing with 40% Pro/Premium mix, projected ARR exceeds EUR 250K.</p>
+  </div>
+
+  <div class="callout fi" style="border-left-color:var(--terra);background:rgba(184,92,56,0.04);">
+    <p><strong>What this buys you.</strong> 18 months of data. Validated unit economics. A community that can't be replicated. The only European longevity platform with CGM integration and a real audience. And a seed deck where every number is real. That's what EUR 500K converts into.</p>
+  </div>
+
+  <div style="margin-top:40px;text-align:center;" class="fi">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;font-style:italic;color:var(--deep);opacity:0.7;">Your Longevity, Daily.</div>
+  </div>
+
+  <div class="page-foot">Alche</div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<script>
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.05 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

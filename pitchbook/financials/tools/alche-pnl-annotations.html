@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P&L Annotation Layer — alche</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--cream-mid:#EDE7DC;--deep:#2C2418;
+  --deep-90:rgba(44,36,24,0.9);--deep-70:rgba(44,36,24,0.7);
+  --deep-50:rgba(44,36,24,0.5);--deep-30:rgba(44,36,24,0.3);
+  --deep-15:rgba(44,36,24,0.15);--deep-08:rgba(44,36,24,0.08);
+  --amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;
+  --rose:#C47A8A;--stone:#9E948A;
+  --glass:rgba(255,252,246,0.55);--glass-strong:rgba(255,252,246,0.75);
+  --glass-border:rgba(196,149,106,0.18);--glass-border-strong:rgba(196,149,106,0.3);
+  --positive:#4A7C59;--negative:#9E3A2A;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:#FEFCF9;color:var(--deep);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(196,149,106,0.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 80%,rgba(139,158,124,0.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(184,107,74,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+
+.container{max-width:920px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(254,252,249,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:10px 24px;display:flex;justify-content:space-between;align-items:center}
+.nav-left{display:flex;align-items:baseline;gap:12px}
+.nav-left .wordmark{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600}
+.nav-left .tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--deep-50);letter-spacing:0.08em}
+.nav-actions{display:flex;gap:6px}
+
+/* Buttons */
+.btn{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;padding:8px 20px;border-radius:8px;cursor:pointer;transition:all 0.15s;border:none;display:inline-flex;align-items:center;gap:6px}
+.btn-dark{background:var(--deep);color:var(--cream)}
+.btn-dark:hover{box-shadow:0 4px 16px rgba(44,36,24,0.25)}
+.btn-ghost{background:transparent;color:var(--deep-50);border:1px solid var(--deep-15)}
+.btn-ghost:hover{color:var(--deep);border-color:var(--amber)}
+.btn-ghost.active{color:var(--amber);border-color:var(--amber);background:rgba(196,149,106,0.06)}
+
+/* Hero */
+.hero{padding:48px 0 32px;text-align:center}
+.hero-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:var(--amber);background:rgba(196,149,106,0.1);border:1px solid rgba(196,149,106,0.2);border-radius:20px;padding:5px 14px;margin-bottom:16px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:12px}
+.hero h1 strong{font-weight:700}
+.hero p{font-size:16px;color:var(--deep-70);max-width:600px;margin:0 auto;line-height:1.6}
+
+/* Section headers */
+.sec-header{display:flex;align-items:center;gap:12px;padding:28px 0 12px;border-bottom:2px solid var(--deep-15);margin-bottom:0}
+.sec-header.income{border-bottom-color:var(--sage)}
+.sec-header.cogs{border-bottom-color:var(--terra)}
+.sec-header.gross{border-bottom-color:var(--sage)}
+.sec-header.opex{border-bottom-color:var(--amber)}
+.sec-header.total{border-bottom-color:var(--deep)}
+.sec-header h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;flex:1}
+.sec-copy{font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--deep-30);background:transparent;border:1px solid var(--deep-08);border-radius:4px;padding:4px 10px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.sec-copy:hover{color:var(--sage);border-color:var(--sage)}
+.sec-copy.copied{color:white;background:var(--sage);border-color:var(--sage)}
+
+/* Sub-section label */
+.sub-label{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--amber);padding:16px 0 6px;font-weight:700}
+
+/* Annotation card */
+.ann{position:relative;background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:12px;padding:16px 20px;margin:6px 0;transition:border-color 0.15s,box-shadow 0.15s}
+.ann:hover{border-color:var(--glass-border-strong);box-shadow:0 2px 12px rgba(44,36,24,0.04)}
+.ann-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px}
+.ann-name{font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;color:var(--deep);flex:1}
+.ann-name .excel-row{font-family:'Space Mono',monospace;font-size:10px;color:var(--deep-30);font-weight:400;margin-left:6px}
+.ann-copy{width:28px;height:28px;border-radius:6px;border:1px solid var(--deep-08);background:transparent;color:var(--deep-30);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.15s;flex-shrink:0}
+.ann-copy:hover{color:var(--sage);border-color:var(--sage);background:rgba(139,158,124,0.06)}
+.ann-copy.copied{color:white;background:var(--sage);border-color:var(--sage)}
+
+.ann-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ann-field{}
+.ann-field-label{font-family:'Space Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--amber);margin-bottom:2px;font-weight:700}
+.ann-field-text{font-size:13px;color:var(--deep-70);line-height:1.5}
+.ann-field-text code{font-family:'Space Mono',monospace;font-size:11px;background:rgba(196,149,106,0.1);padding:1px 5px;border-radius:3px;color:var(--deep)}
+
+.ann-tip{margin-top:8px;padding:8px 12px;background:rgba(139,158,124,0.07);border-radius:8px;border-left:3px solid var(--sage)}
+.ann-tip-label{font-family:'Space Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--sage);margin-bottom:2px;font-weight:700}
+.ann-tip-text{font-size:12px;color:var(--deep-70);line-height:1.5}
+
+/* Total / summary rows */
+.ann.is-total{background:var(--glass-strong);border-color:var(--glass-border-strong)}
+.ann.is-grand{background:rgba(196,149,106,0.08);border:2px solid var(--amber)}
+
+/* Value preview */
+.ann-values{margin-top:8px;padding:6px 0 0;border-top:1px solid var(--deep-08)}
+.ann-values-label{font-family:'Space Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--deep-30);margin-bottom:4px;font-weight:700}
+.val-row{display:flex;gap:2px;flex-wrap:wrap}
+.val-cell{font-family:'Space Mono',monospace;font-size:10px;padding:2px 6px;border-radius:3px;background:rgba(44,36,24,0.03);color:var(--deep-70);min-width:52px;text-align:right}
+.val-cell.neg{color:var(--negative)}
+.val-cell.zero{color:var(--deep-15)}
+.val-cell.head{color:var(--deep-50);background:transparent;font-weight:700;font-size:9px}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--deep);color:var(--cream);padding:12px 24px;border-radius:10px;font-size:13px;font-weight:500;z-index:1000;transition:transform 0.25s ease;box-shadow:0 8px 32px rgba(44,36,24,0.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Utility */
+.mt-sm{margin-top:8px}
+.mb-lg{margin-bottom:32px}
+
+/* Print */
+@media print{
+  body::before,.nav,.btn,.ann-copy,.sec-copy,.toast{display:none}
+  .ann{break-inside:avoid;border:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <span class="wordmark">alche</span>
+    <span class="tag">P&L ANNOTATIONS</span>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-ghost" id="toggle-values" onclick="toggleValues()">Show Values</button>
+    <button class="btn btn-dark" onclick="copyAll()">Copy Everything</button>
+  </div>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+  <div class="hero-badge">INLINE ANNOTATION LAYER</div>
+  <h1>Every P&L Line,<br><strong>Annotated</strong></h1>
+  <p>Click any card's copy button to grab that annotation. Click a section header to copy the whole section. Click "Copy Everything" to get the full annotated P&L as formatted text.</p>
+</section>
+
+<div id="annotations-root"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA: Every P&L line with full annotations
+// ══════════════════════════════════════════════
+const DATA = [
+  // ── INCOME ──
+  { type:'section', id:'income', label:'Income', cls:'income' },
+  { type:'sub', label:'Products' },
+  { type:'ann', id:'prod-units', name:'Longevity Products — units', excel:'Rows 4-5',
+    what:'Number of curated longevity products shipped per month (supplements, functional foods, wellness tools).',
+    formula:'Growth curve hard-coded: 0 units M1-M3 (pre-launch build), ramps 5 → 95 → 240/mo by M24. Scales with subscriber base as cross-sell.',
+    tip:'Units prove product-market fit beyond software. Show the correlation between subscriber count and product attach rate — that\'s your flywheel.',
+    values:[0,0,0,5,10,20,35,45,55,65,80,95,114,125,135,145,155,165,175,185,195,210,225,240]
+  },
+  { type:'ann', id:'prod-eur', name:'Longevity Products — EUR', excel:'Rows 4-5',
+    what:'Revenue from product sales at average EUR 35 per unit.',
+    formula:'prodUnits × EUR 35 average price',
+    tip:'Lower margin than subscriptions (~48%) but builds trust and tangible brand experience. Investors want to see this is supplementary, not primary revenue.',
+    values:[0,0,0,175,350,700,1225,1575,1925,2275,2800,3325,3990,4375,4725,5075,5425,5775,6125,6475,6825,7350,7875,8400]
+  },
+  { type:'ann', id:'led-units', name:'LED Therapy — sessions', excel:'Rows 6-7',
+    what:'Number of red-light therapy sessions delivered per month.',
+    formula:'Starts M6 at 5 sessions/mo, grows to 50/mo by M17. Capped by practitioner availability.',
+    tip:'Service revenue proves the offline+online hybrid model. Each session is a touchpoint that deepens engagement and reduces churn.',
+    values:[0,0,0,0,0,5,10,15,20,25,30,35,40,42,44,46,48,50,50,50,50,50,50,50]
+  },
+  { type:'ann', id:'led-eur', name:'LED Therapy — EUR', excel:'Rows 6-7',
+    what:'Revenue from LED therapy sessions at EUR 45 per session.',
+    formula:'ledSessions × EUR 45',
+    tip:'EUR 45 price − EUR 18 practitioner fee = EUR 27 gross profit per session. 60% margin — higher than physical products.',
+    values:[0,0,0,0,0,225,450,675,900,1125,1350,1575,1800,1890,1980,2070,2160,2250,2250,2250,2250,2250,2250,2250]
+  },
+  { type:'ann', id:'blood-units', name:'Blood Panels — units', excel:'Rows 8-9',
+    what:'Number of blood panel facilitations (lab draw + analysis + practitioner interpretation) per month.',
+    formula:'Starts M5, grows to 30/mo by M19. High-value, low-volume. Requires practitioner network.',
+    tip:'Premium service. Proves alche can deliver medically-adjacent value. The doctor partnership (via Daria) is a defensible asset.',
+    values:[0,0,0,0,4,6,8,10,12,15,18,20,22,24,25,26,28,28,30,30,30,30,30,30]
+  },
+  { type:'ann', id:'blood-eur', name:'Blood Panels — EUR', excel:'Rows 8-9',
+    what:'Revenue from blood panels at EUR 120 each.',
+    formula:'bloodPanels × EUR 120',
+    tip:'EUR 120 − EUR 55 lab+practitioner = EUR 65 gross margin (54%). Also drives Premium tier conversions — subscribers who do blood panels upgrade.',
+    values:[0,0,0,0,480,720,960,1200,1440,1800,2160,2400,2640,2880,3000,3120,3360,3360,3600,3600,3600,3600,3600,3600]
+  },
+  { type:'ann', id:'event-att', name:'Events — attendees', excel:'Rows 10-11',
+    what:'Total attendees across all workshops and longevity events per month.',
+    formula:'eventsPerMonth × avgAttendees — ramps from 1×12 to 5×25',
+    tip:'Community events are your acquisition flywheel. Attendees → free app users → paid subscribers. Track this conversion funnel.',
+    values:[0,0,0,12,15,30,36,54,54,60,60,60,66,66,88,88,96,96,100,125,125,125,125,125]
+  },
+  { type:'ann', id:'event-eur', name:'Events — EUR', excel:'Rows 10-11',
+    what:'Ticket revenue from events and workshops at EUR 35 per attendee.',
+    formula:'totalAttendees × EUR 35/ticket',
+    tip:'EUR 200 facilitator fee per event is fixed — more attendees = better per-head economics. Break-even at ~6 attendees per event.',
+    values:[0,0,0,420,525,1050,1260,1890,1890,2100,2100,2100,2310,2310,3080,3080,3360,3360,3500,4375,4375,4375,4375,4375]
+  },
+
+  { type:'sub', label:'Subscriptions' },
+  { type:'ann', id:'sub-core', name:'A — Core (EUR 19/mo)', excel:'Row 14',
+    what:'Revenue from Core tier subscribers. Features: biomarker dashboard, wearable sync, basic protocols.',
+    formula:'totalSubs × 52% core share × EUR 19/mo',
+    tip:'Entry tier. Low ARPU but highest volume. Most subscribers start here then upgrade. Watch Core → Pro conversion rate.',
+    values:[38,57,95,228,361,475,646,817,969,1159,1349,1520,1710,1881,2052,2204,2337,2470,2584,2755,2907,3040,3173,3287]
+  },
+  { type:'ann', id:'sub-pro', name:'B — Pro (EUR 49/mo)', excel:'Row 15',
+    what:'Revenue from Pro tier subscribers. Features: personalized protocols, AI-driven insights, community access.',
+    formula:'totalSubs × 38% pro share × EUR 49/mo',
+    tip:'Your sweet spot. Highest absolute MRR contribution. This tier drives the bulk of recurring revenue. Optimize onboarding to push users here.',
+    values:[49,98,147,441,686,882,1225,1568,1813,2205,2548,2891,3234,3577,3920,4165,4459,4704,4949,5243,5537,5782,6076,6321]
+  },
+  { type:'ann', id:'sub-prem', name:'Others — Premium (EUR 99/mo)', excel:'Row 16',
+    what:'Revenue from Premium tier. Features: quarterly blood panels, 1:1 longevity reviews, CGM access, concierge.',
+    formula:'totalSubs × 10% premium share × EUR 99/mo',
+    tip:'Highest ARPU, lowest volume. Each Premium sub = 5.2× a Core sub in revenue. Proves willingness-to-pay ceiling exists in this market.',
+    values:[0,99,99,198,297,495,693,792,990,1188,1386,1485,1683,1881,1980,2079,2277,2376,2475,2673,2871,2970,3168,3267]
+  },
+  { type:'ann', id:'total-income', name:'Total Income', excel:'Row 18', total:true,
+    what:'All revenue from all streams combined. Products + Services + Subscriptions. This is the "top line."',
+    formula:'Products EUR + LED EUR + Blood EUR + Events EUR + Sub Core + Sub Pro + Sub Premium',
+    tip:'Investor focus: total trajectory AND composition. Subscription share should grow over time — that\'s your moat. Services and products prove breadth.',
+    values:[87,254,341,1474,2718,4577,6469,8571,9981,11852,13693,15296,17367,18894,20737,21793,23378,24295,25483,27473,29065,30367,31517,31500]
+  },
+
+  // ── COGS ──
+  { type:'section', id:'cogs', label:'Cost of Goods Sold (COGS)', cls:'cogs' },
+  { type:'ann', id:'cogs-hosting', name:'Hosting & Infrastructure', excel:'Row 23',
+    what:'Cloud servers, CDN, database, storage. Scales with active users.',
+    formula:'EUR 200 base × multiplier (1× M1-M5, 1.75× M6-M11, 2.5× M12+)',
+    tip:'Variable cost tied to user count. Shows you understand infrastructure scaling. Per-user hosting cost drops as you grow (economies of scale).',
+    values:[200,200,200,200,200,350,350,350,350,350,350,350,500,500,500,500,500,500,500,500,500,500,500,500]
+  },
+  { type:'ann', id:'cogs-api', name:'API Costs', excel:'Row 24',
+    what:'Third-party API calls: wearable data syncs (Oura, Garmin, Apple Health), AI model inference, health data APIs.',
+    formula:'EUR 100 base × multiplier (1× early, 2× M6-M11, 3.5× M12+)',
+    tip:'These scale sub-linearly because you batch API calls and cache responses. Per-user API cost drops at scale. Important signal of tech efficiency.',
+    values:[100,100,100,100,100,200,200,200,200,200,200,200,350,350,350,350,350,350,350,350,350,350,350,350]
+  },
+  { type:'ann', id:'cogs-stripe', name:'Payment Processing (Stripe)', excel:'Row 25',
+    what:'Stripe transaction fees on all revenue (subscriptions + product sales + services).',
+    formula:'totalIncome × 2.9%',
+    tip:'Standard SEPA/card rate. Non-negotiable at this transaction volume. At scale (>EUR 1M ARR), negotiate to 2.4% + EUR 0.25.',
+    values:[3,7,10,43,79,133,188,249,289,344,397,443,504,548,601,632,678,705,739,797,843,881,914,914]
+  },
+  { type:'ann', id:'cogs-wholesale', name:'Product Wholesale', excel:'Row 26',
+    what:'Cost of goods for curated longevity products purchased from suppliers at wholesale.',
+    formula:'prodUnits × EUR 35 avg retail × 52% wholesale rate',
+    tip:'52% wholesale means 48% product gross margin before shipping/packaging. Target: negotiate to 45% wholesale at volume (500+ units/mo).',
+    values:[0,0,0,91,182,364,637,819,1001,1183,1456,1729,2075,2275,2457,2639,2821,3003,3185,3367,3549,3822,4095,4368]
+  },
+  { type:'ann', id:'cogs-shipping', name:'Product Shipping', excel:'Row 27',
+    what:'Fulfillment and shipping costs for product orders.',
+    formula:'prodUnits × 70% ship rate × EUR 4/unit — 30% are in-person pickups at events',
+    tip:'The 30% in-person pickup rate is unique to your Berlin community model. Most e-commerce ships 95%+. This saves EUR 1.20/unit on average.',
+    values:[0,0,0,14,28,56,98,126,154,182,224,266,319,350,378,406,434,462,490,518,546,588,630,672]
+  },
+  { type:'ann', id:'cogs-packaging', name:'Product Packaging', excel:'Row 28',
+    what:'Custom branded packaging per unit — part of the "neo-apothecary" brand experience.',
+    formula:'prodUnits × EUR 1.50',
+    tip:'Branded packaging is marketing, not just shipping. The unboxing experience drives social sharing and referrals. Don\'t cut this.',
+    values:[0,0,0,8,15,30,53,68,83,98,120,143,171,188,203,218,233,248,263,278,293,315,338,360]
+  },
+  { type:'ann', id:'cogs-led', name:'LED Practitioner Fees', excel:'Row 29',
+    what:'Fee paid to practitioner per LED red-light therapy session.',
+    formula:'ledSessions × EUR 18/session',
+    tip:'Practitioner takes EUR 18 of your EUR 45 price (40%). You keep 60%. Zero sessions = zero cost. Pure variable.',
+    values:[0,0,0,0,0,90,180,270,360,450,540,630,720,756,792,828,864,900,900,900,900,900,900,900]
+  },
+  { type:'ann', id:'cogs-blood', name:'Blood Panel Lab + Practitioner', excel:'Row 30',
+    what:'Combined lab analysis fee and practitioner interpretation fee per blood panel.',
+    formula:'bloodPanels × EUR 55',
+    tip:'EUR 55 cost vs EUR 120 price = 54% gross margin. The doctor partnership (via Daria\'s network) keeps lab costs competitive vs. direct-to-consumer panels.',
+    values:[0,0,0,0,220,330,440,550,660,825,990,1100,1210,1320,1375,1430,1540,1540,1650,1650,1650,1650,1650,1650]
+  },
+  { type:'ann', id:'cogs-events', name:'Event Facilitator Fees', excel:'Row 31',
+    what:'Fixed fee per event for expert facilitator/speaker.',
+    formula:'eventsPerMonth × EUR 200/event',
+    tip:'EUR 200 per event is fixed regardless of attendees. At 20 attendees × EUR 35 = EUR 700 revenue vs EUR 200 cost = 71% margin. Scale is your friend.',
+    values:[0,0,0,200,200,400,400,600,600,600,600,600,600,600,800,800,800,800,800,1000,1000,1000,1000,1000]
+  },
+  { type:'ann', id:'cogs-consumables', name:'Service Consumables', excel:'Row 32',
+    what:'Disposable materials for all service sessions — hygiene supplies, testing materials, event handouts.',
+    formula:'(ledSessions + bloodPanels + eventAttendees) × EUR 4',
+    tip:'Small per-unit cost but scales with total service volume. At M24: (50+30+125) × EUR 4 = EUR 820/mo.',
+    values:[0,0,0,48,76,164,216,316,344,400,432,460,512,528,628,640,688,696,720,820,820,820,820,820]
+  },
+  { type:'ann', id:'cogs-depreciation', name:'Equipment Depreciation', excel:'Row 33',
+    what:'Monthly depreciation of LED devices and lab equipment — 5-year straight-line method.',
+    formula:'EUR 200/mo from M6 onward (EUR 12,000 equipment ÷ 60 months)',
+    tip:'Non-cash expense. No money leaves the bank — it\'s an accounting entry that reduces taxable income. Important: investors understand this.',
+    values:[0,0,0,0,0,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
+  },
+  { type:'ann', id:'total-cogs', name:'Total COGS', excel:'Row 36', total:true,
+    what:'Sum of all direct costs. These exist ONLY because revenue exists. If revenue is zero, COGS approaches zero.',
+    formula:'Hosting + API + Stripe + Wholesale + Shipping + Packaging + LED + Blood + Events + Consumables + Depreciation',
+    tip:'Watch the ratio: Total COGS ÷ Total Income = cost of revenue %. Target: under 30% blended. Subscription COGS is ~10%, products ~55%, services ~45%.',
+    values:[303,307,310,704,1100,2317,2962,3748,4181,4832,5509,6111,7161,7615,8284,8643,9108,9404,9797,10380,10651,11026,11297,11634]
+  },
+
+  // ── GROSS PROFIT ──
+  { type:'section', id:'gross', label:'Gross Profit', cls:'gross' },
+  { type:'ann', id:'gross-profit', name:'Gross Profit', excel:'Row 38', total:true,
+    what:'Revenue minus direct costs. The money left after delivering your product/service. Must cover all operating expenses.',
+    formula:'Total Income − Total COGS',
+    tip:'This is your first "proof" number for investors. Gross margin above 70% = SaaS-grade economics. Below 50% = you have a cost problem.',
+    values:[-216,-53,31,770,1618,2260,3507,4823,5800,7020,8184,9185,10206,11279,12453,13150,14270,14891,15686,17093,18414,19341,20220,19866]
+  },
+
+  // ── OPERATIONS ──
+  { type:'section', id:'opex', label:'Operating Expenses', cls:'opex' },
+
+  { type:'sub', label:'Payroll' },
+  { type:'ann', id:'pay-ceo', name:'Timu (CEO) — fully loaded', excel:'Row 43',
+    what:'Co-founder & CEO gross salary plus 25% employer social contributions (Sozialversicherung, etc.).',
+    formula:'EUR 3,800 gross × 1.25 employer multiplier = EUR 4,750/mo',
+    tip:'Below Berlin market rate (~EUR 75K median tech salary). Shows founders prioritize runway over personal compensation. Investors respect this.',
+    values:[4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750]
+  },
+  { type:'ann', id:'pay-coo', name:'Daria (COO) — fully loaded', excel:'Row 44',
+    what:'Co-founder & COO gross salary plus employer costs. Media/PR background, longevity domain expert.',
+    formula:'EUR 3,800 gross × 1.25 = EUR 4,750/mo',
+    tip:'Equal co-founder comp signals alignment. Daria\'s media/PR network = earned media savings (would otherwise be EUR 3-5K/mo in PR agency fees).',
+    values:[4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750,4750]
+  },
+  { type:'ann', id:'pay-cto', name:'CTO (from M18) — fully loaded', excel:'Row 45',
+    what:'CTO hired at Month 18 after traction is proven. Seed-stage strategic hire.',
+    formula:'M1-M17: EUR 0 | M18+: EUR 5,500 gross × 1.25 = EUR 6,875/mo',
+    tip:'Delayed CTO = longer runway. MVP built by dev agency (EUR ~100K, capitalized — not on this P&L). CTO hire signals seed-stage scaling.',
+    values:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6875,6875,6875,6875,6875,6875,6875]
+  },
+  { type:'ann', id:'pay-support', name:'Part-time Community Manager (from M18)', excel:'Row 46',
+    what:'Part-time hire for community management and customer support.',
+    formula:'M1-M17: EUR 0 | M18+: EUR 1,500/mo',
+    tip:'Coincides with CTO hire — both are seed-stage scaling. Before M18, founders handle community directly. Frugal and hands-on.',
+    values:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1500,1500,1500,1500,1500,1500,1500]
+  },
+  { type:'ann', id:'pay-total', name:'Payroll Total', excel:'Row 48', total:true,
+    what:'All salary + employer costs.',
+    formula:'CEO + COO + CTO + Community Mgr',
+    tip:'Biggest single expense. Pre-M18: EUR 9,500/mo (2 founders only). Post-M18: EUR 17,875/mo. That jump is the seed-stage scaling moment — flag it explicitly.',
+    values:[9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,9500,17875,17875,17875,17875,17875,17875,17875]
+  },
+
+  { type:'sub', label:'R&D' },
+  { type:'ann', id:'rd-retainer', name:'Maintenance Retainer (from M6)', excel:'Row 51',
+    what:'Post-launch bug-fix and minor feature retainer with dev agency.',
+    formula:'M1-M5: EUR 0 (pre-launch) | M6+: EUR 800/mo',
+    tip:'MVP development (~EUR 100K) is a capitalized startup cost — amortized over 3-5 years, NOT monthly OpEx. This retainer is just maintenance. Very lean.',
+    values:[0,0,0,0,0,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800]
+  },
+  { type:'ann', id:'rd-tools', name:'Dev Tools & Infrastructure', excel:'Row 52',
+    what:'GitHub, CI/CD pipeline, monitoring (Sentry), staging environment.',
+    formula:'EUR 200/mo flat',
+    tip:'Standard SaaS tooling. Doesn\'t scale much until you hire engineers. After CTO joins (M18), this may increase to EUR 400-500.',
+    values:[200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
+  },
+  { type:'ann', id:'rd-total', name:'R&D Total', excel:'Row 54', total:true,
+    what:'Total monthly R&D spend.',
+    formula:'Maintenance Retainer + Dev Tools',
+    tip:'EUR 200-1,000/mo is extremely lean R&D for a tech startup. Shows capital efficiency. Expect this to 3-5× after CTO hire and seed raise.',
+    values:[200,200,200,200,200,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000]
+  },
+
+  { type:'sub', label:'Sales & Marketing' },
+  { type:'ann', id:'sm-paid', name:'Paid Advertising', excel:'Row 57',
+    what:'Meta (Instagram/Facebook), Google Ads, TikTok — performance marketing spend.',
+    formula:'Growth curve: EUR 50 M1 → EUR 400 M5 → EUR 1,400 M12 → EUR 3,000 M24',
+    tip:'Low early spend = content-first strategy. Paid scales ONLY after organic acquisition proves CAC. This is disciplined, not timid.',
+    values:[50,50,100,200,400,600,800,800,1000,1200,1400,1400,1800,1800,2000,2000,2200,2200,2500,2500,2800,2800,3000,3000]
+  },
+  { type:'ann', id:'sm-content', name:'Content Creation Tools', excel:'Row 58',
+    what:'Canva Pro, video editing software, stock assets, newsletter platform (Substack/Beehiiv).',
+    formula:'EUR 150/mo flat',
+    tip:'Content is your primary acquisition channel. EUR 150/mo for tools, but Daria (COO) creates the content — no agency needed. That\'s a EUR 3-5K/mo saving.',
+    values:[150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150]
+  },
+  { type:'ann', id:'sm-influencer', name:'Influencer & Partnerships', excel:'Row 59',
+    what:'Micro-influencer collaborations in the Berlin longevity/wellness community.',
+    formula:'M1-M5: EUR 0 | M6+: EUR 200/mo (2-4 micro-collabs)',
+    tip:'Micro, not macro. EUR 200/mo = 2-4 small collaborations. Berlin wellness community is tight — warm intros through Daria\'s established network.',
+    values:[0,0,0,0,0,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
+  },
+  { type:'ann', id:'sm-pr', name:'PR & Communications', excel:'Row 60',
+    what:'Press releases, media outreach tools, earned media efforts.',
+    formula:'M1-M8: EUR 0 | M9+: EUR 100/mo',
+    tip:'Delayed until product is live with real testimonials. Daria\'s media background = most PR is earned, not paid. This is tools budget only.',
+    values:[0,0,0,0,0,0,0,0,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]
+  },
+  { type:'ann', id:'sm-total', name:'S&M Total', excel:'Row 62', total:true,
+    what:'All sales and marketing spend.',
+    formula:'Paid Ads + Content Tools + Influencer + PR',
+    tip:'S&M as % of revenue: at M12 it\'s ~14%. Healthy for early stage (benchmark: 15-25%). Should decrease to <10% at scale as organic takes over.',
+    values:[200,200,250,350,550,950,1150,1150,1450,1650,1850,1850,2250,2250,2450,2450,2650,2650,2950,2950,3250,3250,3450,3450]
+  },
+
+  { type:'sub', label:'General & Administrative' },
+  { type:'ann', id:'ga-rent', name:'Rent (Co-working)', excel:'Row 65',
+    what:'Co-working space for 2 founders in Berlin. Hot desks + meeting room access.',
+    formula:'EUR 500/mo flat',
+    tip:'Below market (Berlin co-working avg EUR 300-400/desk × 2 = EUR 600-800). Shows capital efficiency. Phase 2 adds dedicated physical space.',
+    values:[500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500]
+  },
+  { type:'ann', id:'ga-legal', name:'Legal & Compliance', excel:'Row 66',
+    what:'Ongoing legal: GDPR/DSGVO compliance, terms of service updates, contractor agreements, IP protection.',
+    formula:'EUR 720/mo flat',
+    tip:'Health data + EU = serious compliance requirements. GDPR fines go up to 4% of global revenue. This is not optional — it\'s insurance.',
+    values:[720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720,720]
+  },
+  { type:'ann', id:'ga-insurance', name:'Insurance', excel:'Row 67',
+    what:'Business liability insurance, Directors & Officers (D&O), cyber insurance.',
+    formula:'EUR 200/mo flat',
+    tip:'D&O is mandatory with outside investors. Cyber insurance covers data breach liability. Both are standard for health-tech GmbHs.',
+    values:[200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
+  },
+  { type:'ann', id:'ga-steuer', name:'Steuerberater / Accounting', excel:'Row 68',
+    what:'Monthly tax advisor and bookkeeping services (Steuerberater).',
+    formula:'EUR 400/mo flat',
+    tip:'Non-negotiable for a German GmbH. Handles monthly VAT returns (USt-Voranmeldung), payroll taxes, annual financial statements (Jahresabschluss).',
+    values:[400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400,400]
+  },
+  { type:'ann', id:'ga-office', name:'Office & Supplies', excel:'Row 69',
+    what:'Office supplies, minor equipment, printing, miscellaneous physical necessities.',
+    formula:'EUR 100/mo flat',
+    tip:'Minimal. Most tools are SaaS (under Management section). This covers physical necessities that don\'t fit elsewhere.',
+    values:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]
+  },
+  { type:'ann', id:'ga-total', name:'G&A Total', excel:'Row 71', total:true,
+    what:'Total general and administrative overhead.',
+    formula:'Rent + Legal + Insurance + Steuerberater + Office',
+    tip:'EUR 1,920/mo is lean for a Berlin GmbH with health data compliance requirements. Shows you know German business operations intimately.',
+    values:[1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920,1920]
+  },
+
+  { type:'sub', label:'Management' },
+  { type:'ann', id:'mg-software', name:'Software & Business Tools', excel:'Row 74',
+    what:'CRM (HubSpot), analytics (Mixpanel), project management (Notion), communication (Slack), design (Figma).',
+    formula:'EUR 600/mo flat',
+    tip:'Negotiate startup credits where possible. HubSpot for Startups, AWS Activate, Google for Startups — can reduce this by 30-50%.',
+    values:[600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600,600]
+  },
+  { type:'ann', id:'mg-advisory', name:'Advisory Board', excel:'Row 75',
+    what:'Compensation for advisory board members.',
+    formula:'EUR 0/mo — advisors compensated with equity (0.25-1%), not cash',
+    tip:'Pre-seed advisory for equity is industry standard. Cash-free advisory = longer runway. Explicitly say this to the investor — it shows sophistication.',
+    values:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  },
+  { type:'ann', id:'mg-misc', name:'Miscellaneous', excel:'Row 76',
+    what:'Buffer for unexpected management costs, small purchases, incidentals.',
+    formula:'EUR 100/mo flat',
+    tip:'Small buffer. Investors like seeing this — it means you\'re realistic about unexpected costs. Not having a buffer is a red flag.',
+    values:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]
+  },
+  { type:'ann', id:'mg-total', name:'Management Total', excel:'Row 77', total:true,
+    what:'Total management overhead.',
+    formula:'Software + Advisory + Misc',
+    tip:'EUR 700/mo is very lean. Most "management" work is done by founders directly. This scales when you hire a proper ops team.',
+    values:[700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700,700]
+  },
+
+  { type:'sub', label:'Travel' },
+  { type:'ann', id:'tr-investor', name:'Investor / Partner Meetings', excel:'Row 73',
+    what:'Train/flight tickets and expenses for investor meetings, partner visits, pitch events.',
+    formula:'EUR 150/mo flat',
+    tip:'Berlin-based = most German investors reachable by Deutsche Bahn. EUR 150/mo covers 1-2 round trips. Munich, Hamburg, Frankfurt are key VC cities.',
+    values:[150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150]
+  },
+  { type:'ann', id:'tr-conf', name:'Conferences & Events', excel:'Row 74',
+    what:'Industry conferences, health-tech meetups, startup networking events.',
+    formula:'M1-M5: EUR 0 | M6+: EUR 100/mo',
+    tip:'Starts after launch. Berlin has a strong health-tech scene. Budget is for local events — save international conference budget for post-seed.',
+    values:[0,0,0,0,0,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]
+  },
+  { type:'ann', id:'tr-local', name:'Local Transportation', excel:'Row 75',
+    what:'BVG monthly ticket, occasional taxis for meetings with time constraints.',
+    formula:'EUR 50/mo flat',
+    tip:'Berlin public transport is EUR 49/mo (Deutschland-Ticket). This covers one person. Minimal line item.',
+    values:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]
+  },
+  { type:'ann', id:'tr-total', name:'Travel Total', excel:'Row 77', total:true,
+    what:'All travel costs.',
+    formula:'Investor Meetings + Conferences + Local',
+    tip:'Pre-seed travel should be minimal. You\'re building, not networking. Save conference budget for when you have a live product to demo.',
+    values:[200,200,200,200,200,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300]
+  },
+
+  // ── TOTALS ──
+  { type:'section', id:'totals', label:'Totals', cls:'total' },
+  { type:'ann', id:'total-expenses', name:'Total Expenses (Operations)', excel:'Row 78', total:true,
+    what:'Sum of all operating expenses: Payroll + R&D + S&M + G&A + Management + Travel. Your "burn" when revenue is low.',
+    formula:'payrollTotal + rdTotal + smTotal + gaTotal + mgmtTotal + travelTotal',
+    tip:'Watch the trend: flat at ~EUR 12,700-15,000/mo pre-M18, then jumps to ~EUR 24,000/mo with CTO hire. That step-change is intentional — flag it.',
+    values:[12720,12720,12770,12870,13070,14370,14570,14570,14870,15070,15270,15270,15670,15670,15870,15870,16070,24445,24745,24745,25045,25045,25245,25245]
+  },
+  { type:'ann', id:'total-pnl', name:'TOTAL P&L', excel:'Row 85', grand:true,
+    what:'The bottom line. Gross Profit minus Operating Expenses. Negative = spending more than earning. Normal for pre-seed.',
+    formula:'Gross Profit − Total Operating Expenses',
+    tip:'Negative is EXPECTED. The story to tell: declining losses M1→M17, near break-even at M17 (−EUR 1,733), strategic CTO hire M18 resets the curve, then path to profitability.',
+    values:[-12936,-12773,-12739,-12100,-11452,-12110,-11063,-9747,-9070,-8050,-7086,-6085,-5464,-4391,-3417,-2720,-1800,-9554,-9059,-7652,-6631,-5704,-5025,-5379]
+  }
+];
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+let showValues = false;
+
+function render() {
+  const root = document.getElementById('annotations-root');
+  let html = '';
+
+  DATA.forEach((item, idx) => {
+    if (item.type === 'section') {
+      html += `<div class="sec-header ${item.cls || ''}">
+        <h2>${item.label}</h2>
+        <button class="sec-copy" onclick="copySection('${item.id}',this)">copy section</button>
+      </div>`;
+    } else if (item.type === 'sub') {
+      html += `<div class="sub-label">${item.label}</div>`;
+    } else if (item.type === 'ann') {
+      const cls = item.grand ? 'ann is-grand' : item.total ? 'ann is-total' : 'ann';
+      html += `<div class="${cls}" data-id="${item.id}" id="card-${item.id}">`;
+      html += `<div class="ann-top">`;
+      html += `<div class="ann-name">${item.name}${item.excel ? '<span class="excel-row">' + item.excel + '</span>' : ''}</div>`;
+      html += `<button class="ann-copy" onclick="copyCard('${item.id}',this)" title="Copy this annotation">⧉</button>`;
+      html += `</div>`;
+      html += `<div class="ann-grid">`;
+      html += `<div class="ann-field"><div class="ann-field-label">What it is</div><div class="ann-field-text">${item.what}</div></div>`;
+      html += `<div class="ann-field"><div class="ann-field-label">Formula</div><div class="ann-field-text">${item.formula}</div></div>`;
+      html += `</div>`;
+      html += `<div class="ann-tip"><div class="ann-tip-label">Investor tip</div><div class="ann-tip-text">${item.tip}</div></div>`;
+
+      // Values row (hidden by default)
+      if (item.values) {
+        html += `<div class="ann-values" style="display:${showValues ? 'block' : 'none'}">`;
+        html += `<div class="ann-values-label">24-Month Values <button class="ann-copy" style="width:20px;height:20px;font-size:10px;display:inline-flex;vertical-align:middle;margin-left:4px" onclick="copyValues('${item.id}',this)" title="Copy values only">⧉</button></div>`;
+        html += `<div class="val-row">`;
+        item.values.forEach((v, i) => {
+          const vcls = v === 0 ? 'val-cell zero' : v < 0 ? 'val-cell neg' : 'val-cell';
+          html += `<span class="${vcls}">M${i+1}: ${fmtNum(v)}</span>`;
+        });
+        const total = item.values.reduce((s,v) => s+v, 0);
+        html += `<span class="val-cell" style="font-weight:700;background:rgba(196,149,106,0.08)">TOT: ${fmtNum(total)}</span>`;
+        html += `</div></div>`;
+      }
+
+      html += `</div>`;
+    }
+  });
+
+  root.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// COPY FUNCTIONS
+// ══════════════════════════════════════════════
+
+function copyCard(id, btn) {
+  const item = DATA.find(d => d.id === id);
+  if (!item) return;
+  const text = formatCard(item);
+  clipCopy(text, btn, 'Annotation copied');
+}
+
+function copyValues(id, btn) {
+  const item = DATA.find(d => d.id === id);
+  if (!item || !item.values) return;
+  // TSV: label then 24 values then total
+  const total = item.values.reduce((s,v) => s+v, 0);
+  let tsv = item.name;
+  item.values.forEach(v => tsv += '\t' + Math.round(v));
+  tsv += '\t' + Math.round(total);
+  clipCopy(tsv, btn, 'Values copied (paste into Excel)');
+}
+
+function copySection(secId, btn) {
+  const items = getSectionItems(secId);
+  let text = '';
+  items.forEach(item => {
+    if (item.type === 'sub') {
+      text += '\n── ' + item.label.toUpperCase() + ' ──\n\n';
+    } else if (item.type === 'ann') {
+      text += formatCard(item) + '\n\n';
+    }
+  });
+  clipCopy(text.trim(), btn, 'Section copied');
+}
+
+function copyAll() {
+  let text = 'ALCHE P&L — FULL ANNOTATION LAYER\n';
+  text += '═'.repeat(50) + '\n\n';
+
+  DATA.forEach(item => {
+    if (item.type === 'section') {
+      text += '\n' + '═'.repeat(50) + '\n';
+      text += item.label.toUpperCase() + '\n';
+      text += '═'.repeat(50) + '\n\n';
+    } else if (item.type === 'sub') {
+      text += '── ' + item.label.toUpperCase() + ' ──\n\n';
+    } else if (item.type === 'ann') {
+      text += formatCard(item) + '\n\n';
+    }
+  });
+
+  clipCopy(text.trim(), null, 'Full annotation layer copied');
+}
+
+function formatCard(item) {
+  let t = '';
+  if (item.total || item.grand) t += '★ ';
+  t += item.name;
+  if (item.excel) t += '  [' + item.excel + ']';
+  t += '\n';
+  t += '  WHAT: ' + stripHtml(item.what) + '\n';
+  t += '  FORMULA: ' + stripHtml(item.formula) + '\n';
+  t += '  INVESTOR TIP: ' + stripHtml(item.tip);
+  if (item.values) {
+    const total = item.values.reduce((s,v) => s+v, 0);
+    t += '\n  M1: ' + fmtNum(item.values[0]) + ' | M12: ' + fmtNum(item.values[11]) + ' | M24: ' + fmtNum(item.values[23]) + ' | TOTAL: ' + fmtNum(total);
+  }
+  return t;
+}
+
+function stripHtml(s) {
+  return s.replace(/<[^>]+>/g, '').replace(/&mdash;/g, '—').replace(/&times;/g, '×');
+}
+
+function fmtNum(n) {
+  if (n === 0) return '0';
+  const neg = n < 0;
+  const abs = Math.abs(Math.round(n));
+  const s = abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + s;
+}
+
+function getSectionItems(secId) {
+  const items = [];
+  let capturing = false;
+  for (const item of DATA) {
+    if (item.type === 'section' && item.id === secId) { capturing = true; continue; }
+    if (item.type === 'section' && capturing) break;
+    if (capturing) items.push(item);
+  }
+  return items;
+}
+
+// ══════════════════════════════════════════════
+// UI UTILITIES
+// ══════════════════════════════════════════════
+
+function toggleValues() {
+  showValues = !showValues;
+  const btn = document.getElementById('toggle-values');
+  btn.textContent = showValues ? 'Hide Values' : 'Show Values';
+  btn.classList.toggle('active', showValues);
+  document.querySelectorAll('.ann-values').forEach(el => {
+    el.style.display = showValues ? 'block' : 'none';
+  });
+}
+
+function clipCopy(text, btn, msg) {
+  navigator.clipboard.writeText(text).then(() => {
+    flash(btn); toast(msg);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    flash(btn); toast(msg);
+  });
+}
+
+function flash(btn) {
+  if (!btn) return;
+  btn.classList.add('copied');
+  const orig = btn.textContent;
+  btn.textContent = '✓';
+  setTimeout(() => { btn.classList.remove('copied'); btn.textContent = orig; }, 1500);
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Init
+render();
+</script>
+
+</body>
+</html>

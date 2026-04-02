@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche: The Product</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* Global overflow safety */
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; table-layout: fixed; }
+    td { word-wrap: break-word; }
+
+    /* App screen grid 2x2 */
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+      overflow: hidden;
+    }
+
+    .app-grid__item {
+      text-align: center;
+    }
+
+    .app-grid__screen {
+      width: 100%;
+      max-width: 115px;
+      height: auto;
+      margin: 0 auto var(--space-1);
+      display: block;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+    }
+
+    .app-grid__label {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1px;
+    }
+
+    .app-grid__desc {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.4;
+    }
+
+    /* Module list compact */
+    .module-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px var(--space-4);
+      margin-bottom: var(--space-3);
+      overflow: hidden;
+    }
+
+    .module-list__item {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      padding: 2px 0;
+      border-bottom: 1px solid var(--deep-04);
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-1);
+    }
+
+    .module-list__num {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+
+    /* Membership tier row */
+    .tier-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-2);
+      overflow: hidden;
+    }
+
+    .tier-card {
+      text-align: center;
+      padding: var(--space-2) var(--space-2);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+    }
+
+    .tier-card--highlight {
+      border: 2px solid var(--amber);
+    }
+
+    .tier-card__name {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 2px;
+    }
+
+    .tier-card__price {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--deep);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .tier-card__price span {
+      font-size: 8px;
+      font-weight: 300;
+      color: var(--deep-50);
+    }
+
+    .tier-card__features {
+      font-family: var(--font-sans);
+      font-size: 7px;
+      color: var(--stone);
+      line-height: 1.5;
+    }
+
+    /* Roadmap columns */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      overflow: hidden;
+    }
+
+    .roadmap-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-4);
+      border-left: 3px solid var(--sage);
+    }
+
+    .roadmap-card--v1 { border-left-color: var(--amber); }
+    .roadmap-card--v2 { border-left-color: var(--terra); }
+
+    .roadmap-card__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+    }
+
+    .roadmap-card:first-child .roadmap-card__label { color: var(--sage); }
+    .roadmap-card--v1 .roadmap-card__label { color: var(--amber); }
+    .roadmap-card--v2 .roadmap-card__label { color: var(--terra); }
+
+    .roadmap-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: var(--space-2);
+    }
+
+    .roadmap-card__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+
+    /* Preview screens side by side */
+    .preview-screens {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+      margin-bottom: var(--space-5);
+      overflow: hidden;
+    }
+
+    .preview-screen {
+      text-align: center;
+    }
+
+    .preview-screen__img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      margin: 0 auto var(--space-2);
+      display: block;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+
+    .preview-screen__label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terra);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 (pg 13): The App + Membership
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: var(--space-3);">
+      <span class="section-header__number">[06] The Product</span>
+      <h1 class="section-header__title">The <strong>App</strong></h1>
+    </div>
+
+    <!-- 2x2 App Screen Grid -->
+    <div class="app-grid">
+      <div class="app-grid__item">
+        <img src="../screens/S02-Onboarding.png" alt="Onboarding Screen" class="app-grid__screen">
+        <div class="app-grid__label">Goal-Based Onboarding</div>
+        <div class="app-grid__desc">Select your primary wellness goal. Every recommendation aligns from here.</div>
+      </div>
+      <div class="app-grid__item">
+        <img src="../screens/S07-Events.png" alt="Events Screen" class="app-grid__screen">
+        <div class="app-grid__label">Events and Community</div>
+        <div class="app-grid__desc">Workshops, talks, and wellness sessions. RSVP and ticket purchase in-app.</div>
+      </div>
+      <div class="app-grid__item">
+        <img src="../screens/S08-Membership.png" alt="Membership Screen" class="app-grid__screen">
+        <div class="app-grid__label">Membership Tiers</div>
+        <div class="app-grid__desc">Four tiers from free to premium. Credit-based system with upgrade path.</div>
+      </div>
+      <div class="app-grid__item">
+        <img src="../screens/S15-Digital-Twin.png" alt="Digital Twin Screen" class="app-grid__screen">
+        <div class="app-grid__label">Digital Twin</div>
+        <div class="app-grid__desc">Unified profile: biomarkers, habits, protocols, and progress in one view.</div>
+      </div>
+    </div>
+
+    <!-- 10 modules compact -->
+    <div class="section-label mb-2">10 Modules</div>
+    <div class="module-list">
+      <div class="module-list__item"><span class="module-list__num">01</span> Home Dashboard</div>
+      <div class="module-list__item"><span class="module-list__num">06</span> Shop by Outcome</div>
+      <div class="module-list__item"><span class="module-list__num">02</span> Goal Onboarding</div>
+      <div class="module-list__item"><span class="module-list__num">07</span> Events Calendar</div>
+      <div class="module-list__item"><span class="module-list__num">03</span> LED Booking</div>
+      <div class="module-list__item"><span class="module-list__num">08</span> Membership</div>
+      <div class="module-list__item"><span class="module-list__num">04</span> Potion Menu</div>
+      <div class="module-list__item"><span class="module-list__num">09</span> AI Concierge</div>
+      <div class="module-list__item"><span class="module-list__num">05</span> Session Tracker</div>
+      <div class="module-list__item"><span class="module-list__num">10</span> Digital Twin</div>
+    </div>
+
+    <!-- Membership tiers in a row -->
+    <div class="section-label mb-2">Membership</div>
+    <div class="tier-row">
+      <div class="tier-card">
+        <div class="tier-card__name">Free</div>
+        <div class="tier-card__price">&euro;0</div>
+        <div class="tier-card__features">Content access<br>Community browsing<br>Product browsing</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-card__name">Core</div>
+        <div class="tier-card__price">&euro;19<span>/mo</span></div>
+        <div class="tier-card__features">Biomarker dashboard<br>Wearable sync<br>Basic protocols</div>
+      </div>
+      <div class="tier-card tier-card--highlight">
+        <div class="tier-card__name">Pro</div>
+        <div class="tier-card__price">&euro;49<span>/mo</span></div>
+        <div class="tier-card__features">Personalized protocols<br>AI insights<br>Advanced tracking</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-card__name">Premium</div>
+        <div class="tier-card__price">&euro;99<span>/mo</span></div>
+        <div class="tier-card__features">Blood panel credits<br>1:1 reviews<br>CGM integration</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">13</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       PAGE 2 (pg 14): Roadmap
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">Product Roadmap</div>
+    <h2 class="mb-5"><strong>Three phases. Commerce first, intelligence later.</strong></h2>
+
+    <!-- Three-phase roadmap -->
+    <div class="roadmap-grid">
+      <div class="roadmap-card">
+        <div class="roadmap-card__label">MVP: Months 1 to 4</div>
+        <div class="roadmap-card__title">The Commerce Loop</div>
+        <div class="roadmap-card__body">
+          Booking, menu, shop, membership, events, basic tracking. Commerce-first architecture. The transaction engine running from day one. Six screens, fully functional.
+        </div>
+      </div>
+      <div class="roadmap-card roadmap-card--v1">
+        <div class="roadmap-card__label">V1: Months 5 to 9</div>
+        <div class="roadmap-card__title">The Intelligence Layer</div>
+        <div class="roadmap-card__body">
+          AI concierge, smart replenishment, glucose-smoothie correlation, curated protocols. The KNOW and DO layers become real. Data starts compounding.
+        </div>
+      </div>
+      <div class="roadmap-card roadmap-card--v2">
+        <div class="roadmap-card__label">V2: Months 10+</div>
+        <div class="roadmap-card__title">The Full Platform</div>
+        <div class="roadmap-card__body">
+          Biomarker dashboard, biological age score, personalized AI protocols, doctor integration. The flywheel at full velocity. Complete digital twin.
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview screens -->
+    <div class="section-label mb-3">V1/V2 Preview</div>
+    <div class="preview-screens">
+      <div class="preview-screen">
+        <img src="../screens/S11-CGM-Smart.png" alt="CGM Smart Screen" class="preview-screen__img">
+        <div class="preview-screen__label">Advanced CGM Insights (V1)</div>
+      </div>
+      <div class="preview-screen">
+        <img src="../screens/S14-Biomarkers.png" alt="Biomarkers Dashboard Screen" class="preview-screen__img">
+        <div class="preview-screen__label">Biomarker Dashboard (V2)</div>
+      </div>
+    </div>
+
+    <!-- Physical space callout -->
+    <div class="callout callout--terra">
+      <div class="callout__title">Physical Space: Berlin Mitte Flagship</div>
+      <div class="callout__body">
+        The Berlin flagship in Mitte is where digital meets physical. It operates near breakeven standalone and generates EUR 8,800 to 11,700 per month in subscriber LTV through walk-in conversions. The physical anchor creates the environmental cues that bridge the 66-day habit formation gap digital-only tools structurally cannot.
+      </div>
+    </div>
+
+    <div class="sources mt-5">
+      RevenueCat 2025 Benchmarks / Baumel et al. 2019, JMIR / Lally et al. 2010, European J. Social Psychology / Stripe Integration Docs
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">14</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | Competitive Landscape</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 20px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+
+    /* 2x2 positioning map - simplified consulting style */
+    .pos-map { position: relative; width: 100%; aspect-ratio: 16/10; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; margin: 16px 0; overflow: hidden; }
+    .pos-map-grid { position: absolute; inset: 40px 40px 36px 40px; }
+    .pos-map-axis-x { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(44,36,24,0.15); }
+    .pos-map-axis-y { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(44,36,24,0.15); }
+    .pos-map-label { position: absolute; font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(44,36,24,0.4); }
+    .pos-map-label-top { top: -28px; left: 50%; transform: translateX(-50%); }
+    .pos-map-label-bottom { bottom: -24px; left: 50%; transform: translateX(-50%); }
+    .pos-map-label-left { left: -36px; top: 50%; transform: translateY(-50%) rotate(-90deg); white-space: nowrap; }
+    .pos-map-label-right { right: -36px; top: 50%; transform: translateY(-50%) rotate(90deg); white-space: nowrap; }
+    .pos-map-q { position: absolute; padding: 4px 6px; font-family: 'Outfit', sans-serif; font-size: 7px; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(44,36,24,0.3); font-weight: 500; }
+    .pos-map-q-tl { top: 2px; left: 2px; }
+    .pos-map-q-tr { top: 2px; right: 2px; text-align: right; }
+    .pos-map-q-bl { bottom: 2px; left: 2px; }
+    .pos-map-q-br { bottom: 2px; right: 2px; text-align: right; }
+    .pos-dot { position: absolute; transform: translate(-50%, -50%); z-index: 2; }
+    .pos-dot-circle { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid rgba(44,36,24,0.3); background: rgba(44,36,24,0.08); }
+    .pos-dot-label { position: absolute; font-size: 8px; font-weight: 500; white-space: nowrap; color: rgba(44,36,24,0.6); left: 11px; top: -2px; }
+    .pos-dot-sub { font-family: 'Space Mono', monospace; font-size: 7px; color: rgba(44,36,24,0.4); display: block; }
+    .pos-dot-alche .pos-dot-circle { width: 20px; height: 20px; background: #C4956A; border: none; display: flex; align-items: center; justify-content: center; }
+    .pos-dot-alche .pos-dot-circle span { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700; color: white; }
+    .pos-dot-alche .pos-dot-label { left: 26px; font-weight: 700; color: #C4956A; font-size: 9px; }
+
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">04 &mdash; Competitive Landscape</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Competitive Landscape</div>
+    <div class="action-title">30+ companies analyzed. No integrated European longevity platform exists. The upper-right quadrant is empty.</div>
+
+    <!-- 2x2 Positioning Map -->
+    <div class="pos-map">
+      <div class="pos-map-grid">
+        <div class="pos-map-q pos-map-q-tl">Lifestyle / Single Vertical</div>
+        <div class="pos-map-q pos-map-q-tr">Integrated + Human-Centered</div>
+        <div class="pos-map-q pos-map-q-bl">Performance Tools / Point Solutions</div>
+        <div class="pos-map-q pos-map-q-br">Clinical / Complex + Expensive</div>
+
+        <div class="pos-map-axis-x"></div>
+        <div class="pos-map-axis-y"></div>
+
+        <div class="pos-map-label pos-map-label-top">Human / Real-Life</div>
+        <div class="pos-map-label pos-map-label-bottom">Optimization / Clinical</div>
+        <div class="pos-map-label pos-map-label-left">Single Focus</div>
+        <div class="pos-map-label pos-map-label-right">Integrated Platform</div>
+
+        <!-- Competitors -->
+        <div class="pos-dot" style="left:18%;top:22%"><div class="pos-dot-circle"></div><div class="pos-dot-label">AG1<div class="pos-dot-sub">$600M rev</div></div></div>
+        <div class="pos-dot" style="left:22%;top:34%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Goop</div></div>
+        <div class="pos-dot" style="left:60%;top:72%"><div class="pos-dot-circle" style="width:10px;height:10px;"></div><div class="pos-dot-label">Oura<div class="pos-dot-sub">$11B val</div></div></div>
+        <div class="pos-dot" style="left:55%;top:82%"><div class="pos-dot-circle"></div><div class="pos-dot-label">InsideTracker</div></div>
+        <div class="pos-dot" style="left:68%;top:88%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Function Health<div class="pos-dot-sub">$2.5B val</div></div></div>
+        <div class="pos-dot" style="left:62%;top:30%"><div class="pos-dot-circle" style="width:9px;height:9px;border-color:#C4956A;"></div><div class="pos-dot-label">ZOE<div class="pos-dot-sub">~$100M rev</div></div></div>
+        <div class="pos-dot" style="left:80%;top:84%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Restore<div class="pos-dot-sub">220+ locs</div></div></div>
+        <div class="pos-dot" style="left:42%;top:78%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Levels</div></div>
+        <div class="pos-dot" style="left:30%;top:62%"><div class="pos-dot-circle"></div><div class="pos-dot-label">WHOOP</div></div>
+
+        <!-- ALCHE -->
+        <div class="pos-dot pos-dot-alche" style="left:72%;top:20%;z-index:10">
+          <div class="pos-dot-circle"><span>A</span></div>
+          <div class="pos-dot-label">alche<div class="pos-dot-sub">Integrated / Human / European</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Competitor Comparison Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Category</th>
+          <th style="text-align: right;">Revenue / Valuation</th>
+          <th>What They Miss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Oura</td>
+          <td>Wearable ring; 5.5M sold, 2M subs</td>
+          <td class="number">$11B valuation</td>
+          <td>No lifestyle layer, no community, no products</td>
+        </tr>
+        <tr>
+          <td class="bold">Hims &amp; Hers</td>
+          <td>Telehealth + DTC; distribution-first</td>
+          <td class="number">$2.3B revenue</td>
+          <td>No integration, no data layer, no community</td>
+        </tr>
+        <tr>
+          <td class="bold">ZOE</td>
+          <td>Nutrition AI; UK-based, science-led</td>
+          <td class="number">~$100M revenue</td>
+          <td>Single vertical (nutrition only)</td>
+        </tr>
+        <tr>
+          <td class="bold">AG1</td>
+          <td>Content-first supplements; profitable</td>
+          <td class="number">$600M revenue</td>
+          <td>No data layer, no personalization, no community</td>
+        </tr>
+        <tr>
+          <td class="bold">Function Health</td>
+          <td>Blood testing; comprehensive panels</td>
+          <td class="number">$2.5B valuation</td>
+          <td>No lifestyle integration, no products, US-only</td>
+        </tr>
+        <tr>
+          <td class="bold">Restore Hyper</td>
+          <td>Recovery services; franchise model</td>
+          <td class="number">220+ locations</td>
+          <td>No digital platform, no data, no protocols</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="font-size: 9px; color: rgba(44,36,24,0.5); line-height: 1.5; margin-top: -8px;">
+      Oura tells you your sleep score. It does not help you fix it. Each competitor does one piece. No one connects data to action to product to community -- especially in Europe.
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Oura investor data / Hims 10-K 2024 / ZOE public metrics / AG1 public revenue data / Restore franchise data / Competitive analysis: 30+ companies, Feb 2026</div>
+      <div class="page-footer-num">11</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">04 &mdash; Competitive Landscape</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">$1.4B+ in failed health/nutrition startups reveal three survivor patterns that shape our model.</div>
+
+    <!-- Graveyard Analysis -->
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Failure Mode</th>
+          <th style="text-align: right;">Capital Burned</th>
+          <th>Lesson Applied</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Forward Health</td>
+          <td>Built $1M hardware pods. Asset-heavy approach collapsed under capital requirements.</td>
+          <td class="number">$657M</td>
+          <td>Asset-light: partner, do not build the stack</td>
+        </tr>
+        <tr>
+          <td class="bold">DayTwo</td>
+          <td>2,089 citations (Google Scholar). Science was world-class. No consumer distribution.</td>
+          <td class="number">$32M</td>
+          <td>Content-led: distribution wins over science alone</td>
+        </tr>
+        <tr>
+          <td class="bold">Arivale</td>
+          <td>Consumers did not pay for disease prevention. Product positioned around future risk.</td>
+          <td class="number">$50M+</td>
+          <td>Sell how you feel today, not prevention tomorrow</td>
+        </tr>
+        <tr>
+          <td class="bold">Noom (stalled)</td>
+          <td>Aggressive paid acquisition. Churn destroyed unit economics. No community layer.</td>
+          <td class="number">$600M+ raised</td>
+          <td>Community-first: only retention moat that survives tech disruption</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Three Survivor Patterns -->
+    <div class="section-label" style="margin-top: 12px;">Three Survivor Patterns</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>Evidence</th>
+          <th>alche Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">01. Asset-Light</td>
+          <td>ZOE, AG1, and Levels survived by curating and connecting -- not owning the value chain</td>
+          <td>Lab partnerships for testing, curated products not manufactured, physical space generates revenue</td>
+        </tr>
+        <tr>
+          <td class="bold">02. Content-Led Distribution</td>
+          <td>AG1 built $600M on content and community. ZOE grew on Tim Spector's authority.</td>
+          <td>Content engine launches pre-product. Audience exists before the app ships.</td>
+        </tr>
+        <tr>
+          <td class="bold">03. Community-First Retention</td>
+          <td>When GLP-1 drugs arrived, companies without community had no reason for users to stay</td>
+          <td>Accountability circles, events, shared challenges. Social fabric as retention moat.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Competitive Window -->
+    <div class="callout-box" style="margin-top: 8px;">
+      <div class="callout-box-title">Competitive window: 12-18 months</div>
+      <div class="callout-box-body">
+        $8.49B flowed into longevity in 2024 (2x YoY). Oura has not localized beyond hardware retail. Hims EU expansion is nascent. Levels and Function Health are US-only. Neko Health focuses on scanning, not integrated wellness. The integrated European longevity platform position is open -- but closing.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Longevity.Technology 2024 Funding Report / Company post-mortems / Google Scholar / Competitive analysis, Feb 2026</div>
+      <div class="page-footer-num">12</div>
+    </div>
+  </div>
+
+</body>
+</html>

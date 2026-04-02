@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ALCHE -- What We Learned From Others</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--deep:#2C2418;--amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;
+  --stone:#9E948A;--rose:#C47A8A;--red:#A84A4A;
+  --glass:rgba(255,252,246,0.55);--glass-border:rgba(196,149,106,0.18);
+  --dead:rgba(168,74,74,0.06);--dead-border:rgba(168,74,74,0.18);
+  --alive:rgba(122,142,110,0.06);--alive-border:rgba(122,142,110,0.2);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--deep);line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 10% 15%,rgba(196,149,106,0.07) 0%,transparent 50%),radial-gradient(ellipse at 90% 85%,rgba(139,158,124,0.05) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+.wrap{max-width:960px;margin:0 auto;padding:60px 48px;position:relative;z-index:1}
+
+/* Header */
+.doc-header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:12px;border-bottom:2px solid var(--deep);margin-bottom:48px}
+.doc-header .mark{font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--deep)}
+.doc-header .meta{font-family:var(--mono);font-size:9px;color:var(--stone);letter-spacing:0.03em;text-align:right;line-height:1.6}
+
+/* Labels & Headers */
+.sl{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:8px}
+.sh{font-family:var(--serif);font-size:38px;font-weight:300;line-height:1.12;margin-bottom:6px}.sh strong{font-weight:600}
+.sh-sm{font-family:var(--serif);font-size:26px;font-weight:300;line-height:1.2;margin-bottom:8px}.sh-sm strong{font-weight:600}
+.sh-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:8px}
+.hero-sub{font-size:15px;color:var(--stone);max-width:700px;line-height:1.65;margin-bottom:48px}
+
+/* Prose */
+.prose{font-size:13.5px;line-height:1.7;max-width:720px;margin-bottom:20px}
+.prose strong{color:var(--terra)}
+.prose em{font-style:italic;color:var(--stone)}
+
+/* Separators */
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:56px 0}
+.sep-sm{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:36px 0}
+
+/* Grids */
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+/* Glass cards */
+.c{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:12px;padding:24px 22px;margin-bottom:16px;transition:transform 0.3s}.c:hover{transform:translateY(-2px)}
+.c.dead{background:var(--dead);border-color:var(--dead-border);border-left:4px solid var(--red)}
+.c.alive{background:var(--alive);border-color:var(--alive-border);border-left:4px solid var(--sage)}
+.c.amber{border-left:4px solid var(--amber)}
+.c.terra{border-left:4px solid var(--terra)}
+.cn{font-weight:600;font-size:15px;margin-bottom:6px}
+.cd{font-size:12.5px;line-height:1.6;color:var(--deep)}
+.cd .hl{color:var(--terra);font-weight:600}
+.cd .hlg{color:var(--sage);font-weight:600}
+
+/* Stats */
+.stat{text-align:center;padding:16px 12px}
+.stat-num{font-family:var(--serif);font-size:36px;font-weight:600;line-height:1}
+.stat-num.red{color:var(--red)}.stat-num.a{color:var(--amber)}.stat-num.s{color:var(--sage)}.stat-num.t{color:var(--terra)}
+.stat-label{font-size:11px;color:var(--stone);margin-top:4px;line-height:1.3}
+
+/* KPI row */
+.kpi-row{display:grid;gap:1px;background:var(--glass-border);border:1px solid var(--glass-border);border-radius:8px;overflow:hidden;margin:16px 0}
+.kpi-row.c3{grid-template-columns:repeat(3,1fr)}
+.kpi-row.c4{grid-template-columns:repeat(4,1fr)}
+.kpi-row.c5{grid-template-columns:repeat(5,1fr)}
+.kpi-row.c7{grid-template-columns:repeat(7,1fr)}
+.kpi{background:var(--cream);padding:16px 10px;text-align:center}
+.kpi-val{font-family:var(--mono);font-size:22px;font-weight:700;line-height:1.1;color:var(--deep);letter-spacing:-0.02em}
+.kpi-val.red{color:var(--red)}.kpi-val.sage{color:var(--sage)}.kpi-val.amber{color:var(--amber)}
+.kpi-label{font-family:var(--sans);font-size:9px;text-transform:uppercase;letter-spacing:0.05em;color:var(--stone);margin-top:4px;line-height:1.3}
+
+/* Table */
+.ftable{width:100%;border-collapse:collapse;font-size:12.5px;margin:16px 0}
+.ftable thead th{font-family:var(--mono);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--stone);font-weight:600;text-align:left;padding:10px 14px;border-bottom:2px solid rgba(44,36,24,0.15);background:rgba(245,240,232,0.5)}
+.ftable thead th.r{text-align:right}
+.ftable tbody td{padding:11px 14px;border-bottom:1px solid rgba(196,149,106,0.12);color:var(--deep);vertical-align:top}
+.ftable tbody td.r{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ftable tbody td.b{font-weight:600}
+.ftable tbody td.muted{color:var(--stone);font-size:11px}
+.ftable tbody td.dead-text{color:var(--red);font-size:11px;line-height:1.5}
+.ftable tbody tr:hover{background:rgba(196,149,106,0.03)}
+.ftable tbody tr.dead-row{background:var(--dead)}
+.ftable tbody tr.alive-row{background:var(--alive)}
+
+/* Callouts */
+.call{border-radius:12px;padding:22px 24px;margin:20px 0;border:1px solid}
+.call.t{background:rgba(184,107,74,0.05);border-color:rgba(184,107,74,0.15)}
+.call.sg{background:rgba(139,158,124,0.05);border-color:rgba(139,158,124,0.15)}
+.call.am{background:rgba(196,149,106,0.05);border-color:rgba(196,149,106,0.15)}
+.call.rd{background:rgba(168,74,74,0.04);border-color:rgba(168,74,74,0.12)}
+.call h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:8px}
+.call.t h3{color:var(--terra)}.call.sg h3{color:var(--sage)}.call.am h3{color:var(--amber)}.call.rd h3{color:var(--red)}
+.call p,.call li{font-size:13px;line-height:1.65}
+.call ul{padding-left:18px;margin-top:6px}.call li{margin-bottom:4px}
+
+/* Rule cards */
+.rule{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:18px 20px;margin-bottom:12px;display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;transition:transform 0.2s}
+.rule:hover{transform:translateY(-1px)}
+.rule-num{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--red);line-height:1}
+.rule-name{font-weight:600;font-size:14px;margin-bottom:3px}
+.rule-desc{font-size:12px;color:var(--stone);line-height:1.55}
+.rule-violators{font-family:var(--mono);font-size:9.5px;color:var(--red);letter-spacing:0.02em;margin-top:4px}
+
+/* Survivor cards */
+.surv{background:var(--alive);border:1px solid var(--alive-border);border-radius:10px;padding:20px 22px;margin-bottom:12px}
+.surv-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.surv-name{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--deep)}
+.surv-raised{font-family:var(--mono);font-size:11px;color:var(--sage);font-weight:600}
+.surv-strat{font-size:13px;line-height:1.6;color:var(--deep)}
+.surv-strat strong{color:var(--sage)}
+
+/* Investor line */
+.inv-line{background:rgba(196,149,106,0.05);border:1px solid rgba(196,149,106,0.18);border-radius:10px;padding:20px 22px;margin:24px 0;position:relative}
+.inv-line::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--amber);border-radius:4px 0 0 4px}
+.inv-tag{font-family:var(--mono);font-size:8.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:8px}
+.inv-line p{font-family:var(--serif);font-size:16px;font-weight:400;line-height:1.45;color:var(--deep);font-style:italic}
+
+/* Vis direction */
+.vis{background:rgba(44,36,24,0.03);border:1px dashed rgba(196,149,106,0.25);border-radius:12px;padding:20px 22px;margin:20px 0}
+.vis-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--rose);margin-bottom:8px}
+.vis p,.vis li{font-size:12.5px;line-height:1.6;color:var(--stone)}
+.vis ul{padding-left:18px;margin-top:6px}.vis li{margin-bottom:3px}
+.vis strong{color:var(--deep)}
+
+/* Tags */
+.tag{display:inline-block;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;vertical-align:middle}
+.tag.dead-tag{background:rgba(168,74,74,0.1);color:var(--red)}
+.tag.alive-tag{background:rgba(122,142,110,0.12);color:var(--sage)}
+.tag.slide{background:rgba(196,149,106,0.12);color:var(--amber)}
+.tag.qa{background:rgba(196,122,138,0.12);color:var(--rose)}
+
+/* Alche check */
+.check{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--glass-border);border-radius:10px;overflow:hidden;margin:16px 0}
+.check-left{background:var(--dead);padding:18px 20px;border-right:1px solid var(--glass-border)}
+.check-right{background:var(--alive);padding:18px 20px}
+.check-label{font-family:var(--mono);font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.check-label.rd{color:var(--red)}.check-label.gn{color:var(--sage)}
+.check-list{font-size:12px;line-height:1.65;color:var(--deep)}
+
+/* Pattern bar */
+.pattern-bar{display:flex;align-items:stretch;border-radius:8px;overflow:hidden;margin:16px 0;height:48px}
+.pattern-seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:600;color:white;letter-spacing:0.03em}
+.seg-dead{background:var(--red)}.seg-surv{background:var(--sage)}.seg-amber{background:var(--amber)}
+
+/* Quote */
+.q{border-left:3px solid var(--amber);padding:14px 18px;margin:16px 0;background:rgba(196,149,106,0.04);border-radius:0 8px 8px 0}
+.q .qt{font-family:var(--serif);font-size:17px;font-style:italic;line-height:1.4}.q .qa{font-size:10px;color:var(--amber);font-weight:500;margin-top:4px}
+
+/* Source tag */
+.src{font-family:var(--mono);font-size:9px;color:var(--stone);letter-spacing:0.02em;margin-top:3px}
+
+/* Fade in */
+.fi{opacity:0;transform:translateY(16px);animation:fadeUp 0.6s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.fi:nth-child(2){animation-delay:0.08s}.fi:nth-child(3){animation-delay:0.16s}
+
+/* Responsive */
+@media(max-width:700px){.wrap{padding:32px 20px}.sh{font-size:30px}.g2,.g3,.g4{grid-template-columns:1fr}.kpi-row.c5,.kpi-row.c7{grid-template-columns:repeat(3,1fr)}.check{grid-template-columns:1fr}.check-left{border-right:none;border-bottom:1px solid var(--glass-border)}}
+@media print{body::before{display:none}.fi{opacity:1!important;transform:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════ -->
+<!-- HEADER -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="doc-header fi">
+<div class="mark">Alche</div>
+<div class="meta">What We Learned From Others<br>Pre-Seed Pitch Preparation // February 2026<br>Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sl">Slide 11 Supplement -- Risk Awareness & Structural Moat</div>
+<div class="sh">The <strong>$1.4 Billion</strong><br>Graveyard</div>
+<div class="hero-sub">Seven health-tech companies that burned through massive capital and died. Five that survived. One pattern that separates them. This is the map we used to design Alche's model -- not from theory, but from the wreckage of companies that came before us.</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- THE HEADLINE NUMBERS -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="kpi-row c4 fi" style="margin-bottom:32px">
+<div class="kpi"><div class="kpi-val red">$1.4B+</div><div class="kpi-label">Capital destroyed</div></div>
+<div class="kpi"><div class="kpi-val red">7</div><div class="kpi-label">Companies dead</div></div>
+<div class="kpi"><div class="kpi-val sage">5</div><div class="kpi-label">Survivors studied</div></div>
+<div class="kpi"><div class="kpi-val amber">1</div><div class="kpi-label">Shared pattern</div></div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PART 1: THE GRAVEYARD -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sh-label">Part 1 <span class="tag dead-tag" style="margin-left:8px">The Dead</span></div>
+<div class="sh-sm"><strong>What killed them</strong></div>
+
+<div class="prose" style="margin-top:12px">
+These aren't obscure failures. These are companies that raised hundreds of millions from Founders Fund, Khosla Ventures, SoftBank, and Otsuka Pharmaceuticals. They had the best investors, the best talent, and in most cases a genuine technological edge. They still died. The question isn't "were they smart?" -- they were. The question is <strong>what structural mistakes did they make that no amount of capital could fix?</strong>
+</div>
+
+<table class="ftable">
+<thead><tr><th>Company</th><th class="r">Capital</th><th>What killed them</th><th>Year</th></tr></thead>
+<tbody>
+<tr class="dead-row"><td class="b">Forward Health</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$657M</td><td class="dead-text">Owned hardware (CarePods) + physical clinic ops + tech platform simultaneously. $149/mo subscription couldn't cover the burn. Launched only 3 CarePods before shutting down all 19 locations.</td><td class="muted">2024</td></tr>
+<tr class="dead-row"><td class="b">Proteus Digital</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$532M</td><td class="dead-text">Ingestible sensor hardware multiplied every risk category: FDA regulatory, manufacturing, pharma partnership dependency. Burning $2M/month. Filed Chapter 11, sold to Otsuka for ~$15M.</td><td class="muted">2020</td></tr>
+<tr class="dead-row"><td class="b">Pear Therapeutics</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$400M+</td><td class="dead-text">Novel category (prescription digital therapeutics) required insurer reimbursement that never materialized at scale. $12.7M revenue against $136M expenses in final full year. SPAC valuation of $1.6B collapsed to $6M asset sale.</td><td class="muted">2023</td></tr>
+<tr class="dead-row"><td class="b">DayTwo</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$85M</td><td class="dead-text">Closed-loop trap: tried to own both gut microbiome diagnostics and food recommendations. Executed 4 pivots (consumer, enterprise, clinical, back to consumer) -- identity crisis exhausted capital and team.</td><td class="muted">2023</td></tr>
+<tr class="dead-row"><td class="b">Habit</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$60M+</td><td class="dead-text">Double death spiral: diagnostics business + meal delivery business running simultaneously. Incompatible cost structures, incompatible unit economics. Acquired by Viome for data, meal delivery immediately killed.</td><td class="muted">2019</td></tr>
+<tr class="dead-row"><td class="b">Arivale</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$50M</td><td class="dead-text">Front-loading curse: the most valuable moment was the initial test. After that, subscriptions bled. Preventive health paradox: consumers wouldn't sustain premiums for future benefits they couldn't feel today.</td><td class="muted">2019</td></tr>
+<tr class="dead-row"><td class="b">Modern Age</td><td class="r" style="font-family:var(--mono);font-weight:600;color:var(--red)">$33M</td><td class="dead-text">Tried to own the entire longevity value chain from diagnostics to treatments. Capital spread too thin across too many operational surfaces.</td><td class="muted">2024</td></tr>
+</tbody>
+</table>
+
+<div class="src">Sources: TechCrunch, Fierce Healthcare, STAT News, MobiHealthNews, Tracxn, PitchBook, SEC filings. All funding figures cross-referenced across minimum two sources.</div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PART 2: THE 7 RULES -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sh-label">Part 2 <span class="tag slide" style="margin-left:8px">Goes on the slide</span></div>
+<div class="sh-sm">The <strong>7 Graveyard Rules</strong></div>
+
+<div class="prose" style="margin-top:12px">
+Every one of these deaths maps to a structural pattern. Not bad luck, not bad timing, not bad management -- <strong>structural architectural choices</strong> that made failure nearly inevitable regardless of execution quality. We distilled these into 7 rules that governed every design decision in Alche's model.
+</div>
+
+<div class="rule">
+<div class="rule-num">01</div>
+<div>
+<div class="rule-name">Closed Loop Trap</div>
+<div class="rule-desc">Never own both diagnostics AND food production. They have incompatible cost structures, incompatible margins, and incompatible operational complexity. The moment you're running a lab and a kitchen, you're running two companies.</div>
+<div class="rule-violators">Violators: Habit ($60M+), DayTwo ($85M)</div>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-num">02</div>
+<div>
+<div class="rule-name">Front-Loading Curse</div>
+<div class="rule-desc">If the most valuable moment in your product is the initial test or onboarding, your subscriptions will bleed. The value must compound over time, not peak on day one.</div>
+<div class="rule-violators">Violators: Habit ($60M+), Arivale ($50M), DayTwo ($85M)</div>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-num">03</div>
+<div>
+<div class="rule-name">Preventive Health Paradox</div>
+<div class="rule-desc">Consumers will not pay sustained premiums for future health benefits they cannot feel in the present. You need tangible, felt value -- energy, sleep, clarity, community -- not just risk reduction projections.</div>
+<div class="rule-violators">Violators: Arivale ($50M), Forward ($657M)</div>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-num">04</div>
+<div>
+<div class="rule-name">Two-Business Death Spiral</div>
+<div class="rule-desc">Running a tech company and a physical operations company simultaneously requires 2-3x the capital at half the speed. You end up underinvesting in both instead of excelling at either.</div>
+<div class="rule-violators">Violators: Forward ($657M), Habit ($60M+)</div>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-num">05</div>
+<div>
+<div class="rule-name">Identity Crisis Kill Zone</div>
+<div class="rule-desc">Pivoting between medical, wellness, and enterprise positioning exhausts capital and confuses the market. Pick a lane and stay in it. Every pivot costs 6-12 months and millions in repositioning.</div>
+<div class="rule-violators">Violators: DayTwo (4 pivots, $85M), Forward ($657M)</div>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-num">06</div>
+<div>
+<div class="rule-name">Reimbursement Wall</div>
+<div class="rule-desc">If your business model requires creating a novel insurance reimbursement category, budget $100M+ and 5-10 years. Pear proved clinicians prescribe, patients engage, outcomes improve -- and payers still wouldn't pay.</div>
+<div class="rule-violators">Violators: Pear ($400M+), DayTwo ($85M)</div>
+</div>
+</div>
+
+<div class="rule">
+<div class="rule-num">07</div>
+<div>
+<div class="rule-name">Hardware Multiplier</div>
+<div class="rule-desc">Physical hardware multiplies every risk: regulatory approval timelines, manufacturing defects, supply chain dependency, safety liability. Forward's CarePods had patients getting stuck inside. Proteus spent nearly two decades on an ingestible sensor.</div>
+<div class="rule-violators">Violators: Forward ($657M), Proteus ($532M)</div>
+</div>
+</div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PART 3: THE SURVIVORS -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sh-label">Part 3 <span class="tag alive-tag" style="margin-left:8px">The Living</span></div>
+<div class="sh-sm">What <strong>survivors</strong> did differently</div>
+
+<div class="prose" style="margin-top:12px">
+Five companies in the same space that are still alive, still growing, still funded. The pattern is ruthlessly simple: <strong>own one piece of the value chain and connect to existing infrastructure for everything else.</strong>
+</div>
+
+<div class="surv">
+<div class="surv-head"><div class="surv-name">ZOE</div><div class="surv-raised">~$83M raised</div></div>
+<div class="surv-strat"><strong>Science-first go-to-market.</strong> Published in Nature Medicine before launching a product. Then pivoted their COVID symptom tracker (4.5M+ contributors at zero customer acquisition cost) into a nutrition platform. Over 100K paying members. No meal delivery -- they tell you what to eat, they don't cook it for you.</div>
+<div class="src">Sources: TechCrunch (Dec 2022), ZOE press releases, Deloitte Fast 50 (2024), Nature Medicine publications</div>
+</div>
+
+<div class="surv">
+<div class="surv-head"><div class="surv-name">Levels</div><div class="surv-raised">~$21M raised</div></div>
+<div class="surv-strat"><strong>Content-first community.</strong> Built a massive audience before building a product, then made the CGM hardware optional rather than core. Disciplined $0.5M/month burn rate gave them 2+ years of runway. The insight: the community is the product, the hardware is a feature.</div>
+<div class="src">Sources: Levels blog, a]16z Future podcast interviews, Crunchbase</div>
+</div>
+
+<div class="surv">
+<div class="surv-head"><div class="surv-name">Viome</div><div class="surv-raised">~$75M raised</div></div>
+<div class="surv-strat"><strong>Learn from others' deaths.</strong> Acquired Habit's microbiome data after Habit died, immediately killed Habit's meal delivery business, and pivoted to supplements. Now in CVS retail distribution. Took the data asset, abandoned the operational nightmare.</div>
+<div class="src">Sources: Viome press releases, Crunchbase, industry reporting</div>
+</div>
+
+<div class="surv">
+<div class="surv-head"><div class="surv-name">Fay</div><div class="surv-raised">$75M raised</div></div>
+<div class="surv-strat"><strong>Marketplace model, zero COGS.</strong> Dietitian marketplace using existing insurance reimbursement codes -- no novel category creation needed. 2,300+ dietitians. No proprietary content creation, no hardware, no physical spaces. 5x valuation increase in one year.</div>
+<div class="src">Sources: Fay press releases, Crunchbase, digital health reporting</div>
+</div>
+
+<div class="surv">
+<div class="surv-head"><div class="surv-name">AG1</div><div class="surv-raised">$600M+ revenue</div></div>
+<div class="surv-strat"><strong>Single-SKU supplement, 10+ years of content.</strong> One product. $2.2M+ annual podcast advertising spend. Over a decade of audience-building before the business reached its current scale. Content-first, commerce-second. They own the audience, not the supply chain complexity.</div>
+<div class="src">Sources: AG1 public financials, podcast advertising reports, industry analysis</div>
+</div>
+
+<div class="call sg" style="margin-top:24px">
+<h3>The survivor pattern</h3>
+<p>Every survivor owns <strong>one piece</strong> of the value chain and connects to existing infrastructure for the rest. ZOE owns science + recommendations, not food. Levels owns community + content, not hardware. Fay owns the marketplace, not the dietitians. AG1 owns the audience, not manufacturing. The dead tried to own everything.</p>
+</div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PART 4: HOW ALCHE AVOIDS EACH TRAP -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sh-label">Part 4 <span class="tag slide" style="margin-left:8px">Goes on the slide</span></div>
+<div class="sh-sm">How <strong>Alche avoids</strong> every trap</div>
+
+<div class="prose" style="margin-top:12px">
+We didn't design Alche's model from first principles and hope for the best. We reverse-engineered it from $1.4B worth of failure data. Every structural decision maps to a specific graveyard rule.
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 01: Closed Loop Trap</div>
+<div class="check-list">Habit and DayTwo died combining diagnostics with food production.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">We partner with existing lab providers for bloodwork and connect to existing wearable ecosystems. We recommend protocols -- we don't cook meals or ship test kits.</div>
+</div>
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 02: Front-Loading Curse</div>
+<div class="check-list">Arivale peaked at the initial test. After that, no reason to stay.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">Value compounds over time. Longitudinal data tracking, evolving personalized protocols, community belonging, and content library that grows. Month 6 is more valuable than Month 1.</div>
+</div>
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 03: Preventive Paradox</div>
+<div class="check-list">Consumers won't pay for future benefits they can't feel today.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">Immediate felt value: community events, daily content, energy/sleep/mood tracking with visible trends. Longevity is the mission, but the daily experience is what keeps people paying.</div>
+</div>
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 04: Two-Business Death Spiral</div>
+<div class="check-list">Forward burned $657M running tech + physical clinics simultaneously.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">Digital-first. The app is the business. The Berlin physical space is a single proof-of-concept location that drives acquisition and retention -- not a clinic chain we need to scale.</div>
+</div>
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 05: Identity Crisis Kill Zone</div>
+<div class="check-list">DayTwo pivoted 4 times across consumer, enterprise, clinical, and back.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">We're a consumer wellness platform. Not medical. Not enterprise. Not clinical. Our positioning -- anti-perfectionist longevity for real life -- is locked and validated across 3 research cycles.</div>
+</div>
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 06: Reimbursement Wall</div>
+<div class="check-list">Pear spent $400M+ and still couldn't get payers to cover digital therapeutics.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">Direct-to-consumer subscriptions. Zero insurance dependency. EUR 19-99/mo price points are consumer discretionary, not medical reimbursement. We never need a payer to say yes.</div>
+</div>
+</div>
+
+<div class="check">
+<div class="check-left">
+<div class="check-label rd">Rule 07: Hardware Multiplier</div>
+<div class="check-list">Proteus spent $532M and 20 years on an ingestible sensor. Forward's CarePods malfunctioned.</div>
+</div>
+<div class="check-right">
+<div class="check-label gn">Alche's Design</div>
+<div class="check-list">No proprietary hardware. We integrate with existing wearables (Oura, Apple Watch, Garmin) and existing CGM providers. We're a software layer on top of hardware others build and maintain.</div>
+</div>
+</div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PART 5: THE ALCHE MODEL -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sh-label">Part 5 <span class="tag qa" style="margin-left:8px">Investor Q&A prep</span></div>
+<div class="sh-sm"><strong>Alche's structural position</strong></div>
+
+<div class="prose" style="margin-top:12px">
+The survivors share one architecture: <strong>own the relationship, partner for everything else.</strong> That's exactly what Alche does. We own the data layer, the community, the content, and the brand. We partner with labs for testing, wearable companies for hardware, and existing service providers for physical wellness.
+</div>
+
+<div class="g3" style="margin-top:16px">
+  <div class="c amber"><div class="stat"><div class="stat-num a">Own</div><div class="stat-label">Data, community, content, brand, protocols, editorial voice</div></div></div>
+  <div class="c terra"><div class="stat"><div class="stat-num t">Partner</div><div class="stat-label">Labs, wearables, CGM providers, physical space services</div></div></div>
+  <div class="c" style="border-left:4px solid var(--sage)"><div class="stat"><div class="stat-num s">Never</div><div class="stat-label">Hardware, food production, insurance reimbursement, clinical operations</div></div></div>
+</div>
+
+<div class="pattern-bar" style="margin-top:24px">
+<div class="pattern-seg seg-surv" style="flex:3" title="What we own">SOFTWARE + COMMUNITY + CONTENT</div>
+<div class="pattern-seg seg-amber" style="flex:2" title="What we partner for">TESTING + HARDWARE + SERVICES</div>
+<div class="pattern-seg seg-dead" style="flex:1.5;opacity:0.4" title="What we never touch">FOOD PROD / HARDWARE MFG / INSURANCE</div>
+</div>
+
+<div class="inv-line" style="margin-top:28px">
+<div class="inv-tag">Investor Line</div>
+<p>"We studied $1.4 billion in health-tech failures before designing our model. Every company that died tried to own the entire value chain. Every survivor owns one piece and connects to existing infrastructure. Alche owns the data layer, the community, and the brand -- and partners for everything else. That's not a theory. That's what $1.4 billion in dead capital taught us."</p>
+</div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PART 6: VISUALIZATION DIRECTION -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="fi">
+<div class="sh-label">Part 6</div>
+<div class="sh-sm"><strong>Slide direction</strong></div>
+
+<div class="vis">
+<div class="vis-label">Visualization Direction -- Slide</div>
+<p><strong>Option A: Graveyard Visual.</strong> A minimal table or card layout showing the 7 companies on the left (faded, crossed out, in muted red) with capital figures. On the right, the 5 survivors in sage/green. Between them, the 7 rules as connecting threads. The visual story: death on the left, life on the right, rules in the middle. Alche's position clearly mapped to the right side.</p>
+<p style="margin-top:10px"><strong>Option B: The Architecture Split.</strong> A simple two-column visual. Left column: "What we own" (data, community, content, brand). Right column: "What we partner for" (labs, hardware, services). Below, a crossed-out row: "What we never touch" (food production, hardware manufacturing, insurance billing). Clean, editorial, instantly readable. This is the strongest single-slide distillation.</p>
+<p style="margin-top:10px"><strong>Option C: Rule Checklist.</strong> The 7 rules as a vertical list with red X marks next to dead companies and green checkmarks next to Alche's design choices. This plays well in presentation because you can reveal each rule one at a time, building tension before showing how Alche addresses each one. Works best as an animated slide.</p>
+</div>
+
+<div class="vis" style="margin-top:16px">
+<div class="vis-label">Delivery Notes</div>
+<p><strong>This is a confidence slide, not a data slide.</strong> The goal isn't to impress investors with how many failures you've studied. The goal is to communicate: "we are not naive about how hard this is, and we designed our model to avoid the structural mistakes that killed companies with 100x our funding." That's the emotional residue. If an investor walks away thinking "these founders have done their homework," this slide did its job.</p>
+<p style="margin-top:10px">In the presentation, consider opening with: <strong>"$1.4 billion in health-tech capital was destroyed by 7 companies. We studied every one of them. Here's what we learned."</strong> Then walk through 2-3 rules maximum (not all 7 -- save the rest for Q&A). The investor will ask about the others. That's the point.</p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ═══════════════════════════════════════ -->
+
+<div class="sep"></div>
+<div style="text-align:center;padding:40px 0 60px">
+<div style="font-size:11px;color:var(--stone);letter-spacing:0.08em;text-transform:uppercase;line-height:1.8">Alche // Your Longevity, Daily<br><span style="opacity:0.6">Pitch Book: What We Learned From Others // February 2026 // Confidential</span></div>
+<div style="margin-top:20px;font-size:12px;color:var(--stone);max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6">All capital figures verified across minimum two independent sources. Company timelines from Crunchbase, Tracxn, PitchBook, SEC filings, and primary press coverage. Survivor data from company press releases and verified reporting.</div>
+</div>
+
+</div><!-- .wrap -->
+
+</body></html>

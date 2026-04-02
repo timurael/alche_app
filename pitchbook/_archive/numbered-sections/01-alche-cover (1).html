@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ALCHÈ -- Pitch Book Cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --white:#FEFCF9;
+  --cream:#F5F0E8;
+  --deep:#1A1714;
+  --deep-mid:#3A3530;
+  --amber:#C8922E;
+  --amber-hot:#E0A830;
+  --amber-dark:#9E7420;
+  --sage:#5E8A48;
+  --sage-light:#7EAA64;
+  --terra:#D06828;
+  --terra-light:#E88848;
+  --stone:#8C8278;
+  --stone-light:#B0A89E;
+}
+
+html,body{height:100%;overflow:hidden}
+
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--white);
+  color:var(--deep);
+  -webkit-font-smoothing:antialiased;
+}
+
+.slide{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:0 clamp(40px, 7vw, 120px);
+  position:relative;
+  overflow:hidden;
+}
+
+/* soft warm wash */
+.slide::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 70% at 5% 95%, rgba(200,146,46,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(94,138,72,0.04) 0%, transparent 45%),
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(208,104,40,0.02) 0%, transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* top bar — vivid */
+.top-bar{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg, var(--terra) 0%, var(--amber-hot) 40%, var(--sage-light) 80%, var(--sage) 100%);
+  z-index:5;
+}
+
+.content{
+  position:relative;
+  z-index:10;
+  max-width:960px;
+}
+
+/* vessel icon */
+.vessel-mark{
+  margin-bottom:28px;
+  opacity:0;
+  animation:fadeUp 0.8s ease 0.15s forwards;
+}
+.vessel-mark svg{width:44px;height:auto}
+
+/* WORDMARK — MASSIVE */
+.wordmark{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(100px, 15vw, 180px);
+  font-weight:400;
+  letter-spacing:0.04em;
+  color:var(--deep);
+  line-height:0.88;
+  margin-bottom:8px;
+  opacity:0;
+  animation:fadeUp 0.9s ease 0.3s forwards;
+}
+
+/* TAGLINE — LARGE */
+.tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px, 5vw, 60px);
+  font-weight:300;
+  font-style:italic;
+  letter-spacing:0.01em;
+  color:var(--amber);
+  line-height:1.15;
+  margin-bottom:36px;
+  opacity:0;
+  animation:fadeUp 0.9s ease 0.5s forwards;
+}
+
+/* divider */
+.divider{
+  width:80px;
+  height:3px;
+  background:linear-gradient(90deg, var(--amber-hot), var(--terra-light));
+  border-radius:2px;
+  margin-bottom:28px;
+  opacity:0;
+  animation:fadeUp 0.7s ease 0.7s forwards;
+}
+
+/* DESCRIPTOR — bigger */
+.descriptor{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(16px, 1.8vw, 20px);
+  font-weight:300;
+  color:var(--stone);
+  line-height:1.8;
+  max-width:620px;
+  margin-bottom:48px;
+  opacity:0;
+  animation:fadeUp 0.9s ease 0.85s forwards;
+}
+.descriptor strong{
+  color:var(--deep-mid);
+  font-weight:600;
+}
+
+/* pillars — bigger text */
+.pillars{
+  display:flex;
+  gap:40px;
+  opacity:0;
+  animation:fadeUp 0.9s ease 1.05s forwards;
+}
+.pillar{display:flex;align-items:center;gap:10px}
+.pillar-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--amber-hot);
+  flex-shrink:0;
+}
+.pillar-text{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--deep-mid);
+  font-weight:500;
+}
+
+/* bottom bar */
+.bottom-bar{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:28px clamp(40px, 7vw, 120px);
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  z-index:10;
+  opacity:0;
+  animation:fadeUp 0.9s ease 1.2s forwards;
+}
+.bottom-left{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--stone-light);
+  line-height:1.7;
+}
+.bottom-right{text-align:right}
+.bottom-right .daily{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;
+  font-style:italic;
+  color:var(--amber-dark);
+  letter-spacing:0.03em;
+}
+.bottom-right .conf{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--stone-light);
+  margin-top:4px;
+}
+
+/* bottom bar line */
+.bottom-line{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg, var(--sage) 0%, var(--sage-light) 20%, var(--amber-hot) 50%, var(--terra-light) 80%, var(--terra) 100%);
+  opacity:0.75;
+  z-index:5;
+}
+
+/* bg vessel — bigger, lighter */
+.bg-vessel{
+  position:absolute;
+  right:clamp(20px, 6vw, 100px);
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+  opacity:0;
+  animation:fadeIn 2s ease 1.4s forwards;
+}
+.bg-vessel svg{
+  width:clamp(280px, 32vw, 480px);
+  height:auto;
+  opacity:0.035;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@media(max-width:768px){
+  .pillars{flex-direction:column;gap:14px}
+  .bottom-bar{flex-direction:column;align-items:flex-start;gap:16px}
+  .bottom-right{text-align:left}
+  .bg-vessel{display:none}
+}
+@media print{
+  .slide{height:auto;min-height:100vh;padding:60px}
+  .slide::before{display:none}
+  .bg-vessel{display:none}
+  *{animation:none!important;opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <div class="top-bar"></div>
+
+  <div class="bg-vessel">
+    <svg viewBox="0 0 200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80 20 L80 100 Q80 110 70 120 L30 180 Q10 210 20 240 L30 260 Q40 280 60 290 L80 298 Q95 304 100 304 Q105 304 120 298 L140 290 Q160 280 170 260 L180 240 Q190 210 170 180 L130 120 Q120 110 120 100 L120 20" stroke="#1A1714" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <ellipse cx="100" cy="20" rx="22" ry="6" stroke="#1A1714" stroke-width="1.2" fill="none" opacity="0.4"/>
+      <path d="M35 220 Q60 210 100 215 Q140 220 165 212" stroke="#1A1714" stroke-width="0.8" opacity="0.3"/>
+      <circle cx="100" cy="200" r="40" stroke="#1A1714" stroke-width="0.5" opacity="0.15"/>
+      <circle cx="85" cy="180" r="3" stroke="#1A1714" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="110" cy="195" r="2" stroke="#1A1714" stroke-width="0.5" opacity="0.15"/>
+      <circle cx="95" cy="165" r="1.5" stroke="#1A1714" stroke-width="0.5" opacity="0.15"/>
+    </svg>
+  </div>
+
+  <div class="content">
+
+    <div class="vessel-mark">
+      <svg viewBox="0 0 40 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="20" cy="5" rx="8" ry="3" stroke="#9E7420" stroke-width="1.3" fill="none"/>
+        <path d="M12 5 L12 22 Q12 26 8 30 L3 38 Q-1 44 2 50 L5 54 Q8 58 14 60 L18 62 Q20 63 22 62 L26 60 Q32 58 35 54 L38 50 Q41 44 37 38 L32 30 Q28 26 28 22 L28 5" stroke="#9E7420" stroke-width="1.3" fill="none"/>
+        <path d="M5 46 Q12 43 20 45 Q28 47 35 44" stroke="#9E7420" stroke-width="0.8" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <div class="wordmark">alchè</div>
+
+    <div class="tagline">The Art of Curated Longevity</div>
+
+    <div class="divider"></div>
+
+    <div class="descriptor">
+      A <strong>luxury wellness ecosystem</strong> that integrates a physical space, a proprietary app, curated products, and cultural programming into one data-enabled platform. CGM, blood biomarkers, personalized protocols, functional nutrition, and community -- connected. Berlin-born. Science-backed.
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-dot"></div>
+        <div class="pillar-text">Taste</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-dot"></div>
+        <div class="pillar-text">Trust</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-dot"></div>
+        <div class="pillar-text">Cultural Authority</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-left">
+      Pre-Seed // Berlin, Germany<br>
+      February 2026
+    </div>
+    <div class="bottom-right">
+      <div class="daily">Your longevity, daily.</div>
+      <div class="conf">Confidential</div>
+    </div>
+  </div>
+
+  <div class="bottom-line"></div>
+</div>
+
+</body>
+</html>

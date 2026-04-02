@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ALCHE -- Product: What Users See & Do</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--deep:#2C2418;--amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;
+  --stone:#9E948A;--glass:rgba(255,252,246,0.55);--glass-border:rgba(196,149,106,0.18);
+  --rose:#C47A8A;--ink:#1A1610
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--deep);line-height:1.7;font-size:14px;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 8% 12%,rgba(196,149,106,0.06) 0%,transparent 55%),radial-gradient(ellipse at 92% 88%,rgba(139,158,124,0.04) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+/* LAYOUT */
+.wrap{max-width:980px;margin:0 auto;padding:60px 48px;position:relative;z-index:1}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+
+/* TYPOGRAPHY */
+.sl{font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:6px}
+h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.08;margin-bottom:12px}
+h1 strong{font-weight:600}
+h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;line-height:1.15;margin-bottom:6px}
+h2 strong{font-weight:700}
+h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;line-height:1.2;margin-bottom:6px}
+.sub{font-size:14px;color:var(--stone);max-width:660px;line-height:1.7;margin-bottom:40px}
+.mini{font-size:11px;color:var(--stone);line-height:1.6}
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:52px 0}
+.cap{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700}
+
+/* CARDS */
+.card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:14px;padding:24px 26px}
+.card.accent{border-left:3px solid var(--amber)}
+.card.sage-accent{border-left:3px solid var(--sage)}
+.card.terra-accent{border-left:3px solid var(--terra)}
+.card.rose-accent{border-left:3px solid var(--rose)}
+
+/* PHONE PLACEHOLDER */
+.phone-frame{
+  width:100%;max-width:280px;margin:0 auto;
+  aspect-ratio:9/19.5;
+  background:linear-gradient(165deg,#F8F6F1 0%,#EDE9E0 100%);
+  border-radius:32px;border:2px solid var(--glass-border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 40px rgba(44,36,24,0.08),inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.phone-frame::before{
+  content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  width:80px;height:24px;background:rgba(44,36,24,0.06);border-radius:12px;
+}
+.phone-label{
+  font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--amber);font-weight:600;text-align:center;padding:0 20px;
+}
+.phone-sublabel{
+  font-size:9px;color:var(--stone);text-align:center;padding:0 20px;margin-top:4px;
+  line-height:1.5;
+}
+.phone-placeholder-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(196,149,106,0.15),rgba(139,158,124,0.1));
+  border:1px dashed var(--amber);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:var(--amber);margin-bottom:10px;
+}
+
+/* WIDE SCREENSHOT PLACEHOLDER */
+.screen-placeholder{
+  width:100%;aspect-ratio:16/10;
+  background:linear-gradient(165deg,#F8F6F1 0%,#EDE9E0 100%);
+  border-radius:16px;border:2px dashed var(--glass-border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:0 4px 24px rgba(44,36,24,0.05);
+}
+.screen-placeholder .phone-label{font-size:11px}
+.screen-placeholder .phone-sublabel{font-size:10px;max-width:320px}
+
+/* LOOP VISUAL */
+.loop-ring{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  margin:28px 0;flex-wrap:wrap;
+}
+.loop-node{
+  text-align:center;padding:14px 16px;
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+  min-width:120px;
+}
+.loop-node .label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
+.loop-node .desc{font-size:9.5px;color:var(--stone);margin-top:2px}
+.loop-node.get .label{color:var(--amber)}
+.loop-node.know .label{color:var(--sage)}
+.loop-node.do .label{color:var(--terra)}
+.loop-node.belong .label{color:var(--rose)}
+.loop-arrow{font-size:18px;color:var(--amber);opacity:0.3;padding:0 6px}
+
+/* SPRINT TABLE */
+.sprint-row{display:grid;grid-template-columns:80px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid rgba(44,36,24,0.05)}
+.sprint-row:last-child{border-bottom:none}
+.sprint-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:rgba(196,149,106,0.4)}
+.sprint-content h4{font-size:13px;font-weight:600;margin-bottom:2px}
+.sprint-content p{font-size:12px;color:var(--stone);line-height:1.55}
+
+/* TIER TABLE */
+.tier-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;
+  padding:22px 20px;text-align:center;
+}
+.tier-card.highlight{border:2px solid var(--amber);background:rgba(255,252,246,0.7)}
+.tier-price{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin:8px 0 4px}
+.tier-price strong{font-weight:700}
+.tier-name{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber)}
+.tier-features{font-size:11px;color:var(--stone);line-height:1.7;margin-top:10px;text-align:left}
+
+/* OUTCOME CATEGORIES */
+.outcome{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+  padding:18px 16px;text-align:center;
+}
+.outcome-icon{font-size:24px;margin-bottom:6px}
+.outcome-name{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--deep)}
+.outcome-desc{font-size:10px;color:var(--stone);margin-top:4px;line-height:1.5}
+
+/* CGM PHASES */
+.phase-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+  padding:20px;position:relative;
+}
+.phase-card::before{
+  content:attr(data-phase);position:absolute;top:-8px;left:16px;
+  font-size:8px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;
+  background:var(--cream);padding:0 8px;color:var(--amber);
+}
+.phase-card h4{font-size:13px;font-weight:600;margin-bottom:4px;margin-top:4px}
+.phase-card p{font-size:11.5px;color:var(--stone);line-height:1.6}
+.phase-cost{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--sage);margin-top:6px}
+
+/* JOURNEY STEPS */
+.journey-step{display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:start;margin-bottom:40px}
+.journey-step.reverse{grid-template-columns:1fr 300px}
+.journey-step .step-content{padding:12px 0}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(196,149,106,0.2);line-height:1;margin-bottom:-6px}
+.step-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.step-desc{font-size:12.5px;color:var(--stone);line-height:1.65}
+
+/* TAGS */
+.tag{display:inline-block;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:10px;font-weight:700;margin-right:3px}
+.tag.mvp{background:rgba(139,158,124,0.12);color:var(--sage)}
+.tag.v1{background:rgba(196,149,106,0.12);color:var(--amber)}
+.tag.v2{background:rgba(184,107,74,0.12);color:var(--terra)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(245,240,232,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--glass-border);padding:10px 48px;display:flex;align-items:center;gap:20px;font-size:11px}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--deep);margin-right:auto}
+.nav a{color:var(--stone);text-decoration:none;font-weight:500;transition:color 0.2s}
+.nav a:hover{color:var(--deep)}
+
+/* FOOTER */
+footer{text-align:center;padding:48px;font-size:9px;color:var(--stone);letter-spacing:0.1em;text-transform:uppercase;line-height:2}
+
+/* ANIMATIONS */
+.fade{opacity:0;transform:translateY(12px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .wrap{padding:36px 20px}.g2,.g3,.g4,.g5{grid-template-columns:1fr}
+  h1{font-size:36px}.nav{padding:10px 20px;gap:12px;font-size:10px;flex-wrap:wrap}
+  .journey-step,.journey-step.reverse{grid-template-columns:1fr}
+  .phone-frame{max-width:220px}
+}
+@media print{body::before{display:none}.nav{display:none}.fade{opacity:1!important;transform:none!important}}
+</style></head><body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Alche</div>
+  <a href="#overview">Overview</a>
+  <a href="#loop">The Loop</a>
+  <a href="#journey">User Journey</a>
+  <a href="#features">Features</a>
+  <a href="#space">Physical Space</a>
+  <a href="#cgm">CGM</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="overview">
+  <div class="sl">Alche // Pitch Book Slide 07 // Product // February 2026</div>
+  <h1><strong>What Users</strong><br>See & Do</h1>
+  <p class="sub">The app is the operating system. The physical space is the proof of concept. Every interaction -- booking a session, ordering a smoothie, tracking glucose, attending an event -- feeds a single closed loop that converts engagement into recurring revenue.</p>
+
+  <!-- KPI ROW -->
+  <div class="g5" style="margin-bottom:16px">
+    <div class="card" style="text-align:center;padding:18px 12px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300">10</div>
+      <div class="cap" style="color:var(--amber);margin-top:2px">Modules</div>
+      <div class="mini">MVP Scope</div>
+    </div>
+    <div class="card" style="text-align:center;padding:18px 12px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300">16</div>
+      <div class="cap" style="color:var(--amber);margin-top:2px">Weeks</div>
+      <div class="mini">Build Timeline</div>
+    </div>
+    <div class="card" style="text-align:center;padding:18px 12px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300">6</div>
+      <div class="cap" style="color:var(--amber);margin-top:2px">Sprints</div>
+      <div class="mini">Foundation First</div>
+    </div>
+    <div class="card" style="text-align:center;padding:18px 12px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300">3</div>
+      <div class="cap" style="color:var(--amber);margin-top:2px">Tiers</div>
+      <div class="mini">EUR 19 / 49 / 99</div>
+    </div>
+    <div class="card" style="text-align:center;padding:18px 12px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300">5</div>
+      <div class="cap" style="color:var(--amber);margin-top:2px">Outcomes</div>
+      <div class="mini">Not categories</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- THREE CORE FUNCTIONS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">The App</div>
+  <h2><strong>Three core functions.</strong> Plans. Executes. Converts.</h2>
+  <p class="sub" style="margin-bottom:24px">The app is not a health tracker. It is the single point where data, community, and commerce converge into one unified experience. Physical space gets connected to centralized digital infrastructure, and every interaction converts into recurring revenue.</p>
+
+  <div class="g3" style="margin-bottom:32px">
+    <div class="card accent">
+      <h3 style="color:var(--amber)">Plans</h3>
+      <p style="font-size:12.5px;color:var(--stone);line-height:1.6">Transforms intention into structured action. Goal selection, protocol templates, journey framework. MVP: template-based. V1: AI-personalized.</p>
+    </div>
+    <div class="card sage-accent">
+      <h3 style="color:var(--sage)">Executes</h3>
+      <p style="font-size:12.5px;color:var(--stone);line-height:1.6">Turns plans into real-world behavior. LED booking, smoothie pre-orders, session reminders, habit automation. The physical space makes it tangible.</p>
+    </div>
+    <div class="card terra-accent">
+      <h3 style="color:var(--terra)">Converts</h3>
+      <p style="font-size:12.5px;color:var(--stone);line-height:1.6">Transforms engagement into revenue. Memberships, product sales (in-store pickup or shipping), smart replenishment, event ticketing.</p>
+    </div>
+  </div>
+
+  <!-- APP OVERVIEW SCREENSHOT -->
+  <div class="screen-placeholder">
+    <div class="phone-placeholder-icon">+</div>
+    <div class="phone-label">App Overview -- Home Dashboard</div>
+    <div class="phone-sublabel">Show: greeting, today's protocol, upcoming booking, streak counter, quick actions (book / shop / track)</div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- THE LOOP -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="loop">
+  <div class="sl">The Flywheel</div>
+  <h2><strong>GET. KNOW. DO. BELONG.</strong></h2>
+  <p class="sub" style="margin-bottom:20px">Four layers, one loop. Each feeds the next. The closed loop means your blood data changes what smoothie we recommend, what products we surface, what protocol you follow, and who we connect you with. Nobody does this end-to-end.</p>
+
+  <div class="loop-ring">
+    <div class="loop-node get">
+      <div class="label">GET</div>
+      <div class="desc">Buy products, book sessions, order smoothies</div>
+    </div>
+    <div class="loop-arrow">&rarr;</div>
+    <div class="loop-node know">
+      <div class="label">KNOW</div>
+      <div class="desc">Track biomarkers, CGM, wearable sync, Glow Scan</div>
+    </div>
+    <div class="loop-arrow">&rarr;</div>
+    <div class="loop-node do">
+      <div class="label">DO</div>
+      <div class="desc">Follow protocols, adjust habits, complete journeys</div>
+    </div>
+    <div class="loop-arrow">&rarr;</div>
+    <div class="loop-node belong">
+      <div class="label">BELONG</div>
+      <div class="desc">Community, events, accountability, shared identity</div>
+    </div>
+    <div class="loop-arrow">&rarr;</div>
+    <div style="font-size:10px;color:var(--amber);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:8px">LOOP</div>
+  </div>
+
+  <div class="card" style="margin-top:20px;text-align:center">
+    <p style="font-size:13px;color:var(--deep);line-height:1.65"><strong>MVP is GET-heavy at launch</strong> -- 80% of MVP is commerce: booking, menu, shop, membership, events. We're a commerce company first, data platform second. The KNOW and DO layers seed in MVP and mature in V1/V2.</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CORE USER JOURNEY -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="journey">
+  <div class="sl">User Journey</div>
+  <h2><strong>The core flow.</strong> One visit, fully connected.</h2>
+  <p class="sub">User opens app, books an LED session, pre-orders Potion N&#176;1 with a Glow boost, checks in with QR, tracks their session streak, buys a blend to take home. That's MVP.</p>
+
+  <!-- STEP 1 -->
+  <div class="journey-step">
+    <div class="phone-frame">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">Onboarding</div>
+      <div class="phone-sublabel">Goal selection screen: glow, recovery, calm, gut, energy. Sets protocol direction.</div>
+    </div>
+    <div class="step-content">
+      <div class="step-num">01</div>
+      <div class="step-title">Choose Your Outcome</div>
+      <p class="step-desc">User selects their primary goal from five outcome categories. This determines their initial protocol template, product recommendations, and content feed. No quiz fatigue -- one tap, one direction. Everything from smoothie suggestions to LED session types aligns to this choice.</p>
+      <div style="margin-top:10px"><span class="tag mvp">MVP</span></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="journey-step reverse">
+    <div class="step-content">
+      <div class="step-num">02</div>
+      <div class="step-title">Book an LED Session</div>
+      <p class="step-desc">Real-time seat availability in 20-minute slots. Two session types: Glow Session (red light) and Recovery Session (near-infrared). Capacity-controlled seating creates premium scarcity. During booking, the app suggests a smoothie + boost combo matched to the session type.</p>
+      <div style="margin-top:10px"><span class="tag mvp">MVP</span></div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">LED Booking</div>
+      <div class="phone-sublabel">Slot picker, seat availability, session type, smoothie pre-order suggestion.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="journey-step">
+    <div class="phone-frame">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">Potion + Boost</div>
+      <div class="phone-sublabel">6 Alche Potions, 5 boost add-ons, favorite combos saved, pre-order flow.</div>
+    </div>
+    <div class="step-content">
+      <div class="step-num">03</div>
+      <div class="step-title">Customize Your Potion</div>
+      <p class="step-desc">Six signature Alche Potions (EUR 7--11), five functional boost add-ons (+EUR 2 each, mapped to outcome categories). Pre-ordered during LED booking so it's ready on arrival. Favorite combinations saved. "Same as last time" one-tap reorder. Average ticket EUR 11. The potion is the daily ritual that anchors the habit loop.</p>
+      <div style="margin-top:8px">
+        <span class="tag mvp">MVP</span>
+        <span class="tag v1">V1: Protocol-linked suggestions</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="journey-step reverse">
+    <div class="step-content">
+      <div class="step-num">04</div>
+      <div class="step-title">Check In. Session. Track.</div>
+      <p class="step-desc">QR check-in on arrival. Potion is ready, seat is ready -- zero wait, premium experience. During session, app shows streak counter and light usage data. Post-session: log how you feel, earn a milestone. This creates the data exhaust that powers personalization in V1.</p>
+      <div style="margin-top:10px"><span class="tag mvp">MVP</span></div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">Session Active</div>
+      <div class="phone-sublabel">QR check-in, session timer, streak counter, post-session mood log.</div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="journey-step">
+    <div class="phone-frame">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">Shop & Replenish</div>
+      <div class="phone-sublabel">Product catalog by outcome, one-tap reorder, subscription toggle.</div>
+    </div>
+    <div class="step-content">
+      <div class="step-num">05</div>
+      <div class="step-title">Shop by Outcome</div>
+      <p class="step-desc">Everything organized by what you want (glow, recovery, calm, gut, energy) -- not by ingredient. The boost you loved in your smoothie? Buy the 300g pouch to take home. Own-brand blends, capsules, curated 3rd-party products -- all in-app and in-store. V1 adds smart replenishment: "Your collagen is running low. Want us to prepare your next batch?"</p>
+      <div style="margin-top:8px">
+        <span class="tag mvp">MVP: catalog + cart</span>
+        <span class="tag v1">V1: Smart replenishment</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="journey-step reverse">
+    <div class="step-content">
+      <div class="step-num">06</div>
+      <div class="step-title">Community & Events</div>
+      <p class="step-desc">Wellness events, science talks, researcher sessions held in the physical space. Event RSVP, ticket purchase, member-exclusive access. A social feed shows milestones and member activity -- just enough to know others exist, not building Instagram. Events generate content, strengthen community, and create additional revenue.</p>
+      <div style="margin-top:10px"><span class="tag mvp">MVP</span></div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">Events & Community</div>
+      <div class="phone-sublabel">Event calendar, RSVP, member feed, milestone badges, member-only access.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- OUTCOME CATEGORIES -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">Product Architecture</div>
+  <h2><strong>One taxonomy</strong> across every touchpoint.</h2>
+  <p class="sub" style="margin-bottom:24px">Five outcome categories govern everything: which smoothie you get, which boost goes in it, which LED session you book, which products we recommend, which protocol you follow. The user picks a goal once. The platform aligns everything to it.</p>
+
+  <div class="g5">
+    <div class="outcome">
+      <div class="outcome-icon">&#10024;</div>
+      <div class="outcome-name">Glow</div>
+      <div class="outcome-desc">Potion + boost, red light LED, skin protocols, own-brand blend</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-icon">&#9889;</div>
+      <div class="outcome-name">Energy</div>
+      <div class="outcome-desc">Potion + boost, movement protocols, metabolism tracking</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-icon">&#9673;</div>
+      <div class="outcome-name">Calm</div>
+      <div class="outcome-desc">Potion + boost, breathwork, stress &amp; sleep protocols</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-icon">&#9736;</div>
+      <div class="outcome-name">Gut</div>
+      <div class="outcome-desc">Potion + boost, microbiome protocols, digestion tracking</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-icon">&#9775;</div>
+      <div class="outcome-name">Recovery</div>
+      <div class="outcome-desc">Potion + boost, near-infrared LED, recovery protocols</div>
+    </div>
+  </div>
+
+  <!-- Wide screenshot placeholder -->
+  <div style="margin-top:24px">
+    <div class="screen-placeholder">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">Product Catalog -- Organized by Outcome</div>
+      <div class="phone-sublabel">Show: outcome tabs across the top, product cards below (blends, supplements, capsules), each tagged to an outcome category with pricing</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MEMBERSHIP TIERS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="features">
+  <div class="sl">Membership</div>
+  <h2><strong>Three tiers,</strong> credit-based.</h2>
+  <p class="sub" style="margin-bottom:24px">Stripe handles billing, SEPA + card. Credits for sessions and smoothies. Designed to build audience at free, create data dependency at Core, and deliver personalized protocols at Premium.</p>
+
+  <div class="g4">
+    <div class="tier-card">
+      <div class="tier-name">Free</div>
+      <div class="tier-price"><strong>&euro;0</strong></div>
+      <div class="tier-features">Content access<br>Community browsing<br>Product browsing<br>Event discovery</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">Core</div>
+      <div class="tier-price"><strong>&euro;19</strong><span style="font-size:14px">/mo</span></div>
+      <div class="tier-features">Biomarker dashboard<br>Wearable sync<br>Basic protocols<br>Community access<br>85-90% margin</div>
+    </div>
+    <div class="tier-card highlight">
+      <div class="tier-name">Pro</div>
+      <div class="tier-price"><strong>&euro;49</strong><span style="font-size:14px">/mo</span></div>
+      <div class="tier-features">Personalized protocols<br>AI insights<br>Advanced tracking<br>Drop early access<br>85-90% margin</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-name">Premium</div>
+      <div class="tier-price"><strong>&euro;99</strong><span style="font-size:14px">/mo</span></div>
+      <div class="tier-features">Blood panel credits<br>1:1 reviews<br>Exclusive events<br>CGM integration (Phase 2)<br>70-85% margin</div>
+    </div>
+  </div>
+
+  <!-- Membership screen placeholder -->
+  <div style="margin-top:24px">
+    <div class="g2">
+      <div class="phone-frame">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">Membership View</div>
+        <div class="phone-sublabel">Credit balance: "3 smoothies, 2 LED left." Plan upgrade CTA. Payment history.</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">Profile & Progress</div>
+        <div class="phone-sublabel">Streak counter, goal progress, bio age (V1), saved favorites, purchase history.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MVP FEATURE MAP -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">MVP Scope // 10 Modules // 16 Weeks</div>
+  <h2><strong>Not a prototype.</strong> A full product loop from day one.</h2>
+  <p class="sub" style="margin-bottom:24px">Developer-scoped and sprint-planned. iOS-first (Swift/SwiftUI). Stripe is the backbone -- subscriptions, one-time purchases, SEPA for Germany, proration for plan changes. Admin panel runs in parallel.</p>
+
+  <div class="g2" style="gap:12px">
+    <div class="card accent">
+      <h3 style="font-size:14px">1. LED Booking</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">Most critical module. 20-min slots, real-time seat availability, session type selection (Glow / Recovery), smoothie pre-order bundled. Reminder: "Your session is in 1 hour, smoothie is being prepared."</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 1</span></div>
+    </div>
+    <div class="card accent">
+      <h3 style="font-size:14px">2. Digital Menu + Customization</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">6 Alche Potions (EUR 7--11) + 5 boost add-ons (+EUR 2). Linked with LED booking: "We recommend Potion N&#176;1 + Glow Boost for your session." Save favorite combos. One-tap reorder.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 2</span></div>
+    </div>
+    <div class="card accent">
+      <h3 style="font-size:14px">3. Membership & Credits</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">3-tier credit system. Remaining balance visible. Plan upgrades/downgrades. Stripe billing with SEPA. Proration for plan changes. This is the most complex Stripe integration.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 3</span></div>
+    </div>
+    <div class="card accent">
+      <h3 style="font-size:14px">4. Shop</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">What's on the shelf is in the app. Own blends (EUR 29&#8211;35), single ingredients, capsule supplements. In-store pickup or shipping. No fancy recommendation engine yet -- that's V1.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 2</span></div>
+    </div>
+    <div class="card accent">
+      <h3 style="font-size:14px">5. Event RSVP</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">Event calendar, ticket purchase, member-exclusive events (Premium/Unlimited). Simple reminders. Events generate content + community + revenue simultaneously.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 2</span></div>
+    </div>
+    <div class="card sage-accent">
+      <h3 style="font-size:14px">6. Glow Scan</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">API-based skin analysis at MVP. Not custom AI -- pre-trained model. Provides skin assessment tied to product recommendations. The KNOW layer seed. Full AI version in V2.</p>
+      <div style="margin-top:6px"><span class="tag mvp">MVP Lite</span> <span class="tag v2">V2: Full AI</span></div>
+    </div>
+    <div class="card sage-accent">
+      <h3 style="font-size:14px">7. CGM Lite</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">HealthKit bridge reads glucose from FreeStyle Libre via Apple Health. Display-only at launch. No direct sensor integration, no medical device classification. 1-2 week add-on scope.</p>
+      <div style="margin-top:6px"><span class="tag mvp">MVP Infrastructure</span> <span class="tag v1">V1: User-facing</span></div>
+    </div>
+    <div class="card sage-accent">
+      <h3 style="font-size:14px">8. Goal Journeys</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">6 pre-built templates: glow, recovery, sleep, anti-inflammation, gut, party detox. Template-based, not personalized yet. Weekly check-ins tied to product recs.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Template</span> <span class="tag v1">V1: Personalized</span></div>
+    </div>
+    <div class="card rose-accent">
+      <h3 style="font-size:14px">9. Social Layer</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">Feed, milestones, profiles. Not building Instagram. Just enough for members to see each other exist and feel part of something. Opt-in, never forced.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 4</span></div>
+    </div>
+    <div class="card rose-accent">
+      <h3 style="font-size:14px">10. Progress Tracking</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.55">Session streaks, check-in frequency, product usage patterns. The data foundation for V1 intelligence. Digital twin concept starts as a simple avatar in MVP.</p>
+      <div style="margin-top:6px"><span class="tag mvp">Sprint 4</span> <span class="tag v2">V2: Digital Twin</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;text-align:center;border:1px dashed var(--terra)">
+    <p style="font-size:12px;color:var(--terra);font-weight:500">Admin panel runs in parallel -- not sequential. Staff need booking management, product updates, QR check-in, event management. Don't underestimate this.</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHYSICAL SPACE -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="space">
+  <div class="sl">The Physical Layer</div>
+  <h2><strong>A space you can't delete.</strong></h2>
+  <p class="sub" style="margin-bottom:24px">3% of health app users are still active at day 30. You can't abandon a physical space the way you ignore an app notification. The Berlin flagship in Mitte is where you buy products, do LED sessions, attend events, and interact with the Alche community directly. The space kills churn.</p>
+
+  <!-- Physical space placeholder -->
+  <div class="screen-placeholder" style="aspect-ratio:21/9;margin-bottom:20px">
+    <div class="phone-placeholder-icon">+</div>
+    <div class="phone-label">The Physical Space -- Berlin Mitte</div>
+    <div class="phone-sublabel">Smoothie bar, LED session area, product shelf, community table. Neo-Apothecary aesthetic: warm wood, brass, glass, botanical elements.</div>
+  </div>
+
+  <!-- PRODUCT ECOSYSTEM -->
+  <div class="sl" style="margin-top:8px">Product Ecosystem</div>
+  <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:6px"><strong>Four revenue layers,</strong> one visit.</h3>
+  <p class="sub" style="margin-bottom:20px">Everything maps to five outcome categories: Glow, Energy, Calm, Gut, Recovery. One user decision governs their smoothie, their LED session type, their boost add-on, and their product recommendations. One architecture, zero friction, stacked revenue.</p>
+
+  <!-- Revenue stack visual -->
+  <div class="card" style="background:linear-gradient(135deg, rgba(183,135,38,0.08), rgba(111,130,99,0.06));border:1px solid rgba(183,135,38,0.15);margin-bottom:16px">
+    <h3 style="font-size:14px;margin-bottom:14px">Revenue Stack Per Visit</h3>
+    <table style="font-size:12px;width:100%;border-collapse:collapse">
+      <tr style="border-bottom:1px solid rgba(45,35,28,0.08)">
+        <td style="padding:7px 0;color:var(--deep);font-weight:600">Alch&#233; Potions N&#176;1&#8211;6</td>
+        <td style="padding:7px 0;color:var(--stone);font-size:11px">6 signature smoothies, pre-ordered via app</td>
+        <td style="padding:7px 0;text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;white-space:nowrap">EUR 7&#8211;11</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(45,35,28,0.08)">
+        <td style="padding:7px 0;color:var(--deep);font-weight:600">Functional Boost</td>
+        <td style="padding:7px 0;color:var(--stone);font-size:11px">5 add-ons, mapped 1:1 to outcome categories</td>
+        <td style="padding:7px 0;text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;white-space:nowrap">+EUR 2</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(45,35,28,0.08)">
+        <td style="padding:7px 0;color:var(--deep);font-weight:600">LED Session</td>
+        <td style="padding:7px 0;color:var(--stone);font-size:11px">Glow or Recovery, 20 min, included in membership credits</td>
+        <td style="padding:7px 0;text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;white-space:nowrap">EUR 0&#8211;15</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(45,35,28,0.08)">
+        <td style="padding:7px 0;color:var(--deep);font-weight:600">Take-Home Product</td>
+        <td style="padding:7px 0;color:var(--stone);font-size:11px">Own-brand blends, capsules, curated 3rd-party</td>
+        <td style="padding:7px 0;text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;white-space:nowrap">EUR 12&#8211;35</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0 0;font-weight:700;color:var(--deep);font-size:13px" colspan="2">Basket range per visit</td>
+        <td style="padding:10px 0 0;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--amber)">EUR 9&#8211;63</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 3 mechanism cards -->
+  <div class="g3" style="margin-bottom:16px">
+    <div class="card" style="margin-bottom:0">
+      <h3 style="font-size:12px;color:var(--amber);margin-bottom:6px">Smoothie Bar = Sampling Engine</h3>
+      <p style="font-size:11px;color:var(--stone);line-height:1.55;margin:0">Customers order <strong style="color:var(--deep)">Potions by number</strong>, not ingredient -- brand equity built into the ritual. +EUR 2 boost upsell on every order. At 3x/week, that's <strong style="color:var(--deep)">EUR 132/mo per user</strong> from smoothies alone. The potion is the daily habit that anchors retention.</p>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <h3 style="font-size:12px;color:var(--sage);margin-bottom:6px">LED Session = Foot Traffic Lock</h3>
+      <p style="font-size:11px;color:var(--stone);line-height:1.55;margin:0">20-minute sessions, capacity-controlled seating. Smoothie prepared during session -- bundled, not separate. <strong style="color:var(--deep)">Walk-in pricing creates upsell to membership.</strong> The session gets them through the door; the membership is the lock-in.</p>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <h3 style="font-size:12px;color:var(--terra);margin-bottom:6px">Product Shelf = Conversion Funnel</h3>
+      <p style="font-size:11px;color:var(--stone);line-height:1.55;margin:0">Try a boost in your potion, love it, buy the 300g pouch. Own-brand blends = <strong style="color:var(--deep)">highest margin</strong>. Capsules = <strong style="color:var(--deep)">subscription-ready</strong>. Curated 3rd-party = <strong style="color:var(--deep)">zero inventory risk</strong>. V1 adds smart replenishment.</p>
+    </div>
+  </div>
+
+  <!-- The flywheel sentence -->
+  <div class="card" style="background:rgba(45,35,28,0.02);text-align:center;padding:16px 24px;margin-bottom:16px">
+    <p style="font-size:12.5px;color:var(--deep);line-height:1.7;margin:0;font-style:italic">Try the boost in your smoothie &rarr; love it &rarr; buy the pouch &rarr; run out in 3 weeks &rarr; app triggers replenishment.<br><strong>Every drink is a product demo. The smoothie bar eliminates purchase hesitation.</strong></p>
+  </div>
+
+  <!-- Liability vs Moat -->
+  <div class="card">
+    <div class="g2" style="gap:24px">
+      <div>
+        <h3 style="font-size:14px">Why it's a liability</h3>
+        <p style="font-size:12px;color:var(--stone);line-height:1.6">Physical spaces are expensive (EUR 80-150K buildout), hard to scale, and geography-locked. Every euro in rent is a euro not in app development.</p>
+      </div>
+      <div>
+        <h3 style="font-size:14px">Why it's a moat</h3>
+        <p style="font-size:12px;color:var(--stone);line-height:1.6">Digital-only competitors cannot replicate walking into a space where your biomarker data connects to your smoothie, your session, and the event happening that evening. The smoothie bar is a sampling engine. The product shelf is a conversion funnel. The LED room is a retention anchor.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Space interaction screens -->
+  <div style="margin-top:24px">
+    <div class="g3">
+      <div class="phone-frame" style="max-width:220px">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">QR Check-in</div>
+        <div class="phone-sublabel">Arrive, scan, your potion is waiting.</div>
+      </div>
+      <div class="phone-frame" style="max-width:220px">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">In-Store Browse</div>
+        <div class="phone-sublabel">Scan any product for details, reviews, outcome mapping.</div>
+      </div>
+      <div class="phone-frame" style="max-width:220px">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">Post-Visit Summary</div>
+        <div class="phone-sublabel">Session logged, products purchased, next recommendation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CGM INTEGRATION -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="cgm">
+  <div class="sl">CGM Strategy</div>
+  <h2><strong>Phased integration.</strong> Data first, intelligence later.</h2>
+  <p class="sub" style="margin-bottom:24px">Our physician partner discovered that when patients see their glucose data in real-time, behavior changes naturally -- one patient stopped midnight eating entirely. We integrate this progressively: infrastructure at MVP, display at V1, intelligence at V2. No supply chain risk at launch.</p>
+
+  <div class="g3">
+    <div class="phase-card" data-phase="Phase 1: Launch - M8">
+      <h4>Core Product</h4>
+      <p>Smoothies, LED, app, membership. No CGM hardware. HealthKit infrastructure built and ready. Physician protocols documented (content, not code).</p>
+      <div class="phase-cost">&euro;0</div>
+      <div class="mini">CGM cost to user</div>
+    </div>
+    <div class="phase-card" data-phase="Phase 2: M8 - M10">
+      <h4>BYOD Pilot</h4>
+      <p>10 Premium users bring their own Dexcom Stelo (OTC in Germany). Alche provides the interpretation layer -- glucose graphs + basic context. First real data.</p>
+      <div class="phase-cost">&euro;0</div>
+      <div class="mini">CGM cost to Alche</div>
+    </div>
+    <div class="phase-card" data-phase="Phase 3: M12+">
+      <h4>Wholesale + Intelligence</h4>
+      <p>Bulk pricing at 100+ devices. Premium EUR 99 retains positive margin. Smart correlations: smoothie &rarr; glucose response. Doctor-trained protocols.</p>
+      <div class="phase-cost">&euro;50-65<span style="font-size:12px">/mo</span></div>
+      <div class="mini">Net margin: EUR 34-49</div>
+    </div>
+  </div>
+
+  <!-- CGM screen placeholders -->
+  <div style="margin-top:24px">
+    <div class="g2">
+      <div class="phone-frame">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">CGM Lite -- MVP</div>
+        <div class="phone-sublabel">Simple glucose graph from HealthKit. Display-only. "Your glucose data, visualized."</div>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-placeholder-icon">+</div>
+        <div class="phone-label">CGM Smart -- V1</div>
+        <div class="phone-sublabel">Glucose + smoothie/LED correlation. "Your Berry Glow kept glucose stable for 3 hours."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <p style="font-size:12px;line-height:1.65"><strong>What to tell the investor:</strong> "CGM infrastructure is MVP-ready, user-facing features activate in V1." This is both honest and impressive. We're not building a medical device -- we read standard HealthKit data and provide context. No FDA/MDR classification required for display-only.</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PRODUCT REPLENISHMENT + DROPS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">Commerce Intelligence</div>
+  <h2><strong>Not Amazon "buy again."</strong> Luxury wellness intelligence.</h2>
+  <p class="sub" style="margin-bottom:24px">The app knows what you bought, when you bought it, and what protocol you're following. It doesn't spam -- it acts like a concierge. V1 feature, but the data architecture is built at MVP.</p>
+
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card accent">
+      <h3 style="font-size:14px">Smart Replenishment</h3>
+      <p style="font-size:12px;color:var(--stone);line-height:1.6">"Your collagen is likely running low. Want us to prepare your next batch?" One-tap confirm, subscription convert, or single purchase. Protocol-based: "You're in a recovery phase. We recommend continuing collagen + magnesium this month."</p>
+      <div style="margin-top:8px"><span class="tag v1">V1</span></div>
+    </div>
+    <div class="card terra-accent">
+      <h3 style="font-size:14px">Limited Drops</h3>
+      <p style="font-size:12px;color:var(--stone);line-height:1.6">Timed, curated, limited-quantity product releases. Members get 24-48 hour early access. Each drop has storytelling: who developed it, for which ritual, how to use it. Push + countdown + inventory tracking. Brand authority through scarcity.</p>
+      <div style="margin-top:8px"><span class="tag v1">V1</span></div>
+    </div>
+  </div>
+
+  <!-- Replenishment screen -->
+  <div class="screen-placeholder">
+    <div class="phone-placeholder-icon">+</div>
+    <div class="phone-label">Smart Replenishment Flow</div>
+    <div class="phone-sublabel">Show: gentle notification card, protocol context ("recovery phase"), one-tap reorder, subscription toggle option</div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SPRINT PLAN -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade" id="roadmap">
+  <div class="sl">Development Roadmap</div>
+  <h2><strong>6 sprints,</strong> foundation first.</h2>
+  <p class="sub" style="margin-bottom:24px">Design system, admin panel, and QA run alongside feature sprints -- not sequentially. iOS-first (Swift/SwiftUI). Clean architecture built to support V2 even though we're not building it yet.</p>
+
+  <div class="sprint-row">
+    <div class="sprint-num">S0</div>
+    <div class="sprint-content">
+      <h4>Foundation</h4>
+      <p>Auth + Stripe integration + push notifications. This is the backbone everything else depends on. SEPA payment for Germany. User model, API structure, data models designed for V2 expansion.</p>
+    </div>
+  </div>
+  <div class="sprint-row">
+    <div class="sprint-num">S1</div>
+    <div class="sprint-content">
+      <h4>LED Booking</h4>
+      <p>Real-time availability, slot management, session types, capacity control. The first user-facing feature and the most critical revenue driver.</p>
+    </div>
+  </div>
+  <div class="sprint-row">
+    <div class="sprint-num">S2</div>
+    <div class="sprint-content">
+      <h4>Menu + Shop</h4>
+      <p>Digital menu with smoothie customization, boost add-ons, favorite saving. Product catalog, cart, checkout. In-store pickup or shipping. Event RSVP.</p>
+    </div>
+  </div>
+  <div class="sprint-row">
+    <div class="sprint-num">S3</div>
+    <div class="sprint-content">
+      <h4>Membership</h4>
+      <p>3-tier credit system. Stripe subscriptions with proration. Credit balance display, plan management, payment history. Most complex Stripe integration.</p>
+    </div>
+  </div>
+  <div class="sprint-row">
+    <div class="sprint-num">S4</div>
+    <div class="sprint-content">
+      <h4>Tracking + Social</h4>
+      <p>Progress tracking, session streaks, goal journeys (template-based). Social feed, member profiles, milestones. HealthKit bridge infrastructure (CGM-ready).</p>
+    </div>
+  </div>
+  <div class="sprint-row">
+    <div class="sprint-num">S5</div>
+    <div class="sprint-content">
+      <h4>Integration + QA + Launch</h4>
+      <p>Full integration testing, App Store submission, Glow Scan API integration, performance optimization, accessibility audit. Beta to 50-100 founding members from waitlist.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- V1 / V2 EVOLUTION -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">Product Evolution</div>
+  <h2><strong>MVP is the skeleton.</strong> V1 adds intelligence. V2 is the full platform.</h2>
+
+  <div class="g3" style="margin-bottom:24px">
+    <div class="card" style="border-top:3px solid var(--sage)">
+      <div class="cap" style="color:var(--sage);margin-bottom:8px">MVP -- Months 1-4</div>
+      <h3 style="font-size:15px">The Commerce Loop</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.6">Booking, menu, shop, membership, events, basic tracking, light social. Commerce-first. Get the transaction engine running. Data models built to support what's coming.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <div class="cap" style="color:var(--amber);margin-bottom:8px">V1 -- Months 5-9</div>
+      <h3 style="font-size:15px">The Intelligence Layer</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.6">AI concierge, smart replenishment, glucose-smoothie correlation, curated protocols, recurring booking, multi-language. KNOW and DO layers get real. CGM Lite goes user-facing.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--terra)">
+      <div class="cap" style="color:var(--terra);margin-bottom:8px">V2 -- Months 10+</div>
+      <h3 style="font-size:15px">The Full Platform</h3>
+      <p style="font-size:11.5px;color:var(--stone);line-height:1.6">Biomarker dashboard, bio age score, personalized AI protocols, doctor integration, protocol cohorts, digital twin. This is when the flywheel actually spins at full velocity.</p>
+    </div>
+  </div>
+
+  <!-- V1/V2 vision screens -->
+  <div class="g3">
+    <div class="phone-frame" style="max-width:220px">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">V1: AI Concierge</div>
+      <div class="phone-sublabel">"Based on your glucose data, try the Calm smoothie today."</div>
+    </div>
+    <div class="phone-frame" style="max-width:220px">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">V2: Biomarker Dashboard</div>
+      <div class="phone-sublabel">Blood panels, CGM trends, bio age score, longitudinal tracking.</div>
+    </div>
+    <div class="phone-frame" style="max-width:220px">
+      <div class="phone-placeholder-icon">+</div>
+      <div class="phone-label">V2: Digital Twin</div>
+      <div class="phone-sublabel">Avatar-based health visualization. Your body, your data, one view.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- WHY HYBRID WORKS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">The Science of Retention</div>
+  <h2><strong>Why hybrid beats digital-only.</strong></h2>
+  <p class="sub" style="margin-bottom:20px">Digital-only health tools fail because they attempt to establish habits using weak context cues, without social accountability, during the 30-70 day window when the habit is most fragile. The science of habit formation predicts this failure before any retention data confirms it.</p>
+
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--terra)">3.3%</div>
+      <p style="font-size:12px;color:var(--stone);line-height:1.55;margin-top:4px">Median 30-day retention for health apps. 80% drop between day 1 and day 10. Users abandon before habit formation even has a chance.</p>
+      <div class="mini" style="margin-top:6px">Baumel et al. 2019, JMIR (PMC6785720, n=93 apps)</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--sage)">66 days</div>
+      <p style="font-size:12px;color:var(--stone);line-height:1.55;margin-top:4px">Average time to reach habit automaticity. Range: 18-254 days. Most apps lose users well before this window opens. Physical cues and social accountability bridge the gap.</p>
+      <div class="mini" style="margin-top:6px">Lally et al. 2010, European J. of Social Psychology (UCL, n=96)</div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <p style="font-size:13px;line-height:1.65;max-width:680px;margin:0 auto"><strong>The hybrid argument:</strong> physical spaces create environmental cues that app notifications can't replicate. Community creates social accountability. A place you go to, people you see, rituals you physically do -- these function as reliable triggers that anchor habits during the fragile formation window. The space doesn't just add cost -- it adds the retention mechanism that pure digital structurally lacks.</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- WHAT MAKES IT DIFFERENT -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">Differentiation</div>
+  <h2><strong>Three things</strong> nobody else does.</h2>
+
+  <div class="g3">
+    <div class="card accent">
+      <h3 style="font-size:14px;color:var(--amber)">Closed Loop</h3>
+      <p style="font-size:12px;color:var(--stone);line-height:1.6">Your blood data changes what smoothie we recommend, what products we surface, what protocol you follow, who we connect you with. End-to-end. Nobody else closes this loop.</p>
+    </div>
+    <div class="card sage-accent">
+      <h3 style="font-size:14px;color:var(--sage)">Physical Space Kills Churn</h3>
+      <p style="font-size:12px;color:var(--stone);line-height:1.6">You can delete an app. You can't delete a place. The physical space creates habits that pull people back into the app. That's why our projected churn (8%) beats industry average (12-15%).</p>
+    </div>
+    <div class="card terra-accent">
+      <h3 style="font-size:14px;color:var(--terra)">Outcome-Based Everything</h3>
+      <p style="font-size:12px;color:var(--stone);line-height:1.6">Smoothies, boosts, products, protocols, LED sessions -- all mapped to what you want (glow, recovery, calm, gut, energy). Not ingredients, not categories. Outcomes.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- TECH REALITY CHECK -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="fade">
+  <div class="sl">Tech Reality Check</div>
+  <h2><strong>What's real</strong> and what's not yet.</h2>
+
+  <div class="g2">
+    <div class="card" style="border-left:3px solid var(--sage)">
+      <div class="cap" style="color:var(--sage);margin-bottom:8px">Real at MVP</div>
+      <p style="font-size:12px;color:var(--stone);line-height:1.7">
+        iOS-first (Swift/SwiftUI)<br>
+        Stripe backbone (subs, SEPA, proration)<br>
+        HealthKit bridge (standard API)<br>
+        Pre-trained skin analysis API (Glow Scan)<br>
+        Admin panel for staff operations<br>
+        Push notifications + reminders
+      </p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--stone)">
+      <div class="cap" style="color:var(--stone);margin-bottom:8px">Not Yet</div>
+      <p style="font-size:12px;color:var(--stone);line-height:1.7">
+        Custom AI models (V2)<br>
+        Android (follows MVP)<br>
+        Direct CGM sensor integration<br>
+        Multi-language support (V1)<br>
+        Personalized protocol engine (V1)<br>
+        Digital twin visualization (V2)
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;text-align:center;border:1px dashed var(--amber)">
+    <p style="font-size:13px;font-weight:500;color:var(--deep)">"We're not asking you to build a health-tech moonshot. MVP is a booking app + e-commerce + membership + light tracking. The complexity is in how cleanly these connect, not in any single module."</p>
+    <div class="mini" style="margin-top:6px">-- Developer meeting brief, Feb 2026</div>
+  </div>
+</section>
+
+<footer>
+  Alche // Product Deep Dive // Pitch Book Slide 07 // February 2026 // Confidential<br>
+  17 app screen placeholders for design integration // Sources: Notion Product Docs, Developer Meeting (Farzam), Pitch Book Research
+</footer>
+
+</div>
+
+<script>
+// Fade-in on scroll
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:0.08});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+</script>
+</body></html>

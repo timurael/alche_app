@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>alche math lab — the nerdy business model playground</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* alche core */
+  --cream: #F5F0E8;
+  --cream-mid: #EDE7DC;
+  --deep: #2C2418;
+  --deep-90: rgba(44, 36, 24, 0.9);
+  --deep-70: rgba(44, 36, 24, 0.7);
+  --deep-50: rgba(44, 36, 24, 0.5);
+  --deep-30: rgba(44, 36, 24, 0.3);
+  --deep-15: rgba(44, 36, 24, 0.15);
+  --deep-08: rgba(44, 36, 24, 0.08);
+  --amber: #C4956A;
+  --sage: #8B9E7C;
+  --terra: #B86B4A;
+  --rose: #C47A8A;
+  --stone: #9E948A;
+
+  /* lab-specific: nerdy-cute palette */
+  --pink: #E8A0BF;
+  --pink-soft: rgba(232, 160, 191, 0.15);
+  --pink-mid: rgba(232, 160, 191, 0.35);
+  --lavender: #B8A9C9;
+  --lavender-soft: rgba(184, 169, 201, 0.12);
+  --mint: #A8D8B9;
+  --mint-soft: rgba(168, 216, 185, 0.15);
+  --peach: #F5C7A9;
+  --peach-soft: rgba(245, 199, 169, 0.2);
+  --sky: #A5C4D4;
+  --sky-soft: rgba(165, 196, 212, 0.15);
+
+  /* glass */
+  --glass: rgba(255, 252, 246, 0.6);
+  --glass-strong: rgba(255, 252, 246, 0.82);
+  --glass-border: rgba(196, 149, 106, 0.18);
+  --glass-border-strong: rgba(196, 149, 106, 0.3);
+
+  /* graph paper */
+  --grid-color: rgba(44, 36, 24, 0.06);
+  --grid-accent: rgba(232, 160, 191, 0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--cream);
+  color: var(--deep);
+  line-height: 1.6;
+  overflow-x: hidden;
+  font-weight: 400;
+}
+
+/* Graph paper background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    /* small grid */
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+    /* large grid */
+    linear-gradient(var(--grid-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-accent) 1px, transparent 1px),
+    /* atmospheric blobs */
+    radial-gradient(ellipse at 20% 15%, rgba(232, 160, 191, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(184, 169, 201, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 70%, rgba(168, 216, 185, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 85%, rgba(245, 199, 169, 0.06) 0%, transparent 40%);
+  background-size:
+    20px 20px,
+    20px 20px,
+    100px 100px,
+    100px 100px,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(245, 240, 232, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--deep-08);
+  padding: 0 24px;
+}
+
+nav .nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+nav .nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 20px;
+  color: var(--deep);
+  margin-right: 16px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-logo span {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--pink);
+  vertical-align: super;
+  margin-left: 4px;
+}
+
+.nav-pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--deep-15);
+  background: transparent;
+  color: var(--deep-70);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-pill:hover, .nav-pill.active {
+  background: var(--pink-soft);
+  border-color: var(--pink);
+  color: var(--deep);
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════ */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+}
+
+section {
+  margin-bottom: 100px;
+  scroll-margin-top: 72px;
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2.8rem, 2rem + 3vw, 4.5rem);
+  line-height: 1.1;
+  color: var(--deep);
+  margin-bottom: 16px;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--pink);
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 1.4rem + 1.5vw, 2.6rem);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--pink);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--pink);
+}
+
+.subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.15rem);
+  color: var(--deep-70);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.mono-sm {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+}
+
+/* ═══════════════════════════════════════════
+   CARDS & PANELS
+   ═══════════════════════════════════════════ */
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-elevated {
+  background: var(--glass-strong);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(44, 36, 24, 0.06), 0 2px 8px rgba(44, 36, 24, 0.03);
+}
+
+.card-pink {
+  border-color: rgba(232, 160, 191, 0.25);
+  background: linear-gradient(135deg, rgba(232, 160, 191, 0.08), var(--glass));
+}
+
+.card-lavender {
+  border-color: rgba(184, 169, 201, 0.25);
+  background: linear-gradient(135deg, rgba(184, 169, 201, 0.08), var(--glass));
+}
+
+.card-mint {
+  border-color: rgba(168, 216, 185, 0.25);
+  background: linear-gradient(135deg, rgba(168, 216, 185, 0.08), var(--glass));
+}
+
+.card-peach {
+  border-color: rgba(245, 199, 169, 0.25);
+  background: linear-gradient(135deg, rgba(245, 199, 169, 0.08), var(--glass));
+}
+
+.card-sky {
+  border-color: rgba(165, 196, 212, 0.25);
+  background: linear-gradient(135deg, rgba(165, 196, 212, 0.08), var(--glass));
+}
+
+/* ═══════════════════════════════════════════
+   GRID LAYOUTS
+   ═══════════════════════════════════════════ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE CONTROLS
+   ═══════════════════════════════════════════ */
+.slider-group {
+  margin-bottom: 24px;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.slider-label span:first-child {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--deep-70);
+}
+
+.slider-value {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--deep);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--deep-15);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 3px solid var(--cream);
+  box-shadow: 0 2px 8px rgba(232, 160, 191, 0.4);
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 3px solid var(--cream);
+  box-shadow: 0 2px 8px rgba(232, 160, 191, 0.4);
+  cursor: grab;
+}
+
+input[type="range"].sage::-webkit-slider-thumb { background: var(--sage); box-shadow: 0 2px 8px rgba(139, 158, 124, 0.4); }
+input[type="range"].lavender::-webkit-slider-thumb { background: var(--lavender); box-shadow: 0 2px 8px rgba(184, 169, 201, 0.4); }
+input[type="range"].amber::-webkit-slider-thumb { background: var(--amber); box-shadow: 0 2px 8px rgba(196, 149, 106, 0.4); }
+input[type="range"].terra::-webkit-slider-thumb { background: var(--terra); box-shadow: 0 2px 8px rgba(184, 107, 74, 0.4); }
+
+/* Toggle buttons */
+.toggle-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.toggle-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--deep-15);
+  background: transparent;
+  color: var(--deep-50);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  border-color: var(--deep-30);
+  color: var(--deep-70);
+}
+
+.toggle-btn.active {
+  background: var(--deep);
+  color: var(--cream);
+  border-color: var(--deep);
+}
+
+/* ═══════════════════════════════════════════
+   BIG NUMBERS
+   ═══════════════════════════════════════════ */
+.big-number {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.big-number.pink { color: var(--pink); }
+.big-number.sage { color: var(--sage); }
+.big-number.amber { color: var(--amber); }
+.big-number.terra { color: var(--terra); }
+.big-number.lavender { color: var(--lavender); }
+.big-number.mint { color: var(--mint); }
+
+.big-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--deep-50);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   SVG ILLUSTRATIONS
+   ═══════════════════════════════════════════ */
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════
+   FORMULA DISPLAY
+   ═══════════════════════════════════════════ */
+.formula-box {
+  background: var(--deep);
+  color: var(--cream);
+  border-radius: 12px;
+  padding: 20px 28px;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  line-height: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.formula-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--lavender), var(--mint));
+}
+
+.formula-box .var { color: var(--pink); font-weight: 700; }
+.formula-box .op { color: var(--amber); }
+.formula-box .num { color: var(--mint); }
+.formula-box .result { color: var(--peach); font-weight: 700; }
+.formula-box .comment { color: var(--deep-50); font-size: 11px; }
+
+/* ═══════════════════════════════════════════
+   TOOLTIP
+   ═══════════════════════════════════════════ */
+.term {
+  border-bottom: 1.5px dashed var(--pink-mid);
+  cursor: help;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.term:hover {
+  border-color: var(--pink);
+}
+
+.term .tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--deep);
+  color: var(--cream);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  width: max-content;
+  max-width: 260px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(44, 36, 24, 0.2);
+}
+
+.term .tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--deep);
+}
+
+.term:hover .tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED BAR CHART
+   ═══════════════════════════════════════════ */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 200px;
+  padding-bottom: 28px;
+  position: relative;
+  border-bottom: 1px solid var(--deep-15);
+}
+
+.bar-chart .bar {
+  flex: 1;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-width: 20px;
+}
+
+.bar-chart .bar-label {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--deep-50);
+  white-space: nowrap;
+}
+
+.bar-chart .bar-value {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--deep);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════
+   FUNNEL VIZ
+   ═══════════════════════════════════════════ */
+.funnel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 0;
+}
+
+.funnel-step {
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.funnel-step .step-label {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--deep-90);
+  white-space: nowrap;
+}
+
+.funnel-step .step-num {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.funnel-arrow {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--deep-15);
+}
+
+/* ═══════════════════════════════════════════
+   GLOSSARY CARDS
+   ═══════════════════════════════════════════ */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.glossary-card {
+  perspective: 800px;
+  height: 180px;
+  cursor: pointer;
+}
+
+.glossary-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.glossary-card:hover .glossary-card-inner,
+.glossary-card.flipped .glossary-card-inner {
+  transform: rotateY(180deg);
+}
+
+.glossary-front, .glossary-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.glossary-front {
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+}
+
+.glossary-front .term-abbr {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.glossary-front .term-full {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--deep-50);
+}
+
+.glossary-front .flip-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--deep-30);
+}
+
+.glossary-back {
+  background: var(--deep);
+  color: var(--cream);
+  border: 1px solid var(--deep);
+  transform: rotateY(180deg);
+}
+
+.glossary-back p {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.glossary-back .back-value {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 10px;
+  color: var(--pink);
+}
+
+/* ═══════════════════════════════════════════
+   GRAVEYARD
+   ═══════════════════════════════════════════ */
+.tombstone {
+  border: 1px solid var(--deep-15);
+  border-radius: 20px 20px 4px 4px;
+  padding: 28px 24px;
+  text-align: center;
+  background: var(--glass);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.tombstone::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--terra);
+  opacity: 0.5;
+  border-radius: 20px 20px 0 0;
+}
+
+.tombstone:hover {
+  border-color: var(--terra);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(184, 107, 74, 0.1);
+}
+
+.tombstone .rip {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--terra);
+  margin-bottom: 12px;
+}
+
+.tombstone .company-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.tombstone .burned {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--terra);
+  margin-bottom: 8px;
+}
+
+.tombstone .cause {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: var(--deep-50);
+  line-height: 1.5;
+}
+
+.tombstone .lesson {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--deep-08);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--sage);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tombstone:hover .lesson {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   TIMELINE
+   ═══════════════════════════════════════════ */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--deep-15);
+}
+
+.timeline-node {
+  position: relative;
+  margin-bottom: 32px;
+  padding-left: 24px;
+}
+
+.timeline-node::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--deep-30);
+  transition: all 0.3s ease;
+}
+
+.timeline-node.active::before {
+  background: var(--pink);
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(232, 160, 191, 0.2);
+}
+
+.timeline-node.completed::before {
+  background: var(--sage);
+  border-color: var(--sage);
+}
+
+.timeline-month {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--deep-50);
+  margin-bottom: 4px;
+}
+
+.timeline-event {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--deep-90);
+  margin-bottom: 2px;
+}
+
+.timeline-detail {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--deep-50);
+}
+
+/* ═══════════════════════════════════════════
+   RESULT PANEL (live calc output)
+   ═══════════════════════════════════════════ */
+.result-panel {
+  background: linear-gradient(135deg, rgba(232, 160, 191, 0.06), rgba(184, 169, 201, 0.06));
+  border: 1px solid rgba(232, 160, 191, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--deep-08);
+}
+
+.result-row:last-child { border-bottom: none; }
+
+.result-label {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--deep-70);
+}
+
+.result-val {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--deep);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════════════════════
+   VERDICT BADGES
+   ═══════════════════════════════════════════ */
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.verdict.good {
+  background: rgba(168, 216, 185, 0.2);
+  color: #4a7c5c;
+  border: 1px solid rgba(168, 216, 185, 0.4);
+}
+
+.verdict.warning {
+  background: rgba(245, 199, 169, 0.2);
+  color: #a06830;
+  border: 1px solid rgba(245, 199, 169, 0.4);
+}
+
+.verdict.danger {
+  background: rgba(196, 122, 138, 0.15);
+  color: #9c4a5a;
+  border: 1px solid rgba(196, 122, 138, 0.3);
+}
+
+/* ═══════════════════════════════════════════
+   COHORT RETENTION CHART (SVG)
+   ═══════════════════════════════════════════ */
+.retention-chart-container {
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.retention-chart-container svg {
+  width: 100%;
+  height: auto;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED DOT GRID (hero)
+   ═══════════════════════════════════════════ */
+.dot-grid {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 6px;
+  margin: 40px 0;
+}
+
+.dot-grid .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--deep-15);
+  transition: all 0.4s ease;
+}
+
+.dot-grid .dot.active { background: var(--pink); transform: scale(1.3); }
+.dot-grid .dot.churned { background: var(--deep-08); transform: scale(0.7); }
+
+/* ═══════════════════════════════════════════
+   MISC
+   ═══════════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: var(--deep-08);
+  margin: 40px 0;
+}
+
+.inline-calc {
+  display: inline;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9em;
+  background: var(--pink-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--deep);
+}
+
+.spacer { height: 40px; }
+
+/* Pulse animation for live values */
+@keyframes pulse-pink {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 12px rgba(232, 160, 191, 0.3); }
+}
+
+.pulse { animation: pulse-pink 2s ease infinite; }
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   HERO SECTION
+   ═══════════════════════════════════════════ */
+.hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 0 40px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: var(--pink-soft);
+  border: 1px solid rgba(232, 160, 191, 0.25);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--pink);
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.hero-subtext {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--deep-50);
+  margin-top: 8px;
+  max-width: 520px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Math equation animation */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Tab system */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--deep-08);
+  padding-bottom: 0;
+}
+
+.tab {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--deep-50);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover { color: var(--deep); }
+.tab.active {
+  color: var(--deep);
+  border-bottom-color: var(--pink);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Comparison table */
+.compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.compare-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--deep-50);
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--deep-15);
+  font-weight: 400;
+}
+
+.compare-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--deep-08);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  color: var(--deep-70);
+}
+
+.compare-table td.mono-val {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  color: var(--deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.compare-table tr.highlight td {
+  background: var(--pink-soft);
+  color: var(--deep);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   WATERFALL CHART
+   ═══════════════════════════════════════════ */
+.waterfall {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 220px;
+  padding: 0 0 30px;
+  position: relative;
+}
+
+.waterfall .w-bar {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 0.5s ease;
+}
+
+.waterfall .w-bar .w-segment {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.waterfall .w-bar .w-val {
+  position: absolute;
+  top: -18px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.waterfall .w-bar .w-label {
+  position: absolute;
+  bottom: -24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--deep-50);
+  white-space: nowrap;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">alche<span>math lab</span></div>
+    <a href="#revenue" class="nav-pill active">Revenue</a>
+    <a href="#funnel" class="nav-pill">Funnel</a>
+    <a href="#unit-economics" class="nav-pill">Unit Econ</a>
+    <a href="#churn" class="nav-pill">Churn</a>
+    <a href="#breakeven" class="nav-pill">Break-Even</a>
+    <a href="#graveyard" class="nav-pill">Graveyard</a>
+    <a href="#glossary" class="nav-pill">Glossary</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <circle cx="7" cy="7" r="6" stroke="#E8A0BF" stroke-width="1.5"/>
+      <path d="M4 7.5L6 9.5L10 5" stroke="#E8A0BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    interactive business model playground
+  </div>
+  <h1>The Math<br>Behind <em>alche</em></h1>
+  <p class="hero-subtext">
+    Every number, every formula, every assumption — made tangible.
+    Drag the sliders. Flip the cards. Break the model. Build intuition.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="big-number pink">EUR 500K</div>
+      <div class="big-label">Pre-seed raise</div>
+    </div>
+    <div class="hero-stat">
+      <div class="big-number sage">EUR 2.5M</div>
+      <div class="big-label">Valuation cap</div>
+    </div>
+    <div class="hero-stat">
+      <div class="big-number amber">Month 12</div>
+      <div class="big-label">Break-even</div>
+    </div>
+    <div class="hero-stat">
+      <div class="big-number lavender">145</div>
+      <div class="big-label">Subs to break even</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     1. REVENUE MIXER
+     ═══════════════════════════════════════════ -->
+<section id="revenue" class="reveal">
+  <div class="section-label">Module 01</div>
+  <h2>The Revenue Mixer</h2>
+  <p class="subtitle">Four revenue streams, one blended margin. Drag the sliders to see how subscriber mix changes everything.</p>
+
+  <div class="grid-2">
+    <div class="card card-pink">
+      <h3>Subscriber Mix</h3>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Core @ EUR 19/mo</span>
+          <span class="slider-value" id="core-val">90</span>
+        </div>
+        <input type="range" min="0" max="500" value="90" id="core-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Pro @ EUR 49/mo</span>
+          <span class="slider-value" id="pro-val">40</span>
+        </div>
+        <input type="range" class="sage" min="0" max="300" value="40" id="pro-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Premium @ EUR 99/mo</span>
+          <span class="slider-value" id="premium-val">15</span>
+        </div>
+        <input type="range" class="lavender" min="0" max="100" value="15" id="premium-slider">
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Product Revenue / mo</span>
+          <span class="slider-value">EUR <span id="product-rev-val">2000</span></span>
+        </div>
+        <input type="range" class="amber" min="0" max="10000" value="2000" step="100" id="product-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Events Revenue / mo</span>
+          <span class="slider-value">EUR <span id="events-rev-val">800</span></span>
+        </div>
+        <input type="range" class="terra" min="0" max="5000" value="800" step="50" id="events-slider">
+      </div>
+    </div>
+
+    <div class="card card-lavender">
+      <h3>Live Revenue Output</h3>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div>
+          <div class="big-number pink pulse" id="mrr-output">EUR 7,321</div>
+          <div class="big-label">Monthly Recurring Revenue (MRR)</div>
+        </div>
+        <div>
+          <div class="big-number sage" id="arr-output">EUR 87,852</div>
+          <div class="big-label">Annualized (ARR)</div>
+        </div>
+        <div>
+          <div class="big-number amber" id="total-subs-output">145</div>
+          <div class="big-label">Total Paying Subscribers</div>
+        </div>
+      </div>
+
+      <div class="result-panel">
+        <div class="result-row">
+          <span class="result-label">Weighted ARPU</span>
+          <span class="result-val" id="arpu-output">EUR 45</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Sub Revenue (% of total)</span>
+          <span class="result-val" id="sub-pct-output">72%</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Blended Gross Margin</span>
+          <span class="result-val" id="margin-output">78%</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Gross Profit / mo</span>
+          <span class="result-val" id="gp-output">EUR 5,710</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <span class="verdict good" id="revenue-verdict">Healthy mix</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <!-- Revenue bar chart -->
+  <div class="card">
+    <h3>Revenue Breakdown by Stream</h3>
+    <div class="bar-chart" id="revenue-bars">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Formula -->
+  <div style="margin-top: 24px;">
+    <div class="formula-box">
+      <span class="comment">// Monthly Recurring Revenue</span><br>
+      <span class="var">MRR</span> <span class="op">=</span> (<span class="num">core</span> <span class="op">×</span> <span class="num">19</span>) <span class="op">+</span> (<span class="num">pro</span> <span class="op">×</span> <span class="num">49</span>) <span class="op">+</span> (<span class="num">premium</span> <span class="op">×</span> <span class="num">99</span>) <span class="op">+</span> <span class="num">products</span> <span class="op">+</span> <span class="num">events</span><br>
+      <span class="comment">// Weighted ARPU</span><br>
+      <span class="var">ARPU</span> <span class="op">=</span> <span class="num">sub_revenue</span> <span class="op">/</span> <span class="num">total_subscribers</span><br>
+      <span class="comment">// Blended Margin = weighted by revenue share per stream</span><br>
+      <span class="var">margin</span> <span class="op">=</span> (<span class="num">sub_rev</span> <span class="op">×</span> <span class="num">0.87</span>) <span class="op">+</span> (<span class="num">product_rev</span> <span class="op">×</span> <span class="num">0.58</span>) <span class="op">+</span> (<span class="num">event_rev</span> <span class="op">×</span> <span class="num">0.60</span>) <span class="op">/</span> <span class="num">total_rev</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     2. THE CONVERSION FUNNEL
+     ═══════════════════════════════════════════ -->
+<section id="funnel" class="reveal">
+  <div class="section-label">Module 02</div>
+  <h2>The Conversion Funnel</h2>
+  <p class="subtitle">From free user to paying subscriber. Adjust your audience size and conversion rates to see how the math flows.</p>
+
+  <div class="grid-2">
+    <div class="card card-mint">
+      <h3>Funnel Controls</h3>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Free User Base</span>
+          <span class="slider-value" id="free-base-val">2,000</span>
+        </div>
+        <input type="range" min="500" max="20000" value="2000" step="100" id="free-base-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Free → Core conversion</span>
+          <span class="slider-value" id="f2c-val">4.5%</span>
+        </div>
+        <input type="range" class="sage" min="1" max="15" value="4.5" step="0.5" id="f2c-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Core → Pro upgrade</span>
+          <span class="slider-value" id="c2p-val">20%</span>
+        </div>
+        <input type="range" class="lavender" min="5" max="50" value="20" id="c2p-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Paid → Premium upgrade</span>
+          <span class="slider-value" id="p2pr-val">8%</span>
+        </div>
+        <input type="range" class="amber" min="1" max="25" value="8" id="p2pr-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Walk-in converts / mo</span>
+          <span class="slider-value" id="walkin-val">15</span>
+        </div>
+        <input type="range" class="terra" min="0" max="50" value="15" id="walkin-slider">
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Live Funnel</h3>
+      <div class="funnel" id="funnel-viz">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="result-panel">
+        <div class="result-row">
+          <span class="result-label">Total Paying</span>
+          <span class="result-val" id="funnel-total-paying">145</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Overall Conversion Rate</span>
+          <span class="result-val" id="funnel-overall-rate">7.3%</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Est. MRR from Funnel</span>
+          <span class="result-val" id="funnel-mrr">EUR 5,530</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-box" style="margin-top: 24px;">
+    <span class="comment">// Conversion cascade</span><br>
+    <span class="var">core</span> <span class="op">=</span> <span class="num">free_base</span> <span class="op">×</span> <span class="num">f2c_rate</span><br>
+    <span class="var">pro</span>  <span class="op">=</span> <span class="num">core</span> <span class="op">×</span> <span class="num">c2p_rate</span><br>
+    <span class="var">premium</span> <span class="op">=</span> (<span class="num">core + pro</span>) <span class="op">×</span> <span class="num">premium_rate</span><br>
+    <span class="var">total_paid</span> <span class="op">=</span> <span class="num">core − upgrades</span> <span class="op">+</span> <span class="num">pro − upgrades</span> <span class="op">+</span> <span class="num">premium</span> <span class="op">+</span> <span class="num">walk_ins</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     3. UNIT ECONOMICS CALCULATOR
+     ═══════════════════════════════════════════ -->
+<section id="unit-economics" class="reveal">
+  <div class="section-label">Module 03</div>
+  <h2>Unit Economics Lab</h2>
+  <p class="subtitle">The holy trinity of SaaS: LTV, CAC, and the ratio between them. This is the math investors look at first.</p>
+
+  <div class="grid-2">
+    <div class="card card-peach">
+      <h3>Input Variables</h3>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>
+            <span class="term">ARPU<span class="tip">Average Revenue Per User per month. The weighted average across all tiers.</span></span>
+            (EUR/mo)
+          </span>
+          <span class="slider-value">EUR <span id="ue-arpu-val">49</span></span>
+        </div>
+        <input type="range" min="10" max="120" value="49" id="ue-arpu-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>
+            Monthly <span class="term">Churn<span class="tip">% of subscribers who cancel each month. Industry average is 12-15% for wellness apps.</span></span> Rate
+          </span>
+          <span class="slider-value"><span id="ue-churn-val">8</span>%</span>
+        </div>
+        <input type="range" class="sage" min="2" max="25" value="8" id="ue-churn-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Gross Margin</span>
+          <span class="slider-value"><span id="ue-margin-val">87</span>%</span>
+        </div>
+        <input type="range" class="lavender" min="40" max="95" value="87" id="ue-margin-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>
+            <span class="term">CAC<span class="tip">Customer Acquisition Cost. How much you spend on average to acquire one paying subscriber.</span></span>
+            (EUR)
+          </span>
+          <span class="slider-value">EUR <span id="ue-cac-val">40</span></span>
+        </div>
+        <input type="range" class="amber" min="5" max="200" value="40" id="ue-cac-slider">
+      </div>
+    </div>
+
+    <div class="card card-sky">
+      <h3>Output Metrics</h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+        <div>
+          <div class="big-number pink" id="ue-ltv">EUR 533</div>
+          <div class="big-label">
+            <span class="term">LTV<span class="tip">Lifetime Value. Total revenue from one subscriber over their entire relationship with you. LTV = ARPU × Gross Margin / Churn Rate</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="big-number amber" id="ue-cac-display">EUR 40</div>
+          <div class="big-label">CAC</div>
+        </div>
+        <div>
+          <div class="big-number sage" id="ue-ratio">13.3x</div>
+          <div class="big-label">
+            <span class="term">LTV:CAC<span class="tip">The ratio of lifetime value to acquisition cost. 3x is the minimum for a healthy SaaS. Above 5x is excellent.</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="big-number lavender" id="ue-lifetime">12.5 mo</div>
+          <div class="big-label">Avg Lifetime</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <span class="verdict good" id="ue-verdict">Excellent unit economics</span>
+      </div>
+
+      <div class="result-panel">
+        <div class="result-row">
+          <span class="result-label">Payback Period</span>
+          <span class="result-val" id="ue-payback">0.9 mo</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Revenue per EUR spent</span>
+          <span class="result-val" id="ue-rev-per-spend">EUR 13.33</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Months to 3x CAC</span>
+          <span class="result-val" id="ue-months-3x">2.8 mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-box" style="margin-top: 24px;">
+    <span class="comment">// Unit Economics — the investor's favorite equations</span><br>
+    <span class="var">lifetime</span> <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> <span class="num">churn_rate</span> <span class="comment">    → months a subscriber stays</span><br>
+    <span class="var">LTV</span>      <span class="op">=</span> <span class="num">ARPU</span> <span class="op">×</span> <span class="num">gross_margin</span> <span class="op">×</span> <span class="num">lifetime</span><br>
+    <span class="var">LTV:CAC</span>  <span class="op">=</span> <span class="num">LTV</span> <span class="op">/</span> <span class="num">CAC</span> <span class="comment">         → must be ≥ 3x</span><br>
+    <span class="var">payback</span>  <span class="op">=</span> <span class="num">CAC</span> <span class="op">/</span> (<span class="num">ARPU</span> <span class="op">×</span> <span class="num">gross_margin</span>) <span class="comment">→ months to recoup</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     4. THE CHURN MACHINE
+     ═══════════════════════════════════════════ -->
+<section id="churn" class="reveal">
+  <div class="section-label">Module 04</div>
+  <h2>The Churn Machine</h2>
+  <p class="subtitle">Churn is the silent killer. Watch a cohort of 100 subscribers decay over 12 months — and see why even 1% less churn changes everything.</p>
+
+  <div class="card-elevated">
+    <div class="grid-2" style="margin-bottom: 24px;">
+      <div>
+        <h3>Churn Scenarios</h3>
+        <div class="toggle-row" id="churn-toggles">
+          <button class="toggle-btn" data-churn="5" onclick="setChurnScenario(5, this)">5% (best)</button>
+          <button class="toggle-btn active" data-churn="8" onclick="setChurnScenario(8, this)">8% (alche target)</button>
+          <button class="toggle-btn" data-churn="12" onclick="setChurnScenario(12, this)">12% (industry avg)</button>
+          <button class="toggle-btn" data-churn="15" onclick="setChurnScenario(15, this)">15% (worst)</button>
+        </div>
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Custom churn rate</span>
+            <span class="slider-value"><span id="churn-rate-val">8</span>%</span>
+          </div>
+          <input type="range" min="1" max="30" value="8" id="churn-slider">
+        </div>
+      </div>
+      <div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <div class="big-number pink" id="churn-retained">37</div>
+            <div class="big-label">Retained at M12</div>
+          </div>
+          <div>
+            <div class="big-number terra" id="churn-lost">63</div>
+            <div class="big-label">Churned</div>
+          </div>
+          <div>
+            <div class="big-number sage" id="churn-lifetime">12.5 mo</div>
+            <div class="big-label">Avg Lifetime</div>
+          </div>
+          <div>
+            <div class="big-number amber" id="churn-total-rev">EUR 24,093</div>
+            <div class="big-label">Cohort Revenue (100 users)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVG Retention Curve -->
+    <div class="retention-chart-container">
+      <svg id="retention-svg" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid lines -->
+        <g id="retention-grid" stroke="rgba(44,36,24,0.06)" stroke-width="1">
+          <line x1="60" y1="20" x2="60" y2="250"/>
+          <line x1="60" y1="250" x2="780" y2="250"/>
+          <!-- Horizontal gridlines -->
+          <line x1="60" y1="77" x2="780" y2="77" stroke-dasharray="4,4"/>
+          <line x1="60" y1="134" x2="780" y2="134" stroke-dasharray="4,4"/>
+          <line x1="60" y1="192" x2="780" y2="192" stroke-dasharray="4,4"/>
+        </g>
+        <!-- Y-axis labels -->
+        <g font-family="Space Mono, monospace" font-size="10" fill="rgba(44,36,24,0.5)">
+          <text x="54" y="24" text-anchor="end">100</text>
+          <text x="54" y="81" text-anchor="end">75</text>
+          <text x="54" y="138" text-anchor="end">50</text>
+          <text x="54" y="196" text-anchor="end">25</text>
+          <text x="54" y="254" text-anchor="end">0</text>
+        </g>
+        <!-- X-axis labels -->
+        <g font-family="Space Mono, monospace" font-size="9" fill="rgba(44,36,24,0.5)" id="retention-x-labels">
+        </g>
+        <!-- Curves drawn by JS -->
+        <!-- Industry baseline -->
+        <path id="retention-industry" d="" fill="none" stroke="rgba(44,36,24,0.15)" stroke-width="2" stroke-dasharray="6,4"/>
+        <!-- alche target -->
+        <path id="retention-alche" d="" fill="none" stroke="#E8A0BF" stroke-width="3"/>
+        <!-- Area under curve -->
+        <path id="retention-area" d="" fill="rgba(232,160,191,0.08)"/>
+        <!-- Data points -->
+        <g id="retention-dots"></g>
+        <!-- Legend -->
+        <g transform="translate(620, 30)" font-family="Space Mono, monospace" font-size="10">
+          <line x1="0" y1="0" x2="20" y2="0" stroke="#E8A0BF" stroke-width="3"/>
+          <text x="26" y="4" fill="rgba(44,36,24,0.7)">your rate</text>
+          <line x1="0" y1="18" x2="20" y2="18" stroke="rgba(44,36,24,0.15)" stroke-width="2" stroke-dasharray="6,4"/>
+          <text x="26" y="22" fill="rgba(44,36,24,0.4)">industry 15%</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Dot grid visualization -->
+    <div style="margin-top: 32px;">
+      <h3>Cohort Visualization (100 users, each dot = 1 subscriber)</h3>
+      <div class="dot-grid" id="churn-dots">
+        <!-- 100 dots populated by JS -->
+      </div>
+      <div style="display: flex; gap: 16px; margin-top: 12px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--pink);"></div>
+          <span class="mono-sm" style="color: var(--deep-50);">Active</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--deep-08);"></div>
+          <span class="mono-sm" style="color: var(--deep-50);">Churned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-box" style="margin-top: 24px;">
+    <span class="comment">// Cohort decay</span><br>
+    <span class="var">retained(m)</span> <span class="op">=</span> <span class="num">100</span> <span class="op">×</span> (<span class="num">1 − churn_rate</span>)<span class="op">^</span><span class="num">m</span><br>
+    <span class="comment">// Why 8% vs 15% matters: at month 12</span><br>
+    <span class="var">8%  churn</span> <span class="op">→</span> <span class="result">37 users remain</span> <span class="comment">(LTV = EUR 588)</span><br>
+    <span class="var">15% churn</span> <span class="op">→</span> <span class="result">14 users remain</span> <span class="comment">(LTV = EUR 160)</span>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     5. BREAK-EVEN SIMULATOR
+     ═══════════════════════════════════════════ -->
+<section id="breakeven" class="reveal">
+  <div class="section-label">Module 05</div>
+  <h2>Break-Even Simulator</h2>
+  <p class="subtitle">When does revenue catch up to burn? Adjust your monthly costs and subscriber growth to find the magic number.</p>
+
+  <div class="grid-2">
+    <div class="card card-lavender">
+      <h3>Cost Structure</h3>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Monthly Burn (EUR)</span>
+          <span class="slider-value">EUR <span id="be-burn-val">7,600</span></span>
+        </div>
+        <input type="range" min="3000" max="20000" value="7600" step="100" id="be-burn-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Capital Raised (EUR)</span>
+          <span class="slider-value">EUR <span id="be-capital-val">500,000</span></span>
+        </div>
+        <input type="range" class="sage" min="200000" max="1000000" value="500000" step="10000" id="be-capital-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>ARPU (EUR/mo)</span>
+          <span class="slider-value">EUR <span id="be-arpu-val">49</span></span>
+        </div>
+        <input type="range" class="lavender" min="15" max="120" value="49" id="be-arpu-slider">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Extra Revenue / mo (products+events)</span>
+          <span class="slider-value">EUR <span id="be-extra-val">2,500</span></span>
+        </div>
+        <input type="range" class="amber" min="0" max="10000" value="2500" step="100" id="be-extra-slider">
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Break-Even Output</h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+        <div>
+          <div class="big-number pink" id="be-subs-needed">104</div>
+          <div class="big-label">Subscribers to Break Even</div>
+        </div>
+        <div>
+          <div class="big-number sage" id="be-runway">24 mo</div>
+          <div class="big-label">Total Runway</div>
+        </div>
+        <div>
+          <div class="big-number amber" id="be-buffer">EUR 142K</div>
+          <div class="big-label">Buffer at Break-Even (M12)</div>
+        </div>
+        <div>
+          <div class="big-number lavender" id="be-monthly-target">EUR 7,600</div>
+          <div class="big-label">Revenue Target / mo</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <span class="verdict good" id="be-verdict">Comfortable runway</span>
+      </div>
+
+      <div class="formula-box" style="margin-top: 12px; font-size: 12px; padding: 16px 20px;">
+        <span class="var">subs_needed</span> <span class="op">=</span> (<span class="num">burn</span> <span class="op">−</span> <span class="num">extra_rev</span>) <span class="op">/</span> <span class="num">ARPU</span><br>
+        <span class="var">runway</span> <span class="op">=</span> <span class="num">capital</span> <span class="op">/</span> <span class="num">net_burn</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cash waterfall -->
+  <div class="card" style="margin-top: 24px;">
+    <h3>Cash Position Over 24 Months</h3>
+    <p style="font-size: 12px; color: var(--deep-50); margin-bottom: 16px; font-family: 'Outfit', sans-serif; font-weight: 300;">
+      Assuming linear subscriber growth to break-even at month 12, then stable.
+    </p>
+    <div style="position: relative; width: 100%; overflow-x: auto;">
+      <svg id="cash-waterfall-svg" viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; min-width: 600px;">
+        <!-- Grid -->
+        <g stroke="rgba(44,36,24,0.06)" stroke-width="1">
+          <line x1="50" y1="20" x2="50" y2="240"/>
+          <line x1="50" y1="240" x2="780" y2="240"/>
+          <line x1="50" y1="75" x2="780" y2="75" stroke-dasharray="4,4"/>
+          <line x1="50" y1="130" x2="780" y2="130" stroke-dasharray="4,4"/>
+          <line x1="50" y1="185" x2="780" y2="185" stroke-dasharray="4,4"/>
+        </g>
+        <!-- Y labels -->
+        <g font-family="Space Mono, monospace" font-size="9" fill="rgba(44,36,24,0.5)">
+          <text x="46" y="24" text-anchor="end">500K</text>
+          <text x="46" y="79" text-anchor="end">375K</text>
+          <text x="46" y="134" text-anchor="end">250K</text>
+          <text x="46" y="189" text-anchor="end">125K</text>
+          <text x="46" y="244" text-anchor="end">0</text>
+        </g>
+        <!-- Cash curve -->
+        <path id="cash-curve" d="" fill="none" stroke="#E8A0BF" stroke-width="2.5"/>
+        <path id="cash-area" d="" fill="rgba(232,160,191,0.06)"/>
+        <!-- Break-even line -->
+        <line id="be-line" x1="0" y1="20" x2="0" y2="240" stroke="var(--sage)" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <text id="be-label" x="0" y="16" font-family="Space Mono, monospace" font-size="9" fill="var(--sage)" text-anchor="middle">break-even</text>
+        <!-- X labels -->
+        <g id="cash-x-labels" font-family="Space Mono, monospace" font-size="8" fill="rgba(44,36,24,0.4)">
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     6. THE GRAVEYARD
+     ═══════════════════════════════════════════ -->
+<section id="graveyard" class="reveal">
+  <div class="section-label">Module 06</div>
+  <h2>The Graveyard</h2>
+  <p class="subtitle">$1.4B+ in failed health and wellness startups. Each tombstone is a lesson. Hover to see how alche avoids the same fate.</p>
+
+  <div class="grid-3" style="margin-bottom: 32px;">
+    <div class="tombstone">
+      <div class="rip">Rest in Peace</div>
+      <div class="company-name">Forward Health</div>
+      <div class="burned">$657M burned</div>
+      <div class="cause">Tried to own the full stack: testing, interpretation, food, products, and hardware — all at once.</div>
+      <div class="lesson">alche fix: Partner for biomarkers, curate products, never own hardware</div>
+    </div>
+
+    <div class="tombstone">
+      <div class="rip">Rest in Peace</div>
+      <div class="company-name">Arivale</div>
+      <div class="burned">~$50M burned</div>
+      <div class="cause">Led with test complexity. Users churned post-onboarding. "There is not a meaningful market for future disease prevention."</div>
+      <div class="lesson">alche fix: Sell the present — energy today, sleep tonight, mood this week</div>
+    </div>
+
+    <div class="tombstone">
+      <div class="rip">Rest in Peace</div>
+      <div class="company-name">Juicero</div>
+      <div class="burned">$120M raised</div>
+      <div class="cause">Proprietary hardware for a problem nobody had. DRM on juice bags. $400 machine replaced by human hands.</div>
+      <div class="lesson">alche fix: Zero proprietary hardware. We're the software layer, not the device.</div>
+    </div>
+
+    <div class="tombstone">
+      <div class="rip">Rest in Peace</div>
+      <div class="company-name">Noom (peak)</div>
+      <div class="burned">$3.7B → mass layoffs</div>
+      <div class="cause">Scaled too fast with paid acquisition. Couldn't retain at scale. Identity crisis between "wellness" and "medical."</div>
+      <div class="lesson">alche fix: One identity (lifestyle, not medical). Content-first, never ad-dependent.</div>
+    </div>
+
+    <div class="tombstone">
+      <div class="rip">Rest in Peace</div>
+      <div class="company-name">DiGA Chasers</div>
+      <div class="burned">Regulatory death spiral</div>
+      <div class="cause">Chased German digital health certification (DiGA). Expensive, slow, locks revenue to insurance reimbursement.</div>
+      <div class="lesson">alche fix: Consumer B2C. No DiGA certification. No insurance dependency.</div>
+    </div>
+
+    <div class="tombstone">
+      <div class="rip">Still Alive</div>
+      <div class="company-name" style="color: var(--sage);">ZOE ($100M rev)</div>
+      <div class="burned" style="color: var(--sage);">Asset-light survivor</div>
+      <div class="cause">Content-led, community-first, doesn't own hardware, doesn't chase reimbursement. ~$100M revenue.</div>
+      <div class="lesson" style="color: var(--sage);">What alche models: asset-light + content-first + community retention</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color: rgba(184, 107, 74, 0.2); background: linear-gradient(135deg, rgba(184, 107, 74, 0.04), var(--glass));">
+    <h3 style="color: var(--terra);">The Seven Structural Traps</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">1. Closed Loop Trap</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — partners</span>
+      </div>
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">2. Front-Loading Curse</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — simple start</span>
+      </div>
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">3. Preventive Paradox</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — sell present</span>
+      </div>
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">4. Two-Business Spiral</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — digital first</span>
+      </div>
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">5. Identity Crisis</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — one identity</span>
+      </div>
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">6. Reimbursement Wall</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — consumer B2C</span>
+      </div>
+      <div class="result-row" style="border: none; padding: 8px 0;">
+        <span class="result-label" style="font-size: 12px;">7. Hardware Multiplier</span>
+        <span class="verdict good" style="font-size: 9px;">Avoided — software layer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     7. GLOSSARY — FLIP CARDS
+     ═══════════════════════════════════════════ -->
+<section id="glossary" class="reveal">
+  <div class="section-label">Module 07</div>
+  <h2>The Glossary</h2>
+  <p class="subtitle">Every term investors will use in the meeting. Hover or tap to flip.</p>
+
+  <div class="glossary-grid">
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-pink">
+          <div class="term-abbr" style="color: var(--pink);">MRR</div>
+          <div class="term-full">Monthly Recurring Revenue</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>The predictable revenue you get every month from subscriptions. Excludes one-time purchases. The single most important SaaS metric.</p>
+          <div class="back-value">alche M12: EUR 7-8K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-mint">
+          <div class="term-abbr" style="color: var(--sage);">ARR</div>
+          <div class="term-full">Annual Recurring Revenue</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>MRR times 12. This is the number used for valuation multiples. A SaaS at EUR 100K ARR with 8-15x multiple = EUR 800K-1.5M valuation.</p>
+          <div class="back-value">alche M12: EUR 84-96K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-peach">
+          <div class="term-abbr" style="color: var(--amber);">ARPU</div>
+          <div class="term-full">Average Revenue Per User</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>Total subscription revenue divided by number of paying subscribers. Higher ARPU = more value per customer = faster break-even.</p>
+          <div class="back-value">alche target: EUR 49/mo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-lavender">
+          <div class="term-abbr" style="color: var(--lavender);">LTV</div>
+          <div class="term-full">Lifetime Value</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>Total revenue from one subscriber over their entire relationship. LTV = ARPU x Gross Margin / Monthly Churn Rate. Must be at least 3x CAC.</p>
+          <div class="back-value">alche: EUR 280-588</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-sky">
+          <div class="term-abbr" style="color: var(--sky);">CAC</div>
+          <div class="term-full">Customer Acquisition Cost</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>How much you spend to get one paying subscriber. Includes ads, content production, sales costs. Lower is better. Content-first = EUR 0 CAC initially.</p>
+          <div class="back-value">alche blended: EUR 40-55</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-pink">
+          <div class="term-abbr" style="color: var(--terra);">Churn</div>
+          <div class="term-full">Monthly Churn Rate</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>% of subscribers who cancel each month. Industry average is 12-15% for wellness apps. 77% of health app users leave by Day 3.</p>
+          <div class="back-value">alche target: 8%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-mint">
+          <div class="term-abbr" style="color: var(--sage);">SAFE</div>
+          <div class="term-full">Simple Agreement for Future Equity</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>An investment instrument where investors give money now in exchange for equity later (at the next priced round). German equivalent: Wandeldarlehen (convertible loan).</p>
+          <div class="back-value">alche: EUR 2.5M cap, 20% discount</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-peach">
+          <div class="term-abbr" style="color: var(--amber);">COGS</div>
+          <div class="term-full">Cost of Goods Sold</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>Direct costs to deliver the product. For SaaS: hosting, payment processing, API costs. Gross margin = Revenue minus COGS. Higher margin = more cash to grow.</p>
+          <div class="back-value">alche sub COGS: EUR 2.50-3.50/user</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-lavender">
+          <div class="term-abbr" style="color: var(--lavender);">CAGR</div>
+          <div class="term-full">Compound Annual Growth Rate</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>The smoothed annual growth rate over a period. "The market grows at 3.3% CAGR" means it compounds 3.3% per year, every year.</p>
+          <div class="back-value">German wellness: 3.3% CAGR</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-sky">
+          <div class="term-abbr" style="color: var(--sky);">GMV</div>
+          <div class="term-full">Gross Merchandise Volume</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>Total value of products sold through the platform. Different from revenue — if you sell EUR 10K of products at 60% margin, GMV is EUR 10K but revenue is EUR 6K.</p>
+          <div class="back-value">Used for product commerce stream</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-pink">
+          <div class="term-abbr" style="color: var(--pink);">TAM</div>
+          <div class="term-full">Total Addressable Market</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>The total revenue opportunity if you captured 100% of the market. Global wellness = $6.3 trillion. Investors want to see the TAM → SAM → SOM cascade.</p>
+          <div class="back-value">Global wellness: $6.3T</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glossary-card">
+      <div class="glossary-card-inner">
+        <div class="glossary-front card-mint">
+          <div class="term-abbr" style="color: var(--sage);">Runway</div>
+          <div class="term-full">Cash Runway (months)</div>
+          <div class="flip-hint">hover to flip</div>
+        </div>
+        <div class="glossary-back">
+          <p>How many months you can operate before running out of money. Runway = Cash / Monthly Burn. Investors want 18-24 months minimum.</p>
+          <div class="back-value">alche: 24 months</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer style="text-align: center; padding: 60px 0 40px; border-top: 1px solid var(--deep-08); margin-top: 80px;">
+  <div style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 24px; margin-bottom: 8px;">alche</div>
+  <div style="font-family: 'Space Mono', monospace; font-size: 10px; color: var(--deep-30); letter-spacing: 0.1em;">THE ART OF CURATED LONGEVITY</div>
+  <div style="margin-top: 16px; font-family: 'Outfit', sans-serif; font-size: 12px; color: var(--deep-30);">Math Lab — Interactive Business Model Explorer</div>
+  <div style="margin-top: 4px; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--deep-15);">all figures from locked research data — do not substitute</div>
+</footer>
+
+</main>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT — ALL THE MATH
+     ═══════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ─── Utility ───
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+  const fmt = (n) => n.toLocaleString('en-US');
+  const fmtEur = (n) => 'EUR ' + fmt(Math.round(n));
+
+  // ─── 1. REVENUE MIXER ───
+  const coreSlider = $('#core-slider');
+  const proSlider = $('#pro-slider');
+  const premiumSlider = $('#premium-slider');
+  const productSlider = $('#product-slider');
+  const eventsSlider = $('#events-slider');
+
+  function updateRevenue() {
+    const core = +coreSlider.value;
+    const pro = +proSlider.value;
+    const premium = +premiumSlider.value;
+    const productRev = +productSlider.value;
+    const eventsRev = +eventsSlider.value;
+
+    const subRev = core * 19 + pro * 49 + premium * 99;
+    const totalRev = subRev + productRev + eventsRev;
+    const totalSubs = core + pro + premium;
+    const arpu = totalSubs > 0 ? subRev / totalSubs : 0;
+    const arr = totalRev * 12;
+
+    // Blended margin
+    const subMargin = 0.87;
+    const productMargin = 0.58;
+    const eventsMargin = 0.60;
+    const blendedMargin = totalRev > 0
+      ? (subRev * subMargin + productRev * productMargin + eventsRev * eventsMargin) / totalRev
+      : 0;
+    const grossProfit = totalRev * blendedMargin;
+
+    // Update displays
+    $('#core-val').textContent = fmt(core);
+    $('#pro-val').textContent = fmt(pro);
+    $('#premium-val').textContent = fmt(premium);
+    $('#product-rev-val').textContent = fmt(productRev);
+    $('#events-rev-val').textContent = fmt(eventsRev);
+
+    $('#mrr-output').textContent = fmtEur(totalRev);
+    $('#arr-output').textContent = fmtEur(arr);
+    $('#total-subs-output').textContent = fmt(totalSubs);
+    $('#arpu-output').textContent = fmtEur(arpu);
+    $('#sub-pct-output').textContent = totalRev > 0 ? Math.round(subRev / totalRev * 100) + '%' : '0%';
+    $('#margin-output').textContent = Math.round(blendedMargin * 100) + '%';
+    $('#gp-output').textContent = fmtEur(grossProfit);
+
+    // Verdict
+    const subPct = totalRev > 0 ? subRev / totalRev : 0;
+    const verdict = $('#revenue-verdict');
+    if (subPct >= 0.6 && blendedMargin >= 0.75) {
+      verdict.className = 'verdict good';
+      verdict.textContent = 'Healthy mix — high-margin subs dominate';
+    } else if (subPct >= 0.4) {
+      verdict.className = 'verdict warning';
+      verdict.textContent = 'Okay — push subscription share higher';
+    } else {
+      verdict.className = 'verdict danger';
+      verdict.textContent = 'Warning — too dependent on low-margin streams';
+    }
+
+    // Bar chart
+    updateRevenueBars(core * 19, pro * 49, premium * 99, productRev, eventsRev);
+  }
+
+  function updateRevenueBars(coreRev, proRev, premRev, prodRev, evtRev) {
+    const bars = [
+      { label: 'Core', value: coreRev, color: 'var(--pink)' },
+      { label: 'Pro', value: proRev, color: 'var(--sage)' },
+      { label: 'Premium', value: premRev, color: 'var(--lavender)' },
+      { label: 'Products', value: prodRev, color: 'var(--amber)' },
+      { label: 'Events', value: evtRev, color: 'var(--terra)' },
+    ];
+    const maxVal = Math.max(...bars.map(b => b.value), 1);
+    const container = $('#revenue-bars');
+    container.innerHTML = '';
+
+    bars.forEach(b => {
+      const pct = (b.value / maxVal) * 100;
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.height = Math.max(pct, 2) + '%';
+      bar.style.background = b.color;
+      bar.innerHTML = `
+        <span class="bar-value">${fmtEur(b.value)}</span>
+        <span class="bar-label">${b.label}</span>
+      `;
+      container.appendChild(bar);
+    });
+  }
+
+  [coreSlider, proSlider, premiumSlider, productSlider, eventsSlider].forEach(s => {
+    s.addEventListener('input', updateRevenue);
+  });
+
+
+  // ─── 2. CONVERSION FUNNEL ───
+  const freeBaseSlider = $('#free-base-slider');
+  const f2cSlider = $('#f2c-slider');
+  const c2pSlider = $('#c2p-slider');
+  const p2prSlider = $('#p2pr-slider');
+  const walkinSlider = $('#walkin-slider');
+
+  function updateFunnel() {
+    const freeBase = +freeBaseSlider.value;
+    const f2c = +f2cSlider.value / 100;
+    const c2p = +c2pSlider.value / 100;
+    const p2pr = +p2prSlider.value / 100;
+    const walkins = +walkinSlider.value;
+
+    const totalPaidFromFree = Math.round(freeBase * f2c);
+    const proFromCore = Math.round(totalPaidFromFree * c2p);
+    const coreOnly = totalPaidFromFree - proFromCore;
+    const premiumFromPaid = Math.round(totalPaidFromFree * p2pr);
+    // Premium comes from entire paid pool, so adjust core and pro
+    const premiumFromCore = Math.round(coreOnly * p2pr);
+    const premiumFromPro = Math.round(proFromCore * p2pr);
+    const finalPremium = premiumFromCore + premiumFromPro;
+    const finalCore = coreOnly - premiumFromCore;
+    const finalPro = proFromCore - premiumFromPro;
+    const totalPaying = finalCore + finalPro + finalPremium + walkins;
+
+    const mrr = finalCore * 19 + finalPro * 49 + finalPremium * 99 + walkins * 35; // walkins avg
+    const overallRate = freeBase > 0 ? ((totalPaying) / freeBase * 100) : 0;
+
+    // Display
+    $('#free-base-val').textContent = fmt(freeBase);
+    $('#f2c-val').textContent = (+f2cSlider.value).toFixed(1) + '%';
+    $('#c2p-val').textContent = c2pSlider.value + '%';
+    $('#p2pr-val').textContent = p2prSlider.value + '%';
+    $('#walkin-val').textContent = walkins;
+
+    $('#funnel-total-paying').textContent = fmt(totalPaying);
+    $('#funnel-overall-rate').textContent = overallRate.toFixed(1) + '%';
+    $('#funnel-mrr').textContent = fmtEur(mrr);
+
+    // Funnel viz
+    const funnelEl = $('#funnel-viz');
+    const steps = [
+      { label: 'Free Users', count: freeBase, color: 'var(--deep-08)', pct: 100 },
+      { label: 'Convert to Paid', count: totalPaidFromFree, color: 'var(--pink-soft)', pct: (totalPaidFromFree / freeBase) * 100 },
+      { label: 'Core (EUR 19)', count: Math.max(finalCore, 0), color: 'rgba(232,160,191,0.25)', pct: (Math.max(finalCore, 0) / freeBase) * 100 },
+      { label: 'Pro (EUR 49)', count: Math.max(finalPro, 0), color: 'rgba(139,158,124,0.25)', pct: (Math.max(finalPro, 0) / freeBase) * 100 },
+      { label: 'Premium (EUR 99)', count: Math.max(finalPremium, 0), color: 'rgba(184,169,201,0.25)', pct: (Math.max(finalPremium, 0) / freeBase) * 100 },
+      { label: '+ Walk-ins', count: walkins, color: 'rgba(196,149,106,0.2)', pct: (walkins / freeBase) * 100 },
+    ];
+
+    funnelEl.innerHTML = '';
+    steps.forEach((s, i) => {
+      const widthPct = Math.max(s.pct, 5);
+      const step = document.createElement('div');
+      step.className = 'funnel-step';
+      step.style.width = Math.min(widthPct, 100) + '%';
+      step.style.background = s.color;
+      step.innerHTML = `
+        <span class="step-label">${s.label}</span>
+        <span class="step-num">${fmt(s.count)}</span>
+      `;
+      funnelEl.appendChild(step);
+      if (i < steps.length - 1) {
+        const arrow = document.createElement('div');
+        arrow.className = 'funnel-arrow';
+        funnelEl.appendChild(arrow);
+      }
+    });
+  }
+
+  [freeBaseSlider, f2cSlider, c2pSlider, p2prSlider, walkinSlider].forEach(s => {
+    s.addEventListener('input', updateFunnel);
+  });
+
+
+  // ─── 3. UNIT ECONOMICS ───
+  const ueArpuSlider = $('#ue-arpu-slider');
+  const ueChurnSlider = $('#ue-churn-slider');
+  const ueMarginSlider = $('#ue-margin-slider');
+  const ueCacSlider = $('#ue-cac-slider');
+
+  function updateUnitEcon() {
+    const arpu = +ueArpuSlider.value;
+    const churn = +ueChurnSlider.value / 100;
+    const margin = +ueMarginSlider.value / 100;
+    const cac = +ueCacSlider.value;
+
+    const lifetime = 1 / churn;
+    const ltv = arpu * margin * lifetime;
+    const ratio = ltv / cac;
+    const payback = cac / (arpu * margin);
+    const revPerSpend = ltv / cac;
+    const months3x = (3 * cac) / (arpu * margin);
+
+    // Display
+    $('#ue-arpu-val').textContent = arpu;
+    $('#ue-churn-val').textContent = ueChurnSlider.value;
+    $('#ue-margin-val').textContent = ueMarginSlider.value;
+    $('#ue-cac-val').textContent = cac;
+
+    $('#ue-ltv').textContent = fmtEur(ltv);
+    $('#ue-cac-display').textContent = fmtEur(cac);
+    $('#ue-ratio').textContent = ratio.toFixed(1) + 'x';
+    $('#ue-lifetime').textContent = lifetime.toFixed(1) + ' mo';
+    $('#ue-payback').textContent = payback.toFixed(1) + ' mo';
+    $('#ue-rev-per-spend').textContent = fmtEur(revPerSpend);
+    $('#ue-months-3x').textContent = months3x.toFixed(1) + ' mo';
+
+    // Verdict
+    const v = $('#ue-verdict');
+    if (ratio >= 5) {
+      v.className = 'verdict good';
+      v.textContent = 'Excellent unit economics';
+    } else if (ratio >= 3) {
+      v.className = 'verdict warning';
+      v.textContent = 'Acceptable — room to optimize';
+    } else {
+      v.className = 'verdict danger';
+      v.textContent = 'Danger — LTV:CAC below 3x minimum';
+    }
+  }
+
+  [ueArpuSlider, ueChurnSlider, ueMarginSlider, ueCacSlider].forEach(s => {
+    s.addEventListener('input', updateUnitEcon);
+  });
+
+
+  // ─── 4. CHURN MACHINE ───
+  const churnSlider = $('#churn-slider');
+
+  function updateChurn(rate) {
+    const churn = rate !== undefined ? rate : +churnSlider.value;
+    if (rate !== undefined) churnSlider.value = churn;
+    const churnPct = churn / 100;
+    const arpu = 49; // locked
+
+    // Cohort calculation
+    const months = 13; // 0-12
+    const retained = [];
+    for (let m = 0; m < months; m++) {
+      retained.push(Math.round(100 * Math.pow(1 - churnPct, m)));
+    }
+
+    const retainedAt12 = retained[12];
+    const lost = 100 - retainedAt12;
+    const lifetime = 1 / churnPct;
+    const totalRevenue = retained.reduce((sum, r) => sum + r * arpu, 0);
+
+    // Industry baseline (15%)
+    const industryRetained = [];
+    for (let m = 0; m < months; m++) {
+      industryRetained.push(Math.round(100 * Math.pow(0.85, m)));
+    }
+
+    // Display
+    $('#churn-rate-val').textContent = churn;
+    $('#churn-retained').textContent = retainedAt12;
+    $('#churn-lost').textContent = lost;
+    $('#churn-lifetime').textContent = lifetime.toFixed(1) + ' mo';
+    $('#churn-total-rev').textContent = fmtEur(totalRevenue);
+
+    // SVG curves
+    const svgW = 800, svgH = 300;
+    const padL = 60, padR = 20, padT = 20, padB = 50;
+    const chartW = svgW - padL - padR;
+    const chartH = svgH - padT - padB;
+
+    const xScale = (m) => padL + (m / 12) * chartW;
+    const yScale = (v) => padT + (1 - v / 100) * chartH;
+
+    // Build paths
+    let alchePath = `M ${xScale(0)} ${yScale(retained[0])}`;
+    let industryPath = `M ${xScale(0)} ${yScale(industryRetained[0])}`;
+    let areaPath = `M ${xScale(0)} ${yScale(retained[0])}`;
+
+    for (let m = 1; m < months; m++) {
+      alchePath += ` L ${xScale(m)} ${yScale(retained[m])}`;
+      industryPath += ` L ${xScale(m)} ${yScale(industryRetained[m])}`;
+      areaPath += ` L ${xScale(m)} ${yScale(retained[m])}`;
+    }
+    areaPath += ` L ${xScale(12)} ${yScale(0)} L ${xScale(0)} ${yScale(0)} Z`;
+
+    $('#retention-alche').setAttribute('d', alchePath);
+    $('#retention-industry').setAttribute('d', industryPath);
+    $('#retention-area').setAttribute('d', areaPath);
+
+    // Dots
+    const dotsG = $('#retention-dots');
+    dotsG.innerHTML = '';
+    for (let m = 0; m < months; m++) {
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', xScale(m));
+      circle.setAttribute('cy', yScale(retained[m]));
+      circle.setAttribute('r', 4);
+      circle.setAttribute('fill', '#E8A0BF');
+      circle.setAttribute('stroke', '#F5F0E8');
+      circle.setAttribute('stroke-width', 2);
+      dotsG.appendChild(circle);
+    }
+
+    // X labels
+    const xLabelsG = $('#retention-x-labels');
+    xLabelsG.innerHTML = '';
+    for (let m = 0; m < months; m++) {
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', xScale(m));
+      text.setAttribute('y', svgH - 18);
+      text.setAttribute('text-anchor', 'middle');
+      text.textContent = 'M' + m;
+      xLabelsG.appendChild(text);
+    }
+
+    // Dot grid
+    const dotsContainer = $('#churn-dots');
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < 100; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot ' + (i < retainedAt12 ? 'active' : 'churned');
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  churnSlider.addEventListener('input', () => {
+    updateChurn();
+    // Deactivate toggle buttons
+    $$('#churn-toggles .toggle-btn').forEach(b => b.classList.remove('active'));
+  });
+
+  window.setChurnScenario = function(rate, btn) {
+    $$('#churn-toggles .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateChurn(rate);
+  };
+
+
+  // ─── 5. BREAK-EVEN SIMULATOR ───
+  const beBurnSlider = $('#be-burn-slider');
+  const beCapitalSlider = $('#be-capital-slider');
+  const beArpuSlider = $('#be-arpu-slider');
+  const beExtraSlider = $('#be-extra-slider');
+
+  function updateBreakeven() {
+    const burn = +beBurnSlider.value;
+    const capital = +beCapitalSlider.value;
+    const arpu = +beArpuSlider.value;
+    const extra = +beExtraSlider.value;
+
+    const subsNeeded = Math.ceil((burn - extra) / arpu);
+    const netBurnPreRevenue = burn;
+    const runway = Math.floor(capital / burn);
+
+    // Cash waterfall: linear ramp to break-even at M12
+    const months = 24;
+    const cashPositions = [];
+    let cash = capital;
+    for (let m = 0; m <= months; m++) {
+      cashPositions.push(cash);
+      // Revenue ramps linearly from 0 at M0 to (subsNeeded * arpu + extra) at M12, then flat
+      const revenueAtMonth = m <= 12
+        ? (m / 12) * (subsNeeded * arpu + extra)
+        : (subsNeeded * arpu + extra);
+      cash = cash - burn + revenueAtMonth;
+      if (cash < 0) cash = 0;
+    }
+
+    const bufferAt12 = cashPositions[12];
+
+    // Display
+    $('#be-burn-val').textContent = fmt(burn);
+    $('#be-capital-val').textContent = fmt(capital);
+    $('#be-arpu-val').textContent = arpu;
+    $('#be-extra-val').textContent = fmt(extra);
+
+    $('#be-subs-needed').textContent = fmt(Math.max(subsNeeded, 0));
+    $('#be-runway').textContent = runway + ' mo';
+    $('#be-buffer').textContent = fmtEur(Math.max(bufferAt12, 0));
+    $('#be-monthly-target').textContent = fmtEur(burn);
+
+    // Verdict
+    const v = $('#be-verdict');
+    if (runway >= 20 && bufferAt12 > 50000) {
+      v.className = 'verdict good';
+      v.textContent = 'Comfortable runway';
+    } else if (runway >= 14) {
+      v.className = 'verdict warning';
+      v.textContent = 'Tight — reduce burn or raise more';
+    } else {
+      v.className = 'verdict danger';
+      v.textContent = 'Danger zone — extend runway immediately';
+    }
+
+    // Cash waterfall SVG
+    drawCashWaterfall(cashPositions, capital);
+  }
+
+  function drawCashWaterfall(positions, maxCash) {
+    const svgW = 800, padL = 50, padR = 20, padT = 20, padB = 40;
+    const chartW = svgW - padL - padR;
+    const chartH = 240 - padT;
+    const months = positions.length - 1;
+
+    const xScale = (m) => padL + (m / months) * chartW;
+    const yScale = (v) => padT + (1 - v / maxCash) * chartH;
+
+    let curvePath = `M ${xScale(0)} ${yScale(positions[0])}`;
+    let areaPath = `M ${xScale(0)} ${yScale(positions[0])}`;
+
+    for (let m = 1; m <= months; m++) {
+      curvePath += ` L ${xScale(m)} ${yScale(positions[m])}`;
+      areaPath += ` L ${xScale(m)} ${yScale(positions[m])}`;
+    }
+    areaPath += ` L ${xScale(months)} ${yScale(0)} L ${xScale(0)} ${yScale(0)} Z`;
+
+    $('#cash-curve').setAttribute('d', curvePath);
+    $('#cash-area').setAttribute('d', areaPath);
+
+    // Break-even line at M12
+    const beX = xScale(12);
+    $('#be-line').setAttribute('x1', beX);
+    $('#be-line').setAttribute('x2', beX);
+    $('#be-label').setAttribute('x', beX);
+
+    // X labels
+    const xLabelsG = $('#cash-x-labels');
+    xLabelsG.innerHTML = '';
+    for (let m = 0; m <= months; m += 3) {
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', xScale(m));
+      text.setAttribute('y', 260);
+      text.setAttribute('text-anchor', 'middle');
+      text.textContent = 'M' + m;
+      xLabelsG.appendChild(text);
+    }
+  }
+
+  [beBurnSlider, beCapitalSlider, beArpuSlider, beExtraSlider].forEach(s => {
+    s.addEventListener('input', updateBreakeven);
+  });
+
+
+  // ─── SCROLL REVEAL ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  $$('.reveal').forEach(el => observer.observe(el));
+
+  // ─── NAV ACTIVE STATE ───
+  const navPills = $$('.nav-pill');
+  const sections = ['revenue', 'funnel', 'unit-economics', 'churn', 'breakeven', 'graveyard', 'glossary'];
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const section = document.getElementById(id);
+      if (section && window.scrollY >= section.offsetTop - 100) {
+        current = id;
+      }
+    });
+    navPills.forEach(pill => {
+      pill.classList.toggle('active', pill.getAttribute('href') === '#' + current);
+    });
+  });
+
+
+  // ─── INIT ALL ───
+  updateRevenue();
+  updateFunnel();
+  updateUnitEcon();
+  updateChurn(8);
+  updateBreakeven();
+
+})();
+</script>
+
+</body>
+</html>

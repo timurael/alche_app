@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche GmbH | The Team</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FEFCF9;
+    --charcoal: #2C2824;
+    --charcoal-light: #3D3833;
+    --amber: #C4956A;
+    --sage: #7A8B6F;
+    --muted: #8A847D;
+    --border: #E5DFD8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-size: 9.5pt;
+    line-height: 1.55;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 22mm 26mm;
+    margin: 0 auto;
+    page-break-after: always;
+    position: relative;
+    background: var(--warm-white);
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 24px;
+    font-size: 7pt;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .page-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt;
+    color: var(--muted);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24pt;
+    font-weight: 400;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 9pt;
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* Team overview grid */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .team-card {
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .card-photo {
+    width: 44px;
+    height: 52px;
+    background: linear-gradient(145deg, #EDE8E1, #DDD6CC);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5pt;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13pt;
+    font-weight: 500;
+    margin-bottom: 1px;
+  }
+
+  .card-title {
+    font-size: 7pt;
+    font-weight: 500;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 8pt;
+    color: var(--charcoal-light);
+    line-height: 1.45;
+  }
+
+  .tags {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .tag {
+    font-size: 6pt;
+    font-weight: 500;
+    color: var(--sage);
+    background: rgba(122, 139, 111, 0.08);
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .divider {
+    width: 36px;
+    height: 1px;
+    background: var(--amber);
+    margin: 18px 0;
+  }
+
+  /* Profile section */
+  .profile {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .profile-photo {
+    width: 72px;
+    height: 88px;
+    min-width: 72px;
+    background: linear-gradient(145deg, #EDE8E1, #DDD6CC);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6pt;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .profile-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18pt;
+    font-weight: 400;
+    margin-bottom: 1px;
+  }
+
+  .profile-title {
+    font-size: 8pt;
+    font-weight: 500;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  .profile-bio {
+    font-size: 9pt;
+    color: var(--charcoal-light);
+    line-height: 1.55;
+  }
+
+  /* Experience line */
+  .exp {
+    margin-bottom: 10px;
+    padding-left: 12px;
+    border-left: 1.5px solid var(--border);
+  }
+
+  .exp-title {
+    font-weight: 600;
+    font-size: 9pt;
+  }
+
+  .exp-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt;
+    color: var(--sage);
+    background: rgba(122, 139, 111, 0.08);
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .exp-detail {
+    font-size: 8.5pt;
+    color: var(--charcoal-light);
+    line-height: 1.45;
+  }
+
+  .callout {
+    background: linear-gradient(135deg, rgba(196, 149, 106, 0.06), transparent);
+    border-left: 2px solid var(--amber);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 8.5pt;
+    color: var(--charcoal-light);
+    line-height: 1.5;
+  }
+
+  .gov-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+    margin-bottom: 14px;
+  }
+
+  .gov-table td {
+    padding: 5px 0;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: top;
+  }
+
+  .gov-table td:first-child {
+    font-weight: 500;
+    color: var(--muted);
+    width: 110px;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .small-text {
+    font-size: 7.5pt;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .placeholder {
+    background: #FFF3CD;
+    border: 1px dashed #D4A017;
+    color: #856404;
+    font-size: 7pt;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  p { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: TEAM OVERVIEW + CO-FOUNDERS -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span>Alche GmbH&ensp;|&ensp;The Team&ensp;|&ensp;Confidential</span>
+    <span class="page-num">01</span>
+  </div>
+
+  <h4>The Team</h4>
+  <h2>Four People, No Gaps</h2>
+  <p class="subtitle">
+    Data, engineering, medicine, and brand &mdash; covered across four people. Both co-founders are the product's first users.
+  </p>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="card-photo">Photo</div>
+      <div class="card-name">Timur Tasdogan</div>
+      <div class="card-title">Co-Founder &bull; 49%</div>
+      <div class="card-desc">
+        MSc Data Science. Shipped products at Hepsiburada (NASDAQ) and Hadi app (10M+ users). Managed &euro;1.8M ad spend at Concentrix/Meta.
+      </div>
+      <div class="tags">
+        <span class="tag">Brand</span>
+        <span class="tag">Growth</span>
+        <span class="tag">Data</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="card-photo">Photo</div>
+      <div class="card-name">Daria Dijan Roth</div>
+      <div class="card-title">Co-Founder &bull; 51%</div>
+      <div class="card-desc">
+        BSc Computer Engineering + BA International Business. Built production backend systems. 4-year autoimmune journey shaped product vision.
+      </div>
+      <div class="tags">
+        <span class="tag">Vision</span>
+        <span class="tag">Architecture</span>
+        <span class="tag">Operations</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="card-photo">Photo</div>
+      <div class="card-name">AmirFarzam Kamalpour</div>
+      <div class="card-title">Technical Lead</div>
+      <div class="card-desc">
+        Self-taught since 12. Runs Star Digital (stardigital.ir) &mdash; IT infrastructure, hosting, web/app dev. Previously Jung von Matt HAVEL, Berlin.
+      </div>
+      <div class="tags">
+        <span class="tag">Engineering</span>
+        <span class="tag">Infrastructure</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="card-photo">Photo</div>
+      <div class="card-name">Shukri Jarmoukli</div>
+      <div class="card-title">Medical Advisor</div>
+      <div class="card-desc">
+        Physician (Uni K&ouml;ln). Private longevity practice in Berlin. CGM, biomarkers, functional medicine. Serves Alche's exact target demographic.
+      </div>
+      <div class="tags">
+        <span class="tag">Protocols</span>
+        <span class="tag">Medical</span>
+        <span class="tag">CGM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TIMUR -->
+  <h4>Co-Founder</h4>
+
+  <div class="profile">
+    <div class="profile-photo">Photo</div>
+    <div>
+      <div class="profile-name">Timur Tasdogan</div>
+      <div class="profile-title">Co-Founder &bull; 49% Equity &bull; Full-Time</div>
+      <div class="profile-bio">
+        Quantitative thinker who builds brands. MSc Data Science (GISMA Berlin), BA Economics (Ko&ccedil; University, merit scholarship). Owns data, brand, and growth at Alche.
+      </div>
+    </div>
+  </div>
+
+  <div class="exp">
+    <div class="exp-title">Concentrix (for Meta) <span class="exp-tag">Consulting</span></div>
+    <div class="exp-detail">&euro;1.8M ad spend across 390+ advertisers. Avg ROAS improved from 1.5x to 2.7x. Jan 2024 &ndash; Jan 2025.</div>
+  </div>
+
+  <div class="exp">
+    <div class="exp-title">Hepsiburada <span class="exp-tag">NASDAQ: HEPS</span></div>
+    <div class="exp-detail">&euro;300K performance budget, 4x ROAS. Influencer campaigns: 29M views. Nov 2019 &ndash; Aug 2021.</div>
+  </div>
+
+  <div class="exp">
+    <div class="exp-title">TOM / Hadi App <span class="exp-tag">Consumer</span></div>
+    <div class="exp-detail">Co-led marketing for app that reached 10M+ users. Sep 2021 &ndash; Feb 2022.</div>
+  </div>
+
+  <div class="exp">
+    <div class="exp-title">Quantpaper <span class="exp-tag">Pre-Seed</span></div>
+    <div class="exp-detail">Founding team. 30 user interviews, 27% activation rate lift. Apr &ndash; Sep 2022.</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2: DARIA + EXTENDED TEAM + GOVERNANCE -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span>Alche GmbH&ensp;|&ensp;The Team&ensp;|&ensp;Confidential</span>
+    <span class="page-num">02</span>
+  </div>
+
+  <!-- DARIA -->
+  <h4>Co-Founder</h4>
+
+  <div class="profile">
+    <div class="profile-photo">Photo</div>
+    <div>
+      <div class="profile-name">Daria Dijan Roth</div>
+      <div class="profile-title">Co-Founder &bull; 51% Equity &bull; Full-Time</div>
+      <div class="profile-bio">
+        Systems thinker who ships. BSc Computer Engineering + BA International Business. 4-year autoimmune journey turned domain expertise. Owns vision, architecture, and operations at Alche.
+      </div>
+    </div>
+  </div>
+
+  <div class="exp">
+    <div class="exp-title">Jan Iletisim Teknolojileri <span class="exp-tag">Software</span></div>
+    <div class="exp-detail">Backend development and product architecture. Production systems serving real users. SEO and digital growth with measurable conversion gains.</div>
+  </div>
+
+  <div class="exp">
+    <div class="exp-title">MUTA-1 Reklamcilik <span class="exp-tag">Agency</span></div>
+    <div class="exp-detail">Brand positioning and performance marketing. Acquisition and retention funnel design.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FARZAM -->
+  <h4>Technical Lead</h4>
+
+  <div class="profile">
+    <div class="profile-photo">Photo</div>
+    <div>
+      <div class="profile-name">AmirFarzam Kamalpour</div>
+      <div class="profile-title">Technical Lead</div>
+      <div class="profile-bio">
+        Self-taught developer since age 12. Runs Star Digital (stardigital.ir), an IT infrastructure and digital services company offering server hosting, web/app development, and digital marketing. Previously at Jung von Matt HAVEL (Berlin) in IT and web development. Brings existing server infrastructure to the Alche build.
+      </div>
+    </div>
+  </div>
+
+  <p class="small-text" style="margin-left: 90px;">
+    <span class="placeholder">COMPENSATION STRUCTURE &amp; COMMITMENT LEVEL NEEDED</span>
+  </p>
+
+  <div class="divider"></div>
+
+  <!-- DR. SHUKRI -->
+  <h4>Medical Advisor</h4>
+
+  <div class="profile">
+    <div class="profile-photo">Photo</div>
+    <div>
+      <div class="profile-name">Shukri Jarmoukli</div>
+      <div class="profile-title">Medical Advisor &bull; Physician</div>
+      <div class="profile-bio">
+        Studied Medicine at Universit&auml;t zu K&ouml;ln. Runs Lifestyledoctor, a self-pay longevity practice in Berlin. Specializes in functional medicine, psychoneuroimmunology (KPNI), CGM biofeedback, and biomarker-driven protocols. His patients &mdash; entrepreneurs investing in proactive health out of pocket &mdash; are Alche's exact target demographic. Role: protocol design validation, medical content review, biomarker interpretation, EU regulatory compliance.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GOVERNANCE -->
+  <h4>Structure</h4>
+
+  <table class="gov-table">
+    <tr><td>Entity</td><td>Alche GmbH (formation in progress) &bull; Berlin</td></tr>
+    <tr><td>Equity</td><td>Daria 51% / Timur 49%</td></tr>
+    <tr><td>Domains</td><td>Timur: brand, data, growth &bull; Daria: vision, architecture, ops &bull; Shared: product</td></tr>
+    <tr><td>Residency</td><td>Both founders: Turkish citizens, long-term Berlin residents. No visa risk.</td></tr>
+    <tr><td>Co-Founder History</td><td>10-year personal friendship. Not a networking match.</td></tr>
+    <tr><td>First Hire</td><td><span class="placeholder">TBD</span></td></tr>
+  </table>
+
+  <div style="margin-top: 12px; text-align: center;">
+    <p class="small-text">Alche GmbH&ensp;|&ensp;Berlin&ensp;|&ensp;February 2026&ensp;|&ensp;Confidential</p>
+  </div>
+</div>
+
+</body>
+</html>

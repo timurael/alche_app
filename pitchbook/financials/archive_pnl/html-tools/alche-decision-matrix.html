@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Matrix — alche</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & VARIABLES ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --black: #1A1A1A;
+  --red: #8B1A1A;
+  --red-light: rgba(139, 26, 26, 0.06);
+  --red-border: rgba(139, 26, 26, 0.2);
+  --red-bg: rgba(139, 26, 26, 0.04);
+  --gray: #666666;
+  --gray-light: #999999;
+  --gray-lighter: #CCCCCC;
+  --border: #E5E5E5;
+  --card: #FAFAFA;
+  --card-hover: #F7F7F7;
+  --green: #1B5E20;
+  --green-light: rgba(27, 94, 32, 0.07);
+  --green-border: rgba(27, 94, 32, 0.22);
+  --amber: #7A5C00;
+  --amber-light: rgba(122, 92, 0, 0.07);
+  --amber-border: rgba(122, 92, 0, 0.22);
+  --risk-bg: rgba(139, 26, 26, 0.035);
+  --risk-border: rgba(139, 26, 26, 0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+.mono { font-family: 'Space Mono', monospace; }
+
+/* ========== STICKY NAV ========== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left { display: flex; align-items: baseline; gap: 14px; }
+
+.nav-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: 0.02em;
+}
+
+.nav-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+}
+
+.nav-actions { display: flex; gap: 8px; align-items: center; }
+
+.nav-timestamp {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--gray-light);
+  margin-right: 12px;
+}
+
+.btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--black);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover { border-color: var(--red); color: var(--red); }
+
+.btn-dark {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-dark:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+.btn.copied {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+/* ========== LAYOUT ========== */
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ========== HERO ========== */
+.hero {
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--red);
+  border: 1px solid var(--red-border);
+  border-radius: 2px;
+  padding: 5px 14px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  color: var(--black);
+}
+
+.hero h1 strong { font-weight: 700; }
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--gray);
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.hero-stat-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 2px;
+}
+
+/* ========== SECTION NAV ========== */
+.section-nav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.section-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  text-decoration: none;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.section-nav a:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-light);
+}
+
+/* ========== SECTION HEADERS ========== */
+.section { margin-bottom: 56px; }
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 10px;
+  border-bottom: 2px solid var(--black);
+  margin-bottom: 20px;
+}
+
+.sec-header h2 {
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--black);
+}
+
+.sec-header h2 strong { font-weight: 700; }
+
+.sec-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+}
+
+/* ========== RESEARCH CARDS ========== */
+.r-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s;
+  overflow: hidden;
+}
+
+.r-card:hover { border-color: var(--gray-lighter); }
+
+.r-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.r-card-left { display: flex; align-items: center; gap: 14px; }
+
+.r-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  background: var(--red-light);
+  border: 1px solid var(--red-border);
+  padding: 3px 8px;
+  border-radius: 3px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.r-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.r-card-right { display: flex; align-items: center; gap: 12px; }
+
+.r-confidence {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.confidence-high { color: var(--green); background: var(--green-light); border: 1px solid var(--green-border); }
+.confidence-medium { color: var(--amber); background: var(--amber-light); border: 1px solid var(--amber-border); }
+.confidence-low { color: var(--red); background: var(--red-light); border: 1px solid var(--red-border); }
+
+.r-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.r-chevron {
+  font-size: 14px;
+  color: var(--gray-light);
+  transition: transform 0.2s;
+  margin-left: 4px;
+}
+
+.r-card.open .r-chevron { transform: rotate(180deg); }
+
+.r-card-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.r-card.open .r-card-body { display: block; padding-top: 16px; }
+
+.r-finding {
+  font-size: 14px;
+  color: var(--black);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.r-meta-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.r-meta {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.r-meta strong {
+  font-weight: 600;
+  color: var(--black);
+}
+
+.r-connections {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.r-conn-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--red);
+  background: var(--red-light);
+  border: 1px solid var(--red-border);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.r-warning {
+  background: var(--risk-bg);
+  border: 1px solid var(--risk-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--red);
+  line-height: 1.6;
+}
+
+.r-warning-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  color: var(--red);
+}
+
+/* ========== DECISION CARDS ========== */
+.d-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.d-card:hover {
+  border-color: var(--gray-lighter);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.03);
+}
+
+.d-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.d-card-left { display: flex; align-items: center; gap: 14px; }
+
+.d-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  background: var(--black);
+  padding: 4px 10px;
+  border-radius: 4px;
+  min-width: 36px;
+  text-align: center;
+}
+
+.d-title-group { display: flex; flex-direction: column; gap: 2px; }
+
+.d-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.d-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--gray-light);
+}
+
+.d-card-right { display: flex; align-items: center; gap: 10px; }
+
+.d-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.status-decided { color: var(--green); background: var(--green-light); border: 1px solid var(--green-border); }
+.status-open { color: var(--amber); background: var(--amber-light); border: 1px solid var(--amber-border); }
+.status-blocked { color: var(--red); background: var(--red-light); border: 1px solid var(--red-border); }
+
+.d-chevron {
+  font-size: 14px;
+  color: var(--gray-light);
+  transition: transform 0.2s;
+}
+
+.d-card.open .d-chevron { transform: rotate(180deg); }
+
+.d-card-body {
+  display: none;
+  padding: 0 22px 22px;
+  border-top: 1px solid var(--border);
+}
+
+.d-card.open .d-card-body { display: block; padding-top: 18px; }
+
+.d-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-light);
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.d-section-label:first-child { margin-top: 0; }
+
+.d-chosen {
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--black);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.d-chosen strong {
+  font-weight: 600;
+  color: var(--green);
+}
+
+.d-options { list-style: none; margin-top: 4px; }
+
+.d-options li {
+  font-size: 13px;
+  color: var(--gray);
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  line-height: 1.6;
+}
+
+.d-options li:last-child { border-bottom: none; }
+
+.d-options li.chosen {
+  color: var(--black);
+  font-weight: 500;
+}
+
+.d-pnl-impact {
+  font-size: 13px;
+  color: var(--black);
+  line-height: 1.7;
+}
+
+.d-investor {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--black);
+  background: var(--card);
+  border-left: 3px solid var(--black);
+  padding: 10px 16px;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+}
+
+.d-research-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.d-check {
+  background: var(--risk-bg);
+  border: 1px solid var(--risk-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--red);
+  line-height: 1.6;
+}
+
+/* ========== P&L IMPACT TABLE ========== */
+.pnl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.pnl-table thead th {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--black);
+  font-weight: 400;
+}
+
+.pnl-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.pnl-table tbody tr:hover { background: var(--card); }
+
+.pnl-table .mono-cell {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pnl-table .change-up { color: var(--green); font-weight: 600; }
+.pnl-table .change-down { color: var(--red); font-weight: 600; }
+.pnl-table .change-removed { color: var(--red); font-weight: 600; text-decoration: line-through; }
+.pnl-table .change-new { color: var(--green); font-weight: 600; }
+.pnl-table .change-pending { color: var(--amber); font-weight: 600; }
+.pnl-table .change-same { color: var(--gray-light); }
+
+.pnl-group-header td {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  padding-top: 20px !important;
+  border-bottom: 1px solid var(--red-border) !important;
+  font-weight: 700;
+}
+
+/* ========== OPEN QUESTIONS ========== */
+.oq-card {
+  background: var(--amber-light);
+  border: 1px solid var(--amber-border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+
+.oq-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber);
+  margin-right: 8px;
+}
+
+.oq-text {
+  font-size: 14px;
+  color: var(--black);
+  line-height: 1.6;
+}
+
+.oq-ref {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+/* ========== ACCURACY AUDIT ========== */
+.audit-section {
+  background: var(--risk-bg);
+  border: 2px solid var(--risk-border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 56px;
+}
+
+.audit-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.audit-icon {
+  font-size: 20px;
+  color: var(--red);
+}
+
+.audit-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--red);
+}
+
+.audit-card {
+  background: var(--white);
+  border: 1px solid var(--risk-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+
+.audit-card-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.audit-card-text {
+  font-size: 13px;
+  color: var(--black);
+  line-height: 1.7;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 56px;
+  text-align: center;
+}
+
+.footer-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--gray-light);
+  letter-spacing: 0.05em;
+}
+
+/* ========== TOAST ========== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .nav { padding: 0 16px; }
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 32px; }
+  .hero-stats { flex-direction: column; gap: 16px; }
+  .section-nav { gap: 6px; }
+  .r-card-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .r-card-right { width: 100%; justify-content: flex-start; }
+  .d-card-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .d-card-right { width: 100%; justify-content: flex-start; }
+  .pnl-table { font-size: 11px; }
+  .pnl-table thead th, .pnl-table tbody td { padding: 8px 6px; }
+  .audit-section { padding: 18px; }
+  .nav-timestamp { display: none; }
+}
+
+/* ========== PRINT ========== */
+@media print {
+  .nav { position: relative; background: white; backdrop-filter: none; }
+  .nav-actions { display: none; }
+  .section-nav { display: none; }
+  .r-card-body { display: block !important; padding-top: 12px; }
+  .d-card-body { display: block !important; padding-top: 14px; }
+  .r-chevron, .d-chevron { display: none; }
+  body { font-size: 11px; }
+  .hero h1 { font-size: 28px; }
+  .container { max-width: 100%; padding: 0 20px; }
+  .section { page-break-inside: avoid; }
+  .d-card, .r-card, .audit-card { page-break-inside: avoid; }
+  .toast { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<header class="nav">
+  <div class="nav-left">
+    <span class="nav-wordmark">alche</span>
+    <span class="nav-label">Decision Matrix</span>
+  </div>
+  <div class="nav-actions">
+    <span class="nav-timestamp" id="lastUpdated"></span>
+    <button class="btn" onclick="copySummary()">Copy Summary</button>
+    <button class="btn" onclick="copyInvestorFAQ()">Copy Investor FAQ</button>
+    <button class="btn btn-dark" onclick="window.print()">Print</button>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Single Source of Truth</div>
+  <h1>Research <strong>&rarr;</strong> Decisions <strong>&rarr;</strong> P&amp;L</h1>
+  <p class="hero-sub">Every number in alche's financial model traced back to its research source. Every decision logged with rationale, investor framing, and accuracy flags. Built for investor-grade scrutiny.</p>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">8</div>
+      <div class="hero-stat-label">Research agents completed</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">11</div>
+      <div class="hero-stat-label">Decisions tracked</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Decided</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">4</div>
+      <div class="hero-stat-label">Open</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">6</div>
+      <div class="hero-stat-label">Accuracy flags</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION NAV -->
+<div class="section-nav">
+  <a href="#research">S1 &mdash; Research Overview</a>
+  <a href="#decisions">S2 &mdash; Decision Log</a>
+  <a href="#pnl-impact">S3 &mdash; P&amp;L Impact</a>
+  <a href="#open-questions">S4 &mdash; Open Questions</a>
+  <a href="#accuracy-audit">S5 &mdash; Accuracy Audit</a>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: RESEARCH OVERVIEW -->
+<!-- ============================================================ -->
+<section class="section" id="research">
+  <div class="sec-header">
+    <h2>Section <strong>1</strong> &mdash; Research Overview</h2>
+    <span class="sec-label">8 Agents / All Complete</span>
+  </div>
+
+  <!-- R1 -->
+  <div class="r-card" id="R1">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R1</span>
+        <span class="r-title">CGM Business Model</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-high">High</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> Software-Only model recommended (80-90% gross margin vs. 15-25% for sensor bundling). Dexcom G7 / Libre 3 available in DACH at EUR 70 wholesale. EUR 30K regulatory setup cost identified. ZOE dropped CGM entirely &mdash; significant investor red flag that requires a prepared counter-narrative.
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> Alche_CGM_Full_Analysis.pdf (primary)</div>
+        <div class="r-meta"><strong>Sources count:</strong> 1 PDF + market data</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D3 &mdash; CGM Model</span>
+        <span class="r-conn-tag">D7 &mdash; Waste Rates</span>
+        <span class="r-conn-tag">D8 &mdash; Terra API</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- R2 -->
+  <div class="r-card" id="R2">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R2</span>
+        <span class="r-title">Cost Analysis (PDF Extraction)</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-high">High / Low</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> PDF covers SMOOTHIE BAR operations (EUR 9,022/mo base case at 45 drinks/day, 65% margin), NOT curated retail products. EUR 49 avg retail price / EUR 11.50 COGS for potions remains UNVALIDATED by this research. The wholesale margin benchmark from the Physical Economist (Sub-Agent 3) suggests 50-52% wholesale cost is standard, implying EUR 24.50 COGS on a EUR 49 product &mdash; significantly higher than the EUR 11.50 in the P&amp;L.
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> Alche_Cost_Analysis_pdf.pdf (primary)</div>
+        <div class="r-meta"><strong>Confidence:</strong> HIGH for smoothie data; LOW for retail product assumptions</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D4 &mdash; Smoothie Bar</span>
+        <span class="r-conn-tag">D11 &mdash; Retail Products</span>
+      </div>
+      <div class="r-warning">
+        <div class="r-warning-label">Misleading Risk</div>
+        The original P&amp;L assumed this PDF validated retail product margins. It does not. The PDF is about smoothie bar operations. Retail product unit economics (EUR 49/unit, EUR 11.50 COGS = 76% margin) have no verified source. The Physical Economist research suggests standard wholesale cost would be EUR 24.50 (50% of MSRP), yielding a 50% margin &mdash; not 76%.
+      </div>
+    </div>
+  </div>
+
+  <!-- R3 -->
+  <div class="r-card" id="R3">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R3</span>
+        <span class="r-title">HWG Legal / Doctor Booking</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-high">High</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> Commission-based doctor referral fees are ILLEGAL in Germany under StGB &sect;&sect;299a/299b (criminal offense, up to 3 years prison). SaaS model (flat monthly fee for directory listing) is legal per BGH Feb 2025 ruling. Doctolib and Jameda both use SaaS-only models in Germany. EUR 99/mo is competitive with Doctolib's practitioner pricing in the DACH market.
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> StGB &sect;&sect;299a/299b, BGH Feb 2025 ruling, Doctolib/Jameda comparisons</div>
+        <div class="r-meta"><strong>Sources count:</strong> 5+ legal/market sources</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D1 &mdash; Doctor Revenue Model</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- R4 -->
+  <div class="r-card" id="R4">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R4</span>
+        <span class="r-title">Restaurant Partnership</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-high">High</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> At pre-seed volumes, restaurant commission generates EUR 30-100/mo total &mdash; negligible revenue. No successful health-focused restaurant curation app charges commission at this scale. TheFork and Lieferando required massive scale before commission models worked. Healthy Anywhere precedent: feature-only, no commission. AI-assisted menu analysis costs EUR 46-71/mo for 5 restaurants (vs. EUR 500/mo budgeted for freelance dietitians).
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> TheFork, Lieferando, OpenTable data; Healthy Anywhere precedent</div>
+        <div class="r-meta"><strong>Sources count:</strong> 6+ market sources</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D2 &mdash; Restaurant Partnership</span>
+        <span class="r-conn-tag">D10 &mdash; Menu Analysis Budget</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- R5 -->
+  <div class="r-card" id="R5">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R5</span>
+        <span class="r-title">Claude AI Classification</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-high">High</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> Two distinct cost types identified. (1) Claude Max EUR 210/mo = internal team subscription for Timu + Daria. 100% OpEx under Management &amp; APIs. (2) Anthropic Inference = user-facing AI via API, estimated EUR 0.40/subscriber/mo actual cost (EUR 0.70 estimate is conservative). Recommended 70/30 COGS/OpEx split if user-facing AI is used. User confirmed "no Anthropic Inference" &mdash; decision pending on whether this means no user-facing AI at all.
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> Anthropic public pricing, token cost calculations</div>
+        <div class="r-meta"><strong>Sources count:</strong> 3+ verified pricing sources</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D6 &mdash; AI Cost Classification</span>
+      </div>
+      <div class="r-warning">
+        <div class="r-warning-label">Note</div>
+        User said "no Anthropic Inference" &mdash; may not plan user-facing AI via API. If so, EUR 210/mo is the only AI cost. If user-facing AI is planned for a later phase, a per-user variable cost line will need to be added.
+      </div>
+    </div>
+  </div>
+
+  <!-- R6 -->
+  <div class="r-card" id="R6">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R6</span>
+        <span class="r-title">UX Design Scope</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-medium">Medium</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> EUR 5,000/mo Phase 1, EUR 3,500/mo Phase 2, EUR 4,000/mo Phase 3. Total EUR 99K over 24 months. Based on mid-level Berlin freelancer rates via Malt.de. 100% OpEx under R&amp;D. Current P&amp;L has EUR 800/mo &mdash; a 4-6x gap that needs resolution.
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> Malt.de Berlin freelancer market rates (estimates, not quotes)</div>
+        <div class="r-meta"><strong>Sources count:</strong> Market research, 3+ platforms checked</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D5 &mdash; UX Budget</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- R7 -->
+  <div class="r-card" id="R7">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R7</span>
+        <span class="r-title">Product Waste Rates</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-medium">Medium</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> 5% flat rate holds for capsule/tincture-heavy product mix. Adaptogens and powders run 6-8% waste due to moisture sensitivity and shorter shelf life. Category-weighted approach recommended: capsules 4%, powders 7%. CGM hardware waste (2%) is now irrelevant per D3 (Software-Only decision).
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> Industry benchmarks (supplement manufacturing, not alche-specific data)</div>
+        <div class="r-meta"><strong>Sources count:</strong> 4+ industry benchmarks</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D7 &mdash; Product Waste</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- R8 -->
+  <div class="r-card" id="R8">
+    <div class="r-card-header" onclick="toggleCard(this)">
+      <div class="r-card-left">
+        <span class="r-id">R8</span>
+        <span class="r-title">Software License Audit</span>
+      </div>
+      <div class="r-card-right">
+        <span class="r-confidence confidence-high">High</span>
+        <span class="r-status">Complete</span>
+        <span class="r-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="r-card-body">
+      <div class="r-finding">
+        <strong>Key finding:</strong> Phase 1 EUR 50-100/mo (Google Workspace, Notion, Figma minimal). Phase 2 EUR 175-250/mo (add CRM, Mailchimp). Phase 3 EUR 460-575/mo (full stack). PostHog replaces Mixpanel (free tier sufficient for &lt;2K users). Terra API EUR 370+/mo &mdash; defer to Phase 2. EUR 600/mo blended SaaS estimate is defensible but front-loaded relative to actual Phase 1 needs.
+      </div>
+      <div class="r-meta-row">
+        <div class="r-meta"><strong>Source:</strong> Public pricing pages (verified Feb 2025)</div>
+        <div class="r-meta"><strong>Sources count:</strong> 12+ SaaS pricing pages verified</div>
+      </div>
+      <div class="d-section-label" style="margin-top:12px">Connected Decisions</div>
+      <div class="r-connections">
+        <span class="r-conn-tag">D8 &mdash; Terra API</span>
+        <span class="r-conn-tag">D9 &mdash; SaaS Stack</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: DECISION LOG -->
+<!-- ============================================================ -->
+<section class="section" id="decisions">
+  <div class="sec-header">
+    <h2>Section <strong>2</strong> &mdash; Decision Log</h2>
+    <span class="sec-label">7 Decided / 4 Open</span>
+  </div>
+
+  <!-- D1 -->
+  <div class="d-card" id="D1">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D1</span>
+        <div class="d-title-group">
+          <span class="d-title">Doctor Revenue Model</span>
+          <span class="d-date">Decided 23 Feb 2026</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-decided">Decided</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R3 &mdash; HWG Legal</span>
+      </div>
+
+      <div class="d-section-label">Chosen Option</div>
+      <div class="d-chosen">
+        <strong>C. SaaS only.</strong> EUR 99/mo flat fee per doctor x 20 doctors = EUR 1,980/mo by M12. No commission, no referral fees. Legally validated model.
+      </div>
+
+      <div class="d-section-label">Options Considered</div>
+      <ul class="d-options">
+        <li>A. Commission per referral (EUR 15-25/booking) &mdash; ILLEGAL under StGB &sect;&sect;299a/299b. Rejected.</li>
+        <li>B. Hybrid: SaaS + performance bonus &mdash; Legal gray area. Rejected for simplicity.</li>
+        <li class="chosen">C. SaaS only. EUR 99/mo flat listing fee. &mdash; CHOSEN</li>
+        <li>D. Freemium directory (free listing, paid features) &mdash; Delays revenue. Rejected.</li>
+      </ul>
+
+      <div class="d-section-label">P&amp;L Impact</div>
+      <div class="d-pnl-impact">
+        Replace "Doctor SaaS EUR 150/mo" with EUR 99/mo. Remove any commission reference from the model. Revenue starts M7 (requires Partner Manager hire at M6). Doctor verification cost (EUR 25/new doctor one-off) remains. New CapEx line: EUR 2-5K for healthcare compliance legal opinion.
+      </div>
+
+      <div class="d-section-label">Investor Talking Point</div>
+      <div class="d-investor">
+        "We follow the Doctolib model &mdash; flat SaaS fee, legally validated by BGH Feb 2025 ruling. Commission-based referrals are a criminal offense in Germany. We chose the only defensible path."
+      </div>
+
+      <div class="d-check">
+        <strong>Accuracy check:</strong> 20 longevity doctors in Berlin by M12 is ambitious. R3 estimated 30-60 longevity-focused practices in Berlin total. Onboarding 20 means capturing 33-67% of the addressable market in Year 1 with 2 non-technical founders and 1 part-time Partner Manager. Consider modeling a conservative scenario at 10-12 doctors.
+      </div>
+    </div>
+  </div>
+
+  <!-- D2 -->
+  <div class="d-card" id="D2">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D2</span>
+        <div class="d-title-group">
+          <span class="d-title">Restaurant Partnership</span>
+          <span class="d-date">Decided 23 Feb 2026</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-decided">Decided</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R4 &mdash; Restaurant Partnership</span>
+      </div>
+
+      <div class="d-section-label">Chosen Option</div>
+      <div class="d-chosen">
+        <strong>B. Phase 2 revenue trigger.</strong> EUR 0 revenue until 500+ active users. Position as differentiation and retention mechanism, not a revenue line. Add EUR 175-350/mo cost for 5 pilot restaurants in Phase 1.
+      </div>
+
+      <div class="d-section-label">Options Considered</div>
+      <ul class="d-options">
+        <li>A. Launch with commission from M1 (EUR 1.50/cover) &mdash; Generates EUR 30-100/mo total. Not worth operational overhead. Rejected.</li>
+        <li class="chosen">B. Phase 2 revenue trigger. Feature-only until 500+ users. &mdash; CHOSEN</li>
+        <li>C. Drop entirely &mdash; Loses differentiation. Rejected.</li>
+      </ul>
+
+      <div class="d-section-label">P&amp;L Impact</div>
+      <div class="d-pnl-impact">
+        Remove "Restaurant Bookings" and "Restaurant Commission" (EUR 1.50/cover) from revenue lines for M1-M12. Add EUR 175-350/mo as cost under Product Development for 5 pilot restaurants. Reduce Menu Analysis from EUR 500/mo to EUR 75/mo (or EUR 0 per D10).
+      </div>
+
+      <div class="d-section-label">Investor Talking Point</div>
+      <div class="d-investor">
+        "No competing longevity app extends from your kitchen to your restaurant table. This is a retention moat, not a revenue line at pre-seed. We build the feature, prove engagement, then monetize at scale."
+      </div>
+
+      <div class="d-check">
+        <strong>Accuracy check:</strong> Menu analysis cost in S&amp;M (EUR 500/mo) must be reduced per R4 findings. AI-assisted analysis costs EUR 46-71/mo for 5 restaurants, not EUR 500/mo for freelance dietitians.
+      </div>
+    </div>
+  </div>
+
+  <!-- D3 -->
+  <div class="d-card" id="D3">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D3</span>
+        <div class="d-title-group">
+          <span class="d-title">CGM Model</span>
+          <span class="d-date">Decided 23 Feb 2026</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-decided">Decided</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R1 &mdash; CGM Business Model</span>
+      </div>
+
+      <div class="d-section-label">Chosen Option</div>
+      <div class="d-chosen">
+        <strong>A. Software-Only (BYOD).</strong> Remove CGM hardware revenue AND cost lines. CGM value is baked into Pro/Premium subscription tiers. Users bring their own Dexcom G7 / Libre 3. Margin jumps to 80-90%.
+      </div>
+
+      <div class="d-section-label">Options Considered</div>
+      <ul class="d-options">
+        <li class="chosen">A. Software-Only (BYOD). No hardware lines. &mdash; CHOSEN</li>
+        <li>B. Drop-ship bundle (EUR 130 retail / EUR 70 wholesale). 15-25% margin. Capital-intensive. Rejected.</li>
+        <li>C. Subscription + sensor bundle (monthly fee includes sensor). High churn risk if sensor quality varies. Rejected.</li>
+      </ul>
+
+      <div class="d-section-label">P&amp;L Impact</div>
+      <div class="d-pnl-impact">
+        Remove "CGM Hardware &mdash; units/EUR" from revenue (was EUR 130/unit). Remove "CGM Hardware Cost" (was EUR 70/unit) and "CGM RMA Reserve" (was 4%) from COGS. CGM features now deliver value within existing subscription tiers. Subscription pricing may need adjustment if CGM features significantly increase the value proposition. EUR 30K regulatory setup cost &mdash; may reduce for software-only, but not zero if DiGA pathway is pursued.
+      </div>
+
+      <div class="d-section-label">Investor Talking Point</div>
+      <div class="d-investor">
+        "Software-only model gives us 80-90% margins on CGM features vs. 15-25% for sensor bundling. We avoid capital risk and ZOE's inventory problems. Users already own sensors &mdash; we add the intelligence layer."
+      </div>
+
+      <div class="d-check">
+        <strong>Accuracy check #1:</strong> Need to prepare answer for "ZOE dropped CGM &mdash; why are you picking it up?" Research agent running on ZOE's specific reasons.<br><br>
+        <strong>Accuracy check #2:</strong> EUR 30K regulatory setup from R1 &mdash; does this still apply for software-only? Likely reduced but not zero if any DiGA pathway is pursued.<br><br>
+        <strong>Accuracy check #3:</strong> If CGM features are baked into Pro/Premium tiers without a price increase, subscription revenue stays the same but feature cost increases (development, data infrastructure). Need to validate willingness-to-pay if price increases.
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 -->
+  <div class="d-card" id="D4">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D4</span>
+        <div class="d-title-group">
+          <span class="d-title">Smoothie Bar / Physical Space</span>
+          <span class="d-date">Decided 23 Feb 2026</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-decided">Decided</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R2 &mdash; Cost Analysis PDF</span>
+      </div>
+
+      <div class="d-section-label">Chosen Option</div>
+      <div class="d-chosen">
+        <strong>A. Add as new revenue line.</strong> Physical space is CORE to alche. Red light therapy + potions retail + smoothie bar + community events all converge in one location. "alche is digital AND physical first." Model: M6+ launch, EUR 5-9K/mo revenue.
+      </div>
+
+      <div class="d-section-label">Options Considered</div>
+      <ul class="d-options">
+        <li class="chosen">A. Add as new revenue line. Physical space is core experience. &mdash; CHOSEN</li>
+        <li>B. Defer to Phase 2. Digital-only until revenue proves demand. Rejected &mdash; founder vision is physical-first.</li>
+        <li>C. Partner with existing space (coworking, gym). Lower CapEx but less control. Not explored.</li>
+      </ul>
+
+      <div class="d-section-label">P&amp;L Impact</div>
+      <div class="d-pnl-impact">
+        Add new revenue line "Physical Space &mdash; Smoothie Bar" starting M6+. EUR 5-9K/mo revenue at 65% margin (from R2 PDF). Add CapEx line for commercial kitchen equipment (EUR 15-25K from R2). Integrate with existing LED Therapy revenue line (same physical location). Add CapEx for space buildout and lease deposit. Physical space lease cost is NOT yet in the P&amp;L &mdash; this is a gap.
+      </div>
+
+      <div class="d-section-label">Investor Talking Point</div>
+      <div class="d-investor">
+        "alche is digital AND physical first. The space is where red light therapy, curated potions, functional smoothies, and community events converge. No one else does this. The physical presence creates a retention loop &mdash; digital drives foot traffic, physical experience drives app engagement."
+      </div>
+
+      <div class="d-check">
+        <strong>Accuracy check #1:</strong> EUR 9,022/mo base case from R2 PDF assumed 45 drinks/day. In a niche longevity space (not a high-foot-traffic coffee shop), 20-30 drinks/day may be more realistic. Consider modeling at 60% of the PDF's base case = EUR 5,413/mo.<br><br>
+        <strong>Accuracy check #2:</strong> User said "this never done in anywhere" (red light + potions + smoothies in one space). This first-mover claim needs verification before presenting to investors. If true, this is a genuine differentiator.<br><br>
+        <strong>Accuracy check #3:</strong> Physical space lease cost is missing from the P&amp;L entirely. Berlin commercial lease for a small retail/wellness space = EUR 2,000-4,000/mo depending on neighborhood. This is a significant omission.
+      </div>
+    </div>
+  </div>
+
+  <!-- D5 -->
+  <div class="d-card" id="D5">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D5</span>
+        <div class="d-title-group">
+          <span class="d-title">UX Budget / CapEx Inclusion</span>
+          <span class="d-date">Open</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-open">Open</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R6 &mdash; UX Design Scope</span>
+      </div>
+
+      <div class="d-section-label">Question</div>
+      <div class="d-pnl-impact">
+        <strong>Two intertwined questions:</strong><br>
+        1. Should CapEx be included in this P&amp;L? (Recommendation: Yes. Add a separate "One-Time / Capital Expenditures" section so investors see both monthly burn AND upfront investments.)<br>
+        2. UX budget: Current P&amp;L has EUR 800/mo. R6 says EUR 3,500-5,000/mo for the quality level alche needs. UX design is OpEx (service, not asset), so it stays in the P&amp;L under R&amp;D regardless of the CapEx question.
+      </div>
+
+      <div class="d-section-label">Options</div>
+      <ul class="d-options">
+        <li>A. Keep EUR 800/mo UX + no CapEx section &mdash; Under-budgets design, hides capital needs from investors.</li>
+        <li>B. Increase UX to EUR 3,500/mo + add CapEx section &mdash; Most transparent. Shows total cash needs.</li>
+        <li>C. Increase UX to EUR 2,000/mo (compromise) + add CapEx section &mdash; Budget-conscious but still realistic.</li>
+      </ul>
+
+      <div class="d-section-label">Potential CapEx Items</div>
+      <div class="d-pnl-impact">
+        Red light therapy equipment (EUR TBD) | Physical space buildout/deposit (EUR TBD) | Commercial kitchen equipment for smoothie bar (EUR 15-25K per R2) | R&amp;D formulation testing (EUR 5,000 &mdash; already in P&amp;L as one-off) | CGM regulatory setup (EUR 30K per R1 &mdash; may reduce for software-only) | Legal opinion for doctor SaaS (EUR 2-5K per R3) | GmbH formation costs (EUR TBD)
+      </div>
+
+      <div class="d-section-label">Waiting For</div>
+      <div class="d-pnl-impact" style="color: var(--amber);">User confirmation on both questions: CapEx inclusion and UX budget level.</div>
+    </div>
+  </div>
+
+  <!-- D6 -->
+  <div class="d-card" id="D6">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D6</span>
+        <div class="d-title-group">
+          <span class="d-title">AI Cost Classification</span>
+          <span class="d-date">Open</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-open">Open</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R5 &mdash; Claude AI Classification</span>
+      </div>
+
+      <div class="d-section-label">Question</div>
+      <div class="d-pnl-impact">
+        User confirmed Claude Max EUR 210/mo (internal team tool). User said "no Anthropic Inference." This means either: (1) No user-facing AI via API in the app &mdash; remove the Inference line entirely, or (2) Not decided yet &mdash; defer decision.<br><br>
+        <strong>If no user-facing AI:</strong> EUR 210/mo is the only AI cost. 100% OpEx.<br>
+        <strong>If user-facing AI planned:</strong> Add variable cost line at EUR 0.40-0.70/subscriber/mo. Apply 70/30 COGS/OpEx split.
+      </div>
+
+      <div class="d-section-label">Options</div>
+      <ul class="d-options">
+        <li>A. Remove Anthropic Inference line. EUR 210/mo Claude Max only. No user-facing AI via API.</li>
+        <li>B. Keep Anthropic Inference line at EUR 0.40/subscriber/mo. Budget for user-facing AI features.</li>
+        <li>C. Defer. Remove for now, add in Phase 2 P&amp;L when product scope clarifies.</li>
+      </ul>
+
+      <div class="d-section-label">Waiting For</div>
+      <div class="d-pnl-impact" style="color: var(--amber);">Confirmation: Does the alche app use AI for user-facing features (personalized protocols, health insights)? Or is Claude Max just for internal team use?</div>
+    </div>
+  </div>
+
+  <!-- D7 -->
+  <div class="d-card" id="D7">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D7</span>
+        <div class="d-title-group">
+          <span class="d-title">Product Waste Rates</span>
+          <span class="d-date">Decided 23 Feb 2026</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-decided">Decided</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R7 &mdash; Product Waste</span>
+      </div>
+
+      <div class="d-section-label">Chosen Option</div>
+      <div class="d-chosen">
+        <strong>A. Category-weighted waste.</strong> Potions (capsule-heavy): 4%. Potions (powder-heavy): 7%. CGM hardware: N/A (removed per D3).
+      </div>
+
+      <div class="d-section-label">Options Considered</div>
+      <ul class="d-options">
+        <li class="chosen">A. Category-weighted (capsules 4%, powders 7%). More accurate. &mdash; CHOSEN</li>
+        <li>B. Keep 5% flat across all physical products. Simpler but less accurate.</li>
+      </ul>
+
+      <div class="d-section-label">P&amp;L Impact</div>
+      <div class="d-pnl-impact">
+        Split "Waste/Defect Reserve 5%" into category-specific lines. Remove CGM hardware waste (no longer applicable per D3). Net effect: slightly lower waste cost if product mix skews capsule-heavy, slightly higher if powder-heavy. Marginal P&amp;L impact vs. 5% flat.
+      </div>
+
+      <div class="d-section-label">Investor Talking Point</div>
+      <div class="d-investor">
+        "We model waste at the category level &mdash; capsules at 4%, powders at 7% &mdash; based on industry benchmarks for shelf-stable supplements. This is more rigorous than a flat 5% assumption."
+      </div>
+
+      <div class="d-check">
+        <strong>Accuracy check:</strong> With Software-Only CGM (D3), the "CGM hardware 2%" waste rate from the user's original answer is now irrelevant. Only potions waste applies. These are industry benchmarks, not alche-specific data &mdash; actual waste may differ once inventory begins.
+      </div>
+    </div>
+  </div>
+
+  <!-- D8 -->
+  <div class="d-card" id="D8">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D8</span>
+        <div class="d-title-group">
+          <span class="d-title">Terra API</span>
+          <span class="d-date">Decided 23 Feb 2026</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-decided">Decided</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R8 &mdash; Software License Audit</span>
+        <span class="r-conn-tag">R1 &mdash; CGM Business Model</span>
+      </div>
+
+      <div class="d-section-label">Chosen Option</div>
+      <div class="d-chosen">
+        <strong>Defer. Minimum risk.</strong> Use native Apple HealthKit and Google Health Connect (free). Terra API (EUR 370-499/mo) deferred to Phase 2 when user volume demands multi-device support.
+      </div>
+
+      <div class="d-section-label">Options Considered</div>
+      <ul class="d-options">
+        <li>A. Launch with Terra API from M6 (EUR 499/mo). Multi-device support from day one. Rejected &mdash; cost vs. value at pre-seed volumes.</li>
+        <li class="chosen">B. Defer. Use native HealthKit/Health Connect (free). Add Terra in Phase 2. &mdash; CHOSEN</li>
+        <li>C. Build custom integrations. High dev cost, maintenance burden. Rejected.</li>
+      </ul>
+
+      <div class="d-section-label">P&amp;L Impact</div>
+      <div class="d-pnl-impact">
+        Remove "Terra CGM API EUR 499/mo (M6+)" from Management &amp; APIs. Saves EUR 499/mo x 19 months = EUR 9,481 over the model period. Add Terra as Phase 2 line item (M12+ or when revenue justifies it).
+      </div>
+
+      <div class="d-section-label">Investor Talking Point</div>
+      <div class="d-investor">
+        "We integrate directly with Apple HealthKit and Google Health Connect at zero cost. These cover 95%+ of our target users' devices. Terra API is our Phase 2 play when user volume demands multi-device support beyond the Apple/Google ecosystem."
+      </div>
+    </div>
+  </div>
+
+  <!-- D9 -->
+  <div class="d-card" id="D9">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D9</span>
+        <div class="d-title-group">
+          <span class="d-title">SaaS Stack</span>
+          <span class="d-date">Open</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-open">Open</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R8 &mdash; Software License Audit</span>
+      </div>
+
+      <div class="d-section-label">Current State</div>
+      <div class="d-pnl-impact">
+        User confirmed Claude Code is in the stack. P&amp;L currently models SaaS scaling EUR 350 &rarr; EUR 850 &rarr; EUR 1,800/mo. R8 suggests Phase 1 actual need is EUR 50-100/mo (Google Workspace + Notion + Figma minimal), scaling to EUR 175-250/mo in Phase 2. The current model may be over-budgeting early months and under-specifying what tools are actually needed.
+      </div>
+
+      <div class="d-section-label">alche-Specific SaaS Needs (to be confirmed)</div>
+      <ul class="d-options">
+        <li>Google Workspace (EUR 12/user/mo x 2 = EUR 24/mo)</li>
+        <li>Notion (EUR 10/user/mo x 2 = EUR 20/mo)</li>
+        <li>Figma (EUR 15/user/mo x 2 = EUR 30/mo)</li>
+        <li>Claude Code / Claude Max (EUR 210/mo &mdash; confirmed)</li>
+        <li>PostHog (free tier, replaces Mixpanel)</li>
+        <li>Stripe (transaction fees, not SaaS line)</li>
+        <li>Mailchimp / Brevo for email (EUR 20-50/mo when needed)</li>
+        <li>CRM (HubSpot free tier initially)</li>
+        <li>Hetzner hosting (EUR 100-250/mo per R8)</li>
+      </ul>
+
+      <div class="d-section-label">Waiting For</div>
+      <div class="d-pnl-impact" style="color: var(--amber);">User to confirm alche-specific SaaS needs. Need to think about: booking system for LED therapy/events, inventory management for potions retail, POS for physical space, community platform.</div>
+    </div>
+  </div>
+
+  <!-- D10 -->
+  <div class="d-card" id="D10">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D10</span>
+        <div class="d-title-group">
+          <span class="d-title">Menu Analysis Budget</span>
+          <span class="d-date">Open</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-open">Open</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R4 &mdash; Restaurant Partnership</span>
+      </div>
+
+      <div class="d-section-label">Explanation</div>
+      <div class="d-pnl-impact">
+        Current P&amp;L line: "Menu Database (Dietitians) &mdash; EUR 500/mo" under S&amp;M. This pays freelance nutritionists to analyze partner restaurant menus (calories, macros, micronutrients per dish). Given D2 decision (restaurants = Phase 2, EUR 0 revenue until 500+ users), this cost is premature. R4 found AI-assisted menu analysis costs EUR 110-170/year per restaurant. For 5 restaurants using AI tools: EUR 46-71/month.
+      </div>
+
+      <div class="d-section-label">Options</div>
+      <ul class="d-options">
+        <li>A. Reduce to EUR 75/mo (AI-assisted analysis for 5 pilot restaurants). Keep feature alive at low cost.</li>
+        <li>B. Defer to EUR 0 for M1-M12. No menu analysis until Phase 2.</li>
+        <li>C. Keep EUR 500/mo. Use human dietitians for higher quality. (Not recommended given D2.)</li>
+      </ul>
+
+      <div class="d-section-label">Waiting For</div>
+      <div class="d-pnl-impact" style="color: var(--amber);">User to confirm: EUR 75/mo or EUR 0?</div>
+    </div>
+  </div>
+
+  <!-- D11 -->
+  <div class="d-card" id="D11">
+    <div class="d-card-header" onclick="toggleCard(this)">
+      <div class="d-card-left">
+        <span class="d-id">D11</span>
+        <div class="d-title-group">
+          <span class="d-title">Retail Products (Curated Brands)</span>
+          <span class="d-date">Open</span>
+        </div>
+      </div>
+      <div class="d-card-right">
+        <span class="d-status status-open">Open</span>
+        <span class="d-chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="d-card-body">
+      <div class="d-section-label">Research Backing</div>
+      <div class="d-research-tags">
+        <span class="r-conn-tag">R2 &mdash; Cost Analysis (partial)</span>
+      </div>
+
+      <div class="d-section-label">Current State</div>
+      <div class="d-pnl-impact">
+        User wants to curate ~5 longevity brands for retail. P&amp;L currently assumes EUR 49/unit retail, EUR 11.50 COGS (76% margin). These numbers are UNVALIDATED. The Physical Economist (Sub-Agent 3) found standard wholesale is 50-52% of MSRP, implying EUR 24.50 COGS (50% margin) &mdash; a significant difference from the P&amp;L assumption.
+      </div>
+
+      <div class="d-section-label">Key Questions Provided to User</div>
+      <ul class="d-options">
+        <li><strong>Supplier &amp; Margin:</strong> Wholesale cost per unit? MOQs? Consignment available? Payment terms?</li>
+        <li><strong>Regulatory (EU):</strong> EU Novel Food compliance? German LFGB? EU Health Claims Regulation (EC 1924/2006)? German-language labeling required by law.</li>
+        <li><strong>Unit Economics:</strong> Average retail price across 5 brands? True COGS including wholesale + shipping + storage + waste? Shelf life by product type?</li>
+        <li><strong>Brand Fit:</strong> Alignment with "curated longevity" positioning? Berlin retail exclusivity? Co-marketing potential?</li>
+        <li><strong>Logistics:</strong> 3PL fulfillment at EUR 2.50/unit (in P&amp;L). In-space display/shelving CapEx? Returns policy?</li>
+      </ul>
+
+      <div class="d-section-label">Suggested Brand Categories</div>
+      <ul class="d-options">
+        <li>1. Adaptogen / nootropic blend (capsule or powder)</li>
+        <li>2. High-quality collagen or peptide product</li>
+        <li>3. Functional mushroom product (lion's mane, reishi)</li>
+        <li>4. Premium omega-3 / longevity-specific supplement</li>
+        <li>5. Topical or consumable tied to red light therapy (collagen drink, skin serum)</li>
+      </ul>
+
+      <div class="d-check">
+        <strong>Critical accuracy issue:</strong> EUR 49/unit retail and EUR 11.50 COGS (76% margin) in the P&amp;L have no validated source. If alche is CURATING third-party brands (not manufacturing), standard wholesale cost is 50-52% of MSRP = EUR 24.50 COGS, yielding 50% margin. If alche is CO-PACKING its own formulations, EUR 11.50 COGS is plausible but the "5 brands" framing suggests third-party curation. This distinction dramatically changes the unit economics.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: P&L IMPACT SUMMARY -->
+<!-- ============================================================ -->
+<section class="section" id="pnl-impact">
+  <div class="sec-header">
+    <h2>Section <strong>3</strong> &mdash; P&amp;L Impact Summary</h2>
+    <span class="sec-label">All Changes from Decisions</span>
+  </div>
+
+  <table class="pnl-table">
+    <thead>
+      <tr>
+        <th style="width:28%">Line Item</th>
+        <th style="width:18%">Current Value</th>
+        <th style="width:18%">New Value</th>
+        <th style="width:8%">Change</th>
+        <th style="width:28%">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- REVENUE -->
+      <tr class="pnl-group-header"><td colspan="5">Revenue Changes</td></tr>
+      <tr>
+        <td>Doctor SaaS (Line 6)</td>
+        <td class="mono-cell">EUR 150/mo</td>
+        <td class="mono-cell change-down">EUR 99/mo</td>
+        <td class="change-down">&darr;</td>
+        <td>D1 &mdash; SaaS only, BGH-validated</td>
+      </tr>
+      <tr>
+        <td>Restaurant Commission (Line 5)</td>
+        <td class="mono-cell">EUR 1.50/cover</td>
+        <td class="mono-cell change-removed">EUR 0 (M1-M12)</td>
+        <td class="change-removed">&times;</td>
+        <td>D2 &mdash; Phase 2 revenue trigger</td>
+      </tr>
+      <tr>
+        <td>CGM Hardware (Line 3)</td>
+        <td class="mono-cell">EUR 130/unit</td>
+        <td class="mono-cell change-removed">EUR 0 (removed)</td>
+        <td class="change-removed">&times;</td>
+        <td>D3 &mdash; Software-Only BYOD</td>
+      </tr>
+      <tr>
+        <td>Smoothie Bar</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-new">EUR 5-9K/mo (M6+)</td>
+        <td class="change-new">NEW</td>
+        <td>D4 &mdash; Physical space is core</td>
+      </tr>
+
+      <!-- COGS -->
+      <tr class="pnl-group-header"><td colspan="5">COGS Changes</td></tr>
+      <tr>
+        <td>CGM Hardware Cost</td>
+        <td class="mono-cell">EUR 70/unit</td>
+        <td class="mono-cell change-removed">EUR 0 (removed)</td>
+        <td class="change-removed">&times;</td>
+        <td>D3 &mdash; No hardware</td>
+      </tr>
+      <tr>
+        <td>CGM RMA Reserve</td>
+        <td class="mono-cell">4%</td>
+        <td class="mono-cell change-removed">EUR 0 (removed)</td>
+        <td class="change-removed">&times;</td>
+        <td>D3 &mdash; No hardware</td>
+      </tr>
+      <tr>
+        <td>Waste/Defect Reserve</td>
+        <td class="mono-cell">5% flat</td>
+        <td class="mono-cell">Capsules 4% / Powders 7%</td>
+        <td class="change-same">&asymp;</td>
+        <td>D7 &mdash; Category-weighted</td>
+      </tr>
+      <tr>
+        <td>Doctor Verification</td>
+        <td class="mono-cell">EUR 25/new doctor</td>
+        <td class="mono-cell change-same">EUR 25/new doctor</td>
+        <td class="change-same">&rarr;</td>
+        <td>D1 &mdash; No change</td>
+      </tr>
+      <tr>
+        <td>Smoothie Bar COGS</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-new">35% of smoothie rev</td>
+        <td class="change-new">NEW</td>
+        <td>D4 &mdash; 65% margin per R2</td>
+      </tr>
+
+      <!-- OPEX -->
+      <tr class="pnl-group-header"><td colspan="5">OpEx Changes</td></tr>
+      <tr>
+        <td>Terra CGM API</td>
+        <td class="mono-cell">EUR 499/mo (M6+)</td>
+        <td class="mono-cell change-removed">EUR 0 (deferred)</td>
+        <td class="change-removed">&times;</td>
+        <td>D8 &mdash; Use native HealthKit</td>
+      </tr>
+      <tr>
+        <td>Menu Analysis (Dietitians)</td>
+        <td class="mono-cell">EUR 500/mo</td>
+        <td class="mono-cell change-pending">EUR 75/mo or EUR 0</td>
+        <td class="change-pending">?</td>
+        <td>D10 &mdash; Pending user confirmation</td>
+      </tr>
+      <tr>
+        <td>UX/UI Design</td>
+        <td class="mono-cell">EUR 800/mo</td>
+        <td class="mono-cell change-pending">EUR 2,000-5,000/mo</td>
+        <td class="change-pending">?</td>
+        <td>D5 &mdash; Pending user confirmation</td>
+      </tr>
+      <tr>
+        <td>Claude Max (Internal AI)</td>
+        <td class="mono-cell">EUR 210/mo</td>
+        <td class="mono-cell change-same">EUR 210/mo</td>
+        <td class="change-same">&rarr;</td>
+        <td>D6 &mdash; Confirmed</td>
+      </tr>
+      <tr>
+        <td>Anthropic Inference</td>
+        <td class="mono-cell">EUR 150/mo + variable</td>
+        <td class="mono-cell change-pending">TBD or EUR 0</td>
+        <td class="change-pending">?</td>
+        <td>D6 &mdash; Pending confirmation</td>
+      </tr>
+      <tr>
+        <td>SaaS Stack</td>
+        <td class="mono-cell">EUR 350&rarr;850&rarr;1,800</td>
+        <td class="mono-cell change-pending">Needs itemization</td>
+        <td class="change-pending">?</td>
+        <td>D9 &mdash; Pending specification</td>
+      </tr>
+
+      <!-- CAPEX -->
+      <tr class="pnl-group-header"><td colspan="5">New CapEx Section (from D4 + D5)</td></tr>
+      <tr>
+        <td>Physical space buildout</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-pending">TBD</td>
+        <td class="change-new">NEW</td>
+        <td>D4, D5</td>
+      </tr>
+      <tr>
+        <td>Kitchen equipment (smoothie bar)</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-new">EUR 15-25K</td>
+        <td class="change-new">NEW</td>
+        <td>D4 &mdash; From R2 PDF</td>
+      </tr>
+      <tr>
+        <td>Red light therapy equipment</td>
+        <td class="mono-cell" style="color:var(--gray-light)">In model?</td>
+        <td class="mono-cell change-pending">Verify</td>
+        <td class="change-pending">?</td>
+        <td>D4 &mdash; Check existing model</td>
+      </tr>
+      <tr>
+        <td>Legal opinion (doctor SaaS)</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-new">EUR 2-5K</td>
+        <td class="change-new">NEW</td>
+        <td>D1 &mdash; From R3</td>
+      </tr>
+      <tr>
+        <td>GmbH formation</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-pending">TBD</td>
+        <td class="change-new">NEW</td>
+        <td>D5</td>
+      </tr>
+      <tr>
+        <td>Physical space lease (monthly)</td>
+        <td class="mono-cell" style="color:var(--gray-light)">Not in P&amp;L</td>
+        <td class="mono-cell change-pending">EUR 2-4K/mo est.</td>
+        <td class="change-new">NEW</td>
+        <td>D4 &mdash; Berlin commercial rates</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: OPEN QUESTIONS -->
+<!-- ============================================================ -->
+<section class="section" id="open-questions">
+  <div class="sec-header">
+    <h2>Section <strong>4</strong> &mdash; Open Questions</h2>
+    <span class="sec-label">8 Items Blocking P&amp;L Finalization</span>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q1</span>
+    <span class="oq-text"><strong>CapEx inclusion</strong> &mdash; Should the P&amp;L include a "One-Time / Capital Expenditures" section? Recommendation: Yes. Investors need to see total cash deployment against the EUR 500K raise.</span>
+    <div class="oq-ref">Relates to D5</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q2</span>
+    <span class="oq-text"><strong>User-facing AI</strong> &mdash; Does the alche app use AI for user-facing features via API (personalized protocols, health insights)? Or is Claude Max just for internal team use? This determines whether to keep or remove the Anthropic Inference cost line.</span>
+    <div class="oq-ref">Relates to D6</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q3</span>
+    <span class="oq-text"><strong>SaaS stack specification</strong> &mdash; What specific SaaS tools does alche need beyond generic startup tools? Consider: booking system for LED therapy/events, inventory management for potions, POS for physical space, community platform.</span>
+    <div class="oq-ref">Relates to D9</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q4</span>
+    <span class="oq-text"><strong>Menu analysis budget</strong> &mdash; Reduce to EUR 75/mo (AI-assisted for 5 pilot restaurants) or defer to EUR 0 until Phase 2?</span>
+    <div class="oq-ref">Relates to D10</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q5</span>
+    <span class="oq-text"><strong>Retail brands</strong> &mdash; Do you already have specific brands in mind, or should research be conducted on top longevity retail brands available wholesale in Germany/EU? This directly impacts unit economics validation.</span>
+    <div class="oq-ref">Relates to D11</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q6</span>
+    <span class="oq-text"><strong>Retail product unit economics</strong> &mdash; EUR 49/unit retail, EUR 11.50 COGS (76% margin) is in the P&amp;L but UNVALIDATED. Is alche co-packing its own formulations (EUR 11.50 is plausible) or curating third-party brands (standard wholesale = EUR 24.50, yielding 50% margin)? This is the #1 revenue line with unverified unit economics.</span>
+    <div class="oq-ref">Relates to D11, R2</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q7</span>
+    <span class="oq-text"><strong>Physical space lease cost</strong> &mdash; This is NOT in the P&amp;L. Berlin commercial lease for a small retail/wellness space = EUR 2,000-4,000/mo depending on neighborhood. For a "digital AND physical first" company, this is a significant recurring cost that changes the entire burn rate calculation.</span>
+    <div class="oq-ref">Relates to D4</div>
+  </div>
+
+  <div class="oq-card">
+    <span class="oq-num">Q8</span>
+    <span class="oq-text"><strong>Subscriber growth model</strong> &mdash; "alche is digital and physical first" &mdash; does physical presence change the subscriber growth model? Physical presence typically means different CAC dynamics (lower CAC from foot traffic, higher retention from physical touchpoints) but also geographic constraints (Berlin-only initially). The current model may need a local/digital split.</span>
+    <div class="oq-ref">Relates to D4, break-even calculation</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: ACCURACY AUDIT -->
+<!-- ============================================================ -->
+<section id="accuracy-audit">
+  <div class="audit-section">
+    <div class="audit-header">
+      <span class="audit-icon" aria-hidden="true">&bull;</span>
+      <h2 class="audit-title">Section 5 &mdash; Accuracy Audit</h2>
+    </div>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:20px;line-height:1.7;">Self-check layer. Every item below flags a number, claim, or assumption in the P&amp;L that could mislead an investor if presented without context. Items ordered by severity.</p>
+
+    <div class="audit-card">
+      <div class="audit-card-label">Misleading Risk 1 &mdash; Severity: Critical</div>
+      <div class="audit-card-text">
+        <strong>"EUR 49/potion" price and "EUR 11.50 COGS"</strong> &mdash; These are in the P&amp;L as Line 1 (Curated Longevity Potions) but were NOT validated by any of the 8 research agents. The Cost Analysis PDF (R2) was about smoothie bar operations, not retail products. The Physical Economist (Sub-Agent 3) found standard wholesale is 50-52% of MSRP for third-party brands = EUR 24.50 COGS. The 76% margin assumption may only hold if alche co-packs its own formulations. This is the #1 revenue line with unverified unit economics. An investor who digs into this will find no supporting documentation.
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card-label">Misleading Risk 2 &mdash; Severity: High</div>
+      <div class="audit-card-text">
+        <strong>"Break-even at ~145 subscribers + EUR 10K/month space"</strong> &mdash; This was calculated BEFORE the decisions made on 23 Feb 2026. With CGM hardware revenue removed (D3), restaurant revenue removed for M1-M12 (D2), doctor SaaS reduced from EUR 150 to EUR 99/mo (D1), and smoothie bar added (D4), break-even needs complete recalculation. The physical space lease cost (missing from P&amp;L) will further shift the break-even point. Do NOT present the 145-subscriber figure to investors until the model is updated.
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card-label">Misleading Risk 3 &mdash; Severity: High</div>
+      <div class="audit-card-text">
+        <strong>"20 longevity doctors in Berlin by M12"</strong> (D1) &mdash; R3 estimated 30-60 longevity-focused practices in Berlin total. Onboarding 20 means capturing 33-67% of the addressable market in Year 1. This is exceptionally aggressive for 2 non-technical founders with 1 part-time Partner Manager starting at M6. Consider modeling a conservative scenario: 8-12 doctors by M12 (EUR 792-1,188/mo vs. EUR 1,980/mo). Present the 20-doctor figure as an "optimistic scenario" with the 10-doctor figure as the "base case."
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card-label">Misleading Risk 4 &mdash; Severity: Medium</div>
+      <div class="audit-card-text">
+        <strong>"Smoothie bar EUR 9,022/mo base case"</strong> (D4) &mdash; This assumes 45 drinks/day at an average price derived from the R2 PDF. In a niche longevity space (not a high-foot-traffic coffee shop), 20-30 drinks/day is more realistic for the first 6-12 months. Model at 60% of the PDF's base case = EUR 5,413/mo as the realistic scenario. Present EUR 9,022/mo as the upside case once the space has established regular foot traffic.
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card-label">Misleading Risk 5 &mdash; Severity: Medium</div>
+      <div class="audit-card-text">
+        <strong>"Software-Only CGM"</strong> (D3) &mdash; If CGM features are baked into Pro/Premium subscription tiers without a price increase, subscription revenue stays the same but feature development cost increases (CGM data pipeline, visualization, insights engine). If subscription price increases to reflect CGM value, willingness-to-pay must be validated. Currently, the model removes hardware cost but does not account for the incremental software development cost of CGM features. An investor may ask: "What is the incremental cost of building CGM software features?"
+      </div>
+    </div>
+
+    <div class="audit-card">
+      <div class="audit-card-label">Misleading Risk 6 &mdash; Severity: Medium</div>
+      <div class="audit-card-text">
+        <strong>"ZOE dropped CGM"</strong> &mdash; Until the research on WHY ZOE dropped CGM is complete, this is an open investor risk. If ZOE dropped CGM because the feature had low engagement or high support costs (not just inventory issues), alche's software-only approach may face the same challenges. The counter-narrative must be ready before any investor meeting. Research agent has been tasked with this investigation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-text">alche Decision Matrix &mdash; Single Source of Truth &mdash; All research connected to all decisions &mdash; Generated 23 Feb 2026</div>
+</footer>
+
+</div><!-- /container -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ========== CARD TOGGLE ========== */
+function toggleCard(headerEl) {
+  const card = headerEl.closest('.r-card, .d-card');
+  if (card) card.classList.toggle('open');
+}
+
+/* ========== TOAST ========== */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ========== TIMESTAMP ========== */
+function updateTimestamp() {
+  const stored = localStorage.getItem('alche-dm-lastUpdated');
+  const ts = stored || new Date().toISOString();
+  if (!stored) localStorage.setItem('alche-dm-lastUpdated', ts);
+  const d = new Date(ts);
+  document.getElementById('lastUpdated').textContent =
+    'Updated ' + d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) +
+    ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+}
+
+function refreshTimestamp() {
+  const ts = new Date().toISOString();
+  localStorage.setItem('alche-dm-lastUpdated', ts);
+  updateTimestamp();
+}
+
+updateTimestamp();
+
+/* ========== COPY SUMMARY ========== */
+function copySummary() {
+  const summary = `ALCHE DECISION MATRIX — SUMMARY (${new Date().toLocaleDateString('en-GB')})
+
+STATUS: 8/8 research agents complete. 7/11 decisions made. 4 decisions open. 6 accuracy flags.
+
+DECIDED:
+D1: Doctor Revenue — SaaS only, EUR 99/mo x 20 doctors. Legal per BGH Feb 2025.
+D2: Restaurant Partnership — Phase 2 trigger. EUR 0 revenue M1-M12. Retention feature only.
+D3: CGM Model — Software-Only (BYOD). Remove hardware lines. 80-90% margin.
+D4: Smoothie Bar — New revenue line. Physical space is core. EUR 5-9K/mo from M6+.
+D7: Product Waste — Category-weighted. Capsules 4%, Powders 7%.
+D8: Terra API — Deferred. Use native HealthKit/Health Connect (free). Saves EUR 9,481.
+D6 partial: Claude Max EUR 210/mo confirmed.
+
+OPEN:
+D5: UX Budget / CapEx inclusion — needs user confirmation.
+D6: AI cost classification — user-facing AI or internal only?
+D9: SaaS stack — needs alche-specific specification.
+D10: Menu analysis — EUR 75/mo or EUR 0?
+D11: Retail products — unit economics unvalidated.
+
+CRITICAL FLAGS:
+1. EUR 49/potion, EUR 11.50 COGS (76% margin) — UNVALIDATED. No research backs this.
+2. Break-even at 145 subscribers — STALE. Needs recalculation post-decisions.
+3. 20 doctors in Berlin by M12 — captures 33-67% of addressable market. Aggressive.
+4. Smoothie bar EUR 9K/mo assumes 45 drinks/day — 20-30 more realistic.
+5. Physical space lease cost — NOT in the P&L. EUR 2-4K/mo gap.
+6. ZOE dropped CGM — counter-narrative not yet ready.`;
+
+  navigator.clipboard.writeText(summary).then(() => showToast('Summary copied to clipboard'));
+}
+
+/* ========== COPY INVESTOR FAQ ========== */
+function copyInvestorFAQ() {
+  const faq = `ALCHE — INVESTOR TALKING POINTS (${new Date().toLocaleDateString('en-GB')})
+
+DOCTOR REVENUE MODEL:
+"We follow the Doctolib model — flat SaaS fee, legally validated by BGH Feb 2025 ruling. Commission-based referrals are a criminal offense in Germany under StGB §§299a/299b. We chose the only defensible path."
+
+RESTAURANT PARTNERSHIP:
+"No competing longevity app extends from your kitchen to your restaurant table. This is a retention moat, not a revenue line at pre-seed. We build the feature, prove engagement, then monetize at scale."
+
+CGM MODEL:
+"Software-only model gives us 80-90% margins on CGM features vs. 15-25% for sensor bundling. We avoid capital risk and ZOE's inventory problems. Users already own sensors — we add the intelligence layer."
+
+PHYSICAL SPACE:
+"alche is digital AND physical first. The space is where red light therapy, curated potions, functional smoothies, and community events converge. No one else does this. The physical presence creates a retention loop — digital drives foot traffic, physical experience drives app engagement."
+
+TERRA API:
+"We integrate directly with Apple HealthKit and Google Health Connect at zero cost. These cover 95%+ of our target users' devices. Terra API is our Phase 2 play when user volume demands multi-device support."
+
+PRODUCT WASTE:
+"We model waste at the category level — capsules at 4%, powders at 7% — based on industry benchmarks. More rigorous than a flat 5% assumption."
+
+QUESTIONS TO PREPARE FOR:
+1. "ZOE dropped CGM. Why are you picking it up?" — Counter-narrative in development.
+2. "Your potion margins are 76%. How?" — Unit economics need validation (co-pack vs. wholesale).
+3. "20 doctors in Berlin — how with 2 non-technical founders?" — Consider presenting 10 as base case.
+4. "What's the physical space lease cost?" — Not yet in the model. EUR 2-4K/mo Berlin estimate.`;
+
+  navigator.clipboard.writeText(faq).then(() => showToast('Investor FAQ copied to clipboard'));
+}
+</script>
+</body>
+</html>

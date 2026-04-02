@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | Traction &amp; Validation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 16px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+    .risk-text { color: #B86B4A; }
+    .positive-text { color: #8B9E7C; }
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: Evidence of Market Understanding -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">09 &mdash; Traction &amp; Validation</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Traction &amp; Validation</div>
+    <div class="action-title">Pre-product, pre-revenue -- here is what we know and what funding proves.</div>
+    <div class="action-subtitle">We do not conflate research with traction. This section distinguishes between market understanding (validated through interviews and competitive analysis) and product-market fit (which requires funding to test).</div>
+
+    <!-- Evidence Table -->
+    <div class="section-label" style="margin-top: 4px;">Evidence of Market Understanding</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Claim</th>
+          <th>Evidence</th>
+          <th>Source</th>
+          <th style="text-align: right;">Confidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Target customers spend EUR 50-200/mo on fragmented services</td>
+          <td>Direct spend data from 9 customer discovery interviews</td>
+          <td>Primary research, Feb 2026</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">"Longevity with intention" is the right positioning</td>
+          <td>Emerged from interview language; rejected "biohacker" and "anti-perfectionist"</td>
+          <td>9 interviews, Feb 2026</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">Community events are the strongest acquisition channel</td>
+          <td>Strongest positive signal of anything tested in interviews</td>
+          <td>Interview finding #5</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">Small groups over leaderboards for accountability</td>
+          <td>6 of 9 interviewees specifically rejected gamification for longevity</td>
+          <td>Interview findings</td>
+          <td class="number">Medium</td>
+        </tr>
+        <tr>
+          <td class="bold">No integrated European platform exists</td>
+          <td>30+ competitors analyzed across 35+ research sessions</td>
+          <td>Competitive analysis, Feb 2026</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">EUR 49/mo weighted ARPU is achievable</td>
+          <td>Interviewees already spending EUR 126-295/mo on fragmented tools; EUR 49 is net savings</td>
+          <td>Spend analysis + interviews</td>
+          <td class="number">Medium</td>
+        </tr>
+        <tr>
+          <td class="bold">4.5% free-to-paid conversion</td>
+          <td>Modeled target above RevenueCat median (2-3%), adjusted for community-driven acquisition</td>
+          <td>RevenueCat 2025</td>
+          <td class="number risk-text">Low (unproven)</td>
+        </tr>
+        <tr>
+          <td class="bold">8% monthly churn (vs. 12-15% industry)</td>
+          <td>Thesis: physical touchpoints + community reduce churn. Not yet validated.</td>
+          <td>Internal thesis</td>
+          <td class="number risk-text">Low (unproven)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Hypothesis Invalidation -->
+    <div class="section-label" style="margin-top: 4px;">Hypotheses Invalidated</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Original Hypothesis</th>
+          <th>Why Killed</th>
+          <th>What Replaced It</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">"Anti-perfectionist" is the right language</td>
+          <td>Reactive, confusing in interviews. Nobody self-identified this way.</td>
+          <td>"Longevity with intention" -- emerged from users' own words.</td>
+        </tr>
+        <tr>
+          <td class="bold">Physical space first, digital second</td>
+          <td>Killed by Berlin failure patterns. Capital-intensive physical retail fails pre-seed.</td>
+          <td>Digital-first. Physical space is Phase 2, seed-funded.</td>
+        </tr>
+        <tr>
+          <td class="bold">Bootstrap as a lifestyle business</td>
+          <td>Competitive timing: 12-18 month window. Speed to market matters more than capital efficiency.</td>
+          <td>Raise EUR 500K to capture the timing window.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">INTELLECTUAL HONESTY SIGNAL:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> 3 hypotheses invalidated across 3 research cycles and 9 interviews. Each change strengthened the business model. Killing bad ideas early is cheaper than discovering them with investors' capital.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Customer discovery: 9 interviews, Feb 2026 / Competitive analysis: 30+ companies / RevenueCat 2025</div>
+      <div class="page-footer-num">21</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: What Funding Validates -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">09 &mdash; Traction &amp; Validation</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">Funding validates the six things that research alone cannot prove.</div>
+
+    <!-- Validated vs. Requires Funding -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+      <div>
+        <div class="section-label" style="color: #8B9E7C;">Validated Pre-Funding</div>
+        <table>
+          <tbody>
+            <tr><td class="bold">Market demand</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Target customers spend EUR 50-200/mo</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Positioning thesis ("longevity with intention")</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Competitive white space (no EU integrator)</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Berlin as launch market</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">GTM sequence: content, events, app</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Medical advisor secured</td><td class="number positive-text">Confirmed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="section-label" style="color: #B86B4A;">Requires Funding to Validate</div>
+        <table>
+          <tbody>
+            <tr><td class="bold">Product-market fit</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Conversion rates (waitlist &rarr; signup &rarr; paid)</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Retention and engagement metrics</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Unit economics in practice</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Technical build (CTO hire, dev team)</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Physical space proof-of-concept</td><td class="number risk-text">Unproven</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 90-Day Traction Roadmap -->
+    <div class="section-label" style="margin-top: 8px;">90-Day Post-Funding Traction Roadmap</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Focus</th>
+          <th>Deliverables</th>
+          <th style="text-align: right;">Exit Criteria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Day 1-30</td>
+          <td>Foundation</td>
+          <td>GmbH formed. 20 interviews complete. Waitlist live. CTO search launched.</td>
+          <td class="number">Legal + team</td>
+        </tr>
+        <tr>
+          <td class="bold">Day 30-60</td>
+          <td>Traction</td>
+          <td>Content channel at 1,000+ followers. First Berlin event (50+ attendees). Medical advisor formalized.</td>
+          <td class="number">Audience growth</td>
+        </tr>
+        <tr>
+          <td class="bold">Day 60-90</td>
+          <td>Momentum</td>
+          <td>MVP spec finalized, development underway. Community pilot with founding members. Measurable KPIs: waitlist conversion, event attendance, content engagement.</td>
+          <td class="number">Build velocity</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- What this means for the investor -->
+    <div class="callout-box">
+      <div class="callout-box-title">What this means for the investor</div>
+      <div class="callout-box-body">
+        This is a pre-product, pre-revenue investment. The research depth is unusual for pre-seed -- 35+ research sessions, 30+ competitors analyzed, 9 customer interviews, 3 hypotheses killed. What the investor funds is not more research. It is the transition from validated market understanding to validated product-market fit. The milestones are clear: content engine running, waitlist growing, MVP shipping, founding members paying.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Customer discovery: 9 interviews, Feb 2026 / Competitive analysis / Internal roadmap</div>
+      <div class="page-footer-num">22</div>
+    </div>
+  </div>
+
+</body>
+</html>

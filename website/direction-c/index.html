@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>alche — The Art of Curated Longevity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #F5F0E8;
+  --bg-dark: #EDE7DB;
+  --bg-darker: #E5DECE;
+  --text: #2C2418;
+  --text-secondary: #5C5144;
+  --text-tertiary: #8A7E6F;
+  --amber: #C4956A;
+  --sage: #8B9E7C;
+  --terra: #B86B4A;
+  --rose: #C4858A;
+  --stone: #9B9588;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Outfit', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 clamp(24px, 4vw, 64px);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 200ms, backdrop-filter 200ms;
+}
+
+nav.scrolled {
+  background: rgba(245, 240, 232, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.nav-wordmark {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  position: relative;
+  transition: color 200ms;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--terra);
+  transition: width 250ms ease;
+}
+
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  background: var(--terra) !important;
+  color: var(--bg) !important;
+  padding: 10px 20px !important;
+  border-radius: 4px;
+  transition: background 200ms, transform 200ms !important;
+}
+
+.nav-cta::after { display: none !important; }
+.nav-cta:hover {
+  background: #A35B3D !important;
+  color: var(--bg) !important;
+  transform: translateY(-1px);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 20px;
+  position: relative;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  position: absolute;
+  left: 0;
+  transition: all 250ms;
+}
+
+.mobile-menu-btn span:nth-child(1) { top: 0; }
+.mobile-menu-btn span:nth-child(2) { top: 9px; }
+.mobile-menu-btn span:nth-child(3) { top: 18px; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 72px clamp(24px, 4vw, 64px) 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 6vw, 96px);
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.hero-headline {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+
+.hero-subline {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(16px, 1.4vw, 20px);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 32px;
+}
+
+.hero-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--terra);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 250ms;
+}
+
+.hero-link:hover { gap: 14px; }
+
+.hero-data {
+  background: var(--text);
+  color: var(--bg);
+  padding: clamp(32px, 3vw, 48px);
+  border-radius: 6px;
+  justify-self: end;
+  width: 100%;
+  max-width: 380px;
+}
+
+.hero-data-row {
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.1vw, 14px);
+  letter-spacing: 0.06em;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.hero-data-row:last-child { border-bottom: none; }
+
+.hero-data-label {
+  opacity: 0.5;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.hero-data-value {
+  font-weight: 700;
+}
+
+/* SECTION LABELS */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 20px;
+}
+
+.section-headline {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 48px;
+}
+
+/* WHAT IS ALCHE */
+.platform {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+}
+
+.platform-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.platform-card {
+  padding: clamp(28px, 2.5vw, 40px);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.platform-card:nth-child(1) {
+  background: var(--bg-dark);
+  min-height: 340px;
+}
+
+.platform-card:nth-child(2) {
+  background: transparent;
+  border: 1px solid rgba(44, 36, 24, 0.12);
+  min-height: 300px;
+}
+
+.platform-card:nth-child(3) {
+  background: var(--text);
+  color: var(--bg);
+  min-height: 280px;
+}
+
+.platform-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.platform-icon-cafe {
+  border: 2px solid var(--amber);
+  border-radius: 50%;
+  position: relative;
+}
+
+.platform-icon-cafe::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--amber);
+  opacity: 0.3;
+}
+
+.platform-icon-app {
+  border: 2px solid var(--sage);
+  border-radius: 8px;
+}
+
+.platform-icon-app::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 2px;
+  background: var(--sage);
+  border-radius: 2px;
+}
+
+.platform-icon-community {
+  border: 2px solid rgba(245, 240, 232, 0.4);
+  border-radius: 50%;
+}
+
+.platform-icon-community::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 240, 232, 0.4);
+}
+
+.platform-icon-community::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  border-radius: 14px 14px 0 0;
+  border: 2px solid rgba(245, 240, 232, 0.4);
+  border-bottom: none;
+}
+
+.platform-card-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(20px, 1.8vw, 26px);
+  margin-bottom: 12px;
+}
+
+.platform-card-desc {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.platform-card-callout {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 24px;
+  opacity: 0.9;
+}
+
+.platform-card-callout-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-top: 4px;
+}
+
+/* PILLARS */
+.pillars {
+  min-height: 100vh;
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.pillars-header {
+  position: sticky;
+  top: 100px;
+  z-index: 10;
+  padding: 0 clamp(24px, 4vw, 64px);
+  margin-bottom: 48px;
+}
+
+.pillars-scroll-wrapper {
+  padding: 0 clamp(24px, 4vw, 64px);
+  overflow: visible;
+}
+
+.pillars-scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) transparent;
+}
+
+.pillars-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.pillars-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pillars-scroll::-webkit-scrollbar-thumb {
+  background: var(--amber);
+  border-radius: 4px;
+}
+
+.pillar-card {
+  flex: 0 0 300px;
+  height: 420px;
+  padding: 32px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  background: var(--bg-dark);
+  border: 1px solid rgba(44, 36, 24, 0.06);
+  transition: transform 200ms, box-shadow 200ms;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(44, 36, 24, 0.08);
+}
+
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.pillar-card:nth-child(1)::before { background: var(--amber); }
+.pillar-card:nth-child(2)::before { background: var(--sage); }
+.pillar-card:nth-child(3)::before { background: var(--terra); }
+.pillar-card:nth-child(4)::before { background: var(--rose); }
+.pillar-card:nth-child(5)::before { background: var(--stone); }
+.pillar-card:nth-child(6)::before { background: var(--amber); }
+
+.pillar-number {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin-bottom: auto;
+}
+
+.pillar-name {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.pillar-desc {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* DIFFERENCE */
+.difference {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+}
+
+.difference-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.difference-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 120px);
+  margin-top: 48px;
+}
+
+.diff-column h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+}
+
+.diff-column:first-child h3 { color: var(--text-tertiary); }
+.diff-column:last-child h3 { color: var(--terra); }
+
+.diff-item {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 2.8vw, 38px);
+  font-weight: 300;
+  line-height: 1.3;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(44, 36, 24, 0.08);
+}
+
+.diff-column:first-child .diff-item {
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+  text-decoration-color: rgba(44, 36, 24, 0.2);
+}
+
+.diff-column:last-child .diff-item {
+  color: var(--text);
+  position: relative;
+}
+
+.diff-highlight {
+  background: linear-gradient(120deg, rgba(196, 149, 106, 0.15) 0%, rgba(196, 149, 106, 0.05) 100%);
+  padding: 2px 8px;
+  margin: -2px -8px;
+  border-radius: 3px;
+}
+
+/* PRICING */
+.pricing {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+}
+
+.pricing-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.pricing-band {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+  background: rgba(44, 36, 24, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.pricing-card {
+  background: var(--bg);
+  padding: clamp(32px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+  transition: background 200ms;
+  position: relative;
+}
+
+.pricing-card:hover {
+  background: var(--bg-dark);
+}
+
+.pricing-card:nth-child(2) {
+  background: var(--bg-dark);
+}
+
+.pricing-card:nth-child(2):hover {
+  background: var(--bg-darker);
+}
+
+.pricing-tier {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.pricing-price {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(42px, 4vw, 60px);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pricing-price span {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  vertical-align: baseline;
+}
+
+.pricing-tagline {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  margin-bottom: 32px;
+  flex-grow: 1;
+}
+
+.pricing-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--terra);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 250ms;
+}
+
+.pricing-link:hover { gap: 12px; }
+
+/* WAITLIST */
+.waitlist {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+  text-align: center;
+}
+
+.waitlist-inner {
+  max-width: 560px;
+}
+
+.waitlist h2 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1;
+  margin-bottom: 32px;
+}
+
+.waitlist-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.waitlist-form input {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  padding: 14px 20px;
+  border: 1px solid rgba(44, 36, 24, 0.15);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+  transition: border-color 200ms;
+}
+
+.waitlist-form input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.waitlist-form input:focus {
+  border-color: var(--amber);
+}
+
+.waitlist-form button {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--terra);
+  color: var(--bg);
+  border: none;
+  padding: 14px 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms;
+  white-space: nowrap;
+}
+
+.waitlist-form button:hover {
+  background: #A35B3D;
+  transform: translateY(-1px);
+}
+
+.waitlist-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* FOOTER */
+footer {
+  padding: 80px clamp(24px, 4vw, 64px) 40px;
+  border-top: 1px solid rgba(44, 36, 24, 0.08);
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+.footer-col h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 20px;
+}
+
+.footer-col a {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 200ms;
+}
+
+.footer-col a:hover { color: var(--text); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  border-top: 1px solid rgba(44, 36, 24, 0.06);
+}
+
+.footer-wordmark {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.footer-tagline {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* FADE UP ANIMATION */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .hero-data {
+    justify-self: start;
+    max-width: 100%;
+  }
+  .platform-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .platform-card:nth-child(3) {
+    grid-column: span 2;
+  }
+  .difference-grid {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    z-index: 999;
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+
+  .mobile-menu-btn { display: block; }
+
+  .hero {
+    padding-top: 100px;
+  }
+
+  .platform-grid {
+    grid-template-columns: 1fr;
+  }
+  .platform-card:nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .difference-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .pricing-band {
+    grid-template-columns: 1fr;
+  }
+
+  .waitlist-form {
+    flex-direction: column;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .pillar-card {
+    flex: 0 0 260px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-wordmark">alche</a>
+  <div class="nav-links" id="navLinks">
+    <a href="philosophy.html">Philosophy</a>
+    <a href="#platform">Platform</a>
+    <a href="#pillars">Pillars</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#waitlist" class="nav-cta">Get Early Access</a>
+  </div>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero snap-section" id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1 class="hero-headline fade-up">Longevity,<br>without the<br>obsession.</h1>
+      <p class="hero-subline fade-up">The longevity lifestyle platform that translates the science of living longer into daily rituals you actually enjoy.</p>
+      <a href="#platform" class="hero-link fade-up">Explore <span>&rarr;</span></a>
+    </div>
+    <div class="hero-data fade-up">
+      <div class="hero-data-row">
+        <span class="hero-data-label">Scope</span>
+        <span class="hero-data-value">6 Pillars &middot; 1 Platform</span>
+      </div>
+      <div class="hero-data-row">
+        <span class="hero-data-label">Price</span>
+        <span class="hero-data-value">EUR 19&ndash;99/mo</span>
+      </div>
+      <div class="hero-data-row">
+        <span class="hero-data-label">Founding</span>
+        <span class="hero-data-value" data-count="500">0</span>
+      </div>
+      <div class="hero-data-row">
+        <span class="hero-data-label">Location</span>
+        <span class="hero-data-value">Berlin, 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS ALCHE -->
+<section class="platform snap-section" id="platform">
+  <div class="platform-inner">
+    <div class="section-label fade-up">THE PLATFORM</div>
+    <h2 class="section-headline fade-up">A cafe. An app.<br>A community.</h2>
+    <div class="platform-grid">
+      <div class="platform-card fade-up">
+        <div class="platform-icon platform-icon-cafe"></div>
+        <h3 class="platform-card-title">The Cafe &amp; Apothecary</h3>
+        <p class="platform-card-desc">A physical space in Berlin where longevity meets daily life. Curated drinks, guided rituals, and a place to belong. Your neighborhood anchor for living well.</p>
+      </div>
+      <div class="platform-card fade-up">
+        <div class="platform-icon platform-icon-app"></div>
+        <h3 class="platform-card-title">The App</h3>
+        <p class="platform-card-desc">AI-powered daily rituals across six pillars. Personalized, adaptive, and grounded in peer-reviewed research. Science you can actually use.</p>
+      </div>
+      <div class="platform-card fade-up">
+        <div class="platform-icon platform-icon-community"></div>
+        <h3 class="platform-card-title">The Community</h3>
+        <p class="platform-card-desc">Real relationships with people on the same path. Not a forum. A living network.</p>
+        <div class="platform-card-callout" data-count="500">0</div>
+        <div class="platform-card-callout-label">Founding Members</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars snap-section" id="pillars">
+  <div class="pillars-header">
+    <div class="section-label fade-up">THE SIX PILLARS</div>
+    <h2 class="section-headline fade-up">The science,<br>made daily.</h2>
+  </div>
+  <div class="pillars-scroll-wrapper">
+    <div class="pillars-scroll">
+      <div class="pillar-card">
+        <span class="pillar-number">01</span>
+        <h3 class="pillar-name">Nutrition &amp; Metabolic Health</h3>
+        <p class="pillar-desc">Mediterranean-inspired protocols adapted for daily life. No elimination diets. Real food, real science, real enjoyment.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-number">02</span>
+        <h3 class="pillar-name">Movement &amp; Recovery</h3>
+        <p class="pillar-desc">Functional fitness that builds longevity capital. Strength, mobility, and recovery woven into your natural rhythm.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-number">03</span>
+        <h3 class="pillar-name">Sleep &amp; Circadian Rhythm</h3>
+        <p class="pillar-desc">Your most powerful longevity tool costs nothing. Evidence-based sleep architecture and light exposure protocols.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-number">04</span>
+        <h3 class="pillar-name">Stress &amp; Mental Wellness</h3>
+        <p class="pillar-desc">Nervous system regulation meets daily practice. Breathwork, mindfulness, and cognitive resilience you can feel working.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-number">05</span>
+        <h3 class="pillar-name">Social Connection</h3>
+        <p class="pillar-desc">The Blue Zone secret hiding in plain sight. Structured community, shared rituals, and genuine human bonds.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-number">06</span>
+        <h3 class="pillar-name">Biomarker Tracking</h3>
+        <p class="pillar-desc">Partner lab integration for quarterly health snapshots. Track what matters, skip the obsessive self-monitoring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENCE -->
+<section class="difference snap-section" id="difference">
+  <div class="difference-inner">
+    <div class="section-label fade-up">THE DIFFERENCE</div>
+    <h2 class="section-headline fade-up">Not another<br>wellness brand.</h2>
+    <div class="difference-grid">
+      <div class="diff-column fade-up">
+        <h3>The Industry</h3>
+        <div class="diff-item">Cold</div>
+        <div class="diff-item">Clinical</div>
+        <div class="diff-item">Optimizing</div>
+        <div class="diff-item">Male-coded</div>
+        <div class="diff-item">Expensive</div>
+        <div class="diff-item">Isolating</div>
+      </div>
+      <div class="diff-column fade-up">
+        <h3>alche</h3>
+        <div class="diff-item"><span class="diff-highlight">Warm</span></div>
+        <div class="diff-item"><span class="diff-highlight">Rigorous</span></div>
+        <div class="diff-item"><span class="diff-highlight">Joyful</span></div>
+        <div class="diff-item"><span class="diff-highlight">Inclusive</span></div>
+        <div class="diff-item"><span class="diff-highlight">Accessible</span></div>
+        <div class="diff-item"><span class="diff-highlight">Community</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing snap-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-label fade-up">PRICING</div>
+    <h2 class="section-headline fade-up">Simple, transparent,<br>no lock-in.</h2>
+    <div class="pricing-band fade-up">
+      <div class="pricing-card">
+        <div class="pricing-tier">Essentials</div>
+        <div class="pricing-price">&euro;19 <span>/mo</span></div>
+        <div class="pricing-tagline">The daily practice. AI-guided rituals, community access, and foundational protocols across all six pillars.</div>
+        <a href="#waitlist" class="pricing-link">See what's included <span>&rarr;</span></a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Integrated</div>
+        <div class="pricing-price">&euro;49 <span>/mo</span></div>
+        <div class="pricing-tagline">The full system. Everything in Essentials plus cafe perks, quarterly biomarker reviews, and advanced personalization.</div>
+        <a href="#waitlist" class="pricing-link">See what's included <span>&rarr;</span></a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Complete</div>
+        <div class="pricing-price">&euro;99 <span>/mo</span></div>
+        <div class="pricing-tagline">The living laboratory. Full platform access, 1:1 coaching, priority lab partnerships, and founding member status.</div>
+        <a href="#waitlist" class="pricing-link">See what's included <span>&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist snap-section" id="waitlist">
+  <div class="waitlist-inner">
+    <h2 class="fade-up">Join 500 founding<br>members.</h2>
+    <form class="waitlist-form fade-up" onsubmit="event.preventDefault(); this.querySelector('button').textContent='You\'re in!'; this.querySelector('input').disabled=true;">
+      <input type="email" placeholder="Your email" required>
+      <button type="submit">Join Waitlist</button>
+    </form>
+    <p class="waitlist-note fade-up">Launching Berlin, 2026</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#platform">The Cafe</a>
+        <a href="#platform">The App</a>
+        <a href="#pillars">Six Pillars</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="philosophy.html">Philosophy</a>
+        <a href="#">Team</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="#waitlist">Join Waitlist</a>
+        <a href="#">Newsletter</a>
+        <a href="#">Instagram</a>
+        <a href="#">Events</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Imprint</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        <div class="footer-wordmark">alche</div>
+        <div class="footer-tagline">The Art of Curated Longevity</div>
+      </div>
+      <div class="footer-copy">&copy; 2026 alche GmbH. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Mobile menu
+const mobileBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+mobileBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const spans = mobileBtn.querySelectorAll('span');
+  if (navLinks.classList.contains('open')) {
+    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+});
+
+// Close mobile menu on link click
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    const spans = mobileBtn.querySelectorAll('span');
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  });
+});
+
+// IntersectionObserver for fade-ups
+const fadeEls = document.querySelectorAll('.fade-up');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+fadeEls.forEach(el => fadeObserver.observe(el));
+
+// Count-up animation
+const countEls = document.querySelectorAll('[data-count]');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const target = parseInt(entry.target.dataset.count);
+      const duration = 1200;
+      const start = performance.now();
+      const update = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        entry.target.textContent = Math.round(target * eased).toLocaleString();
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+      countObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+countEls.forEach(el => countObserver.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>alche Skin Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "editorial-black": "#0d121b",
+                        "editorial-muted": "#8d96a6",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"],
+                        "mono": ["Space Mono", "monospace"],
+                    },
+                    animation: {
+                        "scan": "scan 3s linear infinite",
+                    },
+                    keyframes: {
+                        scan: {
+                            "0%": { top: "0%", opacity: "0" },
+                            "10%": { opacity: "1" },
+                            "90%": { opacity: "1" },
+                            "100%": { top: "100%", opacity: "0" },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-editorial-black text-white font-display overflow-hidden h-screen w-full flex flex-col items-center justify-center">
+<div class="relative w-full h-full max-w-md mx-auto bg-black overflow-hidden shadow-2xl border-x border-white/10">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-cover bg-center opacity-70 scale-125" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvRbrbodov2jklkVauD-BZ3OeXszFTxV0p1PsbVo90UJXdOZbu7bMHIOFF23LPg0a6tESj7GQ57xcLidSoVlW59DeJqVsHUDaKqfg9xP_nV0q3kILO8U53gChNlyIapufZDZJW6AULLATHE35dvfJqG0HWHTJMxM6fZWBGNnns9wgqAPjJFJHi74ckLjXoIs5JOo_rAENTQTiuyzidL4a9FGXh3tPvXYpYcveX15u8EC3dmSdTN9cuX1-idvdVYricyAzF8MJppp9U'); filter: grayscale(40%) contrast(110%) blur(1px);">
+</div>
+<div class="absolute inset-0 opacity-[0.15]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAO6LwomGDMocwUUHXnPDfNco6kotift_x68z-xT-hD20PawbNdGbyvc3Bx6MIziO7FHilmpS6KCY1gpC1wlFUzL2vEQDbddwbl1srZEr_40PX8IZmd-Bwa0DMEJoqzEs4L0hJCj4MLroCMlqPeDOyt7jvGarrXuvRTMDd0Zm4KF9EeUThLJcmQfvDnPBsLKsmz6--YHOxsg_a_E4_61Y1f8zLMT1wnInGckqjUVjxX5MzWhp8RJx7AV98wqe9geaM0H24B2RuCsRR7');">
+</div>
+<div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px); background-size: 64px 64px;">
+</div>
+<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+</div>
+<div class="relative z-10 w-full h-full flex flex-col justify-between p-6">
+<header class="flex justify-between items-start pt-8">
+<h1 class="text-4xl font-light italic tracking-tight text-white mix-blend-difference z-20">alche</h1>
+<div class="flex flex-col items-end gap-1 text-white/80">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse box-shadow-glow"></div>
+<span class="text-[9px] font-mono uppercase tracking-widest">Live Analysis</span>
+</div>
+<div class="text-[9px] font-mono uppercase tracking-widest text-white/50">
+                    S: 1/200   ISO 120
+                </div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center justify-center relative w-full">
+<div class="absolute w-full h-full pointer-events-none">
+<div class="absolute top-[25%] right-[5%] flex flex-col items-end animate-[pulse_4s_ease-in-out_infinite]">
+<div class="h-px w-16 bg-white/60 mb-2"></div>
+<div class="bg-black/30 backdrop-blur-md border-r-2 border-primary pl-3 pr-1 py-1">
+<span class="text-[10px] font-mono uppercase text-white tracking-wider block">Hydration</span>
+<span class="text-sm font-mono text-primary font-bold block text-right">64%</span>
+</div>
+</div>
+<div class="absolute bottom-[30%] left-[5%] flex flex-col items-start animate-[pulse_5s_ease-in-out_infinite]">
+<div class="h-px w-12 bg-white/60 mb-2"></div>
+<div class="bg-black/30 backdrop-blur-md border-l-2 border-white pl-1 pr-3 py-1">
+<span class="text-[10px] font-mono uppercase text-white tracking-wider block">Collagen Index</span>
+<span class="text-sm font-mono text-white font-bold block">0.8</span>
+</div>
+</div>
+</div>
+<div class="relative w-72 h-72">
+<div class="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/90"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/90"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/90"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/90"></div>
+<div class="absolute inset-0 m-auto w-6 h-6 flex items-center justify-center opacity-70">
+<div class="w-full h-[1px] bg-white"></div>
+<div class="h-full w-[1px] bg-white absolute"></div>
+</div>
+<div class="absolute inset-0 m-auto w-48 h-48 rounded-full border border-dashed border-white/20 animate-[spin_10s_linear_infinite]"></div>
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_15px_rgba(17,82,212,1)] animate-scan"></div>
+</div>
+<div class="mt-12 text-center relative z-20">
+<p class="font-mono text-[10px] text-white tracking-[0.3em] uppercase animate-pulse">Scanning Epidermis...</p>
+<div class="w-32 h-0.5 bg-white/10 mx-auto mt-2 overflow-hidden rounded-full">
+<div class="h-full bg-white w-2/3 animate-[pulse_2s_infinite]"></div>
+</div>
+</div>
+</main>
+<footer class="pb-6 w-full z-20">
+<div class="flex justify-center items-center gap-8 mb-8">
+<button class="text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-white transition-colors">Texture</button>
+<button class="text-[10px] font-mono uppercase tracking-widest text-white font-bold border-b border-primary pb-1">Structural</button>
+<button class="text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-white transition-colors">Thermal</button>
+</div>
+<div class="flex justify-between items-end px-2">
+<div class="flex flex-col gap-1 w-20">
+<div class="flex items-center gap-1 text-white/60">
+<span class="material-symbols-outlined text-[14px]">my_location</span>
+<span class="text-[9px] font-mono">LOCKED</span>
+</div>
+</div>
+<button class="w-16 h-16 rounded-full border border-white flex items-center justify-center group relative overflow-hidden">
+<div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-12 h-12 bg-white/20 rounded-full group-hover:scale-95 transition-transform duration-200 backdrop-blur-sm border border-white/30"></div>
+</button>
+<div class="flex flex-col gap-1 w-20 text-right items-end">
+<div class="flex items-center gap-1 text-white/60">
+<span class="text-[9px] font-mono">FACE ID</span>
+<span class="material-symbols-outlined text-[14px]">face</span>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+</body></html>

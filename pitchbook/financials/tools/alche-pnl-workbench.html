@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P&L Workbench — alche</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* RESET & VARIABLES */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --black: #1A1A1A;
+  --red: #8B1A1A;
+  --red-light: rgba(139, 26, 26, 0.08);
+  --red-border: rgba(139, 26, 26, 0.2);
+  --gray: #666666;
+  --gray-light: #999999;
+  --border: #E0E0E0;
+  --card: #FAFAFA;
+  --card-hover: #F5F5F5;
+  --success-bg: #1A1A1A;
+  --success-text: #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* TYPOGRAPHY */
+h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+.mono { font-family: 'Space Mono', monospace; }
+
+/* STICKY NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.nav-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: 0.02em;
+}
+
+.nav-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--black);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn-dark {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-dark:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+.btn-red {
+  background: var(--white);
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.btn-red:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+/* CONTAINER */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* HERO */
+.hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--red);
+  border: 1px solid var(--red-border);
+  border-radius: 2px;
+  padding: 5px 14px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1.08;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+
+.hero h1 strong {
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 16px;
+  color: var(--gray);
+  max-width: 620px;
+  line-height: 1.7;
+}
+
+/* SECTION HEADERS */
+.section {
+  margin-bottom: 56px;
+}
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 0 12px;
+  border-bottom: 2px solid var(--black);
+  margin-bottom: 20px;
+}
+
+.sec-header h2 {
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--black);
+}
+
+.sec-header h2 strong {
+  font-weight: 700;
+}
+
+.sec-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+}
+
+.sec-copy-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-light);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sec-copy-btn:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.sec-copy-btn.copied {
+  color: var(--white);
+  background: var(--black);
+  border-color: var(--black);
+}
+
+/* ANNOTATION CARDS */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+
+.card:hover {
+  border-color: #CCC;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+  flex: 1;
+}
+
+.card-title .line-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--gray-light);
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.card-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--gray-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.15s;
+}
+
+.card-btn:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.card-btn.copied {
+  color: var(--white);
+  background: var(--black);
+  border-color: var(--black);
+}
+
+.coach-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--red-border);
+  background: var(--white);
+  color: var(--red);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.coach-btn:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+/* Status badges */
+.status {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+.status-modeled {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.status-decision {
+  background: var(--red);
+  color: var(--white);
+}
+
+.status-legal {
+  background: var(--red);
+  color: var(--white);
+}
+
+/* Card metadata */
+.card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.meta-field {}
+
+.meta-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-light);
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+
+.meta-value {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.meta-value code {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  background: rgba(0,0,0,0.05);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--black);
+}
+
+/* Decision box */
+.decision-box {
+  background: var(--red-light);
+  border: 1px solid var(--red-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.decision-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.decision-text {
+  font-size: 13px;
+  color: var(--black);
+  line-height: 1.6;
+}
+
+/* Research note */
+.research-note {
+  background: rgba(0,0,0,0.03);
+  border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.research-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-light);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.research-text {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Investor warning */
+.investor-warning {
+  background: var(--red);
+  color: var(--white);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.investor-warning-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.investor-warning-text {
+  font-size: 13px;
+  color: var(--white);
+  line-height: 1.6;
+}
+
+/* Note textarea */
+.note-wrapper {
+  margin-top: 12px;
+}
+
+.note-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-light);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.note-input {
+  width: 100%;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: var(--black);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  resize: vertical;
+  line-height: 1.6;
+  transition: border-color 0.15s;
+}
+
+.note-input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(139, 26, 26, 0.08);
+}
+
+.note-input::placeholder {
+  color: var(--gray-light);
+}
+
+/* Value rows */
+.values-section {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.values-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-light);
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.values-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-light);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 2px 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.values-copy:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.values-copy.copied {
+  color: var(--white);
+  background: var(--black);
+  border-color: var(--black);
+}
+
+.val-row {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.val-cell {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.03);
+  color: var(--gray);
+  min-width: 56px;
+  text-align: right;
+}
+
+.val-cell.head {
+  color: var(--gray-light);
+  background: transparent;
+  font-weight: 700;
+  font-size: 9px;
+}
+
+.val-cell.zero {
+  color: #CCC;
+}
+
+.val-cell.tbd {
+  color: var(--red);
+  font-style: italic;
+  background: var(--red-light);
+}
+
+.val-cell.total {
+  font-weight: 700;
+  color: var(--black);
+  background: rgba(0,0,0,0.06);
+}
+
+.val-cell.neg {
+  color: var(--red);
+}
+
+.values-hidden .values-section {
+  display: none;
+}
+
+/* TOTALS */
+.totals-card {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 12px;
+}
+
+.totals-card .card-title {
+  color: var(--white);
+}
+
+.totals-card .meta-label {
+  color: rgba(255,255,255,0.5);
+}
+
+.totals-card .meta-value {
+  color: rgba(255,255,255,0.8);
+}
+
+.totals-card .note-input {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+  color: var(--white);
+}
+
+.totals-card .note-input:focus {
+  border-color: var(--white);
+  box-shadow: none;
+}
+
+.totals-card .note-input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.totals-card .note-label {
+  color: rgba(255,255,255,0.5);
+}
+
+/* RESEARCH TRACKER */
+.tracker-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tracker-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-light);
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--black);
+}
+
+.tracker-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.tracker-table tr:hover td {
+  background: var(--card);
+}
+
+.tracker-table input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--red);
+  cursor: pointer;
+}
+
+.tracker-owner {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--red);
+  font-weight: 700;
+}
+
+.tracker-priority {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--black);
+}
+
+.tracker-table tr.completed td {
+  text-decoration: line-through;
+  color: var(--gray-light);
+}
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 12px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+}
+
+.modal-header {
+  background: var(--red);
+  color: var(--white);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px 12px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.modal-header-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.15s;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-section {
+  margin-bottom: 20px;
+}
+
+.modal-section:last-child {
+  margin-bottom: 0;
+}
+
+.modal-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-light);
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-section-text {
+  font-size: 14px;
+  color: var(--black);
+  line-height: 1.7;
+}
+
+.modal-investor {
+  background: var(--red-light);
+  border: 1px solid var(--red-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+}
+
+.modal-investor-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.modal-investor-text {
+  font-size: 13px;
+  color: var(--black);
+  line-height: 1.6;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--black);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 2000;
+  transition: transform 0.25s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* RULE LINES */
+.rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav { padding: 0 16px; }
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 36px; }
+  .card-meta { grid-template-columns: 1fr; }
+  .val-cell { min-width: 44px; font-size: 9px; }
+  .nav-actions { gap: 4px; }
+  .btn { font-size: 11px; padding: 6px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-wordmark">alche</span>
+    <span class="nav-label">P&L Workbench</span>
+  </div>
+  <div class="nav-actions">
+    <button class="btn" onclick="copyAllNotes()" title="Copy all annotation notes">Copy All Notes</button>
+    <button class="btn btn-red" onclick="exportDecisions()" title="Export decision-required items">Export Decisions</button>
+    <button class="btn btn-dark" onclick="toggleValues()" id="toggleValuesBtn" title="Show or hide value rows">Hide Values</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <div class="hero-badge">Interactive P&L Workbench</div>
+    <h1>Build Your P&L,<br><strong>Line by Line</strong></h1>
+    <p>This is where you annotate, decide, and finalize every number in your 24-month model. Each revenue line, cost item, and operating expense has its own card with editable notes, coach guidance, and investor perspective. Notes auto-save to your browser.</p>
+  </div>
+
+  <!-- SECTION 1: REVENUE LINES -->
+  <div class="section" id="sec-revenue">
+    <div class="sec-header">
+      <div>
+        <span class="sec-label">Section 01</span>
+        <h2>Revenue <strong>Lines</strong></h2>
+      </div>
+      <button class="sec-copy-btn" onclick="copySectionNotes('sec-revenue', this)">Copy Section</button>
+    </div>
+
+    <!-- LINE 1: Curated Longevity Products -->
+    <div class="card" id="card-rev-products" data-section="revenue">
+      <div class="card-top">
+        <div class="card-title">
+          Curated Longevity Products
+          <span class="line-num">Line 1</span>
+        </div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('products')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-rev-products', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <span class="status status-modeled">Modeled</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Unit Economics</div>
+          <div class="meta-value"><code>EUR 35</code> avg price, <code>52%</code> wholesale COGS</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Margin</div>
+          <div class="meta-value"><code>48%</code> gross margin per unit</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Decision Needed</div>
+        <div class="decision-text">First batch cost analysis for "potions" -- supplier quotes needed. Which suppliers? MOQ? Lead time?</div>
+      </div>
+      <div class="research-note">
+        <div class="research-label">Research</div>
+        <div class="research-text">Waste rate: 5% Y1 estimate, EUR 455/mo at volume. Need category-level waste data to refine.</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Founders' Notes</div>
+        <textarea class="note-input" id="note-rev-products" placeholder="Add your notes on product sourcing, supplier contacts, batch sizing..." rows="2"></textarea>
+      </div>
+      <div class="values-section">
+        <div class="values-label">
+          <span>Monthly Revenue (EUR) -- M1 to M24 + Total</span>
+          <button class="values-copy" onclick="copyValues('val-rev-products', this)">TSV</button>
+        </div>
+        <div class="val-row" id="val-rev-products"
+          data-values="0,0,0,175,350,700,1225,1575,1925,2275,2800,3325,3990,4375,4725,5075,5425,5775,6125,6475,6825,7350,7875,8400">
+        </div>
+      </div>
+    </div>
+
+    <!-- LINE 2: LED Therapy -->
+    <div class="card" id="card-rev-led" data-section="revenue">
+      <div class="card-top">
+        <div class="card-title">
+          LED Therapy Sessions
+          <span class="line-num">Line 2</span>
+        </div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('led')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-rev-led', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <span class="status status-modeled">Modeled</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Unit Economics</div>
+          <div class="meta-value"><code>EUR 45</code>/session, <code>EUR 18</code> practitioner cost</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Margin</div>
+          <div class="meta-value"><code>60%</code> gross margin per session</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Founders' Notes</div>
+        <textarea class="note-input" id="note-rev-led" placeholder="Add notes on LED equipment, practitioner sourcing, session scheduling..." rows="2"></textarea>
+      </div>
+      <div class="values-section">
+        <div class="values-label">
+          <span>Monthly Revenue (EUR) -- M1 to M24 + Total</span>
+          <button class="values-copy" onclick="copyValues('val-rev-led', this)">TSV</button>
+        </div>
+        <div class="val-row" id="val-rev-led"
+          data-values="0,0,0,0,0,225,450,675,900,1125,1350,1575,1800,1890,1980,2070,2160,2250,2250,2250,2250,2250,2250,2250">
+        </div>
+      </div>
+    </div>
+
+    <!-- LINE 3: CGM -->
+    <div class="card" id="card-rev-cgm" data-section="revenue">
+      <div class="card-top">
+        <div class="card-title">
+          CGM (Continuous Glucose Monitoring)
+          <span class="line-num">Line 3 -- NEW</span>
+        </div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('cgm')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-rev-cgm', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <span class="status status-decision">Decision Required</span>
+      <div class="decision-box">
+        <div class="decision-label">Open Decisions</div>
+        <div class="decision-text">Resale vs Referral vs White-label? How many units in Y1? Cost per unit? API integration cost? Sensor sourcing (Abbott FreeStyle Libre vs Dexcom)?</div>
+      </div>
+      <div class="research-note">
+        <div class="research-label">Research</div>
+        <div class="research-text">Daria's cgm_analysis_cost doc needs to be finalized into unit economics. CGM margins are thin: 4-24% at EUR 99/mo depending on model. If reselling sensors, COGS is EUR 70-90/mo per user.</div>
+      </div>
+      <div class="investor-warning">
+        <div class="investor-warning-label">Investor Perspective</div>
+        <div class="investor-warning-text">6 revenue lines at pre-seed with no CTO signals unfocused. Make CGM a Phase 2 expansion line. An investor will ask: "Why are you building hardware distribution before you have a working app?"</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Founders' Notes</div>
+        <textarea class="note-input" id="note-rev-cgm" placeholder="Add CGM strategy notes, supplier research, pricing model thoughts..." rows="3"></textarea>
+      </div>
+      <div class="values-section">
+        <div class="values-label">
+          <span>Monthly Revenue (EUR) -- M1 to M24</span>
+          <button class="values-copy" onclick="copyValues('val-rev-cgm', this)">TSV</button>
+        </div>
+        <div class="val-row" id="val-rev-cgm"
+          data-values="TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD">
+        </div>
+      </div>
+    </div>
+
+    <!-- LINE 4: Events & Workshops -->
+    <div class="card" id="card-rev-events" data-section="revenue">
+      <div class="card-top">
+        <div class="card-title">
+          Events &amp; Workshops
+          <span class="line-num">Line 4</span>
+        </div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('events')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-rev-events', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <span class="status status-modeled">Modeled</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Unit Economics</div>
+          <div class="meta-value"><code>EUR 35</code>/ticket, <code>EUR 200</code> facilitator per event</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Break-even</div>
+          <div class="meta-value">~6 attendees per event</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Founders' Notes</div>
+        <textarea class="note-input" id="note-rev-events" placeholder="Add notes on event types, venue costs, facilitator network..." rows="2"></textarea>
+      </div>
+      <div class="values-section">
+        <div class="values-label">
+          <span>Monthly Revenue (EUR) -- M1 to M24 + Total</span>
+          <button class="values-copy" onclick="copyValues('val-rev-events', this)">TSV</button>
+        </div>
+        <div class="val-row" id="val-rev-events"
+          data-values="0,0,0,420,525,1050,1260,1890,1890,2100,2100,2100,2310,2310,3080,3080,3360,3360,3500,4375,4375,4375,4375,4375">
+        </div>
+      </div>
+    </div>
+
+    <!-- LINE 5: Restaurant Partnership -->
+    <div class="card" id="card-rev-restaurant" data-section="revenue">
+      <div class="card-top">
+        <div class="card-title">
+          Restaurant Partnership
+          <span class="line-num">Line 5 -- NEW</span>
+        </div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('restaurant')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-rev-restaurant', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <span class="status status-decision">Decision Required</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Proposed Model</div>
+          <div class="meta-value">alche independently analyzes menus, surfaces in-app. User flow: Discover &rarr; Browse &rarr; Track &rarr; Recommend</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Open Variables</div>
+          <div class="meta-value">Commission rate (<code>8-15%</code>), launch restaurants (<code>3-5 vs 10</code>), nutritional analysis cost (<code>EUR 200-500</code>/restaurant)</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Open Decisions</div>
+        <div class="decision-text">Commission rate (8-15%)? How many restaurants at launch (3-5 vs 10)? Cost of nutritional analysis per restaurant (EUR 200-500)? Who does the analysis -- in-house or outsourced?</div>
+      </div>
+      <div class="investor-warning">
+        <div class="investor-warning-label">Investor Perspective</div>
+        <div class="investor-warning-text">Restaurant-tech has killed hundreds of startups. Position this as a feature, not a business line. An investor will say: "Prove the core subscription works before you touch restaurant partnerships."</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Founders' Notes</div>
+        <textarea class="note-input" id="note-rev-restaurant" placeholder="Add notes on target restaurants, commission structure, manual validation plan..." rows="3"></textarea>
+      </div>
+      <div class="values-section">
+        <div class="values-label">
+          <span>Monthly Revenue (EUR) -- M1 to M24</span>
+          <button class="values-copy" onclick="copyValues('val-rev-restaurant', this)">TSV</button>
+        </div>
+        <div class="val-row" id="val-rev-restaurant"
+          data-values="TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD">
+        </div>
+      </div>
+    </div>
+
+    <!-- LINE 6: Doctor Booking Commission -->
+    <div class="card" id="card-rev-doctor" data-section="revenue">
+      <div class="card-top">
+        <div class="card-title">
+          Doctor Booking Commission
+          <span class="line-num">Line 6 -- NEW</span>
+        </div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('doctor')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-rev-doctor', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <span class="status status-legal">Legal Review Needed</span>
+      <div class="decision-box">
+        <div class="decision-label">Open Decisions</div>
+        <div class="decision-text">Commission vs SaaS to doctors vs lead-gen? German HWG (Heilmittelwerbegesetz) may block commission model entirely. Need legal opinion before any development.</div>
+      </div>
+      <div class="investor-warning">
+        <div class="investor-warning-label">Investor Perspective</div>
+        <div class="investor-warning-text">An investor with healthcare experience will immediately ask about HWG compliance. Doctolib uses SaaS fees to doctors (EUR 50-200/mo) specifically to avoid this. Research the legal model BEFORE investing dev time.</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Founders' Notes</div>
+        <textarea class="note-input" id="note-rev-doctor" placeholder="Add notes on legal research, HWG consultation, doctor network strategy..." rows="3"></textarea>
+      </div>
+      <div class="values-section">
+        <div class="values-label">
+          <span>Monthly Revenue (EUR) -- M1 to M24</span>
+          <button class="values-copy" onclick="copyValues('val-rev-doctor', this)">TSV</button>
+        </div>
+        <div class="val-row" id="val-rev-doctor"
+          data-values="TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD,TBD">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 2: COGS -->
+  <div class="section" id="sec-cogs">
+    <div class="sec-header">
+      <div>
+        <span class="sec-label">Section 02</span>
+        <h2>Cost of <strong>Goods Sold</strong></h2>
+      </div>
+      <button class="sec-copy-btn" onclick="copySectionNotes('sec-cogs', this)">Copy Section</button>
+    </div>
+
+    <!-- Hosting -->
+    <div class="card" id="card-cogs-hosting" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Hosting &amp; Infrastructure</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-hosting', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Range</div>
+          <div class="meta-value"><code>EUR 200-500</code>/mo, scaling with users</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Scaling</div>
+          <div class="meta-value">Steps up at 500, 1000, 2500 users</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-hosting" placeholder="Cloud provider choice, scaling triggers, CDN needs..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- API Costs -->
+    <div class="card" id="card-cogs-api" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">API Costs</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-api', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Range</div>
+          <div class="meta-value"><code>EUR 100-350</code>/mo, scaling with usage</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Includes</div>
+          <div class="meta-value">Health data APIs, nutrition DBs, third-party integrations</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-api" placeholder="Which APIs? Rate limits? Fallback providers..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Payment Processing -->
+    <div class="card" id="card-cogs-stripe" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Payment Processing (Stripe)</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-stripe', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Rate</div>
+          <div class="meta-value"><code>2.9%</code> + EUR 0.25 per transaction</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Note</div>
+          <div class="meta-value">Applied to all card-based revenue</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-stripe" placeholder="SEPA direct debit as alternative? Volume discounts at scale..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Product Wholesale -->
+    <div class="card" id="card-cogs-wholesale" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Product Wholesale</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-wholesale', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">COGS Rate</div>
+          <div class="meta-value"><code>52%</code> of product revenue</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Status</div>
+          <div class="meta-value">Needs supplier quotes for final validation</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-wholesale" placeholder="Supplier shortlist, MOQ requirements, payment terms..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Product Waste (NEW) -->
+    <div class="card" id="card-cogs-waste" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Product Waste <span class="line-num">NEW</span></div>
+        <button class="card-btn" onclick="copyCard('card-cogs-waste', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <span class="status status-decision">Decision Required</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Y1 Estimate</div>
+          <div class="meta-value"><code>5%</code> waste rate</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Y2 Target</div>
+          <div class="meta-value"><code>3%</code> waste rate</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Decision Needed</div>
+        <div class="decision-text">Which product categories have highest waste risk? Perishables vs shelf-stable supplements? Expiry management process?</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-waste" placeholder="Category-level waste estimates, expiry tracking plan..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Shipping -->
+    <div class="card" id="card-cogs-shipping" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Shipping</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-shipping', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 4</code>/unit</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Channel Mix</div>
+          <div class="meta-value"><code>70%</code> e-commerce (shipped), 30% in-space pickup</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-shipping" placeholder="Fulfillment partner, DHL vs Hermes, packaging specs..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Packaging -->
+    <div class="card" id="card-cogs-packaging" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Packaging</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-packaging', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 1.50</code>/unit</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Includes</div>
+          <div class="meta-value">Branded box, tissue, insert card</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-packaging" placeholder="Packaging design, sustainable materials, MOQ for custom boxes..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- LED Practitioner -->
+    <div class="card" id="card-cogs-led-prac" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">LED Practitioner</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-led-prac', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 18</code>/session</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Model</div>
+          <div class="meta-value">Per-session contractor fee</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-led-prac" placeholder="Practitioner sourcing, certification requirements, scheduling..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Blood Panel Lab -->
+    <div class="card" id="card-cogs-blood" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Blood Panel Lab</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-blood', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 55</code>/panel</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Frequency</div>
+          <div class="meta-value">Included in EUR 99/mo tier, quarterly cadence</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-blood" placeholder="Lab partner, panel composition, logistics..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Event Facilitator -->
+    <div class="card" id="card-cogs-facilitator" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Event Facilitator</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-facilitator', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 200</code>/event (fixed)</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Note</div>
+          <div class="meta-value">Fixed cost regardless of attendees. Break-even at ~6 tickets.</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-facilitator" placeholder="Facilitator pool, specializations, event types..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Consumables -->
+    <div class="card" id="card-cogs-consumables" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Consumables</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-consumables', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 4</code>/session</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Applies To</div>
+          <div class="meta-value">LED sessions, blood draws, in-space services</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-consumables" placeholder="Consumables inventory list, reorder triggers..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Equipment Depreciation -->
+    <div class="card" id="card-cogs-depreciation" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Equipment Depreciation</div>
+        <button class="card-btn" onclick="copyCard('card-cogs-depreciation', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value"><code>EUR 200</code>/mo from M6</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Equipment</div>
+          <div class="meta-value">LED panels, blood draw kits, space fixtures</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-depreciation" placeholder="Equipment list, useful life, depreciation schedule..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Claude AI (NEW) -->
+    <div class="card" id="card-cogs-claude" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">Claude AI <span class="line-num">NEW</span></div>
+        <button class="card-btn" onclick="copyCard('card-cogs-claude', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <span class="status status-decision">Decision Required</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Current Cost</div>
+          <div class="meta-value"><code>EUR 210</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Y1 Scaling</div>
+          <div class="meta-value"><code>EUR 250-500</code>/mo</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Classification Decision</div>
+        <div class="decision-text">COGS (if user-facing AI features, e.g., personalized recommendations) or OpEx (if internal use only, e.g., content generation, analysis)? This affects gross margin calculation.</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-claude" placeholder="AI use cases, user-facing vs internal, cost scaling model..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- CGM Sensors (NEW) -->
+    <div class="card" id="card-cogs-cgm" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">CGM Sensors <span class="line-num">NEW -- if resale</span></div>
+        <button class="card-btn" onclick="copyCard('card-cogs-cgm', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <span class="status status-decision">Decision Required</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Cost Per User</div>
+          <div class="meta-value"><code>EUR 70-90</code>/user/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Depends On</div>
+          <div class="meta-value">Revenue Line 3 (CGM) model decision</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Decision Needed</div>
+        <div class="decision-text">Pending CGM revenue model decision (Line 3). If resale: COGS line is EUR 70-90/user/mo. If referral: no COGS, just referral commission. If white-label: negotiated bulk rate.</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-cgm" placeholder="Sensor supplier options, bulk pricing, inventory risk..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- UX Design (NEW) -->
+    <div class="card" id="card-cogs-ux" data-section="cogs">
+      <div class="card-top">
+        <div class="card-title">UX Design <span class="line-num">NEW</span></div>
+        <button class="card-btn" onclick="copyCard('card-cogs-ux', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <span class="status status-decision">Decision Required</span>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Range</div>
+          <div class="meta-value"><code>EUR 600-2,000</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Question</div>
+          <div class="meta-value">Separate COGS (product-related) or OpEx (overhead)?</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Classification Decision</div>
+        <div class="decision-text">If UX design directly improves the product users pay for, it could be COGS. If it's general company design work, it's OpEx. Standard practice: OpEx unless directly tied to revenue-generating features.</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-cogs-ux" placeholder="UX designer scope, freelance vs agency, deliverables..." rows="2"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 3: OPEX -->
+  <div class="section" id="sec-opex">
+    <div class="sec-header">
+      <div>
+        <span class="sec-label">Section 03</span>
+        <h2>Operating <strong>Expenses</strong></h2>
+      </div>
+      <button class="sec-copy-btn" onclick="copySectionNotes('sec-opex', this)">Copy Section</button>
+    </div>
+
+    <!-- Payroll -->
+    <div class="card" id="card-opex-payroll" data-section="opex">
+      <div class="card-top">
+        <div class="card-title">Payroll</div>
+        <div class="card-actions">
+          <button class="coach-btn" onclick="openCoach('payroll')">Coach</button>
+          <button class="card-btn" onclick="copyCard('card-opex-payroll', this)" title="Copy card">&#x2398;</button>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Founders (M1-M24)</div>
+          <div class="meta-value">2 &times; <code>EUR 4,750</code>/mo each = <code>EUR 9,500</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">CTO (from M18)</div>
+          <div class="meta-value"><code>EUR 6,875</code>/mo gross</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Community Manager (from M18)</div>
+          <div class="meta-value"><code>EUR 1,500</code>/mo (part-time)</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Total at M24</div>
+          <div class="meta-value"><code>EUR 17,875</code>/mo</div>
+        </div>
+      </div>
+      <div class="decision-box">
+        <div class="decision-label">Decision Needed</div>
+        <div class="decision-text">Full headcount plan: how many hires, when exactly, which phases? Should community manager start earlier (M12)? Is EUR 6,875 competitive for a Berlin CTO?</div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-opex-payroll" placeholder="Hiring timeline, compensation benchmarks, equity splits..." rows="3"></textarea>
+      </div>
+    </div>
+
+    <!-- R&D -->
+    <div class="card" id="card-opex-rnd" data-section="opex">
+      <div class="card-top">
+        <div class="card-title">R&amp;D</div>
+        <button class="card-btn" onclick="copyCard('card-opex-rnd', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Dev Retainer (from M6)</div>
+          <div class="meta-value"><code>EUR 800</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Dev Tools</div>
+          <div class="meta-value"><code>EUR 200</code>/mo</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-opex-rnd" placeholder="Dev agency/freelancer shortlist, tool stack, sprint planning..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- S&M -->
+    <div class="card" id="card-opex-sm" data-section="opex">
+      <div class="card-top">
+        <div class="card-title">Sales &amp; Marketing</div>
+        <button class="card-btn" onclick="copyCard('card-opex-sm', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Paid Ads</div>
+          <div class="meta-value">Scaling (Instagram, Google), budget ramps monthly</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Content</div>
+          <div class="meta-value"><code>EUR 150</code>/mo</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Influencer (from M6)</div>
+          <div class="meta-value"><code>EUR 200</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">PR (from M9)</div>
+          <div class="meta-value"><code>EUR 100</code>/mo</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-opex-sm" placeholder="Channel strategy, CAC targets, influencer shortlist, PR outlets..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- G&A -->
+    <div class="card" id="card-opex-ga" data-section="opex">
+      <div class="card-top">
+        <div class="card-title">General &amp; Administrative</div>
+        <button class="card-btn" onclick="copyCard('card-opex-ga', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Rent</div>
+          <div class="meta-value"><code>EUR 500</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Legal</div>
+          <div class="meta-value"><code>EUR 720</code>/mo (retainer)</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Insurance</div>
+          <div class="meta-value"><code>EUR 200</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Steuerberater</div>
+          <div class="meta-value"><code>EUR 400</code>/mo</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Office Supplies</div>
+          <div class="meta-value"><code>EUR 100</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Note</div>
+          <div class="meta-value">Software licenses decision pending -- which software, phased approach</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-opex-ga" placeholder="Office space options, legal firm, insurance coverage, software stack..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Management -->
+    <div class="card" id="card-opex-mgmt" data-section="opex">
+      <div class="card-top">
+        <div class="card-title">Management &amp; Software</div>
+        <button class="card-btn" onclick="copyCard('card-opex-mgmt', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Software Licenses</div>
+          <div class="meta-value"><code>EUR 600</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Advisory</div>
+          <div class="meta-value"><code>EUR 0</code>/mo (equity-based advisors)</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Miscellaneous</div>
+          <div class="meta-value"><code>EUR 100</code>/mo</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-opex-mgmt" placeholder="Software stack breakdown, advisory board composition..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Travel -->
+    <div class="card" id="card-opex-travel" data-section="opex">
+      <div class="card-top">
+        <div class="card-title">Travel</div>
+        <button class="card-btn" onclick="copyCard('card-opex-travel', this)" title="Copy card">&#x2398;</button>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Investor Meetings</div>
+          <div class="meta-value"><code>EUR 150</code>/mo</div>
+        </div>
+        <div class="meta-field">
+          <div class="meta-label">Conferences (from M6)</div>
+          <div class="meta-value"><code>EUR 100</code>/mo</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-field">
+          <div class="meta-label">Local Transport</div>
+          <div class="meta-value"><code>EUR 50</code>/mo</div>
+        </div>
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-opex-travel" placeholder="Target conferences, investor meeting cadence, travel budget..." rows="2"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 4: TOTALS -->
+  <div class="section" id="sec-totals">
+    <div class="sec-header">
+      <div>
+        <span class="sec-label">Section 04</span>
+        <h2>P&amp;L <strong>Totals</strong></h2>
+      </div>
+    </div>
+
+    <div class="totals-card" id="card-totals-gp">
+      <div class="card-top">
+        <div class="card-title">Gross Profit</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:12px;">
+        Total Revenue minus Cost of Goods Sold. This measures how efficiently you deliver your products and services. Target: positive gross margin from M4 onward as revenue lines activate.
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-totals-gp" placeholder="Gross margin targets, which lines drive the most margin..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="totals-card" id="card-totals-expenses">
+      <div class="card-top">
+        <div class="card-title">Total Expenses (COGS + OpEx)</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:12px;">
+        All costs combined: direct costs of delivering services (COGS) plus operating overhead (OpEx). With EUR 500K pre-seed, your monthly burn rate determines your runway. At current model: ~EUR 15-22K/mo burn in Y1.
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-totals-expenses" placeholder="Burn rate targets, cost reduction opportunities, runway calculations..." rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="totals-card" id="card-totals-pnl">
+      <div class="card-top">
+        <div class="card-title">Net P&amp;L (Bottom Line)</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.7;margin-bottom:12px;">
+        Revenue minus all costs. Break-even target: Month 12, approximately 145 paying subscribers plus EUR 10K/month from the physical space. Pre-seed funding of EUR 500K at EUR 2.5M valuation cap covers the gap until break-even.
+      </div>
+      <div class="note-wrapper">
+        <div class="note-label">Notes</div>
+        <textarea class="note-input" id="note-totals-pnl" placeholder="Break-even scenarios, what-if analysis, investor narrative..." rows="2"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 5: RESEARCH TRACKER -->
+  <div class="section" id="sec-research">
+    <div class="sec-header">
+      <div>
+        <span class="sec-label">Section 05</span>
+        <h2>Research <strong>Tracker</strong></h2>
+      </div>
+      <button class="sec-copy-btn" onclick="copyResearchTracker(this)">Copy Tracker</button>
+    </div>
+
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th style="width:40px;"></th>
+          <th style="width:40px;">P</th>
+          <th style="width:80px;">Owner</th>
+          <th>Deliverable</th>
+        </tr>
+      </thead>
+      <tbody id="tracker-body">
+        <tr data-tracker="1">
+          <td><input type="checkbox" class="tracker-check" data-id="track-1"></td>
+          <td><span class="tracker-priority">1</span></td>
+          <td><span class="tracker-owner">Daria</span></td>
+          <td>Finalize cgm_analysis_cost doc into unit economics model. Determine resale vs referral vs white-label.</td>
+        </tr>
+        <tr data-tracker="2">
+          <td><input type="checkbox" class="tracker-check" data-id="track-2"></td>
+          <td><span class="tracker-priority">2</span></td>
+          <td><span class="tracker-owner">Timu</span></td>
+          <td>Get 3+ supplier quotes for "potions" first batch. Include MOQ, lead time, payment terms, waste policy.</td>
+        </tr>
+        <tr data-tracker="3">
+          <td><input type="checkbox" class="tracker-check" data-id="track-3"></td>
+          <td><span class="tracker-priority">3</span></td>
+          <td><span class="tracker-owner">External</span></td>
+          <td>Legal opinion on HWG compliance for doctor booking commission model. Get written opinion from healthcare lawyer.</td>
+        </tr>
+        <tr data-tracker="4">
+          <td><input type="checkbox" class="tracker-check" data-id="track-4"></td>
+          <td><span class="tracker-priority">4</span></td>
+          <td><span class="tracker-owner">Daria</span></td>
+          <td>Restaurant partnership validation: manually test with 3 Berlin restaurants. Document commission willingness, menu analysis cost, and user interest.</td>
+        </tr>
+        <tr data-tracker="5">
+          <td><input type="checkbox" class="tracker-check" data-id="track-5"></td>
+          <td><span class="tracker-priority">5</span></td>
+          <td><span class="tracker-owner">Timu</span></td>
+          <td>Claude AI classification decision: map all AI use cases to user-facing (COGS) vs internal (OpEx). Document scaling cost model.</td>
+        </tr>
+        <tr data-tracker="6">
+          <td><input type="checkbox" class="tracker-check" data-id="track-6"></td>
+          <td><span class="tracker-priority">6</span></td>
+          <td><span class="tracker-owner">Timu</span></td>
+          <td>UX Design scope and classification: define deliverables, freelancer vs agency, classify as COGS or OpEx.</td>
+        </tr>
+        <tr data-tracker="7">
+          <td><input type="checkbox" class="tracker-check" data-id="track-7"></td>
+          <td><span class="tracker-priority">7</span></td>
+          <td><span class="tracker-owner">Daria</span></td>
+          <td>Product waste analysis by category: which product types have highest spoilage risk? Define expiry management SOP.</td>
+        </tr>
+        <tr data-tracker="8">
+          <td><input type="checkbox" class="tracker-check" data-id="track-8"></td>
+          <td><span class="tracker-priority">8</span></td>
+          <td><span class="tracker-owner">Timu</span></td>
+          <td>Software license audit: list all SaaS tools needed, cost per tool, phased rollout plan. Validate EUR 600/mo estimate.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="height:80px;"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-header-label">Startup Coach</span>
+      <button class="modal-close" onclick="closeModalDirect()">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- JAVASCRIPT -->
+<script>
+(function(){
+  'use strict';
+
+  /* COACH CONTENT */
+  var coachData = {
+    products: {
+      coach: 'Your product attach rate should scale with subscribers. Track cross-sell % religiously -- it tells you whether your curation is working or just inventory sitting on shelves. At EUR 35 avg with 52% wholesale, your margin is thin. Volume is everything. Consider subscription bundles (monthly "potions box") to create predictable product revenue instead of one-off sales.',
+      investor: 'An investor will calculate your inventory risk. At 52% COGS, you need to move product fast to avoid cash flow problems. They will ask: "What is your sell-through rate?" and "How do you handle returns/expired product?" Have answers ready.'
+    },
+    led: {
+      coach: '60% margin per session is excellent for a service line. Each session deepens engagement and creates a reason to visit the physical space. Track session-to-subscription conversion rate -- this tells you if LED is a gateway drug to the full platform. Consider package deals (10 sessions for the price of 8) to lock in commitment.',
+      investor: 'Investors like high-margin services but will ask about utilization rate. If you have one LED panel, what is your max sessions/day? If you only fill 40% of slots, your effective margin drops. Show a capacity plan.'
+    },
+    cgm: {
+      coach: 'CGM margins are thin (4-24% at EUR 99/mo). If you resell sensors, your COGS is EUR 70-90/mo per user. Consider white-label to avoid inventory risk. At pre-seed, position this as Phase 2. The real value of CGM is engagement data -- users who see their glucose response to food are 3x more likely to stay subscribed. Focus on the data insight layer, not hardware distribution.',
+      investor: '6 revenue lines at pre-seed with no CTO signals unfocused to an investor. They will ask: "Why are you building hardware distribution before you have a working app?" Position CGM as a Phase 2 expansion that the pre-seed funding validates, not builds. Show that you understand the difference between vision and execution scope.'
+    },
+    events: {
+      coach: 'EUR 200 facilitator is fixed per event, so more attendees means better unit economics. Break-even at roughly 6 attendees at EUR 35/ticket. Events are your best community-building tool -- they create word-of-mouth that no paid ad can match. Track: attendees who convert to subscribers within 30 days of attending an event.',
+      investor: 'Events are operationally heavy but investors understand their role in community-driven businesses. The question will be: "Do events scale, or do they max out?" Show that events are a funnel, not a standalone business. Revenue from events should be a bonus on top of the subscribers they generate.'
+    },
+    restaurant: {
+      coach: 'This is a marketplace problem. At EUR 2.50/meal commission (assuming 10% of EUR 25 avg check), you need 200 transactions/month just to cover one restaurant\'s onboarding cost. Do not build tech for this until manually validated. Start with 3 restaurants, a spreadsheet, and Instagram posts featuring their dishes. If users organically start asking for more restaurants, you have signal.',
+      investor: 'Restaurant-tech has killed hundreds of startups. An investor will say: "Prove the core subscription works before you touch restaurant partnerships." Position this as a feature of the alche lifestyle (we curate where you eat), not a separate marketplace business. Revenue attribution should be minimal in your model.'
+    },
+    doctor: {
+      coach: 'German Heilmittelwerbegesetz (HWG) restricts medical referral commissions. Doctolib uses SaaS fees charged to doctors (EUR 50-200/mo) specifically to avoid HWG issues. Research the legal model BEFORE investing any development time. If the commission model is illegal, you have wasted months. The SaaS-to-doctors model (you charge doctors for patient flow) is the safe path.',
+      investor: 'An investor with healthcare experience will immediately ask about HWG compliance. If you cannot answer this question confidently, it signals you have not done your regulatory homework. Get a written legal opinion before this appears in any pitch deck or P&L model. The downside risk is not just lost revenue -- it is legal liability.'
+    },
+    payroll: {
+      coach: 'Founders at EUR 4,750/mo is responsible for pre-seed Berlin. The CTO hire at M18 for EUR 6,875 is tight for Berlin -- competitive offers for experienced CTOs are EUR 8,000-10,000/mo plus meaningful equity (5-10%). Consider: a senior full-stack developer at EUR 5,500-6,500 might be more realistic and still unlock product development. The community manager at EUR 1,500/mo is part-time -- make sure the scope is realistic.',
+      investor: 'Investors will calculate payroll as % of total burn. At EUR 9,500/mo for founders from day 1, that is EUR 114K/year just in founder salaries. They will ask: "Can you survive on less for the first 6 months to extend runway?" Some founders take EUR 2,000-3,000/mo for the first 6 months to show commitment.'
+    }
+  };
+
+  /* VALUE RENDERING */
+  var months = ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12','M13','M14','M15','M16','M17','M18','M19','M20','M21','M22','M23','M24'];
+
+  function renderValues() {
+    var rows = document.querySelectorAll('.val-row[data-values]');
+    rows.forEach(function(row) {
+      var raw = row.getAttribute('data-values');
+      var vals = raw.split(',');
+      var html = '';
+      // Header row
+      for (var i = 0; i < months.length; i++) {
+        html += '<span class="val-cell head">' + months[i] + '</span>';
+      }
+      html += '<span class="val-cell head" style="min-width:72px;">Total</span>';
+      // Value row
+      var total = 0;
+      var isTbd = false;
+      for (var j = 0; j < vals.length; j++) {
+        var v = vals[j].trim();
+        if (v === 'TBD') {
+          html += '<span class="val-cell tbd">TBD</span>';
+          isTbd = true;
+        } else {
+          var num = parseInt(v, 10);
+          total += num;
+          var cls = 'val-cell';
+          if (num === 0) cls += ' zero';
+          if (num < 0) cls += ' neg';
+          html += '<span class="' + cls + '">' + formatEur(num) + '</span>';
+        }
+      }
+      if (isTbd) {
+        html += '<span class="val-cell tbd" style="min-width:72px;">TBD</span>';
+      } else {
+        html += '<span class="val-cell total" style="min-width:72px;">' + formatEur(total) + '</span>';
+      }
+      row.innerHTML = html;
+    });
+  }
+
+  function formatEur(n) {
+    if (n === 0) return '0';
+    return n.toLocaleString('de-DE');
+  }
+
+  /* LOCAL STORAGE */
+  var STORAGE_PREFIX = 'alche-pnl-wb-';
+
+  function loadNotes() {
+    var textareas = document.querySelectorAll('.note-input');
+    textareas.forEach(function(ta) {
+      var key = STORAGE_PREFIX + ta.id;
+      var saved = localStorage.getItem(key);
+      if (saved) ta.value = saved;
+    });
+  }
+
+  function saveNote(ta) {
+    var key = STORAGE_PREFIX + ta.id;
+    localStorage.setItem(key, ta.value);
+  }
+
+  function setupNoteSaving() {
+    var textareas = document.querySelectorAll('.note-input');
+    textareas.forEach(function(ta) {
+      ta.addEventListener('input', function() {
+        saveNote(ta);
+      });
+    });
+  }
+
+  /* TRACKER CHECKBOXES */
+  function loadTrackerState() {
+    var checks = document.querySelectorAll('.tracker-check');
+    checks.forEach(function(cb) {
+      var key = STORAGE_PREFIX + cb.getAttribute('data-id');
+      var saved = localStorage.getItem(key);
+      if (saved === 'true') {
+        cb.checked = true;
+        cb.closest('tr').classList.add('completed');
+      }
+    });
+  }
+
+  function setupTrackerSaving() {
+    var checks = document.querySelectorAll('.tracker-check');
+    checks.forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        var key = STORAGE_PREFIX + cb.getAttribute('data-id');
+        localStorage.setItem(key, cb.checked);
+        if (cb.checked) {
+          cb.closest('tr').classList.add('completed');
+        } else {
+          cb.closest('tr').classList.remove('completed');
+        }
+      });
+    });
+  }
+
+  /* MODAL */
+  window.openCoach = function(key) {
+    var data = coachData[key];
+    if (!data) return;
+    var body = document.getElementById('modal-body');
+    var html = '<div class="modal-section">';
+    html += '<div class="modal-section-label">Practical Guidance</div>';
+    html += '<div class="modal-section-text">' + data.coach + '</div>';
+    html += '</div>';
+    if (data.investor) {
+      html += '<div class="modal-section">';
+      html += '<div class="modal-investor">';
+      html += '<div class="modal-investor-label">Investor Perspective</div>';
+      html += '<div class="modal-investor-text">' + data.investor + '</div>';
+      html += '</div>';
+      html += '</div>';
+    }
+    body.innerHTML = html;
+    document.getElementById('modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeModal = function(e) {
+    if (e.target === document.getElementById('modal-overlay')) {
+      closeModalDirect();
+    }
+  };
+
+  window.closeModalDirect = function() {
+    document.getElementById('modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModalDirect();
+  });
+
+  /* TOAST */
+  var toastTimeout;
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(function() {
+      t.classList.remove('show');
+    }, 2200);
+  }
+
+  /* CLIPBOARD HELPERS */
+  function copyText(text, successMsg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showToast(successMsg || 'Copied to clipboard');
+      }).catch(function() {
+        fallbackCopy(text, successMsg);
+      });
+    } else {
+      fallbackCopy(text, successMsg);
+    }
+  }
+
+  function fallbackCopy(text, successMsg) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast(successMsg || 'Copied to clipboard');
+    } catch(e) {
+      showToast('Copy failed -- please copy manually');
+    }
+    document.body.removeChild(ta);
+  }
+
+  function flashCopied(btn) {
+    btn.classList.add('copied');
+    setTimeout(function() { btn.classList.remove('copied'); }, 1500);
+  }
+
+  /* COPY ALL NOTES */
+  window.copyAllNotes = function() {
+    var textareas = document.querySelectorAll('.note-input');
+    var lines = [];
+    lines.push('ALCHE P&L WORKBENCH -- ALL NOTES');
+    lines.push('Exported: ' + new Date().toLocaleString());
+    lines.push('');
+    textareas.forEach(function(ta) {
+      if (ta.value.trim()) {
+        var card = ta.closest('.card, .totals-card');
+        var title = card ? card.querySelector('.card-title') : null;
+        var name = title ? title.textContent.trim() : ta.id;
+        lines.push('--- ' + name + ' ---');
+        lines.push(ta.value.trim());
+        lines.push('');
+      }
+    });
+    if (lines.length <= 3) {
+      showToast('No notes to copy');
+      return;
+    }
+    copyText(lines.join('\n'), 'All notes copied');
+  };
+
+  /* EXPORT DECISIONS */
+  window.exportDecisions = function() {
+    var decisions = document.querySelectorAll('.decision-box');
+    var lines = [];
+    lines.push('ALCHE P&L WORKBENCH -- OPEN DECISIONS');
+    lines.push('Exported: ' + new Date().toLocaleString());
+    lines.push('');
+    decisions.forEach(function(db) {
+      var card = db.closest('.card, .totals-card');
+      var title = card ? card.querySelector('.card-title') : null;
+      var name = title ? title.textContent.trim() : 'Unknown';
+      var text = db.querySelector('.decision-text');
+      lines.push('[DECISION] ' + name);
+      lines.push(text ? text.textContent.trim() : '');
+      // Include any notes from the same card
+      var note = card ? card.querySelector('.note-input') : null;
+      if (note && note.value.trim()) {
+        lines.push('  Notes: ' + note.value.trim());
+      }
+      lines.push('');
+    });
+    copyText(lines.join('\n'), 'Decisions exported (' + decisions.length + ' items)');
+  };
+
+  /* COPY CARD */
+  window.copyCard = function(cardId, btn) {
+    var card = document.getElementById(cardId);
+    if (!card) return;
+    var lines = [];
+    var title = card.querySelector('.card-title');
+    if (title) lines.push(title.textContent.trim());
+
+    var status = card.querySelector('.status');
+    if (status) lines.push('Status: ' + status.textContent.trim());
+
+    var metas = card.querySelectorAll('.meta-field');
+    metas.forEach(function(m) {
+      var label = m.querySelector('.meta-label');
+      var value = m.querySelector('.meta-value');
+      if (label && value) {
+        lines.push(label.textContent.trim() + ': ' + value.textContent.trim());
+      }
+    });
+
+    var decisionBoxes = card.querySelectorAll('.decision-box');
+    decisionBoxes.forEach(function(db) {
+      var text = db.querySelector('.decision-text');
+      if (text) lines.push('Decision: ' + text.textContent.trim());
+    });
+
+    var note = card.querySelector('.note-input');
+    if (note && note.value.trim()) {
+      lines.push('Notes: ' + note.value.trim());
+    }
+
+    // Include values if visible
+    var valRow = card.querySelector('.val-row[data-values]');
+    if (valRow) {
+      lines.push('Values: ' + valRow.getAttribute('data-values'));
+    }
+
+    copyText(lines.join('\n'), 'Card copied');
+    flashCopied(btn);
+  };
+
+  /* COPY SECTION NOTES */
+  window.copySectionNotes = function(sectionId, btn) {
+    var section = document.getElementById(sectionId);
+    if (!section) return;
+    var cards = section.querySelectorAll('.card');
+    var lines = [];
+    var sectionTitle = section.querySelector('.sec-header h2');
+    lines.push('--- ' + (sectionTitle ? sectionTitle.textContent.trim() : sectionId) + ' ---');
+    lines.push('');
+    cards.forEach(function(card) {
+      var title = card.querySelector('.card-title');
+      var note = card.querySelector('.note-input');
+      lines.push(title ? title.textContent.trim() : 'Item');
+      if (note && note.value.trim()) {
+        lines.push('  ' + note.value.trim());
+      } else {
+        lines.push('  (no notes)');
+      }
+      lines.push('');
+    });
+    copyText(lines.join('\n'), 'Section copied');
+    flashCopied(btn);
+  };
+
+  /* COPY VALUES (TSV) */
+  window.copyValues = function(rowId, btn) {
+    var row = document.getElementById(rowId);
+    if (!row) return;
+    var raw = row.getAttribute('data-values');
+    var vals = raw.split(',').map(function(v) { return v.trim(); });
+    // TSV: month headers + values
+    var header = months.join('\t') + '\tTotal';
+    var isTbd = vals.some(function(v) { return v === 'TBD'; });
+    var valLine;
+    if (isTbd) {
+      valLine = vals.join('\t') + '\tTBD';
+    } else {
+      var total = vals.reduce(function(s, v) { return s + parseInt(v, 10); }, 0);
+      valLine = vals.join('\t') + '\t' + total;
+    }
+    copyText(header + '\n' + valLine, 'Values copied as TSV');
+    flashCopied(btn);
+  };
+
+  /* COPY RESEARCH TRACKER */
+  window.copyResearchTracker = function(btn) {
+    var rows = document.querySelectorAll('#tracker-body tr');
+    var lines = [];
+    lines.push('ALCHE P&L WORKBENCH -- RESEARCH TRACKER');
+    lines.push('Exported: ' + new Date().toLocaleString());
+    lines.push('');
+    rows.forEach(function(row) {
+      var cb = row.querySelector('.tracker-check');
+      var done = cb && cb.checked ? '[x]' : '[ ]';
+      var priority = row.querySelector('.tracker-priority');
+      var owner = row.querySelector('.tracker-owner');
+      var cells = row.querySelectorAll('td');
+      var desc = cells.length >= 4 ? cells[3].textContent.trim() : '';
+      lines.push(done + ' P' + (priority ? priority.textContent : '?') + ' (' + (owner ? owner.textContent : '?') + ') ' + desc);
+    });
+    copyText(lines.join('\n'), 'Tracker copied');
+    flashCopied(btn);
+  };
+
+  /* TOGGLE VALUES */
+  var valuesVisible = true;
+  window.toggleValues = function() {
+    valuesVisible = !valuesVisible;
+    var btn = document.getElementById('toggleValuesBtn');
+    if (valuesVisible) {
+      document.body.classList.remove('values-hidden');
+      btn.textContent = 'Hide Values';
+    } else {
+      document.body.classList.add('values-hidden');
+      btn.textContent = 'Show Values';
+    }
+  };
+
+  /* INIT */
+  function init() {
+    renderValues();
+    loadNotes();
+    setupNoteSaving();
+    loadTrackerState();
+    setupTrackerSaving();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P&L Battle Plan — alche × Investor Template</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --cream: #F5F0E8;
+      --cream-mid: #EDE7DC;
+      --deep: #2C2418;
+      --deep-90: rgba(44, 36, 24, 0.9);
+      --deep-70: rgba(44, 36, 24, 0.7);
+      --deep-50: rgba(44, 36, 24, 0.5);
+      --deep-30: rgba(44, 36, 24, 0.3);
+      --deep-15: rgba(44, 36, 24, 0.15);
+      --deep-08: rgba(44, 36, 24, 0.08);
+      --amber: #C4956A;
+      --sage: #8B9E7C;
+      --terra: #B86B4A;
+      --rose: #C47A8A;
+      --stone: #9E948A;
+      --glass: rgba(255, 252, 246, 0.55);
+      --glass-strong: rgba(255, 252, 246, 0.75);
+      --glass-border: rgba(196, 149, 106, 0.18);
+      --glass-border-strong: rgba(196, 149, 106, 0.3);
+      --positive: #4A7C59;
+      --negative: #9E3A2A;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #FEFCF9;
+      color: var(--deep);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 15% 20%, rgba(196, 149, 106, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 85% 80%, rgba(139, 158, 124, 0.06) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(184, 107, 74, 0.03) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1
+    }
+
+    /* Hero */
+    .hero {
+      padding: 60px 0 40px;
+      text-align: center
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      background: rgba(196, 149, 106, 0.1);
+      border: 1px solid rgba(196, 149, 106, 0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      margin-bottom: 20px
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 16px
+    }
+
+    .hero h1 strong {
+      font-weight: 700
+    }
+
+    .hero .subtitle {
+      font-size: 18px;
+      color: var(--deep-70);
+      max-width: 680px;
+      margin: 0 auto 32px;
+      line-height: 1.6
+    }
+
+    .hero .cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none
+    }
+
+    .btn-primary {
+      background: var(--deep);
+      color: var(--cream);
+      box-shadow: 0 4px 16px rgba(44, 36, 24, 0.2)
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(44, 36, 24, 0.3)
+    }
+
+    .btn-secondary {
+      background: var(--glass-strong);
+      color: var(--deep);
+      border: 1px solid var(--glass-border-strong)
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--amber)
+    }
+
+    .btn-success {
+      background: var(--sage);
+      color: white
+    }
+
+    /* Section */
+    .section {
+      padding: 48px 0
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px
+    }
+
+    .section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 8px
+    }
+
+    .section h2 strong {
+      font-weight: 600
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--deep-70);
+      max-width: 700px;
+      line-height: 1.7;
+      margin-bottom: 32px
+    }
+
+    /* Glass cards */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px
+    }
+
+    .glass-elevated {
+      background: var(--glass-strong);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(44, 36, 24, 0.06), 0 2px 8px rgba(44, 36, 24, 0.03);
+      padding: 28px;
+      margin-bottom: 24px
+    }
+
+    /* Template Map */
+    .map-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px
+    }
+
+    @media(max-width:768px) {
+      .map-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .map-card {
+      padding: 20px;
+      border-left: 3px solid var(--amber)
+    }
+
+    .map-card.income {
+      border-left-color: var(--sage)
+    }
+
+    .map-card.expense {
+      border-left-color: var(--terra)
+    }
+
+    .map-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px
+    }
+
+    .map-card .excel-ref {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--deep-50);
+      margin-bottom: 8px
+    }
+
+    .map-card .map-desc {
+      font-size: 13px;
+      color: var(--deep-70);
+      line-height: 1.6
+    }
+
+    .map-card .map-items {
+      list-style: none;
+      margin-top: 8px
+    }
+
+    .map-card .map-items li {
+      font-size: 13px;
+      color: var(--deep);
+      padding: 3px 0;
+      border-bottom: 1px solid var(--deep-08)
+    }
+
+    .map-card .map-items li span {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--amber);
+      margin-right: 8px
+    }
+
+    /* Vocabulary */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px
+    }
+
+    .vocab-card {
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s
+    }
+
+    .vocab-card:hover {
+      border-color: var(--amber)
+    }
+
+    .vocab-term {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 2px
+    }
+
+    .vocab-german {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--amber);
+      margin-bottom: 8px
+    }
+
+    .vocab-def {
+      font-size: 13px;
+      color: var(--deep-70);
+      line-height: 1.6;
+      margin-bottom: 8px
+    }
+
+    .vocab-alche {
+      font-size: 12px;
+      color: var(--deep);
+      background: rgba(139, 158, 124, 0.1);
+      border-radius: 8px;
+      padding: 8px 12px;
+      line-height: 1.5
+    }
+
+    .vocab-alche strong {
+      color: var(--sage);
+      font-weight: 600
+    }
+
+    /* Assumptions */
+    .assumptions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px
+    }
+
+    .assumption-group h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px
+    }
+
+    .assumption-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--deep-08)
+    }
+
+    .assumption-row label {
+      font-size: 13px;
+      color: var(--deep-70);
+      flex: 1
+    }
+
+    .assumption-row input {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: var(--deep);
+      background: var(--cream);
+      border: 1px solid var(--deep-15);
+      border-radius: 6px;
+      padding: 5px 8px;
+      width: 90px;
+      text-align: right;
+      -moz-appearance: textfield
+    }
+
+    .assumption-row input::-webkit-outer-spin-button,
+    .assumption-row input::-webkit-inner-spin-button {
+      -webkit-appearance: none
+    }
+
+    .assumption-row input:focus {
+      outline: none;
+      border-color: var(--terra);
+      box-shadow: 0 0 0 2px rgba(184, 107, 74, 0.1)
+    }
+
+    .assumption-row .unit {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--deep-30);
+      margin-left: 6px;
+      min-width: 32px
+    }
+
+    /* P&L Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin-bottom: 32px;
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass)
+    }
+
+    .pnl-table {
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 2400px;
+      width: 100%
+    }
+
+    .pnl-table th,
+    .pnl-table td {
+      padding: 6px 10px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--deep-08)
+    }
+
+    .pnl-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--deep-50);
+      background: rgba(245, 240, 232, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 2
+    }
+
+    .pnl-table td:first-child,
+    .pnl-table th:first-child {
+      text-align: left;
+      position: sticky;
+      left: 0;
+      background: rgba(245, 240, 232, 0.95);
+      z-index: 3;
+      min-width: 220px;
+      font-weight: 500;
+      padding-left: 16px
+    }
+
+    .pnl-table th:first-child {
+      z-index: 4
+    }
+
+    .pnl-table td {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--deep-70)
+    }
+
+    .row-header {
+      background: rgba(196, 149, 106, 0.08) !important
+    }
+
+    .row-header td {
+      font-family: 'Outfit', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      color: var(--deep) !important;
+      padding-top: 14px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.05em
+    }
+
+    .row-section {
+      background: rgba(196, 149, 106, 0.04) !important
+    }
+
+    .row-section td {
+      font-family: 'Outfit', sans-serif !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      color: var(--deep-90) !important;
+      padding-top: 10px !important
+    }
+
+    .row-sub td:first-child {
+      padding-left: 32px !important;
+      font-weight: 400 !important;
+      font-family: 'Outfit', sans-serif !important;
+      font-size: 12px !important;
+      color: var(--deep-50) !important
+    }
+
+    .row-total {
+      background: rgba(139, 158, 124, 0.08) !important;
+      border-top: 2px solid var(--deep-15) !important
+    }
+
+    .row-total td {
+      font-weight: 700 !important;
+      color: var(--deep) !important
+    }
+
+    .row-grand-total {
+      background: rgba(196, 149, 106, 0.12) !important;
+      border-top: 3px solid var(--amber) !important;
+      border-bottom: 3px solid var(--amber) !important
+    }
+
+    .row-grand-total td {
+      font-weight: 700 !important;
+      color: var(--deep) !important;
+      font-size: 13px !important
+    }
+
+    .row-gross {
+      background: rgba(139, 158, 124, 0.12) !important;
+      border-top: 2px solid var(--sage) !important
+    }
+
+    .row-gross td {
+      font-weight: 700 !important;
+      color: var(--sage) !important
+    }
+
+    .val-neg {
+      color: var(--negative) !important
+    }
+
+    .val-pos {
+      color: var(--positive) !important
+    }
+
+    .val-zero {
+      color: var(--deep-30) !important
+    }
+
+    /* Sticky header row */
+    .table-wrap {
+      max-height: 80vh;
+      overflow: auto
+    }
+
+    .pnl-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 5
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 180px;
+      padding: 20px;
+      text-align: center
+    }
+
+    .stat-card .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--deep-50);
+      margin-bottom: 4px
+    }
+
+    .stat-card .stat-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--deep)
+    }
+
+    .stat-card .stat-sub {
+      font-size: 12px;
+      color: var(--deep-50);
+      margin-top: 2px
+    }
+
+    .stat-card.positive .stat-value {
+      color: var(--positive)
+    }
+
+    .stat-card.negative .stat-value {
+      color: var(--negative)
+    }
+
+    .stat-card.amber .stat-value {
+      color: var(--amber)
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--deep);
+      color: var(--cream);
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      box-shadow: 0 8px 32px rgba(44, 36, 24, 0.3)
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0)
+    }
+
+    /* Navigation */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(254, 252, 249, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: baseline;
+      gap: 16px
+    }
+
+    .nav-left .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600
+    }
+
+    .nav-left .nav-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--deep-50);
+      letter-spacing: 0.08em
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--deep-50);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--deep);
+      background: var(--glass)
+    }
+
+    /* Vocab tooltip inline */
+    .term {
+      border-bottom: 1px dashed var(--amber);
+      cursor: help;
+      position: relative
+    }
+
+    .term:hover::after {
+      content: attr(data-def);
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      background: var(--deep);
+      color: var(--cream);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      width: 280px;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2)
+    }
+
+    /* How to fill */
+    .steps-list {
+      counter-reset: step
+    }
+
+    .step-item {
+      counter-increment: step;
+      padding: 20px 20px 20px 64px;
+      position: relative;
+      margin-bottom: 12px
+    }
+
+    .step-item::before {
+      content: counter(step);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--amber);
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--amber);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .step-item h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px
+    }
+
+    .step-item p {
+      font-size: 13px;
+      color: var(--deep-70);
+      line-height: 1.6
+    }
+
+    /* ── Annotation Layer ── */
+    .ann-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--deep-15);
+      background: transparent;
+      color: var(--deep-30);
+      font-size: 10px;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      cursor: pointer;
+      margin-left: 6px;
+      transition: all 0.15s;
+      vertical-align: middle;
+      flex-shrink: 0;
+      line-height: 1
+    }
+
+    .ann-toggle:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: rgba(196, 149, 106, 0.08)
+    }
+
+    .ann-toggle.open {
+      border-color: var(--amber);
+      color: white;
+      background: var(--amber)
+    }
+
+    .annotation-tr {
+      display: none
+    }
+
+    .annotation-tr.open {
+      display: table-row
+    }
+
+    .annotation-tr td {
+      padding: 0 !important;
+      border-bottom: 2px solid var(--glass-border) !important;
+      background: rgba(196, 149, 106, 0.03) !important
+    }
+
+    .ann-panel {
+      padding: 10px 16px 10px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      position: sticky;
+      left: 0;
+      width: min(1300px, calc(100vw - 72px))
+    }
+
+    .ann-block .ann-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--amber);
+      margin-bottom: 2px;
+      font-weight: 700
+    }
+
+    .ann-block .ann-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      color: var(--deep-70);
+      line-height: 1.5
+    }
+
+    .ann-block .ann-text code {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      background: rgba(196, 149, 106, 0.1);
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: var(--deep)
+    }
+
+    /* Copy Controls */
+    .copy-row-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: var(--deep-15);
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition: all 0.15s;
+      vertical-align: middle;
+      flex-shrink: 0
+    }
+
+    .copy-row-btn:hover {
+      color: var(--sage);
+      background: rgba(139, 158, 124, 0.1)
+    }
+
+    .copy-row-btn.copied {
+      color: var(--sage);
+      background: rgba(139, 158, 124, 0.15)
+    }
+
+    tr:not(:hover) .copy-row-btn:not(.copied) {
+      opacity: 0
+    }
+
+    .copy-section-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--deep-30);
+      background: transparent;
+      border: 1px solid var(--deep-08);
+      border-radius: 4px;
+      padding: 2px 8px;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: all 0.15s;
+      vertical-align: middle
+    }
+
+    .copy-section-btn:hover {
+      color: var(--sage);
+      border-color: var(--sage);
+      background: rgba(139, 158, 124, 0.06)
+    }
+
+    .copy-section-btn.copied {
+      color: var(--sage);
+      border-color: var(--sage);
+      background: rgba(139, 158, 124, 0.1)
+    }
+
+    /* Annotation toolbar */
+    .ann-toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px
+    }
+
+    .ann-toolbar .toolbar-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--deep-30);
+      text-transform: uppercase;
+      letter-spacing: 0.08em
+    }
+
+    .toggle-all-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--deep-50);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 6px;
+      padding: 5px 14px;
+      cursor: pointer;
+      transition: all 0.15s
+    }
+
+    .toggle-all-btn:hover {
+      color: var(--deep);
+      border-color: var(--amber)
+    }
+
+    .toggle-all-btn.active {
+      color: var(--amber);
+      border-color: var(--amber);
+      background: rgba(196, 149, 106, 0.06)
+    }
+
+    /* Print */
+    @media print {
+      body::before {
+        display: none
+      }
+
+      .nav-bar,
+      .btn,
+      .toast,
+      .ann-toggle,
+      .copy-row-btn,
+      .copy-section-btn,
+      .ann-toolbar {
+        display: none
+      }
+
+      .annotation-tr {
+        display: none !important
+      }
+
+      .table-wrap {
+        max-height: none;
+        overflow: visible
+      }
+
+      .pnl-table {
+        min-width: auto;
+        font-size: 8px
+      }
+
+      .pnl-table td,
+      .pnl-table th {
+        padding: 2px 4px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-left">
+      <span class="wordmark">alche</span>
+      <span class="nav-label">P&L BATTLE PLAN</span>
+    </div>
+    <div class="nav-links">
+      <a href="#map">Template Map</a>
+      <a href="#vocab">Vocabulary</a>
+      <a href="#assumptions">Assumptions</a>
+      <a href="#pnl">24-Month P&L</a>
+      <a href="#howto">How to Fill</a>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">FOR THE INVESTOR'S EXCEL TEMPLATE</div>
+      <h1>Your P&L<br><strong>Battle Plan</strong></h1>
+      <p class="subtitle">
+        Everything you need to fill the investor's Budget P&L spreadsheet. Every term explained from zero. Every number
+        for 24 months calculated. One click to copy it all into Excel.
+      </p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="copyToClipboard()">Copy All Numbers for Excel</button>
+        <a href="#vocab" class="btn btn-secondary">Learn the Vocabulary</a>
+        <a href="#pnl" class="btn btn-secondary">See the Numbers</a>
+      </div>
+    </section>
+
+    <!-- SECTION 1: TEMPLATE MAP -->
+    <section class="section" id="map">
+      <span class="section-label">Section 01</span>
+      <h2>Your Excel Template, <strong>Decoded</strong></h2>
+      <p class="section-intro">
+        The investor sent you an empty spreadsheet with categories designed for a product company. Here is exactly how
+        alche's business maps to each row. The left column is what the Excel says. The right column is what you put
+        there.
+      </p>
+
+      <div class="map-grid">
+        <div class="glass map-card income">
+          <h3>Products (Rows 4-12)</h3>
+          <div class="excel-ref">4 product lines &times; (units + euros each)</div>
+          <div class="map-desc">The template expects physical products. alche sells both physical products AND services.
+            Map them as 4 "product lines":</div>
+          <ul class="map-items">
+            <li><span>Line 1</span> Curated Longevity Products (supplements, functional foods, tools)</li>
+            <li><span>Line 2</span> LED Therapy Sessions (units = sessions, euros = session revenue)</li>
+            <li><span>Line 3</span> Blood Panel Facilitations (units = panels, euros = panel revenue)</li>
+            <li><span>Line 1</span> Curated Longevity Potions (units = batches/jars, euros = price)</li>
+            <li><span>Line 2</span> LED Therapy (units = sessions, euros = price)</li>
+            <li><span>Line 3</span> CGM Bundle (units = shipped kits, euros = price)</li>
+            <li><span>Line 4</span> Events & Workshops (units = total attendees, euros = ticket revenue)</li>
+            <li><span>Line 5</span> Restaurant Partnerships (units = trackable bookings, euros = commission)</li>
+            <li><span>Line 6</span> Doctor Directory SaaS (units = listed doctors, euros = monthly fee)</li>
+          </ul>
+        </div>
+
+        <div class="glass map-card income">
+          <h3>Subscriptions (Rows 14-17)</h3>
+          <div class="excel-ref">3 subscription tiers: A, B, Others</div>
+          <div class="map-desc">This is alche's core business. The 3 rows map perfectly to 3 pricing tiers:</div>
+          <ul class="map-items">
+            <li><span>A</span> Core Tier &mdash; EUR 19/month (biomarker dashboard, wearable sync)</li>
+            <li><span>B</span> Pro Tier &mdash; EUR 49/month (personalized protocols, AI insights)</li>
+            <li><span>Others</span> Premium Tier &mdash; EUR 99/month (blood panels, 1:1 reviews, CGM)</li>
+          </ul>
+        </div>
+
+        <div class="glass map-card expense">
+          <h3>COGS (Rows 22-35)</h3>
+          <div class="excel-ref">Up to 13 line items for direct costs</div>
+          <div class="map-desc">Everything that costs money ONLY when you make a sale. If revenue is zero, COGS is zero.
+          </div>
+          <ul class="map-items">
+            <li><span>Row 23</span> Hosting & Infrastructure (servers, cloud)</li>
+            <li><span>Row 24</span> API Costs (wearable syncs, AI models)</li>
+            <li><span>Row 25</span> Payment Processing (Stripe ~2.9%)</li>
+            <li><span>Row 26</span> Product Wholesale Cost (52% of retail)</li>
+            <li><span>Row 27</span> Product Shipping (EUR 4/unit)</li>
+            <li><span>Row 28</span> Product Packaging (EUR 1.50/unit)</li>
+            <li><span>Row 29</span> LED Practitioner Fees (EUR 18/session)</li>
+            <li><span>Row 30</span> Blood Panel Lab + Practitioner (EUR 55/panel)</li>
+            <li><span>Row 31</span> Event Facilitator Fees (EUR 200/event)</li>
+            <li><span>Row 32</span> Service Consumables (EUR 4/session)</li>
+            <li><span>Row 33</span> Equipment Depreciation (EUR 200/mo)</li>
+          </ul>
+        </div>
+
+        <div class="glass map-card expense">
+          <h3>Operations (Rows 41-77)</h3>
+          <div class="excel-ref">6 categories: Payroll, R&D, S&M, G&A, Management, Travel</div>
+          <div class="map-desc">Everything that costs money whether you sell anything or not. The "lights on" costs.
+          </div>
+          <ul class="map-items">
+            <li><span>Payroll</span> Founder salaries (EUR 4,750 each fully loaded) + CTO (M18+, seed hire)</li>
+            <li><span>R&D</span> Dev agency, dev tools, QA, staging servers</li>
+            <li><span>S&M</span> Paid ads, content tools, influencer, PR</li>
+            <li><span>G&A</span> Rent, legal, insurance, Steuerberater, office</li>
+            <li><span>Management</span> Software tools, advisory, misc</li>
+            <li><span>Travel</span> Investor meetings, conferences, transport</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="glass-elevated" style="text-align:center">
+        <div
+          style="font-family:'Space Mono',monospace;font-size:11px;color:var(--amber);letter-spacing:0.1em;margin-bottom:8px">
+          THE FORMULA CHAIN</div>
+        <div style="font-family:'Space Mono',monospace;font-size:14px;color:var(--deep);line-height:2.2">
+          <strong>Total Income</strong> (Row 18) = Products + Subscriptions<br>
+          <strong>Total COGS</strong> (Row 36) = Sum of all direct costs<br>
+          <strong style="color:var(--sage)">Gross Profit</strong> (Row 38) = Total Income &minus; Total COGS<br>
+          <strong>Total Expenses</strong> (Row 78) = Payroll + R&D + S&M + G&A + Management + Travel<br>
+          <strong style="color:var(--terra)">Total P&L</strong> (Row 85) = Gross Profit &minus; Total Expenses
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: VOCABULARY -->
+    <section class="section" id="vocab">
+      <span class="section-label">Section 02</span>
+      <h2>Vocabulary <strong>Bootcamp</strong></h2>
+      <p class="section-intro">
+        You said you're starting from zero. Here are the 20 terms you absolutely need to know before touching that
+        spreadsheet. No fluff, no jargon-to-explain-jargon. Each term includes what it means for alche specifically.
+      </p>
+
+      <div class="vocab-grid">
+        <div class="glass vocab-card">
+          <div class="vocab-term">Revenue</div>
+          <div class="vocab-german">Umsatz</div>
+          <div class="vocab-def">Money customers pay you. Period. Before you subtract anything. The very first number on
+            a P&L. Also called "top line" because it's literally at the top.</div>
+          <div class="vocab-alche"><strong>alche:</strong> 4 streams &mdash; subscriptions (EUR 19/49/99 per month),
+            product sales (avg EUR 35), services (LED, blood panels, events), and physical space (Phase 2, EUR 0 now).
+          </div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">COGS</div>
+          <div class="vocab-german">Herstellungskosten / Wareneinsatz</div>
+          <div class="vocab-def">Cost of Goods Sold. What it costs you to deliver the thing you sold. Sell nothing =
+            COGS is zero. These costs move in lockstep with revenue.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Hosting (EUR 350/mo), Stripe fees (2.9%), product wholesale
+            (52% of price), practitioner fees (EUR 18-55/session), packaging, shipping.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Gross Profit</div>
+          <div class="vocab-german">Rohgewinn / Bruttogewinn</div>
+          <div class="vocab-def">Revenue minus COGS. This is the money left after you've paid for delivering your
+            product. It's what you have to cover salaries, rent, and everything else.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Target ~72% gross margin Year 1. For every EUR 100 in
+            revenue, EUR 72 remains after direct costs. Subscriptions: 85-90% margin. Products: 40-55%.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">OpEx</div>
+          <div class="vocab-german">Betriebsausgaben</div>
+          <div class="vocab-def">Operating Expenses. Everything it costs to run the business that isn't COGS. Salaries,
+            rent, marketing, legal, software. You pay these even if you sell nothing.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Biggest item = founder salaries at EUR 9,500/mo (2 x EUR
+            3,800 gross + 25% employer costs). Then dev agency, rent, marketing.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Burn Rate</div>
+          <div class="vocab-german">Verbrennungsrate</div>
+          <div class="vocab-def">How much cash you spend per month beyond what you earn. Net burn = expenses minus
+            revenue. At pre-launch, burn = roughly your total expenses because revenue is near zero.</div>
+          <div class="vocab-alche"><strong>alche:</strong> ~EUR 15,000/mo at launch. Decreases as revenue grows. Target:
+            EUR 0 burn by Month 12 (break-even).</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Runway</div>
+          <div class="vocab-german">Reichweite (cash)</div>
+          <div class="vocab-def">How many months until you run out of money. Cash in bank divided by monthly burn rate.
+            When runway hits zero, the company dies unless it raises more money.</div>
+          <div class="vocab-alche"><strong>alche:</strong> EUR 500K raise / ~EUR 15K burn = 33 months. After startup
+            costs (EUR 247K): ~24 months. That's good. Pre-seed standard is 12-18.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">MRR</div>
+          <div class="vocab-german">Monatlich wiederkehrender Umsatz</div>
+          <div class="vocab-def">Monthly Recurring Revenue. Only counts subscription revenue that repeats every month.
+            Product sales and one-time services don't count. Investors love MRR because it's predictable.</div>
+          <div class="vocab-alche"><strong>alche:</strong> At 145 subs (M12): Core 75 x EUR 19 + Pro 55 x EUR 49 +
+            Premium 15 x EUR 99 = EUR 5,605 MRR.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">ARR</div>
+          <div class="vocab-german">J&auml;hrlich wiederkehrender Umsatz</div>
+          <div class="vocab-def">Annual Recurring Revenue. MRR times 12. This is the number used for SaaS company
+            valuations. "We're at EUR 67K ARR" means MRR is ~EUR 5,600.</div>
+          <div class="vocab-alche"><strong>alche:</strong> At M12: EUR 5,605 MRR x 12 = EUR 67,260 ARR. At EUR 2.5M cap,
+            that's ~37x ARR multiple (high for pre-seed but normal for pre-revenue).</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">CAC</div>
+          <div class="vocab-german">Kundenakquisitionskosten</div>
+          <div class="vocab-def">Customer Acquisition Cost. Total marketing spend divided by new customers acquired. How
+            much it costs to get one person to pay you.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Target EUR 40-80 blended. Content-first strategy keeps CAC
+            low. At EUR 1,400/mo marketing and 25 new subs: EUR 56 CAC.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">LTV</div>
+          <div class="vocab-german">Kundenlebenszeitwert</div>
+          <div class="vocab-def">Lifetime Value. Total money one customer will ever pay you. ARPU times how many months
+            they stay. The higher the better. Must be much bigger than CAC.</div>
+          <div class="vocab-alche"><strong>alche:</strong> EUR 49 ARPU x 8-12 months retention = EUR 392-588 LTV.
+            LTV:CAC ratio of 5:1 to 15:1. Investors want 3:1 minimum.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Churn</div>
+          <div class="vocab-german">Abwanderungsrate / K&uuml;ndigungsrate</div>
+          <div class="vocab-def">The percentage of subscribers who cancel each month. The silent killer of subscription
+            businesses. If 8% churn monthly, you lose 8 of every 100 subscribers.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Model at 8% monthly churn. Industry reality: 77% of health
+            app users leave by Day 3. alche's curation model targets stickier engagement.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">ARPU</div>
+          <div class="vocab-german">Durchschnittlicher Umsatz pro Nutzer</div>
+          <div class="vocab-def">Average Revenue Per User. Total revenue divided by paying users. Tells you how much the
+            average customer pays per month.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Weighted target EUR 49/mo. Core (EUR 19) pulls it down,
+            Premium (EUR 99) pulls it up. Tier mix determines actual ARPU.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Gross Margin</div>
+          <div class="vocab-german">Bruttomarge</div>
+          <div class="vocab-def">Gross Profit as a percentage of Revenue. Shows how many cents you keep per euro after
+            direct costs. Higher = better business model.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Target 72% blended Y1, growing to 80% Y3 as subscription
+            share increases. SaaS benchmark: 70-85%. E-commerce: 30-50%.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Break-even</div>
+          <div class="vocab-german">Gewinnschwelle / Break-even-Punkt</div>
+          <div class="vocab-def">The month when revenue equals expenses. No more burning cash. Every euro of additional
+            revenue is profit. The most important milestone for pre-seed investors.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Month 12, approximately 145 paying subscribers. EUR 142K of
+            the EUR 500K raise remains as buffer.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">EBITDA</div>
+          <div class="vocab-german">same in German</div>
+          <div class="vocab-def">Earnings Before Interest, Taxes, Depreciation, Amortization. Your operating profit from
+            core business, ignoring financing and accounting adjustments. The "true" operating performance.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Negative until near break-even. EBITDA = Gross Profit - OpEx.
+            Turns positive when subscription growth outpaces expense growth.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Wandeldarlehen</div>
+          <div class="vocab-german">Convertible Loan</div>
+          <div class="vocab-def">A loan that converts into company shares at the next funding round. You borrow EUR 500K
+            now; when you raise a Series Seed, that EUR 500K becomes equity at a discount.</div>
+          <div class="vocab-alche"><strong>alche:</strong> EUR 500K at EUR 2.5M valuation cap, 20% discount. Interest
+            ~3%/year = EUR 1,250/mo accrued (shows on P&L but no cash leaves).</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Depreciation</div>
+          <div class="vocab-german">Abschreibung (AfA)</div>
+          <div class="vocab-def">Spreading a big purchase over time on the P&L. Buy a EUR 12,000 device, use it 5 years
+            = EUR 200/month expense. No cash leaves your bank each month; it's an accounting entry.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Equipment EUR 200/mo + IT EUR 85/mo = EUR 285/mo pre-seed.
+            Phase 2 adds space buildout depreciation.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">GmbH</div>
+          <div class="vocab-german">Gesellschaft mit beschr&auml;nkter Haftung</div>
+          <div class="vocab-def">German limited liability company. Standard startup structure. Requires EUR 25,000
+            registered capital (EUR 12,500 paid at formation). Taxed at ~30% combined rate on profits.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Berlin-registered GmbH. Combined tax: 15%
+            K&ouml;rperschaftsteuer + 0.825% Soli + ~14.35% Gewerbesteuer = ~30%. Zero tax on losses (they carry
+            forward).</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Unit Economics</div>
+          <div class="vocab-german">St&uuml;ck&ouml;konomie</div>
+          <div class="vocab-def">The revenue and cost of ONE customer. If one customer pays EUR 49/mo, costs EUR 3/mo to
+            serve, and EUR 56 to acquire, is that customer profitable? Unit economics answers this.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Pro sub: EUR 49 revenue - EUR 3 COGS = EUR 46 contribution.
+            Pays back EUR 56 CAC in 1.2 months. Then ~10 months of pure contribution.</div>
+        </div>
+
+        <div class="glass vocab-card">
+          <div class="vocab-term">Freemium Conversion</div>
+          <div class="vocab-german">Freemium-Konversion</div>
+          <div class="vocab-def">The percentage of free users who upgrade to paid. Typical for health apps: 2-5%. If you
+            have 2,000 free users and 100 paying, that's 5% conversion.</div>
+          <div class="vocab-alche"><strong>alche:</strong> Model at 3-5% conversion. 500 free users x 5% = 25 paid subs.
+            Content-first strategy builds free base, then converts through depth of value.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ASSUMPTIONS -->
+    <section class="section" id="assumptions">
+      <span class="section-label">Section 03</span>
+      <h2>Model <strong>Assumptions</strong></h2>
+      <p class="section-intro">
+        These are the inputs that drive every number in the 24-month P&L below. Change any value and the entire table
+        recalculates instantly. All defaults are from alche's locked business model data.
+      </p>
+
+      <div class="assumptions-grid">
+        <div class="glass assumption-group">
+          <h4>Subscription Pricing</h4>
+          <div class="assumption-row"><label>Core tier price</label><input type="number" id="a-core-price"
+              value="19"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Pro tier price</label><input type="number" id="a-pro-price"
+              value="49"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Premium tier price</label><input type="number" id="a-premium-price"
+              value="99"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Monthly churn rate</label><input type="number" id="a-churn" value="8"
+              step="0.5"><span class="unit">%</span></div>
+          <div class="assumption-row"><label>Core tier share</label><input type="number" id="a-core-pct"
+              value="52"><span class="unit">%</span></div>
+          <div class="assumption-row"><label>Pro tier share</label><input type="number" id="a-pro-pct" value="38"><span
+              class="unit">%</span></div>
+          <div class="assumption-row"><label>Premium tier share</label><input type="number" id="a-prem-pct"
+              value="10"><span class="unit">%</span></div>
+        </div>
+
+        <div class="glass assumption-group">
+          <h4>Subscriber Growth</h4>
+          <div class="assumption-row"><label>New subs/mo M1-M3</label><input type="number" id="a-new1" value="3"><span
+              class="unit">/mo</span></div>
+          <div class="assumption-row"><label>New subs/mo M4-M6</label><input type="number" id="a-new2" value="15"><span
+              class="unit">/mo</span></div>
+          <div class="assumption-row"><label>New subs/mo M7-M9</label><input type="number" id="a-new3" value="22"><span
+              class="unit">/mo</span></div>
+          <div class="assumption-row"><label>New subs/mo M10-M12</label><input type="number" id="a-new4"
+              value="28"><span class="unit">/mo</span></div>
+          <div class="assumption-row"><label>New subs/mo M13-M18</label><input type="number" id="a-new5"
+              value="32"><span class="unit">/mo</span></div>
+          <div class="assumption-row"><label>New subs/mo M19-M24</label><input type="number" id="a-new6"
+              value="38"><span class="unit">/mo</span></div>
+        </div>
+
+        <div class="glass assumption-group">
+          <h4>Products & Operations (COGS)</h4>
+          <div class="assumption-row"><label>1. Potion Price</label><input type="number" id="a-pot-price" value="49"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>1. Potion COGS</label><input type="number" id="a-pot-cogs" value="11.50" step="0.5"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>3PL Fulfill (Potions/CGM)</label><input type="number" id="a-3pl" value="2.50" step="0.5"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Phy. Waste/Spoilage</label><input type="number" id="a-waste" value="5"><span class="unit">%</span></div>
+          
+          <div class="assumption-row"><label>2. LED Session Price</label><input type="number" id="a-led-price" value="45"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>2. LED Tech Fee</label><input type="number" id="a-led-cost" value="25"><span class="unit">EUR</span></div>
+          
+          <div class="assumption-row"><label>3. CGM Bundle Price</label><input type="number" id="a-cgm-price" value="130"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>3. CGM Hardware Cost</label><input type="number" id="a-cgm-cogs" value="70"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>3. CGM RMA Reserve</label><input type="number" id="a-cgm-rma" value="4"><span class="unit">%</span></div>
+          
+          <div class="assumption-row"><label>4. Event Price</label><input type="number" id="a-event-price" value="35"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>4. Event Fix Cost</label><input type="number" id="a-event-cost" value="250"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>4. Ticketing Fee</label><input type="number" id="a-ticket-fee" value="7"><span class="unit">%</span></div>
+          
+          <div class="assumption-row"><label>5. Rest. Commission</label><input type="number" id="a-rest-rev" value="1.50" step="0.50"><span class="unit">EUR</span></div>
+          
+          <div class="assumption-row"><label>6. Doc SaaS Fee</label><input type="number" id="a-doc-rev" value="150"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>6. Doc Verify Cost</label><input type="number" id="a-doc-cogs" value="25"><span class="unit">EUR</span></div>
+        </div>
+
+        <div class="glass assumption-group">
+          <h4>Operating Costs</h4>
+          <div class="assumption-row"><label>Founder gross (ea)</label><input type="number" id="a-f1-salary" value="4166"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Partner Mgr (M6+)</label><input type="number" id="a-mgr-salary" value="2000"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Growth Marketer (M12+)</label><input type="number" id="a-growth-salary" value="4500"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Tech/Ops Lead (M18+)</label><input type="number" id="a-cto-salary" value="6500"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Employer multiplier</label><input type="number" id="a-empl-mult" value="1.22" step="0.01"><span class="unit">x</span></div>
+          
+          <div class="assumption-row"><label>App Maint. Retainer</label><input type="number" id="a-app-maint" value="1500"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>UX/Design Retainer</label><input type="number" id="a-ux" value="800"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Menu Dietitian Base</label><input type="number" id="a-menu" value="500"><span class="unit">EUR</span></div>
+          
+          <div class="assumption-row"><label>Claude / AI Base</label><input type="number" id="a-claude" value="210"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Terra CGM API (M6+)</label><input type="number" id="a-terra" value="499"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Stripe fee rate</label><input type="number" id="a-stripe" value="2.9"><span class="unit">%</span></div>
+          
+          <div class="assumption-row"><label>Steuerberater</label><input type="number" id="a-steuer" value="400"><span class="unit">EUR</span></div>
+          <div class="assumption-row"><label>Rent & Insurance</label><input type="number" id="a-rent" value="750"><span class="unit">EUR</span></div>
+        </div>
+      </div>
+
+      <div style="text-align:center">
+        <button class="btn btn-primary" onclick="recalculate()">Recalculate P&L</button>
+        <button class="btn btn-secondary" onclick="resetDefaults()" style="margin-left:8px">Reset to Defaults</button>
+      </div>
+    </section>
+
+    <!-- SECTION 4: STATS & P&L TABLE -->
+    <section class="section" id="pnl">
+      <span class="section-label">Section 04</span>
+      <h2>24-Month <strong>P&L</strong></h2>
+      <p class="section-intro">
+        This table matches the investor's Excel template row-for-row. Every number auto-calculates from your assumptions
+        above. Copy it all in one click.
+      </p>
+
+      <div class="stats-bar" id="stats-bar"></div>
+
+      <div style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary" onclick="copyToClipboard()">Copy All Numbers for Excel</button>
+        <button class="btn btn-secondary" onclick="downloadCSV()">Download as CSV</button>
+        <span style="flex:1"></span>
+        <div class="ann-toolbar">
+          <span class="toolbar-label">Annotations</span>
+          <button class="toggle-all-btn" id="toggle-all-ann" onclick="toggleAllAnnotations()">Show All</button>
+        </div>
+      </div>
+
+      <div class="table-wrap" id="table-wrap">
+        <table class="pnl-table" id="pnl-table">
+          <!-- Generated by JavaScript -->
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 5: HOW TO FILL -->
+    <section class="section" id="howto">
+      <span class="section-label">Section 05</span>
+      <h2>How to <strong>Fill It</strong></h2>
+      <p class="section-intro">
+        Step-by-step instructions for getting these numbers into the investor's Excel file.
+      </p>
+
+      <div class="steps-list">
+        <div class="glass step-item">
+          <h4>Click "Copy All Numbers for Excel"</h4>
+          <p>This copies the entire 24-month P&L table to your clipboard as tab-separated values (TSV) &mdash; the
+            format Excel expects for paste operations.</p>
+        </div>
+        <div class="glass step-item">
+          <h4>Open the investor's Budget P&L.xlsx</h4>
+          <p>Go to the "Budget" sheet. Click on cell B1 (the first month column). This is where Month 1 data begins.</p>
+        </div>
+        <div class="glass step-item">
+          <h4>Paste (Ctrl+V / Cmd+V)</h4>
+          <p>The numbers will fill into the correct cells. Excel maps tabs to columns and newlines to rows
+            automatically.</p>
+        </div>
+        <div class="glass step-item">
+          <h4>Verify the row labels match</h4>
+          <p>Check that "COGS" numbers land in the COGS section (rows 22-36), "Operations" in rows 41-77, etc. If rows
+            are offset, adjust by pasting section-by-section &mdash; use the "Copy Section" buttons in the table.</p>
+        </div>
+        <div class="glass step-item">
+          <h4>Add row labels for COGS and Operations sub-items</h4>
+          <p>The investor's template has blank sub-rows. Type in the label names from the "Template Map" section above
+            (e.g., "Hosting & Infrastructure" in the COGS section, "Timu (CEO)" in Payroll, etc.).</p>
+        </div>
+        <div class="glass step-item">
+          <h4>Add the "Total 2 years" column</h4>
+          <p>Column Z in the Excel has "Total 2 years." For each row, enter a SUM formula: =SUM(B[row]:Y[row]). The
+            totals are also shown in the rightmost column of this table.</p>
+        </div>
+        <div class="glass step-item">
+          <h4>Review and send</h4>
+          <p>Double-check the Gross Profit row (should be positive by M8-M10) and Total P&L row (should approach zero by
+            M12). Save and send to the investor.</p>
+        </div>
+      </div>
+
+      <div class="glass-elevated" style="margin-top:32px">
+        <div
+          style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--terra);margin-bottom:8px">
+          IMPORTANT DISCLAIMERS FOR THE INVESTOR</div>
+        <ul style="font-size:13px;color:var(--deep-70);line-height:1.8;list-style:none">
+          <li style="margin-bottom:4px"><strong style="color:var(--deep)">1.</strong> All numbers are projections, not
+            historical data. alche is pre-revenue.</li>
+          <li style="margin-bottom:4px"><strong style="color:var(--deep)">2.</strong> Subscriber growth includes 8%
+            monthly churn baked in.</li>
+          <li style="margin-bottom:4px"><strong style="color:var(--deep)">3.</strong> Physical space (Phase 2) is
+            excluded &mdash; EUR 0 in this model.</li>
+          <li style="margin-bottom:4px"><strong style="color:var(--deep)">4.</strong> Corporate tax = EUR 0 while
+            operating at a loss (losses carry forward).</li>
+          <li style="margin-bottom:4px"><strong style="color:var(--deep)">5.</strong> Use-of-funds breakdown shared
+            separately upon request.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div><!-- /container -->
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ── MODEL ENGINE ──
+    let model = {};
+
+    function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+    function recalculate() {
+      const A = {
+        corePrice: getVal('a-core-price'),
+        proPrice: getVal('a-pro-price'),
+        premPrice: getVal('a-premium-price'),
+        churn: getVal('a-churn') / 100,
+        corePct: getVal('a-core-pct') / 100,
+        proPct: getVal('a-pro-pct') / 100,
+        premPct: getVal('a-prem-pct') / 100,
+        newSubs: [getVal('a-new1'), getVal('a-new2'), getVal('a-new3'), getVal('a-new4'), getVal('a-new5'), getVal('a-new6')],
+        
+        potPrice: getVal('a-pot-price'),
+        potCOGS: getVal('a-pot-cogs'),
+        tpl: getVal('a-3pl'),
+        waste: getVal('a-waste') / 100,
+        
+        ledPrice: getVal('a-led-price'),
+        ledCost: getVal('a-led-cost'),
+        
+        cgmPrice: getVal('a-cgm-price'),
+        cgmCOGS: getVal('a-cgm-cogs'),
+        cgmRMA: getVal('a-cgm-rma') / 100,
+        
+        eventPrice: getVal('a-event-price'),
+        eventCost: getVal('a-event-cost'),
+        ticketFee: getVal('a-ticket-fee') / 100,
+        
+        restRev: getVal('a-rest-rev'),
+        
+        docRev: getVal('a-doc-rev'),
+        docCOGS: getVal('a-doc-cogs'),
+        
+        fSalary: getVal('a-f1-salary'),
+        mgrSalary: getVal('a-mgr-salary'),
+        growthSalary: getVal('a-growth-salary'),
+        ctoSalary: getVal('a-cto-salary'),
+        emplMult: getVal('a-empl-mult'),
+        
+        appMaint: getVal('a-app-maint'),
+        ux: getVal('a-ux'),
+        menu: getVal('a-menu'),
+        
+        claude: getVal('a-claude'),
+        terra: getVal('a-terra'),
+        stripe: getVal('a-stripe') / 100,
+        
+        steuer: getVal('a-steuer'),
+        rent: getVal('a-rent'),
+      };
+
+      // New Growth schedules for 6 product lines
+      const potUnits = [0, 0, 0, 50, 100, 150, 250, 350, 450, 600, 750, 900, 1100, 1300, 1500, 1800, 2100, 2400, 2700, 3000, 3400, 3800, 4200, 4600];
+      const ledSessions = [0, 0, 0, 10, 20, 35, 50, 65, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 300, 300, 300, 300];
+      const cgmUnits = [0, 0, 0, 0, 0, 10, 25, 40, 60, 85, 115, 150, 190, 235, 285, 340, 400, 465, 535, 610, 690, 775, 865, 960];
+      const events = [[0, 0], [0, 0], [0, 0], [1, 12], [1, 15], [2, 15], [2, 18], [3, 18], [3, 18], [3, 20], [3, 20], [3, 20], [3, 22], [3, 22], [4, 22], [4, 22], [4, 24], [4, 24], [4, 25], [5, 25], [5, 25], [5, 25], [5, 25], [5, 25]];
+      const restCovers = [0, 0, 0, 0, 0, 50, 150, 300, 500, 800, 1200, 1700, 2300, 3000, 3800, 4700, 5700, 6800, 8000, 9300, 10700, 12200, 13800, 15500];
+      const docSaaS = [0, 0, 0, 0, 0, 5, 15, 25, 40, 60, 85, 115, 150, 190, 235, 285, 340, 400, 465, 535, 610, 690, 775, 865];
+
+      // Marketing spend per month — content-first GTM, paid ramps after launch
+      const marketing = [50, 50, 100, 200, 400, 600, 800, 800, 1000, 1200, 1400, 1400, 1800, 1800, 2000, 2000, 2200, 2200, 2500, 2500, 2800, 2800, 3000, 3000];
+
+      const months = [];
+      let totalSubs = 0;
+
+      for (let m = 0; m < 24; m++) {
+        const d = {};
+        // New subs rate by period
+        let newRate;
+        if (m < 3) newRate = A.newSubs[0];
+        else if (m < 6) newRate = A.newSubs[1];
+        else if (m < 9) newRate = A.newSubs[2];
+        else if (m < 12) newRate = A.newSubs[3];
+        else if (m < 18) newRate = A.newSubs[4];
+        else newRate = A.newSubs[5];
+
+        // Subscriber model with churn
+        const churned = Math.round(totalSubs * A.churn);
+        totalSubs = totalSubs - churned + newRate;
+        if (totalSubs < 0) totalSubs = 0;
+        d.totalSubs = totalSubs;
+
+        // Tier split
+        d.coreSubs = Math.round(totalSubs * A.corePct);
+        d.proSubs = Math.round(totalSubs * A.proPct);
+        d.premSubs = totalSubs - d.coreSubs - d.proSubs;
+        if (d.premSubs < 0) d.premSubs = 0;
+
+                // === INCOME ===
+        // L1: Potions
+        d.potUnits = potUnits[m];
+        d.potRevenue = d.potUnits * A.potPrice;
+
+        // L2: LED Therapy
+        d.ledUnits = ledSessions[m];
+        d.ledRevenue = d.ledUnits * A.ledPrice;
+
+        // L3: CGM
+        d.cgmUnits = cgmUnits[m];
+        d.cgmRevenue = d.cgmUnits * A.cgmPrice;
+
+        // L4: Events
+        d.eventCount = events[m][0];
+        d.eventAttendees = events[m][0] * events[m][1];
+        d.eventRevenue = d.eventAttendees * A.eventPrice;
+        
+        // L5: Restaurants
+        d.restCovers = restCovers[m];
+        d.restRevenue = d.restCovers * A.restRev;
+        
+        // L6: Doctors
+        d.docSubs = docSaaS[m];
+        d.docNewSubs = m == 0 ? docSaaS[m] : docSaaS[m] - docSaaS[m-1];
+        if (d.docNewSubs < 0) d.docNewSubs = 0;
+        d.docRevenue = d.docSubs * A.docRev;
+
+        // Subscriptions
+        d.subCore = d.coreSubs * A.corePrice;
+        d.subPro = d.proSubs * A.proPrice;
+        d.subPrem = d.premSubs * A.premPrice;
+        d.subTotal = d.subCore + d.subPro + d.subPrem;
+
+        // Total Income
+        d.totalProducts = d.potRevenue + d.ledRevenue + d.cgmRevenue + d.eventRevenue + d.restRevenue + d.docRevenue;
+        d.totalIncome = d.totalProducts + d.subTotal;
+
+        // === COGS ===
+        // Potions COGS
+        d.cogsPotions = Math.round(d.potUnits * A.potCOGS);
+        d.cogs3PL = m >= 5 ? Math.round((d.potUnits + d.cgmUnits) * A.tpl) : 0;
+        d.cogsWaste = Math.round((d.potRevenue + d.cgmRevenue) * A.waste);
+        
+        // Services/Events/CGM/Docs
+        d.cogsLED = Math.round(d.ledUnits * A.ledCost);
+        d.cogsCGM = Math.round(d.cgmUnits * A.cgmCOGS);
+        d.cogsRMA = Math.round(d.cgmRevenue * A.cgmRMA);
+        d.cogsEvents = Math.round((d.eventCount * A.eventCost) + (d.eventRevenue * A.ticketFee));
+        d.cogsDocs = Math.round(d.docNewSubs * A.docCOGS); // Upfront verification cost per new doctor
+        d.cogsStripe = Math.round(d.totalIncome * A.stripe);
+
+        d.totalCOGS = d.cogsPotions + d.cogs3PL + d.cogsWaste + d.cogsLED + d.cogsCGM + d.cogsRMA + d.cogsEvents + d.cogsDocs + d.cogsStripe;
+
+        // Gross Profit
+        d.grossProfit = d.totalIncome - d.totalCOGS;
+        d.grossMargin = d.totalIncome > 0 ? (d.grossProfit / d.totalIncome * 100) : 0;
+
+                // === OPERATIONS ===
+        // Payroll — Phased hiring map
+        d.payFounder1 = Math.round(A.fSalary * A.emplMult);
+        d.payFounder2 = Math.round(A.fSalary * A.emplMult);
+        d.payMgr = m >= 5 ? Math.round(A.mgrSalary * A.emplMult) : 0; // Part-time manager M6
+        d.payGrowth = m >= 11 ? Math.round(A.growthSalary * A.emplMult) : 0; // Growth Marketer M12
+        d.payCTO = m >= 17 ? Math.round(A.ctoSalary * A.emplMult) : 0; // CTO M18
+        d.payTotal = d.payFounder1 + d.payFounder2 + d.payMgr + d.payGrowth + d.payCTO;
+
+        // App Maint & UX (R&D)
+        d.rdAppMaint = A.appMaint;
+        d.rdUX = A.ux;
+        d.rdCapEx = m === 0 ? 5000 : 0; // Potion R&D phase 1
+        d.rdTotal = d.rdAppMaint + d.rdUX + d.rdCapEx;
+
+        // S&M (Sales & Marketing)
+        d.smPaidAds = marketing[m];
+        d.smContent = 150;
+        d.smInfluencer = m >= 6 ? 200 : 0;
+        d.smMenuAnalysis = A.menu; // Freelance menu analysis for restaurants
+        d.smTotal = d.smPaidAds + d.smContent + d.smInfluencer + d.smMenuAnalysis;
+
+        // G&A
+        d.gaRent = A.rent; 
+        d.gaSteuer = A.steuer;
+        d.gaLegal = 0; // Built into SG&A buffer
+        d.gaTotal = d.gaRent + d.gaSteuer;
+
+        // Management Software & APIs
+        d.mgBaseSaaS = m < 6 ? 350 : (m < 12 ? 850 : 1800);
+        d.mgClaude = A.claude; // internal AI team budget
+        d.mgTerra = m >= 5 ? A.terra : 0; // CGM API
+        d.mgAnthropic = m < 3 ? 150 : 150 + Math.round(totalSubs * 0.05); // External AI inference
+        d.mgTotal = d.mgBaseSaaS + d.mgClaude + d.mgTerra + d.mgAnthropic;
+
+        // Travel
+        d.trInvestor = 150;
+        d.trConference = m >= 6 ? 100 : 0;
+        d.trLocal = 50;
+        d.trTotal = d.trInvestor + d.trConference + d.trLocal;
+
+        // Total Expenses (Operations)
+        d.totalExpenses = d.payTotal + d.rdTotal + d.smTotal + d.gaTotal + d.mgTotal + d.trTotal;
+
+        // Total P&L
+        d.totalPnL = d.grossProfit - d.totalExpenses;
+
+        months.push(d);
+      }
+
+      model = { months, A };
+      renderTable();
+      renderStats();
+    }
+
+    function renderStats() {
+      const m = model.months;
+      const m12 = m[11];
+      const m24 = m[23];
+      const y1Rev = m.slice(0, 12).reduce((s, d) => s + d.totalIncome, 0);
+      const y2Rev = m.slice(12, 24).reduce((s, d) => s + d.totalIncome, 0);
+      const y1PnL = m.slice(0, 12).reduce((s, d) => s + d.totalPnL, 0);
+      const y2PnL = m.slice(12, 24).reduce((s, d) => s + d.totalPnL, 0);
+
+      // Find break-even month or nearest to break-even
+      let beMonth = 'N/A';
+      let bestMonth = 0;
+      let bestLoss = -Infinity;
+      for (let i = 0; i < 24; i++) {
+        if (m[i].totalPnL >= 0) { beMonth = 'M' + (i + 1); break; }
+        if (m[i].totalPnL > bestLoss) { bestLoss = m[i].totalPnL; bestMonth = i; }
+      }
+      const beLabel = beMonth !== 'N/A' ? beMonth : 'M' + (bestMonth + 1) + '*';
+      const beSub = beMonth !== 'N/A' ? m[parseInt(beMonth.slice(1)) - 1].totalSubs + ' subs'
+        : 'Nearest: EUR ' + fmt(bestLoss) + '/mo';
+
+      // Monthly burn at M1 and M12
+      const m1Burn = Math.abs(Math.round(m[0].totalPnL));
+      const m12Burn = Math.abs(Math.round(m12.totalPnL));
+
+      document.getElementById('stats-bar').innerHTML = `
+    <div class="glass stat-card"><div class="stat-label">Y1 Revenue</div><div class="stat-value">EUR ${fmt(y1Rev)}</div><div class="stat-sub">24 months: EUR ${fmt(y1Rev + y2Rev)}</div></div>
+    <div class="glass stat-card ${y1PnL >= 0 ? 'positive' : 'negative'}"><div class="stat-label">Y1 P&L</div><div class="stat-value">EUR ${fmt(y1PnL)}</div><div class="stat-sub">Y2: EUR ${fmt(y2PnL)}</div></div>
+    <div class="glass stat-card amber"><div class="stat-label">Near Break-even</div><div class="stat-value">${beLabel}</div><div class="stat-sub">${beSub}</div></div>
+    <div class="glass stat-card"><div class="stat-label">M12 Subs</div><div class="stat-value">${m12.totalSubs}</div><div class="stat-sub">M24: ${m24.totalSubs}</div></div>
+    <div class="glass stat-card"><div class="stat-label">Burn M1 → M12</div><div class="stat-value">EUR ${fmt(m1Burn)} → ${fmt(m12Burn)}</div><div class="stat-sub">Declining monthly burn</div></div>
+  `;
+    }
+
+    function fmt(n) {
+      if (n === 0) return '0';
+      const neg = n < 0;
+      const abs = Math.abs(Math.round(n));
+      const s = abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return neg ? '-' + s : s;
+    }
+
+    function fmtCell(n) {
+      if (n === 0) return '<span class="val-zero">0</span>';
+      const cls = n > 0 ? '' : 'val-neg';
+      return `<span class="${cls}">${fmt(n)}</span>`;
+    }
+
+    function renderTable() {
+      const m = model.months;
+      const rows = buildRows(m);
+
+      let html = '<thead><tr><th>Budget P&L</th>';
+      for (let i = 1; i <= 24; i++) html += `<th>M${i}</th>`;
+      html += '<th>TOTAL</th></tr></thead><tbody>';
+
+      // Track current section for copy-section buttons
+      let currentSec = null;
+
+      rows.forEach((r, idx) => {
+        const cls = r.cls ? ` class="${r.cls}"` : '';
+
+        // Build label cell with controls
+        let labelHtml = r.label;
+
+        // Add copy-section button to section/header rows
+        if ((r.cls === 'row-header' || r.cls === 'row-section') && r.sec) {
+          currentSec = r.sec;
+          labelHtml += `<button class="copy-section-btn" onclick="event.stopPropagation();copySection('${r.sec}',this)" title="Copy this section">copy</button>`;
+        }
+
+        // Add annotation toggle + row copy button for data rows
+        if (r.values && r.ann) {
+          labelHtml += `<button class="ann-toggle" data-ann="${idx}" onclick="event.stopPropagation();toggleAnnotation(${idx})" title="Show annotation">i</button>`;
+          labelHtml += `<button class="copy-row-btn" onclick="event.stopPropagation();copyRow(${idx},this)" title="Copy this row">⧉</button>`;
+        }
+
+        html += `<tr${cls} data-idx="${idx}" data-sec="${r.sec || currentSec || ''}"><td>${labelHtml}</td>`;
+        if (r.values) {
+          const total = r.values.reduce((s, v) => s + v, 0);
+          r.values.forEach(v => html += `<td>${fmtCell(v)}</td>`);
+          html += `<td>${fmtCell(total)}</td>`;
+        } else {
+          for (let i = 0; i < 25; i++) html += '<td></td>';
+        }
+        html += '</tr>';
+
+        // Add annotation row (hidden by default)
+        if (r.values && r.ann) {
+          html += `<tr class="annotation-tr" id="ann-row-${idx}"><td colspan="26">`;
+          html += `<div class="ann-panel">`;
+          html += `<div class="ann-block"><div class="ann-label">What it is</div><div class="ann-text">${r.ann.what}</div></div>`;
+          html += `<div class="ann-block"><div class="ann-label">How it's calculated</div><div class="ann-text">${r.ann.formula}</div></div>`;
+          html += `<div class="ann-block"><div class="ann-label">Investor tip</div><div class="ann-text">${r.ann.tip}</div></div>`;
+          html += `</div></td></tr>`;
+        }
+      });
+
+      html += '</tbody>';
+      document.getElementById('pnl-table').innerHTML = html;
+    }
+
+    function buildRows(m) {
+      const r = (label, key, cls, ann, sec) => ({
+        label, cls: cls || '',
+        values: m.map(d => typeof key === 'function' ? key(d) : d[key]),
+        ann: ann || null, sec: sec || null
+      });
+      const header = (label, sec) => ({ label, cls: 'row-header', values: null, ann: null, sec: sec || null });
+      const section = (label, sec) => ({ label, cls: 'row-section', values: null, ann: null, sec: sec || null });
+
+      return [
+        header('INCOME', 'income'),
+                section('Products', 'products'),
+        r('  Potions — units', 'potUnits', 'row-sub', {
+          what: 'Number of 30-day longevity potion jars shipped',
+          formula: 'Growth curve scaling with subscriber base (M1=0, M24=4600)',
+          tip: 'Core physical retention hook.'
+        }, 'products'),
+        r('  Potions — EUR', 'potRevenue', 'row-sub', {
+          what: 'Revenue from Potions',
+          formula: '<code>potUnits × EUR 49</code>',
+          tip: 'High volume recurring B2C e-commerce line.'
+        }, 'products'),
+        
+        r('  LED Therapy — sessions', 'ledUnits', 'row-sub', {
+          what: 'Number of red-light therapy sessions delivered',
+          formula: 'Scaling up to max 300/mo cap based on machine utilization.',
+          tip: 'Offline footprint driver.'
+        }, 'products'),
+        r('  LED Therapy — EUR', 'ledRevenue', 'row-sub', {
+          what: 'Revenue from LED',
+          formula: '<code>ledSessions × EUR 45</code>',
+          tip: 'Strong gross margins (44%).'
+        }, 'products'),
+        
+        r('  CGM Hardware — units', 'cgmUnits', 'row-sub', {
+          what: 'Continuous Glucose Monitor bundles dropshipped',
+          formula: 'Starts M6. Deep integration into App.',
+          tip: 'High perceived value hardware.'
+        }, 'products'),
+        r('  CGM Hardware — EUR', 'cgmRevenue', 'row-sub', {
+          what: 'Revenue from CGM B2C sales',
+          formula: '<code>cgmUnits × EUR 130</code>',
+          tip: 'Top-line booster, low % margin but drives premium software conversion.'
+        }, 'products'),
+        
+        r('  Community Events — units', 'eventAttendees', 'row-sub', {
+          what: 'Total attendees at paid events',
+          formula: 'Scales from 1 to 5 events per month.',
+          tip: 'Crucial for zero-CAC organic acquisition.'
+        }, 'products'),
+        r('  Community Events — EUR', 'eventRevenue', 'row-sub', {
+          what: 'Ticket revenue',
+          formula: '<code>eventAttendees × EUR 35</code>',
+          tip: 'Usually break-even, functions as marketing.'
+        }, 'products'),
+        
+        r('  Restaurant Bookings — units', 'restCovers', 'row-sub', {
+          what: 'Number of diners driven to partner restaurants',
+          formula: 'Scales massively after M6 launch (viral loop).',
+          tip: 'Pure B2B affiliate revenue loop.'
+        }, 'products'),
+        r('  Restaurant Commission — EUR', 'restRevenue', 'row-sub', {
+          what: 'Commission paid by restaurants per cover',
+          formula: '<code>restCovers × EUR 1.50</code>',
+          tip: 'High-margin B2B SaaS/affiliate revenue.'
+        }, 'products'),
+
+        r('  Doctor SaaS — clinics listed', 'docSubs', 'row-sub', {
+          what: 'Verified doctors paying for Premium Listing',
+          formula: 'B2B hustle. Scales to ~800+ directory listings.',
+          tip: 'Legal pivot. Safe under § 299a StGB.'
+        }, 'products'),
+        r('  Doctor SaaS — EUR', 'docRevenue', 'row-sub', {
+          what: 'Monthly B2B SaaS revenue from Doctors',
+          formula: '<code>docSubs × EUR 150/mo</code>',
+          tip: 'Pure recurring revenue stream.'
+        }, 'products'),
+        
+        section('Subscriptions', 'subs'),
+        r('  A — Core (EUR 19/mo)', 'subCore', 'row-sub', {
+          what: 'Revenue from Core tier subscribers (biomarker dashboard, wearable sync)',
+          formula: '<code>totalSubs × 52% core share × EUR 19</code>',
+          tip: 'Entry tier. Low ARPU but high volume. Most subscribers start here. Watch conversion to Pro.'
+        }, 'subs'),
+        r('  B — Pro (EUR 49/mo)', 'subPro', 'row-sub', {
+          what: 'Revenue from Pro tier (personalized protocols, AI insights)',
+          formula: '<code>totalSubs × 38% pro share × EUR 49</code>',
+          tip: 'Your sweet spot. Highest volume × decent ARPU. This tier drives most of your MRR.'
+        }, 'subs'),
+        r('  Others — Premium (EUR 99/mo)', 'subPrem', 'row-sub', {
+          what: 'Revenue from Premium tier (blood panels, 1:1 reviews, CGM access)',
+          formula: '<code>totalSubs × 10% premium share × EUR 99</code>',
+          tip: 'Highest ARPU, lowest volume. Proves willingness-to-pay ceiling. Each Premium sub = 5.2 Core subs in revenue.'
+        }, 'subs'),
+        r('Total Income', 'totalIncome', 'row-total', {
+          what: 'All revenue from all 4 streams combined. The "top line."',
+          formula: '<code>Products + LED + Blood + Events + Sub A + Sub B + Sub Premium</code>',
+          tip: 'Investor focus: total trajectory and composition. Subscription share should grow over time — that\'s the moat.'
+        }, 'income'),
+
+        header('EXPENSES', 'expenses'),
+
+                section('COGS', 'cogs'),
+        r('  Potions COGS', 'cogsPotions', 'row-sub', {
+          what: 'Cost of goods for longevity potions',
+          formula: '<code>potUnits × EUR 11.50</code>',
+          tip: '76% Gross Margin profile.'
+        }, 'cogs'),
+        r('  Waste / Defect Reserve', 'cogsWaste', 'row-sub', {
+          what: '5% spoilage on all physical goods',
+          formula: '<code>(Potions + CGMs) × 5%</code>',
+          tip: 'Smart CFO move. Never model 100% perfect shipping.'
+        }, 'cogs'),
+        r('  3PL Fulfillment', 'cogs3PL', 'row-sub', {
+          what: 'Outsourced warehouse pack/ship cost',
+          formula: '<code>Physical Units × EUR 2.50</code>',
+          tip: 'Founders should not be packing boxes.'
+        }, 'cogs'),
+        r('  LED Practitioner', 'cogsLED', 'row-sub', {
+          what: 'Practitioner fee per session',
+          formula: '<code>ledSessions × EUR 25</code>',
+          tip: 'Variable cost only.'
+        }, 'cogs'),
+        r('  CGM Hardware Cost', 'cogsCGM', 'row-sub', {
+          what: 'Wholesale acquisition cost of Dexcom/Libre',
+          formula: '<code>cgmUnits × EUR 70</code>',
+          tip: 'Drop-ship model to preserve cash.'
+        }, 'cogs'),
+        r('  CGM RMA Reserve', 'cogsRMA', 'row-sub', {
+          what: '4% reserve for defective medical hardware',
+          formula: '<code>CGM Revenue × 4%</code>',
+          tip: 'Wearables fall off. Must budget for replacements.'
+        }, 'cogs'),
+        r('  Events & Ticketing', 'cogsEvents', 'row-sub', {
+          what: 'Fixed event costs + 7% platform fee',
+          formula: '<code>(Events × EUR 250) + (Ticket Rev × 7%)</code>',
+          tip: 'Luma/Eventbrite takes a cut.'
+        }, 'cogs'),
+        r('  Doctor Verification', 'cogsDocs', 'row-sub', {
+          what: 'Upfront license verification cost per doctor',
+          formula: '<code>New Doctors Listed × EUR 25</code>',
+          tip: 'Freelance medical verification.'
+        }, 'cogs'),
+        r('  Stripe Processing', 'cogsStripe', 'row-sub', {
+          what: 'Payment processing fees on all revenue',
+          formula: '<code>Total Revenue × 2.9%</code>',
+          tip: '2.9% accounts for fixed 0.25c fee on smaller transactions.'
+        }, 'cogs'),
+        
+          what: 'Sum of all direct costs. These only exist because revenue exists.',
+          formula: '<code>Sum of all COGS line items above</code>',
+          tip: 'Watch the ratio: Total COGS / Total Income = cost of revenue %. Target: under 30% blended.'
+        }, 'cogs'),
+
+        r('GROSS PROFIT', 'grossProfit', 'row-gross', {
+          what: 'Revenue minus direct costs. What\'s left to cover salaries, rent, marketing, and everything else.',
+          formula: '<code>Total Income − Total COGS</code>',
+          tip: 'This is your first "proof" number. Gross margin above 70% = SaaS-grade economics. Investors will focus here.'
+        }),
+
+                section('Operations', 'opex'),
+        section('Payroll', 'payroll'),
+        r('  Timu (CEO)', 'payFounder1', 'row-sub', {
+          what: 'Timu gross + 22% employer cost',
+          formula: 'EUR 5,082 fully loaded',
+          tip: 'Pre-seed optimization.'
+        }, 'payroll'),
+        r('  Daria (COO)', 'payFounder2', 'row-sub', {
+          what: 'Daria gross + 22% employer cost',
+          formula: 'EUR 5,082 fully loaded',
+          tip: 'Aligns founders.'
+        }, 'payroll'),
+        r('  Partner Mgr (M6+)', 'payMgr', 'row-sub', {
+          what: 'B2B hustle for restaurants and doctors',
+          formula: 'EUR 2,440/mo loaded',
+          tip: 'Frees founders from B2B sales.'
+        }, 'payroll'),
+        r('  Growth Marketer (M12+)', 'payGrowth', 'row-sub', {
+          what: 'Scales acquisition engine ahead of seed',
+          formula: 'EUR 5,490/mo loaded',
+          tip: 'Drive toward metric goals.'
+        }, 'payroll'),
+        r('  Tech/Ops Lead (M18+)', 'payCTO', 'row-sub', {
+          what: 'Seed stage critical hire',
+          formula: 'EUR 7,930/mo loaded',
+          tip: 'Internalizes tech.'
+        }, 'payroll'),
+        r('  Payroll Total', 'payTotal', 'row-total', {
+          what: 'Total payroll',
+          formula: 'Sum',
+          tip: 'Scales smartly in 4 phases.'
+        }, 'payroll'),
+
+        section('R&D', 'rd'),
+        r('  App Maintenance', 'rdAppMaint', 'row-sub', {
+          what: 'External agency retainer',
+          formula: 'EUR 1,500/mo',
+          tip: 'Bridge until CTO hire.'
+        }, 'rd'),
+        r('  UX/UI Iteration', 'rdUX', 'row-sub', {
+          what: 'Freelance design retainer',
+          formula: 'EUR 800/mo',
+          tip: 'Crucial for high end brand.'
+        }, 'rd'),
+        r('  R&D CapEx (M1)', 'rdCapEx', 'row-sub', {
+          what: 'Formulation stability testing for Potions',
+          formula: 'EUR 5,000 one-off',
+          tip: 'Food science validation.'
+        }, 'rd'),
+        r('  R&D Total', 'rdTotal', 'row-total', {
+          what: 'Total R&D',
+          formula: 'Sum',
+          tip: 'Asset light R&D.'
+        }, 'rd'),
+
+        section('S&M (Sales & Marketing)', 'sm'),
+        r('  Paid Ads', 'smPaidAds', 'row-sub', {
+          what: 'Meta/Google',
+          formula: 'Ramps up slowly',
+          tip: 'Content first.'
+        }, 'sm'),
+        r('  Content Creation', 'smContent', 'row-sub', {
+          what: 'Tools',
+          formula: 'EUR 150/mo',
+          tip: 'Daria rocks this.'
+        }, 'sm'),
+        r('  Influencer Seeding', 'smInfluencer', 'row-sub', {
+          what: 'Micro collabs',
+          formula: 'EUR 200/mo',
+          tip: 'Product seeding.'
+        }, 'sm'),
+        r('  Menu Database (Dietitians)', 'smMenuAnalysis', 'row-sub', {
+          what: 'Freelance menu macro analysis',
+          formula: 'EUR 500/mo',
+          tip: 'Fuels the restaurant loop.'
+        }, 'sm'),
+        r('  S&M Total', 'smTotal', 'row-total', {
+          what: 'Total S&M',
+          formula: 'Sum',
+          tip: 'Lean acquisition.'
+        }, 'sm'),
+
+        section('G&A (General & Admin)', 'ga'),
+        r('  Rent & Co-Working', 'gaRent', 'row-sub', {
+          what: 'Desks in Berlin',
+          formula: 'EUR 750/mo',
+          tip: 'Includes insurance buffering.'
+        }, 'ga'),
+        r('  Accounting/Steuerberater', 'gaSteuer', 'row-sub', {
+          what: 'Tax advisor',
+          formula: 'EUR 400/mo',
+          tip: 'German necessity.'
+        }, 'ga'),
+        r('  G&A Total', 'gaTotal', 'row-total', {
+          what: 'Total G&A',
+          formula: 'Sum',
+          tip: 'Very lean.'
+        }, 'ga'),
+
+        section('Management & APIs', 'mgmt'),
+        r('  Base SaaS Stack', 'mgBaseSaaS', 'row-sub', {
+          what: 'Google, Figma, Notion, Mixpanel',
+          formula: 'Phased rollout (350 -> 850 -> 1800)',
+          tip: 'Software scales with team.'
+        }, 'mgmt'),
+        r('  Claude Pro (Team AI)', 'mgClaude', 'row-sub', {
+          what: 'Internal team AI budget',
+          formula: 'EUR 210/mo',
+          tip: '10x productivity.'
+        }, 'mgmt'),
+        r('  Terra CGM API', 'mgTerra', 'row-sub', {
+          what: 'Wearable data hook',
+          formula: 'EUR 499/mo (M6+)',
+          tip: 'Unlocks massive value.'
+        }, 'mgmt'),
+        r('  Anthropic Inference', 'mgAnthropic', 'row-sub', {
+          what: 'External AI calls for user protocols',
+          formula: 'Scales with users',
+          tip: 'Unit economics of AI.'
+        }, 'mgmt'),
+        r('  Management Total', 'mgTotal', 'row-total', {
+          what: 'Total SaaS & API',
+          formula: 'Sum',
+          tip: 'The invisible infrastructure.'
+        }, 'mgmt'),
+
+        section('Travel', 'travel'),
+        r('  Investor & Travel', 'trInvestor', 'row-sub', {
+          what: 'Train to VCs',
+          formula: 'EUR 150/mo',
+          tip: 'Berlin ecosystem.'
+        }, 'travel'),
+        r('  Conferences', 'trConference', 'row-sub', {
+          what: 'Industry',
+          formula: 'EUR 100/mo (M6+)',
+          tip: 'Post launch.'
+        }, 'travel'),
+        r('  Local transport', 'trLocal', 'row-sub', {
+          what: 'BVG tickets',
+          formula: 'EUR 50/mo',
+          tip: 'Cheap.'
+        }, 'travel'),
+        r('  Travel Total', 'trTotal', 'row-total', {
+          what: 'Total travel',
+          formula: 'Sum',
+          tip: 'Zoom > Flights.'
+        }, 'travel'),
+
+        
+          what: 'Sum of all operating expenses: Payroll + R&D + S&M + G&A + Management + Travel',
+          formula: '<code>payTotal + rdTotal + smTotal + gaTotal + mgTotal + trTotal</code>',
+          tip: 'This is your "burn" when revenue is low. Watch the trend: flat pre-M18, then jumps with CTO hire.'
+        }),
+
+        r('TOTAL P&L', 'totalPnL', 'row-grand-total', {
+          what: 'The bottom line. Gross Profit minus Operating Expenses. Negative = you\'re spending more than you earn.',
+          formula: '<code>Gross Profit − Total Expenses</code>',
+          tip: 'Negative is EXPECTED for pre-seed. The story: declining losses → near break-even M17 → strategic hire → path to profit.'
+        })
+      ];
+    }
+
+    // ── ANNOTATION & COPY CONTROLS ──
+    let allAnnotationsOpen = false;
+
+    function toggleAnnotation(idx) {
+      const row = document.getElementById('ann-row-' + idx);
+      const btn = document.querySelector(`.ann-toggle[data-ann="${idx}"]`);
+      if (!row) return;
+      row.classList.toggle('open');
+      if (btn) btn.classList.toggle('open');
+    }
+
+    function toggleAllAnnotations() {
+      allAnnotationsOpen = !allAnnotationsOpen;
+      const btn = document.getElementById('toggle-all-ann');
+      document.querySelectorAll('.annotation-tr').forEach(row => {
+        if (allAnnotationsOpen) row.classList.add('open');
+        else row.classList.remove('open');
+      });
+      document.querySelectorAll('.ann-toggle').forEach(b => {
+        if (allAnnotationsOpen) b.classList.add('open');
+        else b.classList.remove('open');
+      });
+      btn.textContent = allAnnotationsOpen ? 'Hide All' : 'Show All';
+      btn.classList.toggle('active', allAnnotationsOpen);
+    }
+
+    function copyRow(idx, btnEl) {
+      const m = model.months;
+      const rows = buildRows(m);
+      const r = rows[idx];
+      if (!r || !r.values) return;
+      const total = r.values.reduce((s, v) => s + v, 0);
+      const label = r.label.replace(/^\s+/, '');
+      let tsv = label;
+      r.values.forEach(v => tsv += '\t' + Math.round(v));
+      tsv += '\t' + Math.round(total);
+      navigator.clipboard.writeText(tsv).then(() => {
+        flashCopied(btnEl, 'copy-row-btn');
+        showToast('Row copied: ' + label);
+      }).catch(() => fallbackCopy(tsv, btnEl, 'copy-row-btn', 'Row copied: ' + label));
+    }
+
+    function copySection(secKey, btnEl) {
+      const m = model.months;
+      const rows = buildRows(m);
+      let tsv = '';
+      let capturing = false;
+      let sectionName = '';
+      for (const r of rows) {
+        // Start capturing when we hit the matching section
+        if (r.sec === secKey && (r.cls === 'row-header' || r.cls === 'row-section')) {
+          capturing = true;
+          sectionName = r.label;
+          continue;
+        }
+        // Stop capturing at next header/section with a different sec key
+        if (capturing && (r.cls === 'row-header' || r.cls === 'row-section') && r.sec !== secKey) {
+          break;
+        }
+        if (capturing && r.values) {
+          const label = r.label.replace(/^\s+/, '');
+          const total = r.values.reduce((s, v) => s + v, 0);
+          tsv += label;
+          r.values.forEach(v => tsv += '\t' + Math.round(v));
+          tsv += '\t' + Math.round(total) + '\n';
+        }
+      }
+      if (!tsv) return;
+      navigator.clipboard.writeText(tsv.trimEnd()).then(() => {
+        flashCopied(btnEl, 'copy-section-btn');
+        showToast('Section copied: ' + sectionName.replace(/^\s+/, ''));
+      }).catch(() => fallbackCopy(tsv.trimEnd(), btnEl, 'copy-section-btn', 'Section copied: ' + sectionName.replace(/^\s+/, '')));
+    }
+
+    function flashCopied(el, cls) {
+      if (!el) return;
+      el.classList.add('copied');
+      el.textContent = el.classList.contains('copy-section-btn') ? 'copied' : '✓';
+      setTimeout(() => {
+        el.classList.remove('copied');
+        el.textContent = el.classList.contains('copy-section-btn') ? 'copy' : '⧉';
+      }, 1500);
+    }
+
+    function fallbackCopy(text, btnEl, cls, msg) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      flashCopied(btnEl, cls);
+      showToast(msg);
+    }
+
+    // ── EXPORT ──
+    function buildTSV() {
+      const m = model.months;
+      const rows = buildRows(m);
+      let tsv = 'Budget P&L';
+      for (let i = 1; i <= 24; i++) tsv += '\t' + i;
+      tsv += '\tTotal 2 years\n';
+
+      rows.forEach(r => {
+        tsv += r.label.replace(/^\s+/, '');
+        if (r.values) {
+          const total = r.values.reduce((s, v) => s + v, 0);
+          r.values.forEach(v => tsv += '\t' + Math.round(v));
+          tsv += '\t' + Math.round(total);
+        } else {
+          for (let i = 0; i < 25; i++) tsv += '\t';
+        }
+        tsv += '\n';
+      });
+      return tsv;
+    }
+
+    function copyToClipboard() {
+      const tsv = buildTSV();
+      navigator.clipboard.writeText(tsv).then(() => {
+        showToast('Copied! Paste into Excel with Ctrl+V / Cmd+V');
+      }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = tsv;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Copied! Paste into Excel with Ctrl+V / Cmd+V');
+      });
+    }
+
+    function downloadCSV() {
+      const tsv = buildTSV();
+      // Convert TSV to CSV
+      const csv = tsv.split('\n').map(line => {
+        return line.split('\t').map(cell => {
+          if (cell.includes(',') || cell.includes('"')) return '"' + cell.replace(/"/g, '""') + '"';
+          return cell;
+        }).join(',');
+      }).join('\n');
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'alche-budget-pnl-24months.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV downloaded! Open in Excel.');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+        function resetDefaults() {
+      // Products
+      document.getElementById('a-pot-price').value = 49;
+      document.getElementById('a-pot-cogs').value = 11.50;
+      document.getElementById('a-3pl').value = 2.50;
+      document.getElementById('a-waste').value = 5;
+      document.getElementById('a-led-price').value = 45;
+      document.getElementById('a-led-cost').value = 25;
+      document.getElementById('a-cgm-price').value = 130;
+      document.getElementById('a-cgm-cogs').value = 70;
+      document.getElementById('a-cgm-rma').value = 4;
+      document.getElementById('a-event-price').value = 35;
+      document.getElementById('a-event-cost').value = 250;
+      document.getElementById('a-ticket-fee').value = 7;
+      document.getElementById('a-rest-rev').value = 1.50;
+      document.getElementById('a-doc-rev').value = 150;
+      document.getElementById('a-doc-cogs').value = 25;
+
+      // Income (Subs)
+      document.getElementById('a-core-price').value = 19;
+      document.getElementById('a-pro-price').value = 49;
+      document.getElementById('a-premium-price').value = 99;
+      document.getElementById('a-churn').value = 8;
+      document.getElementById('a-core-pct').value = 52;
+      document.getElementById('a-pro-pct').value = 38;
+      document.getElementById('a-prem-pct').value = 10;
+      document.getElementById('a-new1').value = 3;
+      document.getElementById('a-new2').value = 15;
+      document.getElementById('a-new3').value = 22;
+      document.getElementById('a-new4').value = 28;
+      document.getElementById('a-new5').value = 32;
+      document.getElementById('a-new6').value = 38;
+
+      // OPEX
+      document.getElementById('a-f1-salary').value = 4166;
+      document.getElementById('a-mgr-salary').value = 2000;
+      document.getElementById('a-growth-salary').value = 4500;
+      document.getElementById('a-cto-salary').value = 6500;
+      document.getElementById('a-empl-mult').value = 1.22;
+      document.getElementById('a-app-maint').value = 1500;
+      document.getElementById('a-ux').value = 800;
+      document.getElementById('a-menu').value = 500;
+      document.getElementById('a-claude').value = 210;
+      document.getElementById('a-terra').value = 499;
+      document.getElementById('a-stripe').value = 2.9;
+      document.getElementById('a-steuer').value = 400;
+      document.getElementById('a-rent').value = 750;
+
+      recalculate();
+      showToast('Calculated with smart CFO projections');
+    }
+    
+    // ── NAVIGATION ──
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', function () {
+        document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Auto-recalculate on input change
+    document.querySelectorAll('.assumption-group input').forEach(input => {
+      input.addEventListener('change', recalculate);
+    });
+
+    // Initial calculation
+    recalculate();
+  </script>
+
+</body>
+
+</html>

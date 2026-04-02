@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>alche — The Art of Curated Longevity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cream: #F5F0E8;
+  --brown: #2C2418;
+  --amber: #C4956A;
+  --sage: #8B9E7C;
+  --terra: #B86B4A;
+  --rose: #C47A8A;
+  --glass-bg: rgba(255,252,246,0.55);
+  --glass-border: rgba(196,149,106,0.25);
+  --glass-blur: blur(16px);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--brown);
+  background: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── ATMOSPHERIC BACKGROUND ─── */
+.atmosphere {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(196,149,106,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 85% 80%, rgba(139,158,124,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(184,107,74,0.06) 0%, transparent 50%),
+    var(--cream);
+}
+
+/* ─── FLOATING ORGANIC SHAPES ─── */
+.organic-shapes {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+}
+
+.shape-1 {
+  width: 500px; height: 500px;
+  background: rgba(196,149,106,0.2);
+  top: -10%; left: -5%;
+  animation: drift1 25s ease-in-out infinite;
+}
+.shape-2 {
+  width: 400px; height: 350px;
+  background: rgba(139,158,124,0.18);
+  top: 40%; right: -8%;
+  animation: drift2 20s ease-in-out infinite;
+}
+.shape-3 {
+  width: 300px; height: 300px;
+  background: rgba(196,122,138,0.12);
+  bottom: 10%; left: 20%;
+  animation: drift3 28s ease-in-out infinite;
+}
+.shape-4 {
+  width: 250px; height: 250px;
+  background: rgba(184,107,74,0.1);
+  top: 20%; right: 25%;
+  animation: drift4 22s ease-in-out infinite;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, 40px) scale(1.08); }
+  66% { transform: translate(-30px, 70px) scale(0.95); }
+}
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(-50px, -30px) scale(1.1); }
+  70% { transform: translate(20px, -60px) scale(0.97); }
+}
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -50px) scale(1.05); }
+}
+@keyframes drift4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  35% { transform: translate(-40px, 30px) scale(1.06); }
+  70% { transform: translate(30px, -20px) scale(0.98); }
+}
+
+/* ─── MAIN CONTENT LAYER ─── */
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── NAVIGATION ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 100;
+  padding: 0 clamp(20px, 4vw, 60px);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(245,240,232,0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(196,149,106,0.12);
+  transition: background 0.3s;
+}
+
+.wordmark {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--brown);
+  text-decoration: none;
+  text-transform: lowercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.5vw, 36px);
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--brown);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a:hover { opacity: 1; }
+
+.nav-cta {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--amber);
+  color: #fff !important;
+  border-radius: 100px;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  opacity: 1 !important;
+  letter-spacing: 0.04em;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(196,149,106,0.3);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.nav-toggle span {
+  width: 22px; height: 2px;
+  background: var(--brown);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* ─── GLASS CARD ─── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  transition: transform 0.15s ease-out, box-shadow 0.3s;
+}
+
+.glass:hover {
+  box-shadow: 0 20px 60px rgba(44,36,24,0.08);
+}
+
+/* ─── BREATH ANIMATION ─── */
+@keyframes breathe {
+  0%, 100% { transform: scale(1) translateZ(0); }
+  50% { transform: scale(1.003) translateZ(0); }
+}
+
+.breathe-1 { animation: breathe 4s ease-in-out infinite; }
+.breathe-2 { animation: breathe 4s ease-in-out infinite 1.3s; }
+.breathe-3 { animation: breathe 4s ease-in-out infinite 2.6s; }
+
+/* ─── FADE IN ─── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px clamp(20px, 5vw, 60px) 60px;
+  position: relative;
+}
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(48px, 8vw, 120px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 40px;
+  color: var(--brown);
+}
+
+.hero-pillars {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 4px;
+}
+
+.hero-pill {
+  padding: 8px 18px;
+  background: rgba(255,252,246,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(196,149,106,0.18);
+  border-radius: 100px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--brown);
+  opacity: 0.75;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.hero-sub {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 44px;
+  opacity: 0.8;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 16px 40px;
+  background: rgba(255,252,246,0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(196,149,106,0.3);
+  border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--brown);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: all 0.4s;
+}
+
+.hero-cta:hover {
+  background: rgba(196,149,106,0.15);
+  box-shadow: 0 0 40px rgba(196,149,106,0.2);
+  transform: translateY(-2px);
+}
+
+/* ─── BREATHING GRID ─── */
+.breathing-grid {
+  padding: clamp(60px, 10vw, 140px) clamp(20px, 5vw, 80px);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.breathing-grid-inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+.grid-card {
+  padding: clamp(32px, 4vw, 52px);
+  will-change: transform;
+}
+
+.grid-card-1 {
+  grid-row: 1 / 3;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.grid-card .label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+.grid-card h3 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.5vw, 32px);
+  margin-bottom: 14px;
+}
+
+.grid-card p {
+  font-weight: 300;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.65;
+  opacity: 0.75;
+  margin-bottom: 20px;
+}
+
+.grid-card .learn-more {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--amber);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: opacity 0.3s;
+}
+
+.grid-card .learn-more:hover { opacity: 0.7; }
+
+/* ─── PHILOSOPHY TEASER ─── */
+.philosophy-teaser {
+  padding: clamp(80px, 12vw, 180px) clamp(20px, 8vw, 120px);
+  text-align: center;
+}
+
+.philosophy-teaser blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 4.5vw, 56px);
+  line-height: 1.35;
+  max-width: 900px;
+  margin: 0 auto 36px;
+  color: var(--brown);
+}
+
+.philosophy-teaser a {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--amber);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: opacity 0.3s;
+}
+
+.philosophy-teaser a:hover { opacity: 0.7; }
+
+/* ─── STATS BAND ─── */
+.stats-band {
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 5vw, 80px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stats-inner {
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 24px);
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  padding: clamp(18px, 2vw, 28px) clamp(24px, 3vw, 40px);
+  text-align: center;
+  min-width: 140px;
+}
+
+.stat-pill .stat-value {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(24px, 2.5vw, 36px);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stat-pill .stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* ─── WAITLIST ─── */
+.waitlist {
+  padding: clamp(80px, 10vw, 160px) clamp(20px, 5vw, 80px);
+  display: flex;
+  justify-content: center;
+}
+
+.waitlist-card {
+  padding: clamp(40px, 5vw, 72px);
+  text-align: center;
+  max-width: 540px;
+  width: 100%;
+}
+
+.waitlist-card h2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(28px, 3.5vw, 44px);
+  margin-bottom: 12px;
+}
+
+.waitlist-card .waitlist-sub {
+  font-weight: 300;
+  font-size: 15px;
+  opacity: 0.6;
+  margin-bottom: 32px;
+}
+
+.waitlist-form {
+  display: flex;
+  gap: 10px;
+}
+
+.waitlist-form input[type="email"] {
+  flex: 1;
+  padding: 14px 20px;
+  background: rgba(255,252,246,0.6);
+  border: 1px solid rgba(196,149,106,0.2);
+  border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  color: var(--brown);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.waitlist-form input[type="email"]:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(196,149,106,0.12);
+}
+
+.waitlist-form input[type="email"]::placeholder {
+  color: var(--brown);
+  opacity: 0.35;
+}
+
+.waitlist-form button {
+  padding: 14px 28px;
+  background: var(--amber);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: transform 0.3s, box-shadow 0.3s;
+  white-space: nowrap;
+}
+
+.waitlist-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(196,149,106,0.3);
+}
+
+.waitlist-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  opacity: 0.4;
+  margin-top: 18px;
+  letter-spacing: 0.03em;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 60px clamp(20px, 5vw, 80px) 40px;
+  text-align: center;
+  border-top: 1px solid rgba(196,149,106,0.1);
+}
+
+.footer-wordmark {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 15px;
+  opacity: 0.5;
+  margin-bottom: 28px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--brown);
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.footer-links a:hover { opacity: 0.8; }
+
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  opacity: 0.3;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 72px; left: 0; right: 0;
+    background: rgba(245,240,232,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 24px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(196,149,106,0.12);
+  }
+  .nav-toggle { display: flex; }
+
+  .breathing-grid-inner {
+    grid-template-columns: 1fr;
+  }
+  .grid-card-1 {
+    grid-row: auto;
+    min-height: 280px;
+  }
+
+  .waitlist-form {
+    flex-direction: column;
+  }
+
+  .hero-pillars {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .stats-inner {
+    gap: 10px;
+  }
+  .stat-pill {
+    min-width: 120px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ATMOSPHERIC BACKGROUND -->
+<div class="atmosphere"></div>
+
+<!-- FLOATING ORGANIC SHAPES -->
+<div class="organic-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  <div class="shape shape-4"></div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="wordmark">alche</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="philosophy.html">Philosophy</a></li>
+      <li><a href="#">The Space</a></li>
+      <li><a href="#">The App</a></li>
+      <li><a href="#">Community</a></li>
+      <li><a href="#">Journal</a></li>
+      <li><a href="#waitlist" class="nav-cta">Join Waitlist</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="fade-in">Live longer.<br>Love the process.</h1>
+    <div class="hero-pillars fade-in">
+      <span class="hero-pill">Space</span>
+      <span class="hero-pill">Products</span>
+      <span class="hero-pill">App</span>
+      <span class="hero-pill">Membership</span>
+      <span class="hero-pill">Community</span>
+      <span class="hero-pill">Data</span>
+    </div>
+    <p class="hero-sub fade-in">alche is the longevity lifestyle platform that integrates cafe, app, and community into one living system.</p>
+    <a href="#waitlist" class="hero-cta fade-in">Begin &rarr;</a>
+  </section>
+
+  <!-- BREATHING GRID -->
+  <section class="breathing-grid">
+    <div class="breathing-grid-inner">
+      <div class="glass grid-card grid-card-1 breathe-1 tilt-card fade-in">
+        <span class="label">01 &mdash; The Space</span>
+        <h3>The Cafe</h3>
+        <p>A space where longevity science meets your morning ritual. Adaptogenic lattes, curated supplements, and community — all under one roof in Berlin.</p>
+        <a href="#" class="learn-more">Explore the space &rarr;</a>
+      </div>
+      <div class="glass grid-card breathe-2 tilt-card fade-in">
+        <span class="label">02 &mdash; The Technology</span>
+        <h3>The App</h3>
+        <p>AI-powered, human-centered. Your longevity practice, personalized. EUR 19/mo to start.</p>
+        <a href="#" class="learn-more">See how it works &rarr;</a>
+      </div>
+      <div class="glass grid-card breathe-3 tilt-card fade-in">
+        <span class="label">03 &mdash; The People</span>
+        <h3>The Community</h3>
+        <p>500 founding members. Berlin, then everywhere. A collective practice of living well, together.</p>
+        <a href="#" class="learn-more">Meet the community &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY TEASER -->
+  <section class="philosophy-teaser">
+    <blockquote class="fade-in">&ldquo;Your body is not a problem to optimize. It&rsquo;s a life to live.&rdquo;</blockquote>
+    <a href="philosophy.html" class="fade-in">Read our philosophy &rarr;</a>
+  </section>
+
+  <!-- STATS BAND -->
+  <section class="stats-band">
+    <div class="stats-inner">
+      <div class="glass stat-pill fade-in">
+        <span class="stat-value">6 pillars</span>
+        <span class="stat-label">1 platform</span>
+      </div>
+      <div class="glass stat-pill fade-in">
+        <span class="stat-value">EUR 19–99</span>
+        <span class="stat-label">monthly</span>
+      </div>
+      <div class="glass stat-pill fade-in">
+        <span class="stat-value">500</span>
+        <span class="stat-label">founding members</span>
+      </div>
+      <div class="glass stat-pill fade-in">
+        <span class="stat-value">Berlin</span>
+        <span class="stat-label">2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST -->
+  <section class="waitlist" id="waitlist">
+    <div class="glass waitlist-card fade-in">
+      <h2>The practice begins soon.</h2>
+      <p class="waitlist-sub">Reserve your place among the first 500.</p>
+      <form class="waitlist-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='You\'re in.'; this.querySelector('input').disabled=true;">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Join Waitlist</button>
+      </form>
+      <p class="waitlist-note">Join 500 founding members</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-wordmark">alche</div>
+    <div class="footer-tagline">The Art of Curated Longevity</div>
+    <ul class="footer-links">
+      <li><a href="philosophy.html">Philosophy</a></li>
+      <li><a href="#">The Space</a></li>
+      <li><a href="#">The App</a></li>
+      <li><a href="#">Community</a></li>
+      <li><a href="#">Journal</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 alche. All rights reserved.</div>
+  </footer>
+
+</div>
+
+<script>
+// ─── INTERSECTION OBSERVER: FADE-IN ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ─── CURSOR TILT EFFECT ON GLASS CARDS ───
+const tiltCards = document.querySelectorAll('.tilt-card');
+
+function handleTilt(e) {
+  tiltCards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const deltaX = (e.clientX - centerX) / rect.width;
+    const deltaY = (e.clientY - centerY) / rect.height;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    if (distance < 1.8) {
+      const tiltX = deltaY * 2.5;
+      const tiltY = -deltaX * 2.5;
+      requestAnimationFrame(() => {
+        card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      });
+    } else {
+      requestAnimationFrame(() => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  });
+}
+
+let tiltRAF = null;
+document.addEventListener('mousemove', (e) => {
+  if (tiltRAF) cancelAnimationFrame(tiltRAF);
+  tiltRAF = requestAnimationFrame(() => handleTilt(e));
+});
+
+// ─── PARALLAX SCROLL FOR ORGANIC SHAPES ───
+const shapes = document.querySelectorAll('.shape');
+const speeds = [0.03, 0.05, 0.02, 0.04];
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  requestAnimationFrame(() => {
+    shapes.forEach((shape, i) => {
+      shape.style.transform = `translateY(${scrollY * speeds[i]}px)`;
+    });
+  });
+}, { passive: true });
+
+// ─── NAV SCROLL EFFECT ───
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(245,240,232,0.85)';
+  } else {
+    nav.style.background = 'rgba(245,240,232,0.6)';
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>

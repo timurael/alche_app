@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche // Who We Serve</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --deep: #2C2418;
+  --amber: #C4956A;
+  --sage: #8B9E7C;
+  --terra: #B86B4A;
+  --stone: #9E948A;
+  --rose: #C47A8A;
+  --glass: rgba(255,252,246,0.55);
+  --glass-border: rgba(232,223,210,0.7);
+  --glass-strong: rgba(255,252,246,0.82);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--cream);
+  color: var(--deep);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 8% 85%, rgba(196,149,106,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 10%, rgba(139,158,124,0.035) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.wrap {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 56px 40px 72px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Typography ---- */
+.sl {
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--stone);
+  line-height: 1.4;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.sh {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.prose {
+  font-size: 13px;
+  line-height: 1.72;
+  margin-bottom: 14px;
+}
+.prose strong { font-weight: 600; }
+
+/* ---- Layout ---- */
+.sep { height: 1px; background: var(--glass-border); margin: 44px 0; }
+
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
+/* ---- Cards ---- */
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 22px;
+}
+.card-terra { border-left: 3px solid var(--terra); }
+.card-sage { border-left: 3px solid var(--sage); }
+.card-amber { border-left: 3px solid var(--amber); }
+.card-rose { border-left: 3px solid var(--rose); }
+
+.cl {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.cl-terra { color: var(--terra); }
+.cl-sage { color: var(--sage); }
+.cl-amber { color: var(--amber); }
+.cl-rose { color: var(--rose); }
+
+/* ---- Stats ---- */
+.stat {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-terra { color: var(--terra); }
+.stat-sage { color: var(--sage); }
+.stat-amber { color: var(--amber); }
+.stat-sm { font-size: 10px; color: var(--stone); line-height: 1.4; }
+
+/* ---- Persona ---- */
+.persona {
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 30px;
+  margin-bottom: 16px;
+}
+.persona-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+/* Avatar: circled dot -- alchemical gold / sun / integrated self */
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(196,149,106,0.06);
+}
+.avatar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber);
+}
+.avatar-sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(196,149,106,0.06);
+}
+.avatar-sm .avatar-dot {
+  width: 5px;
+  height: 5px;
+}
+
+.pn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.pd {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+  margin-bottom: 0;
+}
+.pb {
+  font-size: 13px;
+  line-height: 1.72;
+}
+.pa {
+  font-weight: 600;
+  color: var(--terra);
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-top: 14px;
+}
+
+/* ---- Quote ---- */
+.quote {
+  background: var(--glass);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 12px 12px 0;
+  padding: 18px 22px;
+  margin: 16px 0;
+}
+.qt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--terra);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.qc { font-size: 9.5px; color: var(--stone); }
+
+/* ---- Table ---- */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0; }
+.tbl th {
+  text-align: left; padding: 9px 14px;
+  font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber); border-bottom: 1.5px solid rgba(196,149,106,0.22); font-weight: 700;
+}
+.tbl td { padding: 9px 14px; border-bottom: 1px solid rgba(44,36,24,0.04); }
+.tbl tr:last-child td { border-bottom: none; }
+.row-total td { font-weight: 600; color: var(--terra); border-top: 1.5px solid rgba(184,107,74,0.18); border-bottom: 1.5px solid rgba(184,107,74,0.18); }
+.row-alche td { font-weight: 600; color: var(--sage); background: rgba(139,158,124,0.04); }
+
+/* ---- Brand strip ---- */
+.brands {
+  display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0;
+}
+.bc {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 8px; padding: 10px 14px; text-align: center; flex: 1; min-width: 90px;
+}
+.bc-n { font-size: 12px; font-weight: 600; margin-bottom: 1px; }
+.bc-w { font-size: 9px; color: var(--stone); line-height: 1.3; }
+
+/* ---- Callout box ---- */
+.call {
+  background: rgba(139,158,124,0.05);
+  border: 1px solid rgba(139,158,124,0.14);
+  border-left: 3px solid var(--sage);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin: 20px 0;
+}
+.call p { font-size: 12.5px; line-height: 1.65; }
+
+/* ---- Footnotes ---- */
+.fn {
+  font-size: 9px;
+  color: var(--stone);
+  line-height: 1.55;
+  margin-top: 8px;
+}
+.fn-num {
+  font-weight: 700;
+  color: var(--amber);
+  font-size: 7px;
+  vertical-align: super;
+  margin-right: 2px;
+}
+.fn-lead {
+  font-weight: 700;
+  color: var(--amber);
+  font-size: 8px;
+  vertical-align: super;
+  margin-right: 2px;
+}
+
+/* ---- Trigger symbol ---- */
+.trigger-sym {
+  font-size: 10px;
+  margin-right: 4px;
+  vertical-align: baseline;
+}
+
+/* ---- Asterism ---- */
+.asterism {
+  text-align: center;
+  color: var(--amber);
+  font-size: 14px;
+  letter-spacing: 6px;
+  margin-bottom: 14px;
+}
+
+/* ---- Section glyph ---- */
+.section-glyph {
+  font-size: 11px;
+  color: var(--amber);
+  margin-right: 4px;
+}
+
+/* ---- Footer ---- */
+.footer {
+  text-align: center;
+  font-size: 10px;
+  color: var(--stone);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 40px;
+}
+
+/* ---- Animation ---- */
+.fi { opacity:0; transform:translateY(14px); transition:opacity 0.45s ease, transform 0.45s ease; }
+.fi.v { opacity:1; transform:translateY(0); }
+
+@media print {
+  body::before { display:none; }
+  .wrap { padding:24px; }
+  .fi { opacity:1!important; transform:none!important; }
+  .card,.persona,.quote,.call { break-inside:avoid; }
+}
+@media(max-width:700px) {
+  .wrap { padding:28px 18px; }
+  .g2,.g3 { grid-template-columns:1fr; }
+  .hero-title { font-size:32px; }
+  .pn { font-size:30px; }
+  .brands { flex-direction:column; }
+  .persona-header { gap:12px; }
+  .avatar { width:44px; height:44px; }
+  .avatar-dot { width:6px; height:6px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- =============================== -->
+<!-- HERO -->
+<!-- =============================== -->
+<div class="fi">
+  <div class="sl">Alche &#x2219; Slide 03 &#x2219; Who We Serve</div>
+  <div class="hero-title">Longevity for people<br>who actually live.</div>
+  <div class="hero-sub">Not the 1% who cold-plunge at 5 AM. The millions who care about aging well but have been given fragmented tools that deliver data without direction.</div>
+</div>
+
+<!-- =============================== -->
+<!-- THE PROBLEM IN THREE NUMBERS -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh">The tools fail before the user does.</div>
+
+  <div class="g3">
+    <div class="card" style="text-align:center; padding:18px;">
+      <div class="stat stat-terra">&asymp;30%</div>
+      <div class="stat-sm">wearable abandonment<br>within 6 months<sup class="fn-num">1</sup></div>
+    </div>
+    <div class="card" style="text-align:center; padding:18px;">
+      <div class="stat stat-terra">3%</div>
+      <div class="stat-sm">health app retention<br>at day 30<sup class="fn-num">2</sup></div>
+    </div>
+    <div class="card" style="text-align:center; padding:18px;">
+      <div class="stat stat-terra">1&#x2013;2 mo</div>
+      <div class="stat-sm">before CGM users report<br>diminishing returns<sup class="fn-num">3</sup></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    Every abandoned Oura ring, cancelled CGM subscription, and unopened wellness app represents a person who cared enough to try and was handed a dashboard instead of direction. These are not lost users. They are our addressable market.
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- PRIMARY PERSONA -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="persona">
+    <div class="persona-header">
+      <div class="avatar"><div class="avatar-dot"></div></div>
+      <div>
+        <div class="pn">Lena</div>
+        <div class="pd">36 &#x2219; Berlin &#x2219; Product Designer &#x2219; EUR 72K</div>
+      </div>
+    </div>
+    <div class="pb">
+      Runs three times a week. Takes magnesium and vitamin D but is not confident about dosing. Wore an Oura ring for five months &mdash; checked her sleep score every morning until it started <strong>giving her anxiety about not sleeping well enough</strong>. The ring is on her nightstand.
+      <br><br>
+      Tried Levels for two months. Learned bananas spike her glucose. Thought "...now what?" and cancelled. Has a supplement shelf with six half-empty bottles. A phone folder with four health apps she has not opened in weeks. She does not want to optimize. She wants to <strong>live fully and age well without it becoming her second job</strong>.
+    </div>
+    <div class="pa">
+      &#x25C6; Spends EUR 130/month across a gym, supplements, and a meditation app. Zero integrated view of whether any of it works.
+    </div>
+  </div>
+
+  <div class="quote">
+    <div class="qt">"I never set out to biohack. I just wanted more energy, steadier moods, and to feel at home in my body while juggling real life."</div>
+    <div class="qc">&mdash;&thinsp;Community member, r/Biohacking</div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- MARKET SIZE -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh"><span style="color:var(--sage);">12M+</span> health-conscious Europeans.</div>
+
+  <div class="prose">
+    Germany's health and wellness market reached USD 171.3 billion in 2024, growing at 4.28% CAGR.<sup class="fn-num">4</sup> 60% of German consumers took active steps to live healthier in the past year. 49% are creating personalized nutrition plans.<sup class="fn-num">5</sup>
+  </div>
+
+  <div class="prose">
+    Bottom-up: 19% wearable adoption across 45M German adults 25&ndash;55 yields &asymp;8.5M active trackers. Combined with 11.7M gym memberships<sup class="fn-num">6</sup> and wellness app penetration, we estimate 12&ndash;15M Europeans in the "experimenting to committed" segment &mdash; people already spending, looking for something better.
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- SPENDING CONSOLIDATION -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh">The money already moves.</div>
+
+  <table class="tbl">
+    <thead>
+      <tr><th style="width:30%;">Category</th><th style="width:22%;">Current</th><th>Problem</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Gym membership</td><td>&#x20AC;40&ndash;80/mo</td><td>Fitness only, no health data integration</td></tr>
+      <tr><td>Supplements</td><td>&#x20AC;35&ndash;100/mo</td><td>Unguided, often redundant</td></tr>
+      <tr><td>Wellness app</td><td>&#x20AC;10&ndash;15/mo</td><td>Isolated from any outcome metrics</td></tr>
+      <tr><td>Wearable subscription</td><td>&#x20AC;6&ndash;10/mo</td><td>Raw data, no actionable direction</td></tr>
+      <tr><td>Biomarker testing (annualized)</td><td>&#x20AC;15&ndash;50/mo</td><td>Snapshot, not longitudinal</td></tr>
+      <tr><td>Recovery / body work</td><td>&#x20AC;20&ndash;40/mo</td><td>Disconnected from personal data</td></tr>
+      <tr class="row-total"><td>&#x2717; Fragmented total</td><td>&#x20AC;126&ndash;295/mo</td><td>3&ndash;8 apps, zero integration</td></tr>
+      <tr class="row-alche"><td><strong>&#x2713; Alche</strong></td><td><strong>&#x20AC;49&ndash;99/mo</strong></td><td><strong>One platform. Longitudinal insight.</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="prose" style="font-size:12px;">
+    We are not creating new health spending. We are consolidating fragmented budgets into a single integrated relationship &mdash; at a lower price point with better outcomes.
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- TRIGGER EVENTS -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh">What converts curiosity into spending.</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
+    <div class="card card-terra" style="padding:16px;">
+      <div class="cl cl-terra"><span class="trigger-sym">&#x223F;</span> Body Signal</div>
+      <div style="font-size:11px; line-height:1.55;">Energy drops. Recovery slows. Perimenopause symptoms the GP dismisses.</div>
+    </div>
+    <div class="card card-amber" style="padding:16px;">
+      <div class="cl cl-amber"><span class="trigger-sym">&#x25C6;</span> Social Catalyst</div>
+      <div style="font-size:11px; line-height:1.55;">A friend's diagnosis. A dinner party conversation about biological age.</div>
+    </div>
+    <div class="card card-sage" style="padding:16px;">
+      <div class="cl cl-sage"><span class="trigger-sym">&#x25B8;</span> Content Inflection</div>
+      <div style="font-size:11px; line-height:1.55;">An Attia episode. An Outlive chapter. Awareness without action &mdash; until now.</div>
+    </div>
+    <div class="card card-rose" style="padding:16px;">
+      <div class="cl cl-rose"><span class="trigger-sym">&#x2727;</span> Milestone Birthday</div>
+      <div style="font-size:11px; line-height:1.55;">30, 35, 40. Psychologically significant. Highly targetable.</div>
+    </div>
+  </div>
+
+  <div class="prose" style="font-size:12px;">Each trigger maps to a specific acquisition channel. Our content-first GTM targets the content inflection moment &mdash; meet people where awareness forms.</div>
+</div>
+
+<!-- =============================== -->
+<!-- WHY EUROPE -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh">Why Europe <span style="color:var(--amber);">&#x2219;</span> Why Berlin <span style="color:var(--amber);">&#x2219;</span> Why now</div>
+
+  <div class="g2">
+    <div class="card" style="padding:20px;">
+      <div class="stat stat-sage" style="font-size:26px;">$356.6B</div>
+      <div class="stat-sm" style="margin-bottom:8px;">Germany's total wellness economy<sup class="fn-num">7</sup> &mdash; third largest globally</div>
+      <div style="font-size:12px; line-height:1.6;">
+        German PKV insurance covers preventive testing Americans pay out of pocket. Centuries of Kur and thermal tradition. Longevity culture exists here &mdash; it has not been digitized.
+      </div>
+    </div>
+    <div class="card" style="padding:20px;">
+      <div class="stat stat-amber" style="font-size:26px;">18&ndash;24 mo</div>
+      <div class="stat-sm" style="margin-bottom:8px;">before US competitors seriously localize</div>
+      <div style="font-size:12px; line-height:1.6;">
+        Berlin: 3.7M population, 800K aged 25&ndash;45, 15&ndash;20% expat. YEARS Longevity Clinic, Biohackers Berlin (2,213 members), Rejuvenation Summit. The ecosystem is forming. First mover wins.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- MARKET SEQUENCING -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh">Market sequencing: Day One <span style="color:var(--amber);">&rarr;</span> Year 2+</div>
+
+  <div class="g2">
+    <div class="card card-amber" style="padding:20px;">
+      <div class="cl cl-amber"><span class="section-glyph">&#x2609;</span> Day One: The Disillusioned Optimizer</div>
+      <div style="font-size:12px; line-height:1.6;">
+        60&ndash;70% male. Already spending &#x20AC;200&ndash;500/mo on fragmented longevity tools. Does not need convincing &mdash; needs integration. Premium tier, community leaders, vocal advocates.
+      </div>
+    </div>
+    <div class="card card-rose" style="padding:20px;">
+      <div class="cl cl-rose"><span class="section-glyph" style="color:var(--rose);">&#x263D;</span> Year 2+: The Broader Market</div>
+      <div style="font-size:12px; line-height:1.6;">
+        Women 30&ndash;45 massively underserved by products designed for tech-adjacent men. Hormonal health, perimenopause, GPs who dismiss. They make the majority of household health decisions. <strong>This is the bigger market.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- BRAND ADJACENCY -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh">Who Lena already loves.</div>
+
+  <div class="brands">
+    <div class="bc"><div class="bc-n">Aesop</div><div class="bc-w">Premium. Design-led. Intentional.</div></div>
+    <div class="bc"><div class="bc-n">Veja</div><div class="bc-w">Values meets style.</div></div>
+    <div class="bc"><div class="bc-n">COS</div><div class="bc-w">Elevated basics.</div></div>
+    <div class="bc"><div class="bc-n">Oatly</div><div class="bc-w">Mission with personality.</div></div>
+    <div class="bc"><div class="bc-n">Soho House</div><div class="bc-w">Curated membership.</div></div>
+  </div>
+
+  <div class="prose" style="font-size:12px;">
+    The considered consumer. Design-conscious, values-driven, premium without pretension. A health platform that belongs next to Kinfolk magazines, not a Bloomberg terminal.
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- SECONDARY PERSONAS -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="sh" style="font-size:22px;">The wider picture.</div>
+
+  <div class="g2">
+    <div class="card" style="padding:20px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+        <div class="avatar-sm"><div class="avatar-dot"></div></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:500; line-height:1;">Markus</div>
+          <div style="font-size:10px; font-weight:600; letter-spacing:0.05em; color:var(--amber);">41 &#x2219; Engineering Lead &#x2219; EUR 95K</div>
+        </div>
+      </div>
+      <div style="font-size:11.5px; line-height:1.6;">
+        Committed optimizer. Oura, Whoop, InsideTracker, 8 supplements. Spends <strong>&#x20AC;350+/mo</strong>. Does not need convincing &mdash; needs <strong>integration</strong>. &#x20AC;99/mo premium tier. Early community leader.
+      </div>
+    </div>
+    <div class="card" style="padding:20px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+        <div class="avatar-sm"><div class="avatar-dot"></div></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:500; line-height:1;">Sophie</div>
+          <div style="font-size:10px; font-weight:600; letter-spacing:0.05em; color:var(--amber);">38 &#x2219; Freelance Consultant &#x2219; EUR 55K</div>
+        </div>
+      </div>
+      <div style="font-size:11.5px; line-height:1.6;">
+        Yoga, eats well, runs occasionally. Finds longevity ecosystem <strong>intimidating and male-dominated</strong>. Perimenopause symptoms her GP dismisses. Discovers Alche through a friend or event. &#x20AC;19/mo gateway.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- CLOSING LINE -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div class="call">
+    <div class="asterism">&#x2042;</div>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:500; line-height:1.4;">
+      12M+ health-conscious Europeans spending &#x20AC;100&ndash;300/month on fragmented tools with zero integration. Alche consolidates that into &#x20AC;49&ndash;99/month of intentional, considered wellness &mdash; for people who want to age well without making it their full-time job.
+    </p>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- FOOTNOTES -->
+<!-- =============================== -->
+<div class="sep"></div>
+<div class="fi">
+  <div style="font-size:8px; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; color:var(--stone); margin-bottom:8px;">Sources</div>
+  <div class="fn">
+    <span class="fn-lead">1</span> Mordor Intelligence Wearable Technology Report 2025; Gartner Personal Technologies Study (n=9,592).<br>
+    <span class="fn-lead">2</span> Business of Apps Health &amp; Fitness Benchmarks 2026; AppsFlyer/Statista Q3 2023 (3.7% day-30 retention).<br>
+    <span class="fn-lead">3</span> Levels Health user reviews, Reddit r/Biohackers, r/CGM community sentiment analysis.<br>
+    <span class="fn-lead">4</span> IMARC Group Germany Health &amp; Wellness Market 2024.<br>
+    <span class="fn-lead">5</span> Innova Market Insights Germany Consumer Health Trends, February 2025.<br>
+    <span class="fn-lead">6</span> DSSV German Gym &amp; Health Club Market Report 2024.<br>
+    <span class="fn-lead">7</span> Global Wellness Institute Economy Report 2025.<br>
+    <br>
+    Market sizing methodology: 19% wearable adoption (Statista/Gartner) across 45M German adults 25&ndash;55 = &asymp;8.5M active trackers. Combined with gym membership penetration and wellness app users, estimated 12&ndash;15M Europeans in &ldquo;experimenting to committed&rdquo; segment. Pricing data: Oura (&#x20AC;5.99/mo), Headspace (&#x20AC;12.99/mo), InsideTracker ($589&ndash;1,781/yr), Urban Sports Club Berlin (&#x20AC;29&ndash;99/mo), DSSV average gym (&#x20AC;40&ndash;60/mo).
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- FOOTER -->
+<!-- =============================== -->
+<div style="margin-top:40px;"></div>
+<div class="footer fi">
+  <div>Alche // Your Longevity, Daily.</div>
+  <div style="opacity:0.55; margin-top:4px;">Pitch Book &#x2219; February 2026 &#x2219; Confidential</div>
+</div>
+
+</div><!-- /wrap -->
+<script>
+const o = new IntersectionObserver(e => {
+  e.forEach(i => { if(i.isIntersecting) i.target.classList.add('v'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.fi').forEach(el => o.observe(el));
+</script>
+</body>
+</html>

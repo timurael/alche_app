@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche | The Product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; table-layout: fixed; }
+
+    /* Four-col membership overflow fix */
+    .four-col {
+      overflow: hidden;
+    }
+    .four-col > * {
+      overflow: hidden;
+      word-break: break-word;
+    }
+
+    /* Module grid */
+    .module-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+      margin: var(--space-4) 0;
+      overflow: hidden;
+    }
+    .module-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: var(--space-2);
+      align-items: start;
+      padding: var(--space-2) var(--space-3);
+      background: var(--deep-04);
+      border-radius: var(--radius-sm);
+    }
+    .module-item__num {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--amber);
+      opacity: 0.6;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .module-item__title {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 1px;
+    }
+    .module-item__desc {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.4;
+    }
+
+    /* Individual screen grids */
+    .screen-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-3);
+      overflow: hidden;
+    }
+    .screen-grid-3 img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+    .screen-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 160px));
+      gap: var(--space-3);
+      overflow: hidden;
+    }
+    .screen-grid-2 img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 — The App: 10 Modules
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header" style="margin-bottom: var(--space-5);">
+      <span class="section-header__number">[06] The Product</span>
+      <h1 class="section-header__title"><strong>The App</strong></h1>
+      <p class="section-header__subtitle">The app does three things: PLANS wellness (goals, protocols, journeys) &rarr; EXECUTES them (booking, reminders, routines) &rarr; CONVERTS engagement into revenue (membership, sales, subscriptions).</p>
+    </div>
+
+    <!-- 10 Modules -->
+    <div class="section-label mb-2">10 Modules</div>
+
+    <div class="module-grid mb-4">
+      <div class="module-item">
+        <div class="module-item__num">01</div>
+        <div>
+          <div class="module-item__title">LED Booking</div>
+          <div class="module-item__desc">Real-time chair availability, 20-min slots, smoothie pre-order.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">02</div>
+        <div>
+          <div class="module-item__title">Digital Menu</div>
+          <div class="module-item__desc">6 smoothies + 5 boosts, journey-based recommendations, favorites.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">03</div>
+        <div>
+          <div class="module-item__title">Membership</div>
+          <div class="module-item__desc">Core/Premium tiers, credit tracking, auto-deduction.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">04</div>
+        <div>
+          <div class="module-item__title">Shop + Replenishment</div>
+          <div class="module-item__desc">Own + curated products, outcome browsing, smart reminders.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">05</div>
+        <div>
+          <div class="module-item__title">Events</div>
+          <div class="module-item__desc">Calendar, ticketing, RSVP, member-only, post-event bundles.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">06</div>
+        <div>
+          <div class="module-item__title">In-Store Mode</div>
+          <div class="module-item__desc">Auto-activates, credits, QR product scanning.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">07</div>
+        <div>
+          <div class="module-item__title">Goal-Based Journeys</div>
+          <div class="module-item__desc">10 goals, 4-week protocols, adaptive check-ins.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">08</div>
+        <div>
+          <div class="module-item__title">Glow Scan</div>
+          <div class="module-item__desc">Selfie &rarr; Glow Score (0-100), 3 insights, trend analysis.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">09</div>
+        <div>
+          <div class="module-item__title">Progress Tracking</div>
+          <div class="module-item__desc">Sleep, stress, energy, skin, gut, weekly report.</div>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-item__num">10</div>
+        <div>
+          <div class="module-item__title">Digital Twin</div>
+          <div class="module-item__desc">Unified profile, AI optimization, feeds adaptive journeys.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Screenshots: Core -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: var(--space-2);">MVP: Core Screens</div>
+      <div class="screen-grid-3">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu">
+        <img src="../screens/S05-Session-Active.png" alt="Session Active">
+      </div>
+    </div>
+    <!-- App Screenshots: Extended -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); font-weight: 600; margin-bottom: var(--space-2);">MVP: Extended</div>
+      <div class="screen-grid-3">
+        <img src="../screens/S06-Shop-by-Outcome.png" alt="Shop by Outcome">
+        <img src="../screens/S07-Events.png" alt="Events">
+        <img src="../screens/S08-Membership.png" alt="Membership">
+      </div>
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Membership Tiers -->
+    <div class="section-label mb-2">Membership Tiers</div>
+
+    <div class="four-col">
+      <div class="glass" style="padding: var(--space-3); text-align: center;">
+        <div class="section-label mb-1">Free</div>
+        <div class="font-serif text-xl mb-1" style="font-weight: 300;">&euro;0</div>
+        <p class="text-xs text-stone" style="line-height: 1.5; margin-bottom: 0;">Content access<br>Community browsing<br>Event discovery</p>
+      </div>
+      <div class="glass" style="padding: var(--space-3); text-align: center;">
+        <div class="section-label mb-1">Core</div>
+        <div class="font-serif text-xl mb-1"><strong>&euro;19</strong><span class="text-xs" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.5; margin-bottom: 0;">Booking access<br>Basic tracking<br>Community access</p>
+      </div>
+      <div class="glass" style="padding: var(--space-3); text-align: center; border: 2px solid var(--amber);">
+        <div class="section-label mb-1">Pro</div>
+        <div class="font-serif text-xl mb-1"><strong>&euro;49</strong><span class="text-xs" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.5; margin-bottom: 0;">Personalized protocols<br>AI insights<br>Advanced tracking</p>
+      </div>
+      <div class="glass" style="padding: var(--space-3); text-align: center;">
+        <div class="section-label mb-1">Premium</div>
+        <div class="font-serif text-xl mb-1"><strong>&euro;99</strong><span class="text-xs" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.5; margin-bottom: 0;">1:1 reviews<br>Exclusive events<br>Full platform access</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">13</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2 — Roadmap + Physical Space
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Product Roadmap -->
+    <div class="section-label">Product Roadmap</div>
+    <h2 class="mb-4"><strong>MVP is the skeleton.</strong> Intelligence comes later.</h2>
+
+    <div class="three-col mb-5">
+      <div class="glass-accent glass-accent--sage">
+        <div class="section-label mb-2">MVP: Months 1 to 4</div>
+        <h4 class="mb-1">The Commerce Loop</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">LED booking, digital menu, membership, shop, events, basic progress tracking. Commerce-first: the transaction engine running from day one. Stripe integration, credit-based deductions, real-time inventory.</p>
+      </div>
+      <div class="glass-accent glass-accent--amber">
+        <div class="section-label mb-2">V1: Months 5 to 9</div>
+        <h4 class="mb-1">The Intelligence Layer</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Goal-based journeys, Glow Scan, smart replenishment, adaptive check-ins, in-store mode. The data captured in MVP now drives personalization. Protocols become dynamic.</p>
+      </div>
+      <div class="glass-accent glass-accent--terra">
+        <div class="section-label mb-2">V2: Months 10+</div>
+        <h4 class="mb-1">The Full Platform</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Digital Twin, AI-driven protocol optimization, advanced progress tracking, community features, wearable sync. The feedback loop at full velocity.</p>
+      </div>
+    </div>
+
+    <!-- Physical Space -->
+    <div class="callout callout--terra mb-5">
+      <div class="callout__title">Physical Space = Phase 2</div>
+      <div class="callout__body">
+        The Berlin flagship in Mitte is where digital meets physical: LED sessions, functional smoothies, curated products, community events. It operates near breakeven standalone, generates &euro;8,800-11,700/month in subscriber LTV through walk-in conversions, and creates the environmental cues that bridge the 66-day habit formation gap digital-only tools structurally cannot.
+      </div>
+    </div>
+
+    <!-- App Screens: V1/V2 -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terra); font-weight: 600; margin-bottom: var(--space-2);">V1 / V2: Intelligence Layer</div>
+      <div class="screen-grid-3">
+        <img src="../screens/S11-CGM-Smart.png" alt="CGM Smart">
+        <img src="../screens/S14-Biomarkers.png" alt="Biomarkers">
+        <img src="../screens/S15-Digital-Twin.png" alt="Digital Twin">
+      </div>
+    </div>
+    <!-- AI + Replenishment -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); font-weight: 600; margin-bottom: var(--space-2);">AI Concierge + Smart Replenishment</div>
+      <div class="screen-grid-2">
+        <img src="../screens/S12-AI-Concierge.png" alt="AI Concierge">
+        <img src="../screens/S13-Replenishment.png" alt="Replenishment">
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      RevenueCat 2025 Benchmarks / Baumel et al. 2019, JMIR / Lally et al. 2010, European J. Social Psychology / Stripe Integration Docs
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">14</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

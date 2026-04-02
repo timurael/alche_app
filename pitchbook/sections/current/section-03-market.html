@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — The Market</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* TAM/SAM/SOM visual cards */
+    .market-tier {
+      margin-bottom: var(--space-4);
+    }
+
+    .market-tier__header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .market-tier__label {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .market-tier__sublabel {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--stone);
+    }
+
+    .market-tier__value {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--deep);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: var(--space-2);
+    }
+
+    .market-tier__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+
+    /* Compare table life bars */
+    .life-bar-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .life-bar {
+      height: 5px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .life-bar--de { width: 56px; background: var(--terra); opacity: 0.7; }
+    .life-bar--ch { width: 68px; background: var(--sage); opacity: 0.5; }
+    .life-bar--fr { width: 62px; background: var(--sage); opacity: 0.5; }
+    .life-bar--jp { width: 74px; background: var(--sage); opacity: 0.5; }
+    .life-bar--oecd { width: 50px; background: var(--stone); opacity: 0.3; }
+
+    /* Structural advantages grid */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin: var(--space-5) 0;
+    }
+
+    .advantage-card {
+      padding: var(--space-4);
+    }
+
+    .advantage-card__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: var(--space-1);
+    }
+
+    .advantage-card__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Market<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[03] The Market</span>
+      <h1 class="section-header__title"><strong>The European longevity market is forming now.</strong></h1>
+      <p class="section-header__subtitle">No integrated player exists. That changes within 12-18 months.</p>
+    </div>
+
+    <!-- German Health Paradox -->
+    <div class="callout callout--terra mb-6">
+      <div class="callout__title">The German Health Paradox</div>
+      <div class="callout__body">
+        Germany spends nearly <strong>EUR 495 billion</strong> on healthcare annually (12.3% of GDP) -- the highest in the EU. Only <strong>4.8%</strong> goes to prevention. With 7.7 hospital beds per 1,000 people (OECD average: 4.2), the system was architecturally built to treat illness, not prevent it. Consumers are filling the gap themselves.
+      </div>
+    </div>
+
+    <!-- Health Spend Comparison Table -->
+    <table class="data-table mb-6">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Health spend (% GDP)</th>
+          <th>Life expectancy</th>
+          <th class="align-right">Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td class="bold">Germany</td>
+          <td class="numeric">12.3%</td>
+          <td>
+            <div class="life-bar-cell">
+              <div class="life-bar life-bar--de"></div>
+              <span class="font-mono text-sm">81.1 yrs</span>
+            </div>
+          </td>
+          <td class="muted align-right">#1 spend, below 5 cheaper systems</td>
+        </tr>
+        <tr>
+          <td>Switzerland</td>
+          <td class="numeric">11.3%</td>
+          <td>
+            <div class="life-bar-cell">
+              <div class="life-bar life-bar--ch"></div>
+              <span class="font-mono text-sm">83.4 yrs</span>
+            </div>
+          </td>
+          <td class="muted align-right">+2.3 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td>France</td>
+          <td class="numeric">12.1%</td>
+          <td>
+            <div class="life-bar-cell">
+              <div class="life-bar life-bar--fr"></div>
+              <span class="font-mono text-sm">82.2 yrs</span>
+            </div>
+          </td>
+          <td class="muted align-right">+1.1 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td>Japan</td>
+          <td class="numeric">11.5%</td>
+          <td>
+            <div class="life-bar-cell">
+              <div class="life-bar life-bar--jp"></div>
+              <span class="font-mono text-sm">84.5 yrs</span>
+            </div>
+          </td>
+          <td class="muted align-right">+3.4 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td class="text-stone">OECD avg</td>
+          <td class="numeric text-stone">9.3%</td>
+          <td>
+            <div class="life-bar-cell">
+              <div class="life-bar life-bar--oecd"></div>
+              <span class="font-mono text-sm text-stone">80.3 yrs</span>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      OECD Health at a Glance 2025 / Destatis 2023 / GWI 2024 Global Wellness Economy Monitor
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">06</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Market<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- TAM / SAM / SOM — All on one page -->
+    <div class="section-label">Market Sizing</div>
+    <h2 class="mb-4"><strong>TAM / SAM / SOM</strong></h2>
+
+    <!-- TAM — compact context line -->
+    <div class="glass mb-3" style="opacity: 0.7; padding: var(--space-3) var(--space-4);">
+      <div style="display: flex; align-items: baseline; gap: var(--space-3);">
+        <div class="market-tier__label text-stone">TAM</div>
+        <div class="font-mono" style="font-size: 20px; font-weight: 700; color: var(--stone);">$6.3T</div>
+        <div class="text-xs text-stone" style="line-height: 1.4;">Global wellness economy (GWI 2024). Context marker -- not a revenue claim.</div>
+      </div>
+    </div>
+
+    <!-- SAM -->
+    <div class="glass-accent glass-accent--terra mb-3" style="padding: var(--space-3) var(--space-4);">
+      <div style="display: flex; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-1);">
+        <div class="market-tier__label text-terra">SAM</div>
+        <div class="font-mono" style="font-size: 28px; font-weight: 700;">&euro;3.2-4.1B</div>
+      </div>
+      <div class="text-xs" style="color: var(--deep-70); line-height: 1.5;">Germany. Supplements (&euro;2.67B), functional beverages (&euro;2.8-3.2B), digital health apps (&euro;263M), premium wellness (&euro;300-500M).</div>
+    </div>
+
+    <!-- SOM -->
+    <div class="glass-elevated mb-5" style="border: 2px solid var(--amber); padding: var(--space-4);">
+      <div style="display: flex; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-2);">
+        <div class="market-tier__label text-amber">SOM</div>
+        <div class="font-mono" style="font-size: 20px; font-weight: 700; color: var(--amber);">145 subscribers to break even</div>
+      </div>
+      <div class="text-xs mb-3" style="color: var(--deep-70); line-height: 1.5;">From 108K Mitte residents aged 30-44. Conservative: 300 members Y1. Base case: 600. alche consolidates existing spend.</div>
+      <div class="kpi-grid kpi-grid--3">
+        <div class="kpi-grid__item">
+          <div class="kpi-grid__value">~108K</div>
+          <div class="kpi-grid__label">Mitte 30-44 yr olds</div>
+        </div>
+        <div class="kpi-grid__item">
+          <div class="kpi-grid__value">250-280K</div>
+          <div class="kpi-grid__label">High-income households<br>(&gt;&euro;4,500 net/mo)</div>
+        </div>
+        <div class="kpi-grid__item">
+          <div class="kpi-grid__value">~400K</div>
+          <div class="kpi-grid__label">PKV holders in Berlin<br>(prevention coverage)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sep mb-4"></div>
+
+    <!-- Europe Is Structurally Different -->
+    <div class="section-label">European Advantage</div>
+    <h2 class="mb-3"><strong>Not behind -- structurally different.</strong></h2>
+
+    <div class="advantages-grid" style="margin: var(--space-3) 0;">
+      <div class="glass advantage-card">
+        <div class="advantage-card__title">Insurance covers prevention</div>
+        <div class="advantage-card__body">PKV (8.73M holders) reimburses &euro;200-500/yr in wellness. US consumers pay 100% out-of-pocket.</div>
+      </div>
+      <div class="glass advantage-card">
+        <div class="advantage-card__title">Centuries of Kur culture</div>
+        <div class="advantage-card__body">European wellness built on apothecary traditions. alche speaks to that lineage, not Silicon Valley imports.</div>
+      </div>
+      <div class="glass advantage-card">
+        <div class="advantage-card__title">GDPR as trust differentiator</div>
+        <div class="advantage-card__body">Only 8% of EU consumers share health data. A GDPR-native platform is a feature, not a compliance cost.</div>
+      </div>
+      <div class="glass advantage-card">
+        <div class="advantage-card__title">Lower pricing works here</div>
+        <div class="advantage-card__body">&euro;19-99/mo matches European norms. US players at $199/mo will feel overpriced.</div>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-3">
+      GWI 2024 / Statista 2024 / Euromonitor 2024 / PKV-Verband 2024 / BEUC 2024 / DSSV 2024 / Berlin Partner
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">07</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

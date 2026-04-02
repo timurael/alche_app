@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche, The Ask</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Terms table layout */
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+
+    .term-card {
+      text-align: center;
+      padding: var(--space-6) var(--space-4);
+      background: var(--glass-strong);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: var(--radius-lg);
+    }
+
+    .term-card__value {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--deep);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .term-card__label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--stone);
+      margin-top: var(--space-2);
+      line-height: 1.35;
+    }
+
+    .term-card--accent {
+      border: 2px solid var(--amber);
+    }
+
+    .term-card--accent .term-card__value {
+      color: var(--amber);
+    }
+
+    /* Deal terms detail */
+    .deal-detail {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0;
+    }
+
+    .deal-detail__row {
+      display: contents;
+    }
+
+    .deal-detail__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--stone);
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--deep-08);
+    }
+
+    .deal-detail__value {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      color: var(--deep);
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--deep-08);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Ask<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[12] The Ask</span>
+      <h1 class="section-header__title"><strong>EUR 500,000 to build the category.</strong></h1>
+      <p class="section-header__subtitle">Convertible loan (Wandeldarlehen). 24-month runway. Break-even at Month 12.</p>
+    </div>
+
+    <!-- Terms Cards -->
+    <div class="terms-grid">
+      <div class="term-card term-card--accent">
+        <div class="term-card__value">&euro;500K</div>
+        <div class="term-card__label">Pre-seed raise<br>Wandeldarlehen</div>
+      </div>
+      <div class="term-card">
+        <div class="term-card__value">&euro;2.5M</div>
+        <div class="term-card__label">Valuation cap</div>
+      </div>
+      <div class="term-card">
+        <div class="term-card__value">20%</div>
+        <div class="term-card__label">Discount to<br>next round</div>
+      </div>
+    </div>
+
+    <!-- Deal Structure Detail -->
+    <div class="glass mb-6" style="padding: var(--space-5);">
+      <div class="section-label mb-3">Deal Terms</div>
+      <div class="deal-detail">
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Instrument</div>
+          <div class="deal-detail__value">Wandeldarlehen (convertible loan), standard German pre-seed structure</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Amount</div>
+          <div class="deal-detail__value">EUR 500,000</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Valuation cap</div>
+          <div class="deal-detail__value">EUR 2,500,000</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Discount</div>
+          <div class="deal-detail__value">20% to next qualified round</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Runway</div>
+          <div class="deal-detail__value">24 months (pre-launch burn: EUR 7,600/month)</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Break-even</div>
+          <div class="deal-detail__value">Month 12, 145 paying subscribers + EUR 10K/month space revenue</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Buffer at M12</div>
+          <div class="deal-detail__value">EUR 142,000 (at EUR 500K raise) // EUR 42,000 (at EUR 400K)</div>
+        </div>
+        <div class="deal-detail__row">
+          <div class="deal-detail__label">Use of funds</div>
+          <div class="deal-detail__value">[Detailed allocation shared separately upon request]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sep mb-5"></div>
+
+    <!-- What This Capital Does -->
+    <div class="section-label">What EUR 500K Unlocks</div>
+    <div class="three-col mb-5">
+      <div class="glass-accent glass-accent--sage">
+        <h4 class="mb-2">Build</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Technical co-founder hire. 16-week MVP development sprint. App architecture and biomarker integration. GmbH formation and legal structure.</p>
+      </div>
+      <div class="glass-accent glass-accent--amber">
+        <h4 class="mb-2">Launch</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Content production scaling. First Alche Salon events. Beta to 50-100 founding members. Community infrastructure.</p>
+      </div>
+      <div class="glass-accent glass-accent--terra">
+        <h4 class="mb-2">Prove</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Unit economics validation. Churn data vs. industry averages. Conversion funnel metrics. Physical space as acquisition channel proof.</p>
+      </div>
+    </div>
+
+    <!-- Closing Frame -->
+    <div class="callout callout--sage">
+      <div class="callout__title">The Investor Equation</div>
+      <div class="callout__body">
+        Zero European competitors in integrated longevity lifestyle. A 12-18 month window before US players localize. EUR 500K buys 24 months of runway, break-even at Month 12 with a EUR 142K buffer, and a founding team that has already done the research depth of a Series A company. What is missing is execution capital. That is exactly what this raise is for.
+      </div>
+    </div>
+
+    <!-- What alche is -->
+    <div class="sep mb-4 mt-4"></div>
+    <div class="section-label mb-3">What alche is</div>
+    <div class="prose mb-4">
+      <p style="font-size: var(--text-sm); line-height: 1.6; color: var(--deep-70);">The digital platform is the business. The physical space is one revenue module. Built in Berlin for European culture, regulation, and sensibility. GDPR-native from day one. An identity brand, a cultural hub. Not a feature set. An organised combination of people, product, and data.</p>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-4">
+      Standard German Wandeldarlehen structure / RevenueCat 2025 Benchmarks / Internal financial modeling
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">24</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+</body>
+</html>

@@ -1,0 +1,3072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | Pre-Seed Investment Memorandum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & PRINT === */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+
+    /* === PAGE BASE === */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm 22mm;
+      background: #F5F0E8;
+      position: relative;
+      page-break-after: always;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+      color: #2C2418;
+    }
+
+    /* Cover page override */
+    .page-cover {
+      padding: 0 22mm;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* === PAGE HEADER === */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(44, 36, 24, 0.08);
+    }
+    .page-header-left {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .page-header-right {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.45);
+    }
+
+    /* === SECTION LABEL === */
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #C4956A;
+      margin-bottom: 6px;
+    }
+
+    /* === ACTION TITLE / SUBTITLE === */
+    .action-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2C2418;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .action-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.6);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* === TABLES === */
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(44, 36, 24, 0.6);
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid rgba(44, 36, 24, 0.15);
+    }
+    td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(44, 36, 24, 0.08);
+      vertical-align: top;
+      font-family: 'Outfit', sans-serif;
+      font-size: 10.5px;
+      color: rgba(44, 36, 24, 0.85);
+    }
+    tr:nth-child(even) { background: rgba(44, 36, 24, 0.02); }
+    .number {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196, 149, 106, 0.08) !important; }
+    .total-row td { border-top: 2px solid rgba(44, 36, 24, 0.15); font-weight: 600; }
+    .assumption-row td { color: rgba(44, 36, 24, 0.45); font-size: 9px; font-style: italic; }
+
+    /* === CALLOUT BOX === */
+    .callout-box {
+      border-top: 3px solid #C4956A;
+      border-radius: 2px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      background: rgba(196, 149, 106, 0.04);
+    }
+    .callout-box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #2C2418;
+      margin-bottom: 4px;
+    }
+    .callout-box-body {
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      color: rgba(44, 36, 24, 0.7);
+      line-height: 1.5;
+    }
+
+    /* === PAGE FOOTER === */
+    .page-footer {
+      position: absolute;
+      bottom: 20mm;
+      left: 22mm;
+      right: 22mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .page-footer-source {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8px;
+      font-weight: 300;
+      color: rgba(44, 36, 24, 0.45);
+      max-width: 75%;
+    }
+    .page-footer-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(44, 36, 24, 0.5);
+    }
+
+    /* === TEXT HELPERS === */
+    .risk-text { color: #B86B4A; }
+    .positive-text { color: #8B9E7C; }
+    .risk-row td:first-child { color: #B86B4A; font-weight: 500; }
+
+    /* === TWO COLUMN LAYOUT === */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+    /* ============================== */
+    /* SECTION 00: COVER              */
+    /* ============================== */
+    .cover-top-rule {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #C4956A;
+    }
+    .cover-content { position: relative; z-index: 2; }
+    .cover-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #2C2418;
+      line-height: 0.9;
+      margin-bottom: 8px;
+    }
+    .cover-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.5);
+      letter-spacing: 0.02em;
+      margin-bottom: 32px;
+    }
+    .cover-rule {
+      width: 40px;
+      height: 2px;
+      background: #C4956A;
+      margin-bottom: 28px;
+    }
+    .cover-doc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2C2418;
+      margin-bottom: 6px;
+    }
+    .cover-doc-sub {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.6);
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .cover-pillars { display: flex; gap: 28px; }
+    .cover-pillar {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(44, 36, 24, 0.5);
+      padding: 6px 0;
+      border-top: 2px solid #C4956A;
+    }
+    .cover-bottom {
+      position: absolute;
+      bottom: 20mm;
+      left: 22mm;
+      right: 22mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 2;
+    }
+    .cover-bottom-left {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(44, 36, 24, 0.45);
+      line-height: 1.7;
+    }
+    .cover-bottom-right {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(44, 36, 24, 0.35);
+      text-align: right;
+    }
+
+    /* ============================== */
+    /* SECTION 00b: TABLE OF CONTENTS */
+    /* ============================== */
+    .toc-section { margin-bottom: 28px; }
+    .toc-group-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #C4956A;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(196, 149, 106, 0.2);
+    }
+    .toc-item {
+      display: flex;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(44, 36, 24, 0.05);
+    }
+    .toc-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.35);
+      width: 28px;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .toc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #2C2418;
+      flex: 1;
+    }
+    .toc-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(44, 36, 24, 0.15);
+      margin: 0 8px;
+      min-width: 24px;
+      position: relative;
+      top: -3px;
+    }
+    .toc-page {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.5);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+    .toc-item-critical .toc-title { font-weight: 600; }
+
+    /* ============================== */
+    /* SECTION 00c: EXECUTIVE SUMMARY */
+    /* ============================== */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .summary-box {
+      border: 1px solid rgba(44, 36, 24, 0.12);
+      border-radius: 3px;
+      padding: 12px 14px;
+    }
+    .summary-box-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(44, 36, 24, 0.5);
+      margin-bottom: 6px;
+    }
+    .summary-box-content {
+      font-family: 'Outfit', sans-serif;
+      font-size: 10.5px;
+      color: rgba(44, 36, 24, 0.85);
+      line-height: 1.55;
+    }
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 14px 0;
+      border-top: 2px solid rgba(44, 36, 24, 0.15);
+      border-bottom: 1px solid rgba(44, 36, 24, 0.08);
+    }
+    .kpi-item { text-align: center; }
+    .kpi-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2C2418;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .kpi-value-accent { color: #C4956A; }
+    .kpi-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.5);
+      line-height: 1.35;
+    }
+
+    /* ============================== */
+    /* SECTION 01: DATA STRIP         */
+    /* ============================== */
+    .data-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 14px 0;
+      border-top: 2px solid rgba(44, 36, 24, 0.15);
+      border-bottom: 1px solid rgba(44, 36, 24, 0.08);
+    }
+    .data-strip-item { text-align: center; }
+    .data-strip-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: #2C2418;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .data-strip-value-accent { color: #C4956A; }
+    .data-strip-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 8px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.5);
+      line-height: 1.35;
+    }
+
+    /* ============================== */
+    /* SECTION 02: PERSONA BOX        */
+    /* ============================== */
+    .persona-box {
+      border: 1px solid rgba(44, 36, 24, 0.12);
+      border-radius: 3px;
+      padding: 14px;
+    }
+    .persona-box-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(44, 36, 24, 0.5);
+      margin-bottom: 8px;
+    }
+
+    /* ============================== */
+    /* SECTION 04: POSITIONING MAP    */
+    /* ============================== */
+    .pos-map { position: relative; width: 100%; aspect-ratio: 16/10; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; margin: 16px 0; overflow: hidden; }
+    .pos-map-grid { position: absolute; inset: 40px 40px 36px 40px; }
+    .pos-map-axis-x { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(44,36,24,0.15); }
+    .pos-map-axis-y { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(44,36,24,0.15); }
+    .pos-map-label { position: absolute; font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(44,36,24,0.4); }
+    .pos-map-label-top { top: -28px; left: 50%; transform: translateX(-50%); }
+    .pos-map-label-bottom { bottom: -24px; left: 50%; transform: translateX(-50%); }
+    .pos-map-label-left { left: -36px; top: 50%; transform: translateY(-50%) rotate(-90deg); white-space: nowrap; }
+    .pos-map-label-right { right: -36px; top: 50%; transform: translateY(-50%) rotate(90deg); white-space: nowrap; }
+    .pos-map-q { position: absolute; padding: 4px 6px; font-family: 'Outfit', sans-serif; font-size: 7px; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(44,36,24,0.3); font-weight: 500; }
+    .pos-map-q-tl { top: 2px; left: 2px; }
+    .pos-map-q-tr { top: 2px; right: 2px; text-align: right; }
+    .pos-map-q-bl { bottom: 2px; left: 2px; }
+    .pos-map-q-br { bottom: 2px; right: 2px; text-align: right; }
+    .pos-dot { position: absolute; transform: translate(-50%, -50%); z-index: 2; }
+    .pos-dot-circle { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid rgba(44,36,24,0.3); background: rgba(44,36,24,0.08); }
+    .pos-dot-label { position: absolute; font-size: 8px; font-weight: 500; white-space: nowrap; color: rgba(44,36,24,0.6); left: 11px; top: -2px; }
+    .pos-dot-sub { font-family: 'Space Mono', monospace; font-size: 7px; color: rgba(44,36,24,0.4); display: block; }
+    .pos-dot-alche .pos-dot-circle { width: 20px; height: 20px; background: #C4956A; border: none; display: flex; align-items: center; justify-content: center; }
+    .pos-dot-alche .pos-dot-circle span { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700; color: white; }
+    .pos-dot-alche .pos-dot-label { left: 26px; font-weight: 700; color: #C4956A; font-size: 9px; }
+
+    /* ============================== */
+    /* SECTION 05: KDGB PROCESS       */
+    /* ============================== */
+    .kdgb-process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin: 16px 0; }
+    .kdgb-step { border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; padding: 12px 10px; position: relative; }
+    .kdgb-step-num { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(44,36,24,0.35); margin-bottom: 4px; }
+    .kdgb-step-name { font-size: 13px; font-weight: 600; color: #2C2418; margin-bottom: 6px; }
+    .kdgb-step-action { font-size: 9px; color: rgba(44,36,24,0.6); line-height: 1.4; margin-bottom: 6px; }
+    .kdgb-step-revenue { font-size: 9px; font-weight: 500; color: #C4956A; }
+    .kdgb-arrow { display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 14px; color: rgba(44,36,24,0.2); }
+
+    /* ============================== */
+    /* SECTION 07: HERO STAT          */
+    /* ============================== */
+    .hero-stat { text-align: center; padding: 20px 0; margin-bottom: 16px; border-top: 2px solid rgba(44,36,24,0.15); border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .hero-stat-value { font-family: 'Space Mono', monospace; font-size: 36px; font-weight: 700; color: #C4956A; font-variant-numeric: tabular-nums; line-height: 1; }
+    .hero-stat-label { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-top: 6px; }
+
+    /* ============================== */
+    /* SECTION 08: PROCESS FLOW       */
+    /* ============================== */
+    .process-flow { display: flex; align-items: stretch; gap: 2px; margin: 16px 0; }
+    .process-step { flex: 1; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; padding: 10px 8px; text-align: center; position: relative; }
+    .process-step-num { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(44,36,24,0.35); margin-bottom: 4px; }
+    .process-step-name { font-size: 9px; font-weight: 600; margin-bottom: 4px; }
+    .process-step-detail { font-size: 8px; color: rgba(44,36,24,0.5); line-height: 1.35; }
+    .process-arrow { display: flex; align-items: center; font-family: 'Space Mono', monospace; font-size: 12px; color: rgba(44,36,24,0.2); }
+
+    /* ============================== */
+    /* SECTION 12: TERMS STRIP        */
+    /* ============================== */
+    .terms-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 16px 0; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; overflow: hidden; }
+    .terms-strip-item { text-align: center; padding: 16px 12px; background: #F5F0E8; }
+    .terms-strip-value { font-family: 'Space Mono', monospace; font-size: 24px; font-weight: 700; color: #2C2418; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 4px; }
+    .terms-strip-value-accent { color: #C4956A; }
+    .terms-strip-label { font-size: 9px; font-weight: 400; color: rgba(44,36,24,0.5); line-height: 1.35; }
+
+    /* ============================== */
+    /* SECTION 13: CLOSING            */
+    /* ============================== */
+    .close-section { margin-top: 40px; text-align: center; }
+    .close-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 400; letter-spacing: 0.04em; color: #2C2418; margin-bottom: 6px; }
+    .close-tagline { font-size: 12px; font-weight: 400; color: rgba(44,36,24,0.5); margin-bottom: 24px; }
+    .close-contact { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.04em; color: rgba(44,36,24,0.6); line-height: 1.8; }
+    .close-cta { font-size: 11px; font-weight: 500; color: rgba(44,36,24,0.5); margin-top: 24px; border-top: 1px solid rgba(44,36,24,0.08); padding-top: 16px; }
+    .what-not-list { font-size: 10px; color: rgba(44,36,24,0.6); line-height: 1.6; margin: 0; padding-left: 16px; }
+    .what-is-list { font-size: 10px; color: rgba(44,36,24,0.85); line-height: 1.6; margin: 0; padding-left: 16px; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ====== deloitte-section-00-cover.html ====== -->
+  <div class="page page-cover">
+    <div class="cover-top-rule"></div>
+
+    <div class="cover-content">
+      <div class="cover-wordmark">alche</div>
+      <div class="cover-subtitle">The Art of Curated Longevity</div>
+      <div class="cover-rule"></div>
+      <div class="cover-doc-title">Pre-Seed Investment Memorandum</div>
+      <div class="cover-doc-sub">Berlin, Germany | February 2026</div>
+
+      <div class="cover-pillars">
+        <div class="cover-pillar">EUR 500K Pre-Seed</div>
+        <div class="cover-pillar">EUR 2.5M Valuation Cap</div>
+        <div class="cover-pillar">Longevity Lifestyle Platform</div>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-bottom-left">
+        Wandeldarlehen (Convertible Loan)<br>
+        24-Month Runway | Break-Even at Month 12
+      </div>
+      <div class="cover-bottom-right">Confidential</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-00b-toc.html ====== -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">Table of Contents</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">This document presents a structured investment case for alche across 13 sections.</div>
+    <div class="action-subtitle">Each section includes action titles, data tables, assumption transparency, and source citations.</div>
+
+    <!-- Overview -->
+    <div class="toc-section">
+      <div class="toc-group-label">Overview</div>
+      <div class="toc-item toc-item-critical">
+        <div class="toc-num">00</div>
+        <div class="toc-title">Executive Summary</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">03</div>
+      </div>
+    </div>
+
+    <!-- Problem & Market -->
+    <div class="toc-section">
+      <div class="toc-group-label">Problem &amp; Market</div>
+      <div class="toc-item">
+        <div class="toc-num">01</div>
+        <div class="toc-title">The Insight</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">05</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">02</div>
+        <div class="toc-title">Who We Serve</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">07</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">03</div>
+        <div class="toc-title">The Market</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">09</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">04</div>
+        <div class="toc-title">Competitive Landscape</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">11</div>
+      </div>
+    </div>
+
+    <!-- Solution & Product -->
+    <div class="toc-section">
+      <div class="toc-group-label">Solution &amp; Product</div>
+      <div class="toc-item">
+        <div class="toc-num">05</div>
+        <div class="toc-title">The Solution</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">13</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">06</div>
+        <div class="toc-title">The Product</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">15</div>
+      </div>
+    </div>
+
+    <!-- Business Case -->
+    <div class="toc-section">
+      <div class="toc-group-label">Business Case</div>
+      <div class="toc-item toc-item-critical">
+        <div class="toc-num">07</div>
+        <div class="toc-title">Business Model &amp; Unit Economics</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">18</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">08</div>
+        <div class="toc-title">Go-to-Market Strategy</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">21</div>
+      </div>
+      <div class="toc-item toc-item-critical">
+        <div class="toc-num">09</div>
+        <div class="toc-title">Traction &amp; Validation</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">23</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">10</div>
+        <div class="toc-title">Defensibility</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">25</div>
+      </div>
+    </div>
+
+    <!-- Team & Terms -->
+    <div class="toc-section">
+      <div class="toc-group-label">Team &amp; Terms</div>
+      <div class="toc-item toc-item-critical">
+        <div class="toc-num">11</div>
+        <div class="toc-title">Team &amp; Governance</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">26</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">12</div>
+        <div class="toc-title">The Ask &amp; Deal Terms</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">28</div>
+      </div>
+      <div class="toc-item">
+        <div class="toc-num">13</div>
+        <div class="toc-title">Growth Trajectory &amp; Contact</div>
+        <div class="toc-dots"></div>
+        <div class="toc-page">29</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source"></div>
+      <div class="page-footer-num">02</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-00c-executive-summary.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">Executive Summary</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Executive Summary</div>
+    <div class="action-title">Alche is raising EUR 500K to build the first integrated longevity lifestyle platform in Europe, targeting break-even at Month 12.</div>
+
+    <!-- KPI Strip -->
+    <div class="kpi-strip">
+      <div class="kpi-item">
+        <div class="kpi-value kpi-value-accent">&euro;500K</div>
+        <div class="kpi-label">Pre-Seed Raise<br>(Wandeldarlehen)</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-value">&euro;2.5M</div>
+        <div class="kpi-label">Valuation Cap</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-value">M12</div>
+        <div class="kpi-label">Break-Even<br>Target</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-value">145</div>
+        <div class="kpi-label">Paying Users<br>at Break-Even</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-value">72%</div>
+        <div class="kpi-label">Blended Margin<br>Year 1</div>
+      </div>
+    </div>
+
+    <!-- Two-Column Summary -->
+    <div class="summary-grid">
+      <div class="summary-box">
+        <div class="summary-box-label">The Opportunity</div>
+        <div class="summary-box-content">
+          The global wellness economy is $6.3T (GWI 2024). Germany spends EUR 495B on healthcare (12.3% GDP) with only 4.8% on prevention. No integrated longevity lifestyle platform exists in Europe. The competitive window is 12-18 months before US players localize.
+        </div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-box-label">The Solution</div>
+        <div class="summary-box-content">
+          A subscription platform integrating biomarker tracking, personalized protocols, curated products, and community into one membership. Four-layer model (Know, Do, Get, Belong) creates revenue at every touchpoint. Subscription-first, physical space as acquisition channel.
+        </div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-box-label">Business Model</div>
+        <div class="summary-box-content">
+          Three-tier subscription (EUR 19/49/99 per month). Weighted ARPU EUR 49. Conservative LTV:CAC ratio 5.1x. Revenue mix shifts from 52% subscription Y1 to 68% Y3. Digital margins 85-90%. 24-month runway with EUR 142K buffer at break-even.
+        </div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-box-label">Traction</div>
+        <div class="summary-box-content">
+          Pre-product stage. 9 customer discovery interviews completed. 3 hypotheses invalidated (intellectual honesty signal). Content-first GTM running at zero CAC. Positioning validated: "longevity with intention." Medical advisor secured. Market research across 30+ competitors, 35+ research sessions.
+        </div>
+      </div>
+    </div>
+
+    <!-- Investment Thesis Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Investment Thesis Component</th>
+          <th>Evidence</th>
+          <th style="text-align: right;">Section</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td class="bold">Market timing</td>
+          <td>12-18 month window; zero integrated EU platforms; $8.49B longevity funding in 2024</td>
+          <td class="number">03-04</td>
+        </tr>
+        <tr>
+          <td class="bold">Unit economics</td>
+          <td>5.1x LTV:CAC conservative; break-even at 145 users; 72% blended margin</td>
+          <td class="number">07</td>
+        </tr>
+        <tr>
+          <td class="bold">Defensibility thesis</td>
+          <td>Integration across 4 layers; GDPR-native trust; community-based retention</td>
+          <td class="number">10</td>
+        </tr>
+        <tr>
+          <td class="bold">Team-market fit</td>
+          <td>Founders are users; CMO with EUR 1.8M ad spend; COO with CS/engineering background</td>
+          <td class="number">11</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Key Risks -->
+    <div class="callout-box">
+      <div class="callout-box-title">Key Risks Acknowledged</div>
+      <div class="callout-box-body">
+        <strong>CTO gap:</strong> No dedicated technical co-founder; first hire post-funding. <strong>Pre-revenue:</strong> No product, no paying users. All projections are modeled, not actual. <strong>Two-person team:</strong> Execution capacity constrained until post-funding hires. <strong>Retention assumptions:</strong> 8% monthly churn modeled vs. 12-15% industry average; unproven at this stage.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">GWI 2024 / OECD Health at a Glance 2025 / Internal financial modeling</div>
+      <div class="page-footer-num">03</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">Executive Summary</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The 12-month execution plan converts EUR 500K into a break-even business with validated unit economics.</div>
+
+    <!-- Execution Timeline -->
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Timeline</th>
+          <th>Key Milestones</th>
+          <th style="text-align: right;">Budget</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Foundation</td>
+          <td>M1-3</td>
+          <td>Content engine launch; 300 newsletter subscribers; 10 discovery interviews</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">Traction Proof</td>
+          <td>M4-6</td>
+          <td>First Alche Salon event; 500 waitlist signups; GmbH formation</td>
+          <td class="number">EUR 200-500</td>
+        </tr>
+        <tr>
+          <td class="bold">Fundraise + Build</td>
+          <td>M7-9</td>
+          <td>Funding close; CTO hire; MVP development begins</td>
+          <td class="number">Post-funding</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Beta Launch</td>
+          <td>M10-12</td>
+          <td>MVP beta to 50-100 users; founding member pricing; physical space search</td>
+          <td class="number">Post-funding</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size: 8px; color: rgba(44, 36, 24, 0.45); font-style: italic; margin-top: -10px; margin-bottom: 20px;">*Pre-funding phases operate on founder labor, not capital.</div>
+
+    <!-- Comparable Company Context -->
+    <div class="section-label" style="margin-top: 8px;">Market Comparables</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Position</th>
+          <th style="text-align: right;">Scale</th>
+          <th>Gap vs. alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Oura</td>
+          <td>Wearable ring; 5.5M sold, 2M subscribers</td>
+          <td class="number">$11B valuation</td>
+          <td>No lifestyle layer, no community</td>
+        </tr>
+        <tr>
+          <td class="bold">Hims &amp; Hers</td>
+          <td>Telehealth + DTC; distribution-first</td>
+          <td class="number">$2.3B revenue</td>
+          <td>No integration, no data layer</td>
+        </tr>
+        <tr>
+          <td class="bold">ZOE</td>
+          <td>Nutrition AI; UK-based, science-led</td>
+          <td class="number">~$100M revenue</td>
+          <td>Single vertical (nutrition only)</td>
+        </tr>
+        <tr>
+          <td class="bold">AG1</td>
+          <td>Content-first supplements; profitable</td>
+          <td class="number">$600M revenue</td>
+          <td>No data layer, no personalization</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Team Summary -->
+    <div class="section-label" style="margin-top: 8px;">Founding Team</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Key Qualification</th>
+          <th style="text-align: right;">Equity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Timur Tasdogan</td>
+          <td>Co-Founder &amp; CMO</td>
+          <td>MSc Data Science; EUR 1.8M Meta ad spend managed; 10M+ user app</td>
+          <td class="number">49%</td>
+        </tr>
+        <tr>
+          <td class="bold">Daria Dijan Roth</td>
+          <td>Co-Founder &amp; COO</td>
+          <td>BSc Computer Engineering; media/PR; operations &amp; competitive intel</td>
+          <td class="number">51%</td>
+        </tr>
+        <tr>
+          <td class="bold">Dr. Shukri Jarmoukli</td>
+          <td>Medical Advisor</td>
+          <td>Physician; CGM expert; runs longevity practice in Berlin</td>
+          <td class="number">Advisor</td>
+        </tr>
+        <tr class="risk-row">
+          <td class="bold">CTO</td>
+          <td>First funded hire</td>
+          <td>Technical co-founder / dev lead; founders have technical literacy to scope and evaluate</td>
+          <td class="number">TBD</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Deal Summary Box -->
+    <div class="callout-box" style="margin-top: 4px;">
+      <div class="callout-box-title">Deal Structure</div>
+      <div class="callout-box-body">
+        Wandeldarlehen (convertible loan). EUR 500,000. EUR 2.5M valuation cap. 20% discount to next qualified round. 24-month runway. Pre-launch burn: EUR 7,600/month. Break-even: Month 12 (145 paying subscribers + EUR 10K/month physical space revenue). Buffer at break-even: EUR 142K. Use of funds: detailed allocation shared separately upon request.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Oura investor data / Hims 10-K 2024 / ZOE public metrics / AG1 public revenue data / Internal modeling</div>
+      <div class="page-footer-num">04</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-01-insight.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">01 &mdash; The Insight</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Insight</div>
+    <div class="action-title">Health-conscious consumers spend EUR 126-295/mo across 8+ disconnected services and 77% of health app users churn by Day 3.</div>
+    <div class="action-subtitle">The longevity tools market is large and growing, but structurally fragmented. Consumers are forced to be project managers of their own health.</div>
+
+    <!-- Churn / Retention Data Strip -->
+    <div class="data-strip">
+      <div class="data-strip-item">
+        <div class="data-strip-value data-strip-value-accent">77%</div>
+        <div class="data-strip-label">Health app users churn<br>by Day 3</div>
+      </div>
+      <div class="data-strip-item">
+        <div class="data-strip-value data-strip-value-accent">44%</div>
+        <div class="data-strip-label">Cancel within<br>first 90 days</div>
+      </div>
+      <div class="data-strip-item">
+        <div class="data-strip-value">84%</div>
+        <div class="data-strip-label">Consumers rank healthy<br>aging as top priority</div>
+      </div>
+    </div>
+
+    <!-- Fragmented Spend Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Service Category</th>
+          <th>Typical Monthly Cost</th>
+          <th style="text-align: right;">Integration with Others</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Blood panels / biomarker testing</td><td>EUR 25-60 per test</td><td class="number">None</td></tr>
+        <tr><td class="bold">Wearable subscription (Oura, WHOOP)</td><td>EUR 6-30/mo</td><td class="number">Siloed data</td></tr>
+        <tr><td class="bold">Supplements (3-5 products)</td><td>EUR 30-80/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Gym / fitness membership</td><td>EUR 30-60/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Nutrition / meal planning app</td><td>EUR 10-25/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Recovery (sauna, cold plunge, LED)</td><td>EUR 15-40/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Meditation / sleep app</td><td>EUR 5-15/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Functional beverages</td><td>EUR 20-40/mo</td><td class="number">None</td></tr>
+        <tr class="highlight-row">
+          <td class="bold">Total fragmented spend</td>
+          <td><strong>EUR 126-295/mo</strong></td>
+          <td class="number"><strong>Zero integration</strong></td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="3">Assumption: Spend ranges derived from competitive analysis of 30+ companies and 9 customer interviews (Berlin, health-conscious professionals aged 28-45)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Converging Forces -->
+    <div class="callout-box">
+      <div class="callout-box-title">Three converging forces create the opening</div>
+      <div class="callout-box-body">
+        <strong>1. Demand is proven:</strong> 84% of consumers now rank healthy aging as a top priority (McKinsey 2024). <strong>2. Prevention is underfunded:</strong> Germany spends only 4.8% of health expenditure on prevention despite EUR 495B total annual spend. <strong>3. No integrator exists in Europe:</strong> 30+ companies analyzed; zero offer integrated biomarkers + protocols + products + community. The window is 12-18 months before well-funded US players localize to DACH.
+      </div>
+    </div>
+
+    <!-- Lesson from failures -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px; margin-bottom: 0;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">LESSON FROM $1.4B IN FAILURES:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Arivale (shut down 2019) proved consumers do not pay for disease prevention. Implication: alche sells how you feel today, not prevention of future disease. (Source: Arivale post-mortem, Lee Hood interview)</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">McKinsey Health Consumer Survey 2024 / Baumel et al. 2019, JMIR / RevenueCat 2025 Benchmarks / Competitive spend analysis, Feb 2026</div>
+      <div class="page-footer-num">05</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">01 &mdash; The Insight</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The market demands integration, not more point solutions -- and the structural barriers to building one are why it has not happened yet.</div>
+
+    <!-- Why integration has not happened -->
+    <table>
+      <thead>
+        <tr>
+          <th>Barrier to Integration</th>
+          <th>Evidence</th>
+          <th style="text-align: right;">Implication for alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Organizational DNA mismatch</td>
+          <td>Companies optimized for one vertical (wearables, supplements, telehealth) cannot bolt on adjacent verticals without restructuring</td>
+          <td class="number">Greenfield advantage</td>
+        </tr>
+        <tr>
+          <td class="bold">Data trust deficit in EU</td>
+          <td>Only 8% of EU consumers share health data with third parties (BEUC 2024)</td>
+          <td class="number">GDPR-native design</td>
+        </tr>
+        <tr>
+          <td class="bold">US-centric market approach</td>
+          <td>Oura, Hims, Function Health are US-designed and US-priced. No localized European longevity platform exists.</td>
+          <td class="number">European positioning</td>
+        </tr>
+        <tr>
+          <td class="bold">Capital misallocation</td>
+          <td>$1.4B+ burned on hardware-first approaches (Forward Health: $657M), clinical-first approaches (DayTwo: 2,089 citations, still failed)</td>
+          <td class="number">Asset-light model</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- The Rebundling Thesis -->
+    <div style="margin-top: 16px; margin-bottom: 20px;">
+      <div class="section-label">The Rebundling Thesis</div>
+      <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; margin-top: 10px;">
+        <div style="border: 1px solid rgba(44,36,24,0.12); border-radius: 3px; padding: 14px;">
+          <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #B86B4A; margin-bottom: 6px;">Current: Fragmented</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; margin-bottom: 4px;">EUR 126-295/mo</div>
+          <div style="font-size: 9px; color: rgba(44,36,24,0.5);">8+ providers, zero integration, user is project manager</div>
+        </div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 16px; color: #C4956A;">&rarr;</div>
+        <div style="border: 1px solid rgba(44,36,24,0.12); border-radius: 3px; padding: 14px; border-left: 3px solid #8B9E7C;">
+          <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #8B9E7C; margin-bottom: 6px;">alche: Integrated</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; margin-bottom: 4px;">EUR 19-99/mo</div>
+          <div style="font-size: 9px; color: rgba(44,36,24,0.5);">One platform: data + protocols + products + community</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What this means for investors -->
+    <div class="callout-box">
+      <div class="callout-box-title">Investment implication</div>
+      <div class="callout-box-body">
+        Alche does not create new demand. It consolidates existing spend (EUR 126-295/mo fragmented) into a single platform (EUR 19-99/mo). The consumer saves money. alche captures a portion of spend that was previously distributed across 8+ uncoordinated providers. This is a rebundling play, not a market creation play.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">BEUC Health Data Survey 2024 / Competitive analysis: 30+ companies, Feb 2026 / Forward Health post-mortem / DayTwo Google Scholar citation count</div>
+      <div class="page-footer-num">06</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-02-who-we-serve.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">02 &mdash; Who We Serve</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Target Segment</div>
+    <div class="action-title">108K residents aged 30-44 in Berlin Mitte, spending EUR 126-295/mo on fragmented wellness -- our EUR 49-99 platform consolidates that spend.</div>
+
+    <!-- Quantified Target Segment -->
+    <table>
+      <thead>
+        <tr>
+          <th>Segment Parameter</th>
+          <th>Value</th>
+          <th style="text-align: right;">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Primary population (Berlin Mitte, 30-44)</td><td>~108,000 residents</td><td class="number">Berlin Partner</td></tr>
+        <tr><td class="bold">High-income households (&gt;EUR 4,500 net/mo)</td><td>250,000-280,000 in Berlin</td><td class="number">GfK / Destatis</td></tr>
+        <tr><td class="bold">PKV holders in Berlin (private insurance, prevention coverage)</td><td>~400,000</td><td class="number">PKV-Verband 2024</td></tr>
+        <tr><td class="bold">Berlin purchasing power index</td><td>92.4</td><td class="number">GfK 2024</td></tr>
+        <tr><td class="bold">Berlin tech worker median salary</td><td>EUR 75,000 gross</td><td class="number">Berlin Partner</td></tr>
+        <tr><td class="bold">Current fragmented wellness spend</td><td>EUR 126-295/mo across 8+ services</td><td class="number">Competitive analysis</td></tr>
+        <tr><td class="bold">Germans willing to pay OOP for health apps</td><td>27%</td><td class="number">SpringerMedizin</td></tr>
+        <tr class="highlight-row">
+          <td class="bold">Break-even subscriber requirement</td>
+          <td><strong>145 paying subscribers</strong></td>
+          <td class="number">Internal model</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="3">Assumption: Break-even from a population of 108K requires 0.13% penetration. Conservative target: 300 members Y1. Base case: 600.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Psychographic Profile -->
+    <div class="section-label" style="margin-top: 8px;">Psychographic Profile</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Description</th>
+          <th style="text-align: right;">Interview Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Primary motivation</td><td>How they feel today, not disease prevention tomorrow</td><td class="number">9/9 interviews</td></tr>
+        <tr><td class="bold">Self-identification</td><td>"Longevity with intention" -- rejected both "biohacker" and "anti-perfectionist" labels</td><td class="number">Emerged in interviews</td></tr>
+        <tr><td class="bold">Pain point</td><td>Fragmentation creates guilt, not just inconvenience. They feel like they are failing at wellness.</td><td class="number">7/9 interviews</td></tr>
+        <tr><td class="bold">Community preference</td><td>Small consistent accountability groups over leaderboards. Gamification does not work for longevity.</td><td class="number">6/9 interviews</td></tr>
+        <tr><td class="bold">Entry channel</td><td>Local community events got the strongest positive signal of anything tested</td><td class="number">Strongest signal</td></tr>
+        <tr><td class="bold">Already spending</td><td>EUR 50-200/mo on fragmented services, willing to consolidate</td><td class="number">Direct spend data</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Persona Illustration -->
+    <div class="callout-box">
+      <div class="callout-box-title">Illustrative user: Mira, 33, Berlin Mitte</div>
+      <div class="callout-box-body">
+        Product designer at a B2B SaaS startup. Earns EUR 65K. Spends EUR 185/mo across Oura (EUR 6), gym (EUR 45), supplements from three brands (EUR 70), meditation app (EUR 12), bi-annual blood panels (EUR 25/mo amortized), and AG1 (EUR 27). Uses five apps that do not talk to each other. Wants one system. Would pay EUR 49-99/mo to consolidate -- the net savings alone justifies the switch.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Berlin Partner / GfK 2024 / PKV-Verband 2024 / SpringerMedizin / Customer discovery: 9 interviews, Feb 2026</div>
+      <div class="page-footer-num">07</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">02 &mdash; Who We Serve</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The rebundling math works because consumers are overpaying for fragmented services they do not fully use.</div>
+
+    <!-- Rebundling Comparison -->
+    <div class="two-col" style="margin-top: 8px;">
+      <div class="persona-box">
+        <div class="persona-box-label" style="color: #B86B4A;">Current State: Fragmented</div>
+        <table style="margin-bottom: 0;">
+          <thead><tr><th>Service</th><th style="text-align: right;">Monthly</th></tr></thead>
+          <tbody>
+            <tr><td>Wearable sub (Oura)</td><td class="number">EUR 6</td></tr>
+            <tr><td>Gym membership</td><td class="number">EUR 45</td></tr>
+            <tr><td>Supplements (3 brands)</td><td class="number">EUR 70</td></tr>
+            <tr><td>Meditation app</td><td class="number">EUR 12</td></tr>
+            <tr><td>Blood panels (amortized)</td><td class="number">EUR 25</td></tr>
+            <tr><td>AG1</td><td class="number">EUR 27</td></tr>
+            <tr class="highlight-row"><td class="bold">Total</td><td class="number bold">EUR 185/mo</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size: 9px; color: rgba(44,36,24,0.45); margin-top: 6px;">5 apps, zero integration, user manages everything</div>
+      </div>
+      <div class="persona-box" style="border-left: 3px solid #8B9E7C;">
+        <div class="persona-box-label" style="color: #8B9E7C;">alche Platform: Integrated</div>
+        <table style="margin-bottom: 0;">
+          <thead><tr><th>Tier</th><th style="text-align: right;">Monthly</th></tr></thead>
+          <tbody>
+            <tr><td>Core (biomarker dashboard, protocols, community)</td><td class="number">EUR 19</td></tr>
+            <tr><td>Pro (personalized AI, advanced tracking, early access)</td><td class="number">EUR 49</td></tr>
+            <tr><td>Premium (blood panel credits, 1:1 reviews, CGM Phase 2)</td><td class="number">EUR 99</td></tr>
+            <tr class="highlight-row"><td class="bold">Target ARPU</td><td class="number bold">EUR 49/mo</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size: 9px; color: rgba(44,36,24,0.45); margin-top: 6px;">1 platform: data + protocols + products + community</div>
+      </div>
+    </div>
+
+    <!-- Customer Acquisition Funnel -->
+    <div class="section-label" style="margin-top: 8px;">Acquisition Channels (Berlin Launch)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Mechanism</th>
+          <th style="text-align: right;">Est. CAC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Organic content (TikTok, Reels, Newsletter)</td><td>Science content builds audience pre-product. Founder labor, not capital.</td><td class="number">EUR 0*</td></tr>
+        <tr><td class="bold">Community events (Alche Salon)</td><td>30-40 attendees per event. EUR 200-500 per event. Content production from each event.</td><td class="number">EUR 5-12</td></tr>
+        <tr><td class="bold">Physical space walk-ins (Phase 2)</td><td>30-40 subscribers per month from LED sessions, smoothies, in-person conversion</td><td class="number">EUR 15-25</td></tr>
+        <tr><td class="bold">Berlin wellness community (Biohackers meetup)</td><td>2,213 members in Berlin Biohackers Meetup. Warm audience.</td><td class="number">EUR 0*</td></tr>
+        <tr class="assumption-row">
+          <td colspan="3">*EUR 0 paid acquisition. Content cost is founder labor, not capital. Blended CAC at scale modeled at EUR 40-55.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Expansion segments -->
+    <div class="callout-box">
+      <div class="callout-box-title">Expansion segments (post-Berlin proof)</div>
+      <div class="callout-box-body">
+        <strong>Segment 2:</strong> German PKV holders nationally (~8.73M, reimburse EUR 200-500/yr in wellness). <strong>Segment 3:</strong> DACH health-conscious professionals (digital-only, no physical space required). <strong>Segment 4:</strong> EU expansion -- UK, Netherlands, Nordics share similar wellness culture and regulatory framework.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Berlin Partner / Biohackers Berlin Meetup / PKV-Verband 2024 / Customer discovery interviews</div>
+      <div class="page-footer-num">08</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-03-market.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">03 &mdash; The Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Market Opportunity</div>
+    <div class="action-title">Germany's EUR 495B healthcare system spends 4.8% on prevention -- consumers are filling the gap at EUR 126-295/mo out of pocket.</div>
+
+    <!-- German Health Paradox -->
+    <div class="callout-box">
+      <div class="callout-box-title">The German Health Paradox</div>
+      <div class="callout-box-body">
+        Germany spends EUR 495B on healthcare annually (12.3% of GDP) -- the highest in the EU. Only 4.8% goes to prevention. With 7.7 hospital beds per 1,000 people (OECD average: 4.2), the system was architecturally built to treat illness, not prevent it. Consumers are filling the gap themselves.
+      </div>
+    </div>
+
+    <!-- Health Spend Comparison -->
+    <table>
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th style="text-align: right;">Health Spend (% GDP)</th>
+          <th style="text-align: right;">Life Expectancy</th>
+          <th>Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td class="bold">Germany</td>
+          <td class="number">12.3%</td>
+          <td class="number">81.1 yrs</td>
+          <td>#1 EU spend, below 5 cheaper systems</td>
+        </tr>
+        <tr>
+          <td>Switzerland</td>
+          <td class="number">11.3%</td>
+          <td class="number">83.4 yrs</td>
+          <td>+2.3 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td>France</td>
+          <td class="number">12.1%</td>
+          <td class="number">82.2 yrs</td>
+          <td>+1.1 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td>Japan</td>
+          <td class="number">11.5%</td>
+          <td class="number">84.5 yrs</td>
+          <td>+3.4 yrs, spends less</td>
+        </tr>
+        <tr>
+          <td style="color: rgba(44,36,24,0.5);">OECD Average</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">9.3%</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">80.3 yrs</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- TAM / SAM / SOM -->
+    <div class="section-label" style="margin-top: 8px;">Market Sizing</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th style="text-align: right;">Value</th>
+          <th>Definition</th>
+          <th style="text-align: right;">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color: rgba(44,36,24,0.5);">TAM</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">$6.3T</td>
+          <td style="color: rgba(44,36,24,0.5);">Global wellness economy. Context marker -- not a revenue claim.</td>
+          <td class="number" style="color: rgba(44,36,24,0.5);">GWI 2024</td>
+        </tr>
+        <tr>
+          <td class="bold">SAM</td>
+          <td class="number bold">EUR 3.2-4.1B</td>
+          <td>Germany: supplements (EUR 2.67B) + functional beverages (EUR 2.8-3.2B) + digital health apps (EUR 263M) + premium wellness (EUR 300-500M)</td>
+          <td class="number">Statista / Euromonitor</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">SOM</td>
+          <td class="number bold">145 subscribers</td>
+          <td>Break-even target from 108K Mitte residents aged 30-44. 0.13% penetration. Conservative Y1: 300 members. Base case: 600.</td>
+          <td class="number">Internal model</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">Assumption: SOM is the break-even point, not a revenue aspiration. alche consolidates existing spend rather than creating new demand.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">OECD Health at a Glance 2025 / Destatis 2023 / GWI 2024 / Statista 2024 / Euromonitor 2024</div>
+      <div class="page-footer-num">09</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">03 &mdash; The Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">Europe is not behind on longevity -- it is structurally different, creating advantages for a GDPR-native, culturally adapted platform.</div>
+
+    <!-- European Structural Advantages -->
+    <table>
+      <thead>
+        <tr>
+          <th>Structural Advantage</th>
+          <th>Detail</th>
+          <th>Implication for alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Insurance covers prevention</td>
+          <td>PKV (8.73M holders) reimburses EUR 200-500/yr in wellness. US consumers pay 100% out-of-pocket.</td>
+          <td>Partial reimbursement reduces effective customer cost</td>
+        </tr>
+        <tr>
+          <td class="bold">Kur culture / apothecary tradition</td>
+          <td>European wellness built on centuries of apothecary traditions, thermal baths, and preventive health culture</td>
+          <td>alche speaks to existing cultural infrastructure</td>
+        </tr>
+        <tr>
+          <td class="bold">GDPR as trust differentiator</td>
+          <td>Only 8% of EU consumers share health data with third parties (BEUC 2024)</td>
+          <td>GDPR-native architecture is a feature, not a compliance cost</td>
+        </tr>
+        <tr>
+          <td class="bold">European pricing norms</td>
+          <td>EUR 19-99/mo matches European willingness to pay. US players at $199/mo feel overpriced.</td>
+          <td>Local pricing creates natural barrier to US entry</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- German Wellness Market Growth -->
+    <div class="section-label" style="margin-top: 12px;">German Wellness Market Trajectory</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th style="text-align: right;">Market Size (Germany)</th>
+          <th style="text-align: right;">Growth</th>
+          <th>Relevance to alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Supplements market</td>
+          <td class="number">EUR 2.67B</td>
+          <td class="number">3.3% CAGR</td>
+          <td>Product layer (curated, protocol-linked)</td>
+        </tr>
+        <tr>
+          <td class="bold">Functional beverages</td>
+          <td class="number">EUR 2.8-3.2B</td>
+          <td class="number">Growing</td>
+          <td>Physical space revenue (Alche Potions)</td>
+        </tr>
+        <tr>
+          <td class="bold">Digital health apps</td>
+          <td class="number">EUR 263M</td>
+          <td class="number">High growth</td>
+          <td>Core subscription platform</td>
+        </tr>
+        <tr>
+          <td class="bold">Premium wellness services</td>
+          <td class="number">EUR 300-500M</td>
+          <td class="number">Growing</td>
+          <td>LED, recovery, community events</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">Note: German wellness market growth of 3.3% CAGR is for the overall market. Digital health and premium wellness segments are growing faster.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Timing callout -->
+    <div class="callout-box">
+      <div class="callout-box-title">Market timing: 12-18 month window</div>
+      <div class="callout-box-body">
+        $8.49B flowed into longevity in 2024 (2x YoY). Oura has not localized beyond hardware retail. Hims EU expansion is nascent. Levels and Function Health are US-only. Neko Health (Spotify founder) focuses on scanning, not integrated wellness. The full-stack European longevity platform is wide open, but the window closes as US players begin DACH localization.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">PKV-Verband 2024 / BEUC 2024 / Statista 2024 / Euromonitor 2024 / Longevity.Technology 2024 Funding Report / DSSV 2024</div>
+      <div class="page-footer-num">10</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-04-competitive.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">04 &mdash; Competitive Landscape</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Competitive Landscape</div>
+    <div class="action-title">30+ companies analyzed. No integrated European longevity platform exists. The upper-right quadrant is empty.</div>
+
+    <!-- 2x2 Positioning Map -->
+    <div class="pos-map">
+      <div class="pos-map-grid">
+        <div class="pos-map-q pos-map-q-tl">Lifestyle / Single Vertical</div>
+        <div class="pos-map-q pos-map-q-tr">Integrated + Human-Centered</div>
+        <div class="pos-map-q pos-map-q-bl">Performance Tools / Point Solutions</div>
+        <div class="pos-map-q pos-map-q-br">Clinical / Complex + Expensive</div>
+
+        <div class="pos-map-axis-x"></div>
+        <div class="pos-map-axis-y"></div>
+
+        <div class="pos-map-label pos-map-label-top">Human / Real-Life</div>
+        <div class="pos-map-label pos-map-label-bottom">Optimization / Clinical</div>
+        <div class="pos-map-label pos-map-label-left">Single Focus</div>
+        <div class="pos-map-label pos-map-label-right">Integrated Platform</div>
+
+        <!-- Competitors -->
+        <div class="pos-dot" style="left:18%;top:22%"><div class="pos-dot-circle"></div><div class="pos-dot-label">AG1<div class="pos-dot-sub">$600M rev</div></div></div>
+        <div class="pos-dot" style="left:22%;top:34%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Goop</div></div>
+        <div class="pos-dot" style="left:60%;top:72%"><div class="pos-dot-circle" style="width:10px;height:10px;"></div><div class="pos-dot-label">Oura<div class="pos-dot-sub">$11B val</div></div></div>
+        <div class="pos-dot" style="left:55%;top:82%"><div class="pos-dot-circle"></div><div class="pos-dot-label">InsideTracker</div></div>
+        <div class="pos-dot" style="left:68%;top:88%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Function Health<div class="pos-dot-sub">$2.5B val</div></div></div>
+        <div class="pos-dot" style="left:62%;top:30%"><div class="pos-dot-circle" style="width:9px;height:9px;border-color:#C4956A;"></div><div class="pos-dot-label">ZOE<div class="pos-dot-sub">~$100M rev</div></div></div>
+        <div class="pos-dot" style="left:80%;top:84%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Restore<div class="pos-dot-sub">220+ locs</div></div></div>
+        <div class="pos-dot" style="left:42%;top:78%"><div class="pos-dot-circle"></div><div class="pos-dot-label">Levels</div></div>
+        <div class="pos-dot" style="left:30%;top:62%"><div class="pos-dot-circle"></div><div class="pos-dot-label">WHOOP</div></div>
+
+        <!-- ALCHE -->
+        <div class="pos-dot pos-dot-alche" style="left:72%;top:20%;z-index:10">
+          <div class="pos-dot-circle"><span>A</span></div>
+          <div class="pos-dot-label">alche<div class="pos-dot-sub">Integrated / Human / European</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Competitor Comparison Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Category</th>
+          <th style="text-align: right;">Revenue / Valuation</th>
+          <th>What They Miss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Oura</td>
+          <td>Wearable ring; 5.5M sold, 2M subs</td>
+          <td class="number">$11B valuation</td>
+          <td>No lifestyle layer, no community, no products</td>
+        </tr>
+        <tr>
+          <td class="bold">Hims &amp; Hers</td>
+          <td>Telehealth + DTC; distribution-first</td>
+          <td class="number">$2.3B revenue</td>
+          <td>No integration, no data layer, no community</td>
+        </tr>
+        <tr>
+          <td class="bold">ZOE</td>
+          <td>Nutrition AI; UK-based, science-led</td>
+          <td class="number">~$100M revenue</td>
+          <td>Single vertical (nutrition only)</td>
+        </tr>
+        <tr>
+          <td class="bold">AG1</td>
+          <td>Content-first supplements; profitable</td>
+          <td class="number">$600M revenue</td>
+          <td>No data layer, no personalization, no community</td>
+        </tr>
+        <tr>
+          <td class="bold">Function Health</td>
+          <td>Blood testing; comprehensive panels</td>
+          <td class="number">$2.5B valuation</td>
+          <td>No lifestyle integration, no products, US-only</td>
+        </tr>
+        <tr>
+          <td class="bold">Restore Hyper</td>
+          <td>Recovery services; franchise model</td>
+          <td class="number">220+ locations</td>
+          <td>No digital platform, no data, no protocols</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="font-size: 9px; color: rgba(44,36,24,0.5); line-height: 1.5; margin-top: -8px;">
+      Oura tells you your sleep score. It does not help you fix it. Each competitor does one piece. No one connects data to action to product to community -- especially in Europe.
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Oura investor data / Hims 10-K 2024 / ZOE public metrics / AG1 public revenue data / Restore franchise data / Competitive analysis: 30+ companies, Feb 2026</div>
+      <div class="page-footer-num">11</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">04 &mdash; Competitive Landscape</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">$1.4B+ in failed health/nutrition startups reveal three survivor patterns that shape our model.</div>
+
+    <!-- Graveyard Analysis -->
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Failure Mode</th>
+          <th style="text-align: right;">Capital Burned</th>
+          <th>Lesson Applied</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Forward Health</td>
+          <td>Built $1M hardware pods. Asset-heavy approach collapsed under capital requirements.</td>
+          <td class="number">$657M</td>
+          <td>Asset-light: partner, do not build the stack</td>
+        </tr>
+        <tr>
+          <td class="bold">DayTwo</td>
+          <td>2,089 citations (Google Scholar). Science was world-class. No consumer distribution.</td>
+          <td class="number">$32M</td>
+          <td>Content-led: distribution wins over science alone</td>
+        </tr>
+        <tr>
+          <td class="bold">Arivale</td>
+          <td>Consumers did not pay for disease prevention. Product positioned around future risk.</td>
+          <td class="number">$50M+</td>
+          <td>Sell how you feel today, not prevention tomorrow</td>
+        </tr>
+        <tr>
+          <td class="bold">Noom (stalled)</td>
+          <td>Aggressive paid acquisition. Churn destroyed unit economics. No community layer.</td>
+          <td class="number">$600M+ raised</td>
+          <td>Community-first: only retention moat that survives tech disruption</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Three Survivor Patterns -->
+    <div class="section-label" style="margin-top: 12px;">Three Survivor Patterns</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>Evidence</th>
+          <th>alche Implementation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">01. Asset-Light</td>
+          <td>ZOE, AG1, and Levels survived by curating and connecting -- not owning the value chain</td>
+          <td>Lab partnerships for testing, curated products not manufactured, physical space generates revenue</td>
+        </tr>
+        <tr>
+          <td class="bold">02. Content-Led Distribution</td>
+          <td>AG1 built $600M on content and community. ZOE grew on Tim Spector's authority.</td>
+          <td>Content engine launches pre-product. Audience exists before the app ships.</td>
+        </tr>
+        <tr>
+          <td class="bold">03. Community-First Retention</td>
+          <td>When GLP-1 drugs arrived, companies without community had no reason for users to stay</td>
+          <td>Accountability circles, events, shared challenges. Social fabric as retention moat.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Competitive Window -->
+    <div class="callout-box" style="margin-top: 8px;">
+      <div class="callout-box-title">Competitive window: 12-18 months</div>
+      <div class="callout-box-body">
+        $8.49B flowed into longevity in 2024 (2x YoY). Oura has not localized beyond hardware retail. Hims EU expansion is nascent. Levels and Function Health are US-only. Neko Health focuses on scanning, not integrated wellness. The integrated European longevity platform position is open -- but closing.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Longevity.Technology 2024 Funding Report / Company post-mortems / Google Scholar / Competitive analysis, Feb 2026</div>
+      <div class="page-footer-num">12</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-05-solution.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">05 &mdash; The Solution</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Solution</div>
+    <div class="action-title">Four integrated layers, each creating demand for the next -- and each generating revenue.</div>
+    <div class="action-subtitle">The KDGB framework (Know-Do-Get-Belong) is a business process, not a brand concept. Each layer has a user action, a revenue lever, and a retention mechanism.</div>
+
+    <!-- KDGB Process Diagram -->
+    <div class="kdgb-process">
+      <div class="kdgb-step" style="border-top: 3px solid #8B9E7C;">
+        <div class="kdgb-step-num">01</div>
+        <div class="kdgb-step-name">KNOW</div>
+        <div class="kdgb-step-action">User tracks biomarkers, wearable data, biological age. Longitudinal data creates personalization engine.</div>
+        <div class="kdgb-step-revenue">Revenue: Subscription (EUR 19-99/mo)</div>
+      </div>
+      <div class="kdgb-step" style="border-top: 3px solid #B86B4A;">
+        <div class="kdgb-step-num">02</div>
+        <div class="kdgb-step-name">DO</div>
+        <div class="kdgb-step-action">User follows personalized protocols -- nutrition, recovery, movement. AI-guided, physician-informed.</div>
+        <div class="kdgb-step-revenue">Revenue: Service bookings, protocol access</div>
+      </div>
+      <div class="kdgb-step" style="border-top: 3px solid #C4956A;">
+        <div class="kdgb-step-num">03</div>
+        <div class="kdgb-step-name">GET</div>
+        <div class="kdgb-step-action">User buys protocol-linked supplements, functional products. Recommended by data, not generic catalog.</div>
+        <div class="kdgb-step-revenue">Revenue: Product margins (40-65%)</div>
+      </div>
+      <div class="kdgb-step" style="border-top: 3px solid #9E948A;">
+        <div class="kdgb-step-num">04</div>
+        <div class="kdgb-step-name">BELONG</div>
+        <div class="kdgb-step-action">User joins accountability circles, shared challenges, events. Community as longevity intervention.</div>
+        <div class="kdgb-step-revenue">Revenue: Events, premium community access</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(44,36,24,0.35); letter-spacing: 0.2em; margin: 4px 0 16px;">KNOW &rarr; DO &rarr; GET &rarr; BELONG &rarr; KNOW (repeat, each cycle stickier)</div>
+
+    <!-- Layer-to-Business Mapping -->
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>User Action</th>
+          <th>Revenue Lever</th>
+          <th>Retention Mechanism</th>
+          <th style="text-align: right;">Key Metric</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">KNOW</td>
+          <td>Biomarker dashboard, wearable sync</td>
+          <td>Subscription (EUR 19-99/mo)</td>
+          <td>Longitudinal data accumulates; 6 months &gt; snapshot</td>
+          <td class="number">Activation rate</td>
+        </tr>
+        <tr>
+          <td class="bold">DO</td>
+          <td>Follow personalized protocols</td>
+          <td>Service bookings, LED sessions</td>
+          <td>Protocol calibration improves with data</td>
+          <td class="number">Session frequency</td>
+        </tr>
+        <tr>
+          <td class="bold">GET</td>
+          <td>Purchase protocol-linked products</td>
+          <td>Product margins (40-65%)</td>
+          <td>Smart replenishment from usage data</td>
+          <td class="number">AOV, repeat rate</td>
+        </tr>
+        <tr>
+          <td class="bold">BELONG</td>
+          <td>Circles, events, shared challenges</td>
+          <td>Events, premium community</td>
+          <td>Social bonds create switching cost</td>
+          <td class="number">Community NPS</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Each step creates demand for the next. KNOW creates motivation to DO. DO creates need to GET. GET creates belonging through shared rituals. BELONG generates better data.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Why integration matters -->
+    <div class="callout-box">
+      <div class="callout-box-title">Why integration is the structural advantage</div>
+      <div class="callout-box-body">
+        Single-vertical competitors own one layer. Oura owns wearable data. AG1 owns a supplement. Restore owns recovery. Nobody connects all four. Integration is structurally hard to bolt on because it requires different organizational DNA than single-vertical excellence. A competitor would need to rebuild from the ground up -- the same thing alche is doing, but without the greenfield advantage.
+      </div>
+    </div>
+
+    <!-- Data Trust -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px; margin-bottom: 0;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">DATA TRUST:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Only 8% of EU consumers share health data (BEUC 2024). GDPR-native architecture, transparent data policies, user-controlled sharing. In a market where trust is the scarcest resource, privacy-first design is a competitive advantage.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">BEUC Health Data Survey 2024 / Blue Zones / Fitzgerald et al. 2021, Aging / Competitive analysis, Feb 2026</div>
+      <div class="page-footer-num">13</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-06-product.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">06 &mdash; The Product</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Product</div>
+    <div class="action-title">Three subscription tiers from EUR 19-99/mo with 85-90% digital gross margin, each tier designed as an upgrade trigger for the next.</div>
+
+    <!-- Tier Comparison Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free (EUR 0)</th>
+          <th>Core (EUR 19/mo)</th>
+          <th class="highlight-row">Pro (EUR 49/mo)</th>
+          <th>Premium (EUR 99/mo)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Biomarker dashboard</td>
+          <td>&mdash;</td>
+          <td>Basic tracking</td>
+          <td>Advanced tracking</td>
+          <td>Full dashboard + CGM (Phase 2)</td>
+        </tr>
+        <tr>
+          <td class="bold">Wearable sync</td>
+          <td>&mdash;</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes + CGM integration</td>
+        </tr>
+        <tr>
+          <td class="bold">Protocols</td>
+          <td>&mdash;</td>
+          <td>Basic templates</td>
+          <td>AI-personalized</td>
+          <td>1:1 physician review</td>
+        </tr>
+        <tr>
+          <td class="bold">Community access</td>
+          <td>Browse only</td>
+          <td>Full access</td>
+          <td>Full + early access</td>
+          <td>Full + exclusive events</td>
+        </tr>
+        <tr>
+          <td class="bold">Content</td>
+          <td>Public content</td>
+          <td>Member content</td>
+          <td>Member + AI insights</td>
+          <td>All content + drop previews</td>
+        </tr>
+        <tr>
+          <td class="bold">Product access</td>
+          <td>Browse catalog</td>
+          <td>Member pricing</td>
+          <td>Member + smart recs</td>
+          <td>Member + replenishment</td>
+        </tr>
+        <tr>
+          <td class="bold">Blood panels</td>
+          <td>&mdash;</td>
+          <td>&mdash;</td>
+          <td>&mdash;</td>
+          <td>Credits included</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Gross margin</td>
+          <td class="number">&mdash;</td>
+          <td class="number">85-90%</td>
+          <td class="number">85-90%</td>
+          <td class="number">70-85%</td>
+        </tr>
+        <tr>
+          <td class="bold">Target user</td>
+          <td>Curious, exploring</td>
+          <td>Health-aware, starting</td>
+          <td>Committed, optimizing</td>
+          <td>Serious, data-driven</td>
+        </tr>
+        <tr>
+          <td class="bold">Upgrade trigger</td>
+          <td>Content engagement</td>
+          <td>Wants personalization</td>
+          <td>Wants deeper data</td>
+          <td>&mdash;</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Assumption: Tier distribution at M12: 60% Core, 25% Pro, 15% Premium. Weighted ARPU: EUR 49/mo. Free tier serves as acquisition funnel, not revenue source.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Product Roadmap -->
+    <div class="section-label" style="margin-top: 4px;">Development Roadmap</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Timeline</th>
+          <th>Scope</th>
+          <th>Business Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">MVP</td>
+          <td>Months 1-4</td>
+          <td>Booking, menu, shop, membership, events, basic tracking</td>
+          <td>Transaction engine running from day one</td>
+        </tr>
+        <tr>
+          <td class="bold">V1</td>
+          <td>Months 5-9</td>
+          <td>AI concierge, smart replenishment, glucose correlations, protocols</td>
+          <td>Intelligence layer enables personalization at scale</td>
+        </tr>
+        <tr>
+          <td class="bold">V2</td>
+          <td>Months 10+</td>
+          <td>Full biomarker dashboard, bio age score, AI protocols, doctor integration</td>
+          <td>Complete KDGB flywheel at full velocity</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Physical Space -->
+    <div class="callout-box">
+      <div class="callout-box-title">Physical space: Phase 2 acquisition channel (seed-funded, not pre-seed)</div>
+      <div class="callout-box-body">
+        The Berlin flagship in Mitte operates near breakeven standalone. It generates EUR 8,800-11,700/month in subscriber LTV through walk-in conversions and creates the environmental cues that bridge the 66-day habit formation gap digital-only tools structurally cannot. The physical space is an acquisition channel, not the business.
+      </div>
+    </div>
+
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">NOTE:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> The app is the operating system. The physical space is one revenue module. Every digital interaction feeds the KDGB loop. The architecture is invisible to the user -- what they experience is a single integrated platform.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 Benchmarks / Lally et al. 2010, European J. Social Psychology / Stripe Integration Docs</div>
+      <div class="page-footer-num">14</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: App Screens Reference -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">06 &mdash; The Product</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The product experience: booking, tracking, shopping, and community in one integrated interface.</div>
+
+    <!-- MVP Core Screens -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(44,36,24,0.5); font-weight: 600; margin-bottom: 8px;">MVP Core Screens</div>
+      <img src="screens/row-1-mvp-core.png" alt="MVP Core Screens: Home Dashboard, Onboarding, LED Booking, Potion Menu, Session Active" style="width: 100%; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px;">
+    </div>
+
+    <!-- MVP Extended Screens -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(44,36,24,0.5); font-weight: 600; margin-bottom: 8px;">MVP Extended</div>
+      <img src="screens/row-2-mvp-extended.png" alt="MVP Extended: Shop by Outcome, Events, Membership, Profile, CGM Lite" style="width: 100%; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px;">
+    </div>
+
+    <!-- V1/V2 Screens -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(44,36,24,0.5); font-weight: 600; margin-bottom: 8px;">V1 / V2 Intelligence Layer</div>
+      <img src="screens/row-3-v1-v2.png" alt="V1/V2: CGM Smart, AI Concierge, Replenishment, Biomarkers, Digital Twin" style="width: 100%; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px;">
+    </div>
+
+    <!-- User Journey Summary -->
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Action</th>
+          <th>Revenue Touchpoint</th>
+          <th style="text-align: right;">Phase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">01</td><td>Choose outcome category</td><td>Determines protocol templates + product recs</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">02</td><td>Book LED session (20-min slots)</td><td>Service booking revenue</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">03</td><td>Customize potion (EUR 7-11 + boosts)</td><td>Product revenue, avg ticket EUR 11</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">04</td><td>Check in, session, post-session log</td><td>Behavioral data for personalization</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">05</td><td>Shop by outcome (supplements, products)</td><td>Product margins 40-50%</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">06</td><td>Community events, RSVP, tickets</td><td>Event ticketing + member access</td><td class="number">MVP</td></tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Product specification: alche MVP / V1 / V2 architecture</div>
+      <div class="page-footer-num">15</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-07-business-model.html ====== -->
+  <!-- PAGE 1: Break-Even Analysis -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">07 &mdash; Business Model</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Business Model &amp; Unit Economics</div>
+    <div class="action-title">Break-even at Month 12 with 145 paying subscribers -- conservative model with 24-month runway and EUR 142K buffer.</div>
+
+    <!-- Hero Stat -->
+    <div class="hero-stat">
+      <div class="hero-stat-value">145 subscribers to break-even</div>
+      <div class="hero-stat-label">From 108K Mitte residents aged 30-44. 0.13% penetration required. Conservative Y1: 300 members. Base case: 600.</div>
+    </div>
+
+    <!-- Break-Even Path -->
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th style="text-align: right;">EUR 500K Raise</th>
+          <th style="text-align: right;">EUR 400K Raise</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Raise amount</td><td class="number">EUR 500,000</td><td class="number">EUR 400,000</td></tr>
+        <tr><td class="bold">Runway</td><td class="number">24 months</td><td class="number">~20 months</td></tr>
+        <tr><td class="bold">Pre-launch burn rate</td><td class="number">EUR 7,600/mo</td><td class="number">EUR 7,600/mo</td></tr>
+        <tr><td class="bold">Break-even point</td><td class="number">Month 12</td><td class="number">Month 12</td></tr>
+        <tr><td class="bold">Required paying subscribers</td><td class="number">~145</td><td class="number">~145</td></tr>
+        <tr><td class="bold">Physical space revenue at break-even</td><td class="number">EUR 10,000/mo</td><td class="number">EUR 10,000/mo</td></tr>
+        <tr class="highlight-row">
+          <td class="bold">Buffer at break-even</td>
+          <td class="number bold">EUR 142,000</td>
+          <td class="number bold">EUR 42,000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Sensitivity Analysis -->
+    <div class="section-label" style="margin-top: 4px;">Sensitivity Analysis</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th style="text-align: right;">Conversion Rate</th>
+          <th style="text-align: right;">Monthly Churn</th>
+          <th style="text-align: right;">Break-Even</th>
+          <th style="text-align: right;">Subs Required</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Base case</td>
+          <td class="number">4.5%</td>
+          <td class="number">8%</td>
+          <td class="number">Month 12</td>
+          <td class="number">~145</td>
+        </tr>
+        <tr>
+          <td class="bold">Downside: lower conversion</td>
+          <td class="number">3.0%</td>
+          <td class="number">8%</td>
+          <td class="number">Month 15</td>
+          <td class="number">~190</td>
+        </tr>
+        <tr>
+          <td class="bold">Downside: higher churn</td>
+          <td class="number">4.5%</td>
+          <td class="number">12%</td>
+          <td class="number">Month 14</td>
+          <td class="number">~170</td>
+        </tr>
+        <tr>
+          <td class="bold">Worst case: both</td>
+          <td class="number">3.0%</td>
+          <td class="number">12%</td>
+          <td class="number">Month 18</td>
+          <td class="number">~230</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Upside: community-driven</td>
+          <td class="number">6.0%</td>
+          <td class="number">6%</td>
+          <td class="number">Month 9</td>
+          <td class="number">~110</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Assumptions: Base case conversion (4.5%) is above RevenueCat 2025 health/fitness median (2-3%), adjusted for community-driven organic acquisition where conversion trends 1.5-2x paid channel benchmarks. Base case churn (8%) vs. industry average (12-15%) reflects physical touchpoint + community retention thesis.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Key takeaway -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">KEY FINDING:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Even in the worst-case scenario (3% conversion, 12% churn), break-even occurs within the 24-month runway at EUR 500K raise. The model survives stress-testing.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 State of Subscription Apps / Recurly churn benchmarks / Internal financial modeling</div>
+      <div class="page-footer-num">16</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Unit Economics + Pricing -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">07 &mdash; Business Model</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">Conservative LTV:CAC of 5.1x with clear path to 14.7x as community-driven acquisition scales.</div>
+
+    <!-- Unit Economics Table -->
+    <div class="section-label">Unit Economics</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th style="text-align: right;">Conservative</th>
+          <th style="text-align: right;">Realistic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">ARPU (weighted monthly)</td><td class="number">EUR 35</td><td class="number">EUR 49</td></tr>
+        <tr><td class="bold">Average lifetime (months)</td><td class="number">8</td><td class="number">12</td></tr>
+        <tr><td class="bold">LTV</td><td class="number">EUR 280</td><td class="number">EUR 588</td></tr>
+        <tr><td class="bold">CAC</td><td class="number">EUR 55</td><td class="number">EUR 40</td></tr>
+        <tr class="highlight-row"><td class="bold">LTV : CAC</td><td class="number bold">5.1x</td><td class="number bold">14.7x</td></tr>
+        <tr><td class="bold">Payback period</td><td class="number">~1.6 months</td><td class="number">~0.8 months</td></tr>
+        <tr class="assumption-row">
+          <td colspan="3">Conservative: EUR 35 ARPU (weighted toward Core tier), 8-month lifetime, EUR 55 CAC (paid channels). Realistic: EUR 49 ARPU (weighted with Pro tier upgrades), 12-month lifetime, EUR 40 CAC (community-driven organic acquisition lowers blended CAC).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pricing Table -->
+    <div class="section-label">Pricing Structure</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th style="text-align: right;">Monthly</th>
+          <th>Value Proposition</th>
+          <th style="text-align: right;">Gross Margin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Free</td><td class="number" style="color: rgba(44,36,24,0.4);">EUR 0</td><td>Content, community browsing, product browsing</td><td class="number" style="color: rgba(44,36,24,0.4);">&mdash;</td></tr>
+        <tr><td class="bold">Core</td><td class="number bold">EUR 19</td><td>Biomarker dashboard, wearable sync, basic protocols</td><td class="number">85-90%</td></tr>
+        <tr class="highlight-row"><td class="bold">Pro</td><td class="number bold">EUR 49</td><td>Personalized protocols, AI insights, advanced tracking</td><td class="number">85-90%</td></tr>
+        <tr><td class="bold">Premium</td><td class="number bold">EUR 99</td><td>Blood panel credits, 1:1 reviews, exclusive events, CGM (Phase 2)</td><td class="number">70-85%</td></tr>
+        <tr class="assumption-row">
+          <td colspan="4">Assumption: Tier mix at M12: ~60% Core, ~25% Pro, ~15% Premium. Weighted ARPU: EUR 49/mo.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Gross Margin by Stream -->
+    <div class="section-label">Gross Margin by Revenue Stream</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Revenue Stream</th>
+          <th style="text-align: right;">Gross Margin</th>
+          <th style="text-align: right;">% of Y1 Revenue</th>
+          <th style="text-align: right;">% of Y3 Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Digital subscriptions</td><td class="number">85-90%</td><td class="number">52%</td><td class="number">68%</td></tr>
+        <tr><td class="bold">LED / recovery services</td><td class="number">65-75%</td><td class="number">17%</td><td class="number">10%</td></tr>
+        <tr><td class="bold">Product sales (supplements, potions)</td><td class="number">40-65%</td><td class="number">18%</td><td class="number">15%</td></tr>
+        <tr><td class="bold">Events</td><td class="number">50-70%</td><td class="number">—</td><td class="number">—</td></tr>
+        <tr><td class="bold">Physical space (net)</td><td class="number">Variable</td><td class="number">13%</td><td class="number">7%</td></tr>
+        <tr class="total-row highlight-row">
+          <td class="bold">Blended margin</td>
+          <td class="number bold">~72% Y1</td>
+          <td class="number">100%</td>
+          <td class="number bold">~80% Y3</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">Revenue shifts from 52% subscription Y1 to 68% Y3, pushing valuation toward SaaS-adjacent multiples (8-15x ARR) vs. premium retail (2-4x revenue).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 / Industry churn benchmarks (Recurly, Baremetrics) / Internal financial modeling</div>
+      <div class="page-footer-num">17</div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: Conversion Funnel -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">07 &mdash; Business Model</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The conversion funnel builds to 145 paying subscribers at Month 12 through a combination of digital conversion and physical space walk-ins.</div>
+
+    <!-- Conversion Funnel as Table -->
+    <div class="section-label">Subscriber Funnel at Month 12</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th style="text-align: right;">Price</th>
+          <th style="text-align: right;">Count</th>
+          <th style="text-align: right;">Conversion Rate</th>
+          <th style="text-align: right;">Monthly Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Free users (base)</td>
+          <td class="number">EUR 0</td>
+          <td class="number">2,000</td>
+          <td class="number">100%</td>
+          <td class="number">EUR 0</td>
+        </tr>
+        <tr>
+          <td class="bold">Core</td>
+          <td class="number">EUR 19</td>
+          <td class="number">~90</td>
+          <td class="number">4.5% free-to-paid</td>
+          <td class="number">EUR 1,710</td>
+        </tr>
+        <tr>
+          <td class="bold">Pro</td>
+          <td class="number">EUR 49</td>
+          <td class="number">~18</td>
+          <td class="number">20% upgrade from Core</td>
+          <td class="number">EUR 882</td>
+        </tr>
+        <tr>
+          <td class="bold">Premium</td>
+          <td class="number">EUR 99</td>
+          <td class="number">~7</td>
+          <td class="number">~8% of paid to Premium</td>
+          <td class="number">EUR 693</td>
+        </tr>
+        <tr style="border-top: 1px solid rgba(44,36,24,0.12);">
+          <td class="bold">Direct-to-paid (physical space)</td>
+          <td class="number">EUR 49 avg</td>
+          <td class="number">~30-40</td>
+          <td class="number">Walk-in conversion</td>
+          <td class="number">EUR 1,470-1,960</td>
+        </tr>
+        <tr class="total-row highlight-row">
+          <td class="bold">Total at Month 12</td>
+          <td class="number"></td>
+          <td class="number bold">~145</td>
+          <td class="number"></td>
+          <td class="number bold">EUR 4,755-5,245/mo</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Assumptions: 4.5% free-to-paid (RevenueCat 2025 health/fitness median: 2-3%, adjusted for community-led acquisition). 20% Core-to-Pro upgrade. Physical space conversion: 30-40 direct subscribers/month (modeled target). Monthly churn: 8% (vs. industry 12-15%).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Revenue Composition Visual -->
+    <div class="section-label" style="margin-top: 8px;">Revenue Composition Shift</div>
+    <div style="margin-bottom: 8px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <span style="font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600; min-width: 24px;">Y1</span>
+        <div style="flex: 1; display: flex; height: 20px; border-radius: 2px; overflow: hidden;">
+          <div style="width: 52%; background: #8B9E7C; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">52%</div>
+          <div style="width: 18%; background: #C4956A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">18%</div>
+          <div style="width: 17%; background: #B86B4A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">17%</div>
+          <div style="width: 13%; background: #9E948A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">13%</div>
+        </div>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); min-width: 60px; text-align: right;">~72% margin</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <span style="font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600; min-width: 24px;">Y3</span>
+        <div style="flex: 1; display: flex; height: 20px; border-radius: 2px; overflow: hidden;">
+          <div style="width: 68%; background: #8B9E7C; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">68%</div>
+          <div style="width: 15%; background: #C4956A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">15%</div>
+          <div style="width: 10%; background: #B86B4A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">10%</div>
+          <div style="width: 7%; background: #9E948A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 7px; font-weight: 600; color: white;">7%</div>
+        </div>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); min-width: 60px; text-align: right;">~80% margin</span>
+      </div>
+      <div style="display: flex; gap: 16px; font-size: 8px; color: rgba(44,36,24,0.45); margin-top: 4px;">
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #8B9E7C; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Subscriptions</span>
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #C4956A; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Products</span>
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #B86B4A; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Services</span>
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #9E948A; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Space</span>
+      </div>
+    </div>
+
+    <!-- Graveyard lessons as footnotes -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); padding-top: 10px; margin-top: 12px;">
+      <div style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5); margin-bottom: 6px;">LESSONS FROM $1.4B IN FAILURES</div>
+      <div style="font-size: 9px; color: rgba(44,36,24,0.5); line-height: 1.6;">
+        Asset-light model: Forward Health burned $657M building hardware. We partner, not build the stack. Lab partnerships for testing, curated products not manufactured.<br>
+        Community-first retention: DayTwo had 2,089 citations and died when GLP-1 drugs arrived. Science alone is not a moat. Community is the only retention layer that survives technology disruption.<br>
+        Projected 8% monthly churn vs. industry 12-15% through physical touchpoints, community identity, and longitudinal data compounding.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 / Recurly, Baremetrics churn benchmarks / Forward Health post-mortem / DayTwo Google Scholar / Internal modeling</div>
+      <div class="page-footer-num">18</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-08-go-to-market.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">08 &mdash; Go-to-Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Go-to-Market Strategy</div>
+    <div class="action-title">Content-first GTM: build the audience at EUR 0 capital cost, convert to subscribers when the product ships.</div>
+    <div class="action-subtitle">Most startups spend money to find customers. We find customers for free, then spend money to build what they already want.</div>
+
+    <!-- GTM Process Flow -->
+    <div class="process-flow">
+      <div class="process-step" style="border-top: 3px solid #C4956A;">
+        <div class="process-step-num">01</div>
+        <div class="process-step-name">Content</div>
+        <div class="process-step-detail">3-5 short-form videos/week. Radical honesty science format.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-step-num">02</div>
+        <div class="process-step-name">Audience</div>
+        <div class="process-step-detail">Social + newsletter growth. Email = owned asset.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-step-num">03</div>
+        <div class="process-step-name">Community</div>
+        <div class="process-step-detail">Events, DMs, meetups. Trust before product.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-step-num">04</div>
+        <div class="process-step-name">Waitlist</div>
+        <div class="process-step-detail">Capture intent. Pre-launch demand proof.</div>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step" style="border-top: 3px solid #8B9E7C;">
+        <div class="process-step-num">05</div>
+        <div class="process-step-name">Conversion</div>
+        <div class="process-step-detail">App launch. Founding member pricing: EUR 19/mo locked.</div>
+      </div>
+    </div>
+
+    <!-- Channel Strategy -->
+    <div class="section-label" style="margin-top: 8px;">Channel Strategy</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Role</th>
+          <th>Frequency</th>
+          <th style="text-align: right;">Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Short-form video (TikTok + Reels)</td>
+          <td>Primary acquisition. Radical honesty science content. First piece: collagen deep dive across 23 studies.</td>
+          <td>3-5 posts/week</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">Newsletter (Substack/Beehiiv)</td>
+          <td>Owned audience. Email is the only asset algorithms cannot take. Conversion happens here.</td>
+          <td>Weekly</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">YouTube long-form</td>
+          <td>Evergreen SEO pillars. 10-20 min deep research. The moat no short-form competitor builds.</td>
+          <td>Monthly</td>
+          <td class="number">EUR 0*</td>
+        </tr>
+        <tr>
+          <td class="bold">Berlin events (Alche Salon)</td>
+          <td>Physical trust signal. 30-40 attendees. Each event produces 3-4 weeks of content. Biohackers Berlin (2,213 members) is warm audience.</td>
+          <td>Quarterly</td>
+          <td class="number">EUR 200-500/event</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">*EUR 0 paid acquisition. Content cost is founder labor, not capital. Timur has managed EUR 1.8M in Meta ad spend -- choosing to spend EUR 0 is a strategic decision, not a budget constraint.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 12 Month Milestone Table -->
+    <div class="section-label" style="margin-top: 8px;">Target Metrics by Quarter</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th style="text-align: right;">Q1 (M1-3)</th>
+          <th style="text-align: right;">Q2 (M4-6)</th>
+          <th style="text-align: right;">Q3 (M7-9)</th>
+          <th style="text-align: right;">Q4 (M10-12)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Social followers</td><td class="number">1-2K</td><td class="number">3-5K</td><td class="number">8-12K</td><td class="number">15-20K</td></tr>
+        <tr><td class="bold">Newsletter subs</td><td class="number">300</td><td class="number">1,000</td><td class="number">2,500</td><td class="number">5,000</td></tr>
+        <tr><td class="bold">Waitlist signups</td><td class="number">&mdash;</td><td class="number">500</td><td class="number">1,500</td><td class="number">(converts)</td></tr>
+        <tr><td class="bold">Event attendees</td><td class="number">&mdash;</td><td class="number">35</td><td class="number">250</td><td class="number">500+</td></tr>
+        <tr class="highlight-row"><td class="bold">Paying subscribers</td><td class="number">&mdash;</td><td class="number">&mdash;</td><td class="number">&mdash;</td><td class="number bold">50-100</td></tr>
+        <tr><td class="bold">Content pieces published</td><td class="number">~60</td><td class="number">~120</td><td class="number">~180</td><td class="number">~240</td></tr>
+        <tr class="assumption-row">
+          <td colspan="5">Q1-Q2 pre-funding. Q3-Q4 post-funding. Paying subscribers begin in Q4 with beta launch to founding members from waitlist.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Biohackers Berlin Meetup / GruendungsBONUS Plus Program / RevenueCat 2025 Benchmarks</div>
+      <div class="page-footer-num">19</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Execution Roadmap -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">08 &mdash; Go-to-Market</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">12 months to product-market fit, structured in four phases with defined milestones at each gate.</div>
+
+    <!-- Roadmap Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Timeline</th>
+          <th>Key Activities</th>
+          <th style="text-align: right;">Budget</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold" style="color: #8B9E7C;">Foundation</td>
+          <td>Q1 (M1-3)</td>
+          <td>Launch @alche.space. 3-5 short-form videos/week. Launch newsletter (Week 2). Goal: 300 subs. 10 informal customer discovery conversations from social DMs and meetup contacts.</td>
+          <td class="number">EUR 0</td>
+        </tr>
+        <tr>
+          <td class="bold" style="color: #C4956A;">Traction Proof</td>
+          <td>Q2 (M4-6)</td>
+          <td>First Alche Salon event (30-40 people). Open waitlist landing page. Goal: 500 signups. Begin GmbH formation. Apply to GruendungsBONUS Plus (EUR 50K non-dilutive Berlin grant).</td>
+          <td class="number">EUR 200-500</td>
+        </tr>
+        <tr>
+          <td class="bold" style="color: #B86B4A;">Fundraise + Build</td>
+          <td>Q3 (M7-9)</td>
+          <td>Pitch with real numbers: followers, newsletter subs, waitlist, event attendees. Post-funding: hire CTO / dev lead. Begin MVP development. Events scale to monthly (60-80 attendees).</td>
+          <td class="number">Post-funding</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Beta Launch</td>
+          <td>Q4 (M10-12)</td>
+          <td>MVP beta to first 50-100 users from waitlist. Founding member pricing: EUR 19/mo, locked. Content evolves to product teasers, beta stories, "building in public." Physical space search begins.</td>
+          <td class="number">Post-funding</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Two Flywheels -->
+    <div class="section-label" style="margin-top: 12px;">Two Flywheels, Sequenced</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #8B9E7C; border-radius: 2px; padding: 12px 14px;">
+        <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #8B9E7C; margin-bottom: 6px;">Flywheel 1 -- Running Now (Pre-Funding)</div>
+        <div style="font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5;">Create radical-honesty science content &rarr; attract health-curious audience &rarr; they engage and share &rarr; we learn what they need &rarr; create sharper content. No product needed. No funding needed.</div>
+      </div>
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px;">
+        <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #C4956A; margin-bottom: 6px;">Flywheel 2 -- Activated by Funding</div>
+        <div style="font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5;">Know your body (data) &rarr; Do the protocols (action) &rarr; Get what you need (products) &rarr; Belong with others (community). Funding builds the product for an audience that already exists and trusts us.</div>
+      </div>
+    </div>
+
+    <!-- Key GTM advantage -->
+    <div class="callout-box">
+      <div class="callout-box-title">Why content-first reduces risk for investors</div>
+      <div class="callout-box-body">
+        By the time funding closes, the content engine has been running for 6+ months. The investor sees real audience data (followers, newsletter subs, waitlist signups, event attendance) before writing a check. If the content fails to build an audience, the investment thesis fails before capital is deployed. This is a feature, not a risk.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Content strategy benchmarks / Biohackers Berlin Meetup / GruendungsBONUS Plus</div>
+      <div class="page-footer-num">20</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-09-traction.html ====== -->
+  <!-- PAGE 1: Evidence of Market Understanding -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">09 &mdash; Traction &amp; Validation</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Traction &amp; Validation</div>
+    <div class="action-title">Pre-product, pre-revenue -- here is what we know and what funding proves.</div>
+    <div class="action-subtitle">We do not conflate research with traction. This section distinguishes between market understanding (validated through interviews and competitive analysis) and product-market fit (which requires funding to test).</div>
+
+    <!-- Evidence Table -->
+    <div class="section-label" style="margin-top: 4px;">Evidence of Market Understanding</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Claim</th>
+          <th>Evidence</th>
+          <th>Source</th>
+          <th style="text-align: right;">Confidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Target customers spend EUR 50-200/mo on fragmented services</td>
+          <td>Direct spend data from 9 customer discovery interviews</td>
+          <td>Primary research, Feb 2026</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">"Longevity with intention" is the right positioning</td>
+          <td>Emerged from interview language; rejected "biohacker" and "anti-perfectionist"</td>
+          <td>9 interviews, Feb 2026</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">Community events are the strongest acquisition channel</td>
+          <td>Strongest positive signal of anything tested in interviews</td>
+          <td>Interview finding #5</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">Small groups over leaderboards for accountability</td>
+          <td>6 of 9 interviewees specifically rejected gamification for longevity</td>
+          <td>Interview findings</td>
+          <td class="number">Medium</td>
+        </tr>
+        <tr>
+          <td class="bold">No integrated European platform exists</td>
+          <td>30+ competitors analyzed across 35+ research sessions</td>
+          <td>Competitive analysis, Feb 2026</td>
+          <td class="number positive-text">High</td>
+        </tr>
+        <tr>
+          <td class="bold">EUR 49/mo weighted ARPU is achievable</td>
+          <td>Interviewees already spending EUR 126-295/mo on fragmented tools; EUR 49 is net savings</td>
+          <td>Spend analysis + interviews</td>
+          <td class="number">Medium</td>
+        </tr>
+        <tr>
+          <td class="bold">4.5% free-to-paid conversion</td>
+          <td>Modeled target above RevenueCat median (2-3%), adjusted for community-driven acquisition</td>
+          <td>RevenueCat 2025</td>
+          <td class="number risk-text">Low (unproven)</td>
+        </tr>
+        <tr>
+          <td class="bold">8% monthly churn (vs. 12-15% industry)</td>
+          <td>Thesis: physical touchpoints + community reduce churn. Not yet validated.</td>
+          <td>Internal thesis</td>
+          <td class="number risk-text">Low (unproven)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Hypothesis Invalidation -->
+    <div class="section-label" style="margin-top: 4px;">Hypotheses Invalidated</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Original Hypothesis</th>
+          <th>Why Killed</th>
+          <th>What Replaced It</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">"Anti-perfectionist" is the right language</td>
+          <td>Reactive, confusing in interviews. Nobody self-identified this way.</td>
+          <td>"Longevity with intention" -- emerged from users' own words.</td>
+        </tr>
+        <tr>
+          <td class="bold">Physical space first, digital second</td>
+          <td>Killed by Berlin failure patterns. Capital-intensive physical retail fails pre-seed.</td>
+          <td>Digital-first. Physical space is Phase 2, seed-funded.</td>
+        </tr>
+        <tr>
+          <td class="bold">Bootstrap as a lifestyle business</td>
+          <td>Competitive timing: 12-18 month window. Speed to market matters more than capital efficiency.</td>
+          <td>Raise EUR 500K to capture the timing window.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">INTELLECTUAL HONESTY SIGNAL:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> 3 hypotheses invalidated across 3 research cycles and 9 interviews. Each change strengthened the business model. Killing bad ideas early is cheaper than discovering them with investors' capital.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Customer discovery: 9 interviews, Feb 2026 / Competitive analysis: 30+ companies / RevenueCat 2025</div>
+      <div class="page-footer-num">21</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: What Funding Validates -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">09 &mdash; Traction &amp; Validation</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">Funding validates the six things that research alone cannot prove.</div>
+
+    <!-- Validated vs. Requires Funding -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+      <div>
+        <div class="section-label" style="color: #8B9E7C;">Validated Pre-Funding</div>
+        <table>
+          <tbody>
+            <tr><td class="bold">Market demand</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Target customers spend EUR 50-200/mo</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Positioning thesis ("longevity with intention")</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Competitive white space (no EU integrator)</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Berlin as launch market</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">GTM sequence: content, events, app</td><td class="number positive-text">Confirmed</td></tr>
+            <tr><td class="bold">Medical advisor secured</td><td class="number positive-text">Confirmed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="section-label" style="color: #B86B4A;">Requires Funding to Validate</div>
+        <table>
+          <tbody>
+            <tr><td class="bold">Product-market fit</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Conversion rates (waitlist &rarr; signup &rarr; paid)</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Retention and engagement metrics</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Unit economics in practice</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Technical build (CTO hire, dev team)</td><td class="number risk-text">Unproven</td></tr>
+            <tr><td class="bold">Physical space proof-of-concept</td><td class="number risk-text">Unproven</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 90-Day Traction Roadmap -->
+    <div class="section-label" style="margin-top: 8px;">90-Day Post-Funding Traction Roadmap</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Focus</th>
+          <th>Deliverables</th>
+          <th style="text-align: right;">Exit Criteria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Day 1-30</td>
+          <td>Foundation</td>
+          <td>GmbH formed. 20 interviews complete. Waitlist live. CTO search launched.</td>
+          <td class="number">Legal + team</td>
+        </tr>
+        <tr>
+          <td class="bold">Day 30-60</td>
+          <td>Traction</td>
+          <td>Content channel at 1,000+ followers. First Berlin event (50+ attendees). Medical advisor formalized.</td>
+          <td class="number">Audience growth</td>
+        </tr>
+        <tr>
+          <td class="bold">Day 60-90</td>
+          <td>Momentum</td>
+          <td>MVP spec finalized, development underway. Community pilot with founding members. Measurable KPIs: waitlist conversion, event attendance, content engagement.</td>
+          <td class="number">Build velocity</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- What this means for the investor -->
+    <div class="callout-box">
+      <div class="callout-box-title">What this means for the investor</div>
+      <div class="callout-box-body">
+        This is a pre-product, pre-revenue investment. The research depth is unusual for pre-seed -- 35+ research sessions, 30+ competitors analyzed, 9 customer interviews, 3 hypotheses killed. What the investor funds is not more research. It is the transition from validated market understanding to validated product-market fit. The milestones are clear: content engine running, waitlist growing, MVP shipping, founding members paying.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Customer discovery: 9 interviews, Feb 2026 / Competitive analysis / Internal roadmap</div>
+      <div class="page-footer-num">22</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-10-moat.html ====== -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">10 &mdash; Defensibility</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Defensibility</div>
+    <div class="action-title">No moat exists at pre-seed. Here is our thesis for building one across three layers over 24 months.</div>
+    <div class="action-subtitle">At pre-seed, no moat exists yet. What investors evaluate is whether the model has the structural potential to build one. We present our thesis honestly.</div>
+
+    <!-- Moat Layer Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Moat Layer</th>
+          <th>Description</th>
+          <th style="text-align: right;">Timeline</th>
+          <th>Evidence It Works</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Social Identity</td>
+          <td>Brand, content, and community build identity. People do not leave brands they identify with -- this is structural, not aspirational. Content voice + community rituals + physical space create belonging.</td>
+          <td class="number">M0-12</td>
+          <td>Taste-dependent. Hardest to copy. Interview feedback confirms "longevity with intention" resonates at identity level.</td>
+        </tr>
+        <tr>
+          <td class="bold">Network Effects</td>
+          <td>Each new member increases value for existing members. Accountability groups, shared challenges, event networks, protocol sharing. Value grows with community size.</td>
+          <td class="number">M6-18</td>
+          <td>Time-dependent. Impossible to fast-track. Every community platform shows this pattern once critical mass is reached.</td>
+        </tr>
+        <tr>
+          <td class="bold">Switching Costs</td>
+          <td>12 months of biomarker data, personalized protocols, supplement subscriptions, and community connections create real friction to leave. GDPR means data is portable -- but insights, calibrated protocols, and social graphs are not.</td>
+          <td class="number">M12+</td>
+          <td>Volume-dependent. Gets more valuable over time. Oura sees this with longitudinal sleep data; users who have 6+ months of data retain at 2x the rate.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- AI Resilience -->
+    <div class="section-label" style="margin-top: 8px;">AI Resilience Assessment</div>
+    <table>
+      <thead>
+        <tr>
+          <th>AI Threat</th>
+          <th>Vulnerable Layer</th>
+          <th>Resilient Layer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Apple Health + ChatGPT gives free longevity advice</td>
+          <td>Pure data-and-insights layer (the KNOW layer) becomes commoditized over time</td>
+          <td>Physical experiences (AI cannot give you a smoothie or community event), social identity, accountability</td>
+        </tr>
+        <tr>
+          <td class="bold">AI-generated personalized protocols</td>
+          <td>Generic protocol generation becomes a commodity</td>
+          <td>Physician-reviewed protocols, community accountability, protocol calibration from longitudinal user data</td>
+        </tr>
+        <tr>
+          <td class="bold">AI-curated product recommendations</td>
+          <td>Product discovery becomes easier</td>
+          <td>Trust layer (GDPR-native, physician-backed), community-validated products, subscription convenience</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Integration thesis -->
+    <div class="callout-box" style="margin-top: 4px;">
+      <div class="callout-box-title">Integration is the structural thesis</div>
+      <div class="callout-box-body">
+        None of alche's competitors combine biomarker data + personalized protocols + curated products + physical experiences + community in one platform. Each does one or two layers. Integration is structurally hard to bolt on because it requires different organizational DNA than single-vertical excellence. GDPR-native data trust gives a European entrant a structural advantage US platforms cannot retrofit. When the data layer gets cheaper and AI interpretation improves, the companies that built genuine community, cultural identity, and regulatory trust are the ones still standing.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Competitive analysis: 30+ companies, Feb 2026 / WHOOP 2025 Retention Data / Fortune Business Insights 2025</div>
+      <div class="page-footer-num">23</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-11-team.html ====== -->
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">11 &mdash; Team &amp; Governance</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Team &amp; Governance</div>
+    <div class="action-title">Two co-founders with technical and commercial credentials. CTO is the first funded hire.</div>
+
+    <!-- Capability Matrix -->
+    <div class="section-label" style="margin-top: 4px;">Team Capability Matrix</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Owner</th>
+          <th>Key Credential</th>
+          <th>Relevant Achievement</th>
+          <th style="text-align: right;">Equity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Brand, Data &amp; Growth</td>
+          <td class="bold">Timur Tasdogan</td>
+          <td>MSc Data Science (GISMA Berlin), BA Economics (Koc University, merit scholarship)</td>
+          <td>EUR 1.8M Meta ad spend managed (Concentrix/Meta). 10M+ user app (TOM/Hadi). Hepsiburada (NASDAQ: HEPS) performance marketing.</td>
+          <td class="number">49%</td>
+        </tr>
+        <tr>
+          <td class="bold">Operations &amp; Strategy</td>
+          <td class="bold">Daria Dijan Roth</td>
+          <td>BSc Computer Engineering + BA International Business</td>
+          <td>Backend systems development (Jan Iletisim). Brand positioning and acquisition funnel design (MUTA-1). Established figure in longevity/wellness topics.</td>
+          <td class="number">51%</td>
+        </tr>
+        <tr>
+          <td class="bold">Medical &amp; Clinical</td>
+          <td class="bold">Dr. Shukri Jarmoukli</td>
+          <td>Physician (Universitaet zu Koeln). CGM specialist. Functional medicine, psychoneuroimmunology.</td>
+          <td>Runs Lifestyledoctor, a self-pay longevity practice in Berlin. His patients are alche's exact target demographic.</td>
+          <td class="number">Advisor</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold risk-text">Technical / CTO</td>
+          <td class="bold risk-text">First funded hire</td>
+          <td>Requirement: full-stack, health-data experience, EU-based</td>
+          <td>MVP scoped at 16-week sprint. AmirFarzam Kamalpour (Technical Lead) provides interim infrastructure and development support.</td>
+          <td class="number">TBD</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Experience Detail: Timur -->
+    <div class="section-label" style="margin-top: 4px;">Timur Tasdogan &mdash; Co-Founder &amp; CMO</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Company</th>
+          <th>Key Metrics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Performance Marketing Consultant</td><td>Concentrix (for Meta)</td><td>EUR 1.8M ad spend across 390+ advertisers. Avg ROAS improved from 1.5x to 2.7x.</td></tr>
+        <tr><td class="bold">Performance Marketing Lead</td><td>Hepsiburada (NASDAQ: HEPS)</td><td>EUR 300K budget, 4x ROAS. Influencer campaigns: 29M views.</td></tr>
+        <tr><td class="bold">Marketing Co-Lead</td><td>TOM / Hadi App</td><td>App reached 10M+ users.</td></tr>
+        <tr><td class="bold">Founding Team</td><td>Quantpaper (pre-seed)</td><td>30 user interviews. 27% activation rate lift.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Experience Detail: Daria -->
+    <div class="section-label" style="margin-top: 4px;">Daria Dijan Roth &mdash; Co-Founder &amp; COO</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Company</th>
+          <th>Key Metrics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Backend Developer</td><td>Jan Iletisim Teknolojileri</td><td>Production backend systems serving real users. Product architecture.</td></tr>
+        <tr><td class="bold">Brand &amp; Performance Marketing</td><td>MUTA-1 Reklamcilik</td><td>Brand positioning. Acquisition and retention funnel design.</td></tr>
+        <tr><td class="bold">Domain Expert</td><td>Personal (4-year autoimmune journey)</td><td>Deep wellness domain expertise. Established figure in longevity content. 4 years of lived experience in the problem space.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source"></div>
+      <div class="page-footer-num">24</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">11 &mdash; Team &amp; Governance</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The CTO gap is honest and specific. The founding team has the technical literacy to scope, evaluate, and manage the hire.</div>
+
+    <!-- CTO Gap Assessment -->
+    <div class="section-label">CTO Gap: Honest Assessment</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Gap identified</td><td>No dedicated technical co-founder. First hire post-funding.</td></tr>
+        <tr><td class="bold">Interim capability</td><td>AmirFarzam Kamalpour (Technical Lead) provides infrastructure and development support. Self-taught developer since age 12. Runs Star Digital. Previously at Jung von Matt HAVEL (Berlin) in IT/web development. Brings existing server infrastructure.</td></tr>
+        <tr><td class="bold">Founder technical literacy</td><td>Daria: BSc Computer Engineering. Built production backend systems. Timur: MSc Data Science. Both can scope work, evaluate candidates, and manage the build.</td></tr>
+        <tr><td class="bold">Hiring plan</td><td>CTO / technical co-founder is the first funded hire. MVP development is scoped at a 16-week sprint.</td></tr>
+        <tr class="highlight-row"><td class="bold">Mitigant</td><td>We will not add a technical co-founder who has not seen the thesis validated. The raise enables this hire from a position of demonstrated market understanding, not desperation.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Medical Advisor Detail -->
+    <div class="section-label" style="margin-top: 8px;">Medical Advisor Detail</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Name</td><td>Dr. Shukri Jarmoukli</td></tr>
+        <tr><td class="bold">Education</td><td>Medicine, Universitaet zu Koeln</td></tr>
+        <tr><td class="bold">Practice</td><td>Lifestyledoctor -- self-pay longevity practice in Berlin</td></tr>
+        <tr><td class="bold">Specializations</td><td>Functional medicine, psychoneuroimmunology (KPNI), CGM biofeedback, biomarker-driven protocols</td></tr>
+        <tr><td class="bold">Relevance</td><td>His patients -- entrepreneurs investing in proactive health out of pocket -- are alche's exact target demographic</td></tr>
+        <tr><td class="bold">Role at alche</td><td>Protocol design validation, medical content review, biomarker interpretation, EU regulatory compliance</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Governance -->
+    <div class="section-label" style="margin-top: 8px;">Governance Structure</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Entity</td><td>Alche GmbH (formation in progress), Berlin</td></tr>
+        <tr><td class="bold">Equity split</td><td>Daria 51% / Timur 49%</td></tr>
+        <tr><td class="bold">Domain ownership</td><td>Timur: brand, data, growth. Daria: vision, architecture, ops. Shared: product.</td></tr>
+        <tr><td class="bold">Residency</td><td>Both founders: Turkish citizens, long-term Berlin residents. No visa risk.</td></tr>
+        <tr><td class="bold">First funded hire</td><td>CTO / technical co-founder (equity TBD, post-funding)</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Why this team -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px; margin-top: 4px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">FOUNDER-MARKET FIT:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Both founders are the product's first users. Both spend hundreds of euros monthly on fragmented longevity tools. The medical advisor serves alche's exact target demographic in his private practice. The team has brand, growth, data, operations, and medical expertise covered. The gap is engineering -- and there is a funded plan to close it.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source"></div>
+      <div class="page-footer-num">25</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-12-ask.html ====== -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">12 &mdash; The Ask</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Ask &amp; Deal Terms</div>
+    <div class="action-title">EUR 500K Wandeldarlehen at EUR 2.5M cap. 24-month runway. Tranche-gated against milestones.</div>
+
+    <!-- Terms Strip -->
+    <div class="terms-strip">
+      <div class="terms-strip-item">
+        <div class="terms-strip-value terms-strip-value-accent">&euro;500K</div>
+        <div class="terms-strip-label">Pre-Seed Raise<br>Wandeldarlehen</div>
+      </div>
+      <div class="terms-strip-item" style="border-left: 1px solid rgba(44,36,24,0.08); border-right: 1px solid rgba(44,36,24,0.08);">
+        <div class="terms-strip-value">&euro;2.5M</div>
+        <div class="terms-strip-label">Valuation Cap</div>
+      </div>
+      <div class="terms-strip-item">
+        <div class="terms-strip-value">20%</div>
+        <div class="terms-strip-label">Discount to<br>Next Qualified Round</div>
+      </div>
+    </div>
+
+    <!-- Deal Terms Table -->
+    <div class="section-label">Deal Structure</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Term</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Instrument</td><td>Wandeldarlehen (convertible loan) -- standard German pre-seed structure</td></tr>
+        <tr><td class="bold">Amount</td><td>EUR 500,000</td></tr>
+        <tr><td class="bold">Valuation cap</td><td>EUR 2,500,000</td></tr>
+        <tr><td class="bold">Discount</td><td>20% to next qualified round</td></tr>
+        <tr><td class="bold">Runway</td><td>24 months (pre-launch burn: EUR 7,600/month)</td></tr>
+        <tr><td class="bold">Break-even</td><td>Month 12 -- 145 paying subscribers + EUR 10K/month space revenue</td></tr>
+        <tr><td class="bold">Buffer at M12</td><td>EUR 142,000 (EUR 500K raise) / EUR 42,000 (EUR 400K raise)</td></tr>
+        <tr><td class="bold">Use of funds</td><td>[Detailed allocation shared separately upon request]</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Tranche Milestones -->
+    <div class="section-label" style="margin-top: 4px;">Tranche Milestones</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tranche</th>
+          <th style="text-align: right;">Amount</th>
+          <th>Milestone</th>
+          <th style="text-align: right;">Timeline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row"><td class="bold">Tranche 1</td><td class="number">EUR 200,000</td><td>At signing</td><td class="number">Day 0</td></tr>
+        <tr><td class="bold">Tranche 2</td><td class="number">EUR 150,000</td><td>MVP shipped + 100 active users</td><td class="number">~Month 6</td></tr>
+        <tr><td class="bold">Tranche 3</td><td class="number">EUR 150,000</td><td>EUR 10K MRR achieved</td><td class="number">~Month 9-12</td></tr>
+        <tr class="assumption-row">
+          <td colspan="4">Tranche gates protect investor capital. Each release is tied to a measurable, binary milestone. If MVP does not ship, Tranche 2 does not release. If EUR 10K MRR is not achieved, Tranche 3 does not release.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- What EUR 500K Unlocks -->
+    <div class="section-label" style="margin-top: 4px;">What EUR 500K Unlocks</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #8B9E7C; border-radius: 2px; padding: 10px 12px;">
+        <div style="font-size: 10px; font-weight: 600; margin-bottom: 4px;">Build</div>
+        <ul style="font-size: 9px; color: rgba(44,36,24,0.7); line-height: 1.5; padding-left: 14px; margin: 0;">
+          <li>CTO / technical co-founder hire</li>
+          <li>16-week MVP development sprint</li>
+          <li>App architecture + biomarker integration</li>
+          <li>GmbH formation + legal</li>
+        </ul>
+      </div>
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #C4956A; border-radius: 2px; padding: 10px 12px;">
+        <div style="font-size: 10px; font-weight: 600; margin-bottom: 4px;">Launch</div>
+        <ul style="font-size: 9px; color: rgba(44,36,24,0.7); line-height: 1.5; padding-left: 14px; margin: 0;">
+          <li>Content production scaling</li>
+          <li>First Alche Salon events</li>
+          <li>Beta to 50-100 founding members</li>
+          <li>Community infrastructure</li>
+        </ul>
+      </div>
+      <div style="border: 1px solid rgba(44,36,24,0.12); border-top: 3px solid #B86B4A; border-radius: 2px; padding: 10px 12px;">
+        <div style="font-size: 10px; font-weight: 600; margin-bottom: 4px;">Prove</div>
+        <ul style="font-size: 9px; color: rgba(44,36,24,0.7); line-height: 1.5; padding-left: 14px; margin: 0;">
+          <li>Unit economics validation</li>
+          <li>Churn data vs. industry averages</li>
+          <li>Conversion funnel metrics</li>
+          <li>Physical space as acquisition channel proof</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Standard German Wandeldarlehen structure / Internal financial modeling</div>
+      <div class="page-footer-num">26</div>
+    </div>
+  </div>
+
+  <!-- ====== deloitte-section-13-closing.html ====== -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">13 &mdash; Closing</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Growth Trajectory &amp; Contact</div>
+    <div class="action-title">From Berlin proof-of-concept to European platform in 24 months.</div>
+
+    <!-- Growth Arc Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Timeline</th>
+          <th>Objective</th>
+          <th style="text-align: right;">Key Metric</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Phase 1: Berlin Proof</td>
+          <td>M0-12</td>
+          <td>App launch. One physical space in Mitte. 145 paying subscribers. Break-even on unit economics. Content flywheel spinning. Community density forming.</td>
+          <td class="number">Break-even</td>
+        </tr>
+        <tr>
+          <td class="bold">Phase 2: Digital Expansion</td>
+          <td>M6-18</td>
+          <td>Open app beyond Berlin. Ship products across the EU. Partner with existing wellness spaces. Prove digital-only members retain without a physical node.</td>
+          <td class="number">EU subscribers</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Phase 3: Scale + Seed Round</td>
+          <td>M12-24</td>
+          <td>Second Berlin location where digital density is highest. Pop-ups before permanent. Seed round at EUR 2M+ MRR trajectory.</td>
+          <td class="number">MRR trajectory</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- What alche is / is not -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+      <div>
+        <div class="section-label" style="color: rgba(44,36,24,0.45);">What alche is not</div>
+        <ul class="what-not-list">
+          <li>Not a wellness brand that happens to have an app</li>
+          <li>Not a longevity clinic for the already-converted</li>
+          <li>Not another personalized nutrition play</li>
+          <li>Not a Silicon Valley export</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label" style="color: #8B9E7C;">What alche is</div>
+        <ul class="what-is-list">
+          <li>The digital platform is the business</li>
+          <li>The physical space is one revenue module</li>
+          <li>Built in Berlin for European culture, regulation, and sensibility</li>
+          <li>GDPR-native from day one</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contact / Close -->
+    <div class="close-section">
+      <div class="close-wordmark">alche</div>
+      <div class="close-tagline">The longevity lifestyle platform that translates the science of living longer into daily rituals you actually enjoy.</div>
+      <div class="close-contact">
+        Daria Dijan Roth &mdash; daria@alche.space<br>
+        Timur Tasdogan &mdash; timur@alche.space<br><br>
+        Pre-Seed | Berlin, Germany | February 2026<br>
+        Confidential
+      </div>
+      <div class="close-cta">
+        Detailed term sheet, use of funds, and data room available upon request.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source"></div>
+      <div class="page-footer-num">27</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche | The Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; table-layout: fixed; }
+
+    /* Not/But grid */
+    .not-but-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: var(--space-4) 0;
+    }
+    .not-but-grid__item {
+      padding: var(--space-3) var(--space-4);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      border-bottom: 1px solid var(--deep-04);
+    }
+    .not-but-grid__item--header {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding-bottom: var(--space-2);
+      border-bottom: 1.5px solid var(--deep-15);
+    }
+    .not-but-grid__item--not {
+      color: var(--stone);
+    }
+    .not-but-grid__item--but {
+      color: var(--deep);
+      font-weight: 500;
+    }
+
+    /* Loop steps */
+    .loop-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+      margin: var(--space-4) 0;
+      overflow: hidden;
+    }
+    .loop-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: var(--space-2);
+      align-items: start;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      background: var(--deep-04);
+    }
+    .loop-step__num {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--amber);
+      opacity: 0.5;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .loop-step__title {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 1px;
+    }
+    .loop-step__desc {
+      font-family: var(--font-sans);
+      font-size: 8.5px;
+      color: var(--deep-70);
+      line-height: 1.45;
+    }
+
+    /* Customer journey compact */
+    .cj-step {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: var(--space-2);
+      align-items: start;
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--deep-04);
+    }
+    .cj-step:last-child { border-bottom: none; }
+    .cj-step__num {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 300;
+      color: var(--amber);
+      opacity: 0.4;
+      line-height: 1;
+    }
+    .cj-step__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--deep);
+    }
+    .cj-step__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+    }
+
+    /* Product ecosystem compact */
+    .product-cat {
+      margin-bottom: var(--space-3);
+    }
+    .product-cat__title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: var(--space-1);
+    }
+    .product-cat__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.5;
+    }
+
+    /* Individual screen grids */
+    .screen-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-3);
+      overflow: hidden;
+    }
+    .screen-grid-3 img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+    .screen-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 160px));
+      gap: var(--space-3);
+      overflow: hidden;
+    }
+    .screen-grid-2 img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 — What alche Builds
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header" style="margin-bottom: var(--space-5);">
+      <span class="section-header__number">[05] The Solution</span>
+      <h1 class="section-header__title"><strong>What alche Builds</strong></h1>
+      <p class="section-header__subtitle">A premium wellness ecosystem that connects a physical flagship, a mobile application, a product brand, and community events through one integrated information system.</p>
+    </div>
+
+    <!-- Not a / But a -->
+    <div class="not-but-grid mb-4">
+      <div class="not-but-grid__item not-but-grid__item--header text-stone">Not a</div>
+      <div class="not-but-grid__item not-but-grid__item--header text-amber">But a</div>
+      <div class="not-but-grid__item not-but-grid__item--not">A caf&eacute;</div>
+      <div class="not-but-grid__item not-but-grid__item--but">A platform for wellness culture, education, and technology</div>
+      <div class="not-but-grid__item not-but-grid__item--not">A supplement brand</div>
+      <div class="not-but-grid__item not-but-grid__item--but">A scalable product brand organized by health outcomes</div>
+      <div class="not-but-grid__item not-but-grid__item--not">An app</div>
+      <div class="not-but-grid__item not-but-grid__item--but">An organised combination of people, products, and data</div>
+    </div>
+
+    <!-- Hybrid Model Callout -->
+    <div class="callout callout--amber mb-5">
+      <div class="callout__title">The Hybrid Model</div>
+      <div class="callout__body">
+        As a physical-digital hybrid B2C company, alche uses daily rituals, personalized protocols, and data-driven feedback loops to generate recurring engagement, while management information systems support coordination, decision-making, and scalable growth.
+      </div>
+    </div>
+
+    <!-- Two-col: Physical / Digital -->
+    <div class="two-col">
+      <div class="glass-accent glass-accent--sage">
+        <h4 class="mb-2" style="font-size: var(--text-base);">Physical (Berlin)</h4>
+        <p class="text-sm mb-2" style="color: var(--deep-70); line-height: 1.55;">Flagship location, functional smoothies, LED red light therapy, curated products, events.</p>
+        <div class="font-mono text-xs" style="color: var(--sage); font-weight: 600;">&rarr; Builds trust, generates behavioral data</div>
+      </div>
+      <div class="glass-accent glass-accent--terra">
+        <h4 class="mb-2" style="font-size: var(--text-base);">Digital (Global)</h4>
+        <p class="text-sm mb-2" style="color: var(--deep-70); line-height: 1.55;">Proprietary app, memberships, booking, personalized protocols, online shop, community.</p>
+        <div class="font-mono text-xs" style="color: var(--terra); font-weight: 600;">&rarr; Recurring revenue, borderless scalability</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">10</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2 — The Loop
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The Feedback Loop</div>
+    <h2 class="mb-2"><strong>The Loop.</strong> Eight steps from goal to re-entry.</h2>
+    <p class="text-sm mb-4" style="color: var(--deep-70); max-width: 480px; line-height: 1.55;">alche's competitive advantage is a continuous data-driven feedback loop connecting physical and digital layers. The loop is the product.</p>
+
+    <!-- 8-step loop -->
+    <div class="loop-container mb-4">
+      <div class="loop-step">
+        <div class="loop-step__num">01</div>
+        <div>
+          <div class="loop-step__title">Goal Selection</div>
+          <div class="loop-step__desc">User selects wellness goal in the app (skin, energy, calm, gut, recovery).</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">02</div>
+        <div>
+          <div class="loop-step__title">Personalized Protocol Created</div>
+          <div class="loop-step__desc">System generates LED frequency + smoothie + product plan matched to goal.</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">03</div>
+        <div>
+          <div class="loop-step__title">Booking</div>
+          <div class="loop-step__desc">LED session + smoothie pre-ordered via app. Real-time availability.</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">04</div>
+        <div>
+          <div class="loop-step__title">Experience</div>
+          <div class="loop-step__desc">Physical visit: LED mask + smoothie + check-in. 20-minute session.</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">05</div>
+        <div>
+          <div class="loop-step__title">Data Captured</div>
+          <div class="loop-step__desc">System records usage patterns: energy, mood, skin, purchases, attendance &rarr; structured data.</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">06</div>
+        <div>
+          <div class="loop-step__title">Insights Generated</div>
+          <div class="loop-step__desc">System identifies patterns, correlations, opportunities, and progress tracking.</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">07</div>
+        <div>
+          <div class="loop-step__title">Recommendations</div>
+          <div class="loop-step__desc">Product replenishment, event invitations, protocol adjustment. Revenue at every node.</div>
+        </div>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step__num">08</div>
+        <div>
+          <div class="loop-step__title">Re-entry</div>
+          <div class="loop-step__desc">User returns to loop with smarter protocol. Continuous learning.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom line -->
+    <div class="callout callout--sage mb-4">
+      <div class="callout__body"><strong>This loop transforms one-time visits into recurring revenue and continuous learning.</strong> Each rotation generates data that makes the next rotation stickier, more personalized, and more commercially productive.</div>
+    </div>
+
+    <!-- App screenshots: Core Flow -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: var(--space-2);">App Flow: Booking, Session, Tracking</div>
+      <div class="screen-grid-3">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu">
+        <img src="../screens/S05-Session-Active.png" alt="Session Active">
+      </div>
+    </div>
+
+    <!-- Dashboard + Onboarding -->
+    <div>
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); font-weight: 600; margin-bottom: var(--space-2);">Dashboard + Onboarding</div>
+      <div class="screen-grid-2">
+        <img src="../screens/S01-Home-Dashboard.png" alt="Home Dashboard">
+        <img src="../screens/S02-Onboarding.png" alt="Onboarding">
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">11</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+
+  <!-- ============================================================
+       PAGE 3 — Physical Experience + Product Ecosystem
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The Physical Experience</div>
+    <h2 class="mb-4"><strong>Customer Journey + Product Ecosystem</strong></h2>
+
+    <div class="two-col mb-4">
+      <!-- Left: Customer Journey -->
+      <div>
+        <div class="font-mono mb-2" style="font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber);">Customer Journey</div>
+
+        <div class="cj-step">
+          <div class="cj-step__num">1</div>
+          <div>
+            <div class="cj-step__title">Book via app</div>
+            <div class="cj-step__desc">LED session + smoothie + boost selected before arrival.</div>
+          </div>
+        </div>
+        <div class="cj-step">
+          <div class="cj-step__num">2</div>
+          <div>
+            <div class="cj-step__title">Arrive</div>
+            <div class="cj-step__desc">Smoothie is ready, LED chair is ready. Zero wait.</div>
+          </div>
+        </div>
+        <div class="cj-step">
+          <div class="cj-step__num">3</div>
+          <div>
+            <div class="cj-step__title">Experience</div>
+            <div class="cj-step__desc">LED red light mask on, functional smoothie in hand. 20-minute session.</div>
+          </div>
+        </div>
+        <div class="cj-step">
+          <div class="cj-step__num">4</div>
+          <div>
+            <div class="cj-step__title">Check-in</div>
+            <div class="cj-step__desc">Post-session feedback: energy, mood, skin. Feeds the information system.</div>
+          </div>
+        </div>
+        <div class="cj-step">
+          <div class="cj-step__num">5</div>
+          <div>
+            <div class="cj-step__title">Browse and buy</div>
+            <div class="cj-step__desc">Product shelf organized by outcome, or order via app for delivery.</div>
+          </div>
+        </div>
+        <div class="cj-step">
+          <div class="cj-step__num">6</div>
+          <div>
+            <div class="cj-step__title">Leave and return</div>
+            <div class="cj-step__desc">App reminds, recommends, and books the next visit.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Product Ecosystem -->
+      <div>
+        <div class="font-mono mb-2" style="font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage);">Product Ecosystem</div>
+
+        <div class="product-cat">
+          <div class="product-cat__title">Smoothie Bar (6 options, EUR 7-11)</div>
+          <div class="product-cat__body">
+            Alch&eacute; Potions N&ordm;1 (radiance/glow), N&ordm;2 (focus/clarity), N&ordm;3 (calm/stillness), N&ordm;4 (recover/repair), N&ordm;5 (gut/balance), N&ordm;6 (reset/clean).
+          </div>
+        </div>
+        <div class="product-cat">
+          <div class="product-cat__title">Functional Boosts (+EUR 2 each)</div>
+          <div class="product-cat__body">
+            Glow (collagen + vitC), Energy (lion's mane + maca), Calm (ashwagandha + reishi), Gut (sea moss), Recovery (curcumin).
+          </div>
+        </div>
+        <div class="product-cat">
+          <div class="product-cat__title">LED Red Light Therapy</div>
+          <div class="product-cat__body">
+            Glow Session (630-660nm). Recovery Session (810-850nm). 20-minute sessions.
+          </div>
+        </div>
+        <div class="product-cat">
+          <div class="product-cat__title">Product Shelf (outcome-based)</div>
+          <div class="product-cat__body">
+            5 own blends (300g pouches), single ingredients (collagen, matcha, spirulina), capsules (omega-3, NAC, CoQ10, NR, probiotics, glutathione), curated 3rd-party products.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data callout -->
+    <div class="callout callout--sage">
+      <div class="callout__body">
+        <strong>Every interaction generates structured data that feeds the information system.</strong> The physical space is not just a revenue source; it is a data-generating environment. Session frequency, product preferences, self-reported outcomes, and purchase patterns form the behavioral dataset that powers personalization.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">12</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 3 -->
+
+</body>
+</html>

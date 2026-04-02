@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche - The Solution</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Four Pillars layout */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin: var(--space-4) 0;
+    }
+
+    .pillar-card {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+    }
+
+    .pillar-card__num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .pillar-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: var(--space-1);
+    }
+
+    .pillar-card__detail {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      color: var(--deep-70);
+      line-height: 1.5;
+      margin-bottom: 2px;
+    }
+
+    .pillar-card__data {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      color: var(--stone);
+      margin-top: var(--space-1);
+    }
+
+    /* Center hub */
+    .info-system-hub {
+      text-align: center;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--amber);
+      border-radius: var(--radius-lg);
+      background: var(--amber-10);
+      margin: var(--space-3) auto;
+      max-width: 360px;
+    }
+
+    .info-system-hub__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+    }
+
+    .info-system-hub__desc {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      color: var(--deep-70);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+
+    /* Journey steps for physical experience */
+    .journey-flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: var(--space-2);
+      margin: var(--space-3) 0;
+    }
+
+    .journey-flow__step {
+      text-align: center;
+      padding: var(--space-2);
+      border-radius: var(--radius-sm);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    .journey-flow__step::after {
+      content: '\2192';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: var(--amber);
+      opacity: 0.4;
+    }
+
+    .journey-flow__step:last-child::after {
+      display: none;
+    }
+
+    .journey-flow__num {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 1px;
+    }
+
+    .journey-flow__title {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 1px;
+      line-height: 1.2;
+    }
+
+    .journey-flow__desc {
+      font-family: var(--font-sans);
+      font-size: 7px;
+      color: var(--deep-70);
+      line-height: 1.35;
+    }
+
+    /* Product sidebar */
+    .product-sidebar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+      margin: var(--space-3) 0;
+    }
+
+    .product-sidebar__group {
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+    }
+
+    .product-sidebar__label {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-1);
+    }
+
+    .product-sidebar__item {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.5;
+    }
+
+    /* Screen grid images - responsive */
+    .screen-grid-3 img, .screen-grid-2 img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Ensure all images are responsive */
+    .page img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* App modules grid */
+    .app-modules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin: var(--space-2) 0;
+    }
+
+    .app-module {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: var(--space-1);
+      align-items: start;
+      padding: 4px var(--space-2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+    }
+
+    .app-module__num {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      font-weight: 300;
+      color: var(--amber);
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .app-module__title {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 0;
+    }
+
+    .app-module__desc {
+      font-family: var(--font-sans);
+      font-size: 7.5px;
+      color: var(--deep-70);
+      line-height: 1.35;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 - What is Alche?
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[05] The Solution</span>
+      <h1 class="section-header__title"><strong>What is alche?</strong></h1>
+      <p class="section-header__subtitle">A premium wellness ecosystem that integrates a physical flagship experience, a proprietary mobile application, an outcome-based product brand, and a curated event programme into one data-enabled membership.</p>
+    </div>
+
+    <!-- Four Pillars -->
+    <div class="section-label mb-2">Four Pillars</div>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-card__num text-amber">01 Physical Experience</div>
+        <div class="pillar-card__title">Berlin Mitte Flagship</div>
+        <div class="pillar-card__detail">Functional smoothies, LED red light therapy, curated product shelf, in-person events. The physical touchpoint that builds trust and anchors the brand in daily routine.</div>
+        <div class="pillar-card__data">Generates behavioral data + walk-in conversions</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card__num text-terra">02 Product Brand &amp; Marketplace</div>
+        <div class="pillar-card__title">Outcome-Based Blends</div>
+        <div class="pillar-card__detail">Proprietary blends (Glow, Energy, Calm, Recovery, Gut, Reset), curated third-party supplements and tools. Organized by outcome, not ingredient.</div>
+        <div class="pillar-card__data">Product margins + replenishment revenue</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card__num text-rose">03 Events &amp; Culture</div>
+        <div class="pillar-card__title">Community Programme</div>
+        <div class="pillar-card__detail">Wellness workshops, expert talks, community sessions. Each event strengthens retention, deepens brand loyalty, and generates engagement data.</div>
+        <div class="pillar-card__data">Retention + engagement data</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card__num text-sage">04 App &amp; Membership</div>
+        <div class="pillar-card__title">Digital Operating System</div>
+        <div class="pillar-card__detail">LED booking, digital menu, membership management, goal-based journeys, Glow Scan, progress tracking, Digital Twin. The layer that enables scale.</div>
+        <div class="pillar-card__data">Recurring revenue + global scale</div>
+      </div>
+    </div>
+
+    <!-- Integrated Information System Hub -->
+    <div class="info-system-hub">
+      <div class="info-system-hub__title">Integrated Information System</div>
+      <div class="info-system-hub__desc">Each pillar generates data. The core information system aggregates it, enabling evidence-based decisions across the entire ecosystem.</div>
+    </div>
+
+    <!-- Key Insight -->
+    <div class="callout callout--amber mt-3 mb-3">
+      <div class="callout__body">
+        Each pillar generates data &rarr; feeds the core information system &rarr; enables evidence-based decisions across the entire ecosystem. No single-vertical competitor can replicate this integration.
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">10</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2 - The Physical Experience
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The Physical Experience</div>
+    <h2 class="mb-3"><strong>Six-step customer journey, zero friction.</strong></h2>
+
+    <!-- 6-Step Journey Flow -->
+    <div class="journey-flow mb-4">
+      <div class="journey-flow__step">
+        <div class="journey-flow__num">01</div>
+        <div class="journey-flow__title">Book via App</div>
+        <div class="journey-flow__desc">LED slot + smoothie pre-order</div>
+      </div>
+      <div class="journey-flow__step">
+        <div class="journey-flow__num">02</div>
+        <div class="journey-flow__title">Arrive</div>
+        <div class="journey-flow__desc">Smoothie ready, LED chair ready</div>
+      </div>
+      <div class="journey-flow__step">
+        <div class="journey-flow__num">03</div>
+        <div class="journey-flow__title">Experience</div>
+        <div class="journey-flow__desc">LED mask + functional smoothie, 20 min</div>
+      </div>
+      <div class="journey-flow__step">
+        <div class="journey-flow__num">04</div>
+        <div class="journey-flow__title">Check-in</div>
+        <div class="journey-flow__desc">Post-session feedback: energy, mood, skin</div>
+      </div>
+      <div class="journey-flow__step">
+        <div class="journey-flow__num">05</div>
+        <div class="journey-flow__title">Browse &amp; Buy</div>
+        <div class="journey-flow__desc">Product shelf organized by outcome</div>
+      </div>
+      <div class="journey-flow__step">
+        <div class="journey-flow__num">06</div>
+        <div class="journey-flow__title">Leave &amp; Return</div>
+        <div class="journey-flow__desc">App reminds, recommends, books next</div>
+      </div>
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Product Ecosystem -->
+    <div class="section-label mb-2">Product Ecosystem</div>
+
+    <div class="product-sidebar mb-3">
+      <div class="product-sidebar__group">
+        <div class="product-sidebar__label text-amber">Smoothie Bar: 6 Alche Potions (EUR 7-11)</div>
+        <div class="product-sidebar__item">N&#186;1 Glow, radiance (collagen, berry, vitamin C)</div>
+        <div class="product-sidebar__item">N&#186;2 Focus, clarity (lion's mane, cacao, MCT)</div>
+        <div class="product-sidebar__item">N&#186;3 Calm, stillness (ashwagandha, lavender, reishi)</div>
+        <div class="product-sidebar__item">N&#186;4 Recover, repair (curcumin, tart cherry, ginger)</div>
+        <div class="product-sidebar__item">N&#186;5 Gut, balance (sea moss, prebiotic fibre, aloe)</div>
+        <div class="product-sidebar__item">N&#186;6 Reset, clean (chlorophyll, spirulina, lemon)</div>
+      </div>
+      <div class="product-sidebar__group">
+        <div class="product-sidebar__label text-sage">Functional Boosts (+EUR 2)</div>
+        <div class="product-sidebar__item">Glow: collagen + vitamin C</div>
+        <div class="product-sidebar__item">Energy: lion's mane + maca</div>
+        <div class="product-sidebar__item">Calm: ashwagandha + reishi</div>
+        <div class="product-sidebar__item">Gut: sea moss</div>
+        <div class="product-sidebar__item">Recovery: curcumin</div>
+        <div class="product-sidebar__label text-terra mt-2">LED Sessions</div>
+        <div class="product-sidebar__item">Glow Session: 630-660nm (visible red)</div>
+        <div class="product-sidebar__item">Recovery Session: 810-850nm (near-infrared)</div>
+      </div>
+    </div>
+
+    <div class="product-sidebar mb-3">
+      <div class="product-sidebar__group" style="grid-column: span 2;">
+        <div class="product-sidebar__label text-rose">Product Shelf</div>
+        <div class="product-sidebar__item">Own blends: 300g pouches (at-home versions of each Potion) &nbsp;|&nbsp; Capsules: omega-3, NAC, CoQ10, NR, probiotics &nbsp;|&nbsp; Curated third-party: selected tools and supplements</div>
+      </div>
+    </div>
+
+    <!-- App screenshots showing physical experience -->
+    <div class="mb-2">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: var(--space-1);">App: Physical Experience Flow</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S05-Session-Active.png" alt="Session Active" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: block;">
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">11</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+
+  <!-- ============================================================
+       PAGE 3 - The App
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The App</div>
+    <h2 class="mb-2"><strong>Ten modules, one operating system.</strong></h2>
+
+    <!-- 10 App Modules Grid -->
+    <div class="app-modules-grid">
+      <div class="app-module">
+        <div class="app-module__num">01</div>
+        <div>
+          <div class="app-module__title">LED Booking</div>
+          <div class="app-module__desc">Real-time availability, 20-min slots, smoothie pre-order integrated into booking flow.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">02</div>
+        <div>
+          <div class="app-module__title">Digital Menu</div>
+          <div class="app-module__desc">6 smoothies + 5 boosts, journey-based recommendations tailored to selected outcome.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">03</div>
+        <div>
+          <div class="app-module__title">Membership</div>
+          <div class="app-module__desc">Core / Premium tiers, credit tracking, subscription management.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">04</div>
+        <div>
+          <div class="app-module__title">Shop + Replenishment</div>
+          <div class="app-module__desc">Own + curated products, outcome-based browsing, automated reorder cycles.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">05</div>
+        <div>
+          <div class="app-module__title">Events</div>
+          <div class="app-module__desc">Calendar, RSVP, member-only access. Ticketing for workshops and expert talks.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">06</div>
+        <div>
+          <div class="app-module__title">In-Store Mode</div>
+          <div class="app-module__desc">Auto-activates in physical space, QR scanning for check-in and product lookup.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">07</div>
+        <div>
+          <div class="app-module__title">Goal-Based Journeys</div>
+          <div class="app-module__desc">10 goal options, 4-week protocols combining sessions, products, and tracking.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">08</div>
+        <div>
+          <div class="app-module__title">Glow Scan</div>
+          <div class="app-module__desc">Selfie-based Glow Score (0-100), trend analysis across sessions over time.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">09</div>
+        <div>
+          <div class="app-module__title">Progress Tracking</div>
+          <div class="app-module__desc">Sleep, stress, energy, skin, gut. Self-reported and wearable-synced metrics.</div>
+        </div>
+      </div>
+      <div class="app-module">
+        <div class="app-module__num">10</div>
+        <div>
+          <div class="app-module__title">Digital Twin</div>
+          <div class="app-module__desc">Unified health profile aggregating all data points. AI-driven protocol optimization.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Screenshots -->
+    <div style="margin-top: 6px; margin-bottom: 4px;">
+      <div class="font-mono" style="font-size: 7px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: 2px;">MVP: Core Screens</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
+        <img src="../screens/S01-Home-Dashboard.png" alt="Home Dashboard" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); display: block;">
+      </div>
+    </div>
+
+    <div style="margin-bottom: 4px;">
+      <div class="font-mono" style="font-size: 7px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); font-weight: 600; margin-bottom: 2px;">MVP: Extended</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
+        <img src="../screens/S06-Shop-by-Outcome.png" alt="Shop by Outcome" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S07-Events.png" alt="Events" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S08-Membership.png" alt="Membership" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); display: block;">
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">12</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 3 -->
+
+</body>
+</html>

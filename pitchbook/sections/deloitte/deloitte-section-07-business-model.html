@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | Business Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 16px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .total-row td { border-top: 2px solid rgba(44,36,24,0.15); font-weight: 600; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+
+    .hero-stat { text-align: center; padding: 20px 0; margin-bottom: 16px; border-top: 2px solid rgba(44,36,24,0.15); border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .hero-stat-value { font-family: 'Space Mono', monospace; font-size: 36px; font-weight: 700; color: #C4956A; font-variant-numeric: tabular-nums; line-height: 1; }
+    .hero-stat-label { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-top: 6px; }
+
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: Break-Even Analysis -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">07 &mdash; Business Model</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">Business Model &amp; Unit Economics</div>
+    <div class="action-title">Break-even at Month 12 with 145 paying subscribers -- conservative model with 24-month runway and EUR 142K buffer.</div>
+
+    <!-- Hero Stat -->
+    <div class="hero-stat">
+      <div class="hero-stat-value">145 subscribers to break-even</div>
+      <div class="hero-stat-label">From 108K Mitte residents aged 30-44. 0.13% penetration required. Conservative Y1: 300 members. Base case: 600.</div>
+    </div>
+
+    <!-- Break-Even Path -->
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th style="text-align: right;">EUR 500K Raise</th>
+          <th style="text-align: right;">EUR 400K Raise</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Raise amount</td><td class="number">EUR 500,000</td><td class="number">EUR 400,000</td></tr>
+        <tr><td class="bold">Runway</td><td class="number">24 months</td><td class="number">~20 months</td></tr>
+        <tr><td class="bold">Pre-launch burn rate</td><td class="number">EUR 7,600/mo</td><td class="number">EUR 7,600/mo</td></tr>
+        <tr><td class="bold">Break-even point</td><td class="number">Month 12</td><td class="number">Month 12</td></tr>
+        <tr><td class="bold">Required paying subscribers</td><td class="number">~145</td><td class="number">~145</td></tr>
+        <tr><td class="bold">Physical space revenue at break-even</td><td class="number">EUR 10,000/mo</td><td class="number">EUR 10,000/mo</td></tr>
+        <tr class="highlight-row">
+          <td class="bold">Buffer at break-even</td>
+          <td class="number bold">EUR 142,000</td>
+          <td class="number bold">EUR 42,000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Sensitivity Analysis -->
+    <div class="section-label" style="margin-top: 4px;">Sensitivity Analysis</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th style="text-align: right;">Conversion Rate</th>
+          <th style="text-align: right;">Monthly Churn</th>
+          <th style="text-align: right;">Break-Even</th>
+          <th style="text-align: right;">Subs Required</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Base case</td>
+          <td class="number">4.5%</td>
+          <td class="number">8%</td>
+          <td class="number">Month 12</td>
+          <td class="number">~145</td>
+        </tr>
+        <tr>
+          <td class="bold">Downside: lower conversion</td>
+          <td class="number">3.0%</td>
+          <td class="number">8%</td>
+          <td class="number">Month 15</td>
+          <td class="number">~190</td>
+        </tr>
+        <tr>
+          <td class="bold">Downside: higher churn</td>
+          <td class="number">4.5%</td>
+          <td class="number">12%</td>
+          <td class="number">Month 14</td>
+          <td class="number">~170</td>
+        </tr>
+        <tr>
+          <td class="bold">Worst case: both</td>
+          <td class="number">3.0%</td>
+          <td class="number">12%</td>
+          <td class="number">Month 18</td>
+          <td class="number">~230</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Upside: community-driven</td>
+          <td class="number">6.0%</td>
+          <td class="number">6%</td>
+          <td class="number">Month 9</td>
+          <td class="number">~110</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Assumptions: Base case conversion (4.5%) is above RevenueCat 2025 health/fitness median (2-3%), adjusted for community-driven organic acquisition where conversion trends 1.5-2x paid channel benchmarks. Base case churn (8%) vs. industry average (12-15%) reflects physical touchpoint + community retention thesis.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Key takeaway -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">KEY FINDING:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Even in the worst-case scenario (3% conversion, 12% churn), break-even occurs within the 24-month runway at EUR 500K raise. The model survives stress-testing.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 State of Subscription Apps / Recurly churn benchmarks / Internal financial modeling</div>
+      <div class="page-footer-num">16</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Unit Economics + Pricing -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">07 &mdash; Business Model</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">Conservative LTV:CAC of 5.1x with clear path to 14.7x as community-driven acquisition scales.</div>
+
+    <!-- Unit Economics Table -->
+    <div class="section-label">Unit Economics</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th style="text-align: right;">Conservative</th>
+          <th style="text-align: right;">Realistic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">ARPU (weighted monthly)</td><td class="number">EUR 35</td><td class="number">EUR 49</td></tr>
+        <tr><td class="bold">Average lifetime (months)</td><td class="number">8</td><td class="number">12</td></tr>
+        <tr><td class="bold">LTV</td><td class="number">EUR 280</td><td class="number">EUR 588</td></tr>
+        <tr><td class="bold">CAC</td><td class="number">EUR 55</td><td class="number">EUR 40</td></tr>
+        <tr class="highlight-row"><td class="bold">LTV : CAC</td><td class="number bold">5.1x</td><td class="number bold">14.7x</td></tr>
+        <tr><td class="bold">Payback period</td><td class="number">~1.6 months</td><td class="number">~0.8 months</td></tr>
+        <tr class="assumption-row">
+          <td colspan="3">Conservative: EUR 35 ARPU (weighted toward Core tier), 8-month lifetime, EUR 55 CAC (paid channels). Realistic: EUR 49 ARPU (weighted with Pro tier upgrades), 12-month lifetime, EUR 40 CAC (community-driven organic acquisition lowers blended CAC).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pricing Table -->
+    <div class="section-label">Pricing Structure</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th style="text-align: right;">Monthly</th>
+          <th>Value Proposition</th>
+          <th style="text-align: right;">Gross Margin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Free</td><td class="number" style="color: rgba(44,36,24,0.4);">EUR 0</td><td>Content, community browsing, product browsing</td><td class="number" style="color: rgba(44,36,24,0.4);">&mdash;</td></tr>
+        <tr><td class="bold">Core</td><td class="number bold">EUR 19</td><td>Biomarker dashboard, wearable sync, basic protocols</td><td class="number">85-90%</td></tr>
+        <tr class="highlight-row"><td class="bold">Pro</td><td class="number bold">EUR 49</td><td>Personalized protocols, AI insights, advanced tracking</td><td class="number">85-90%</td></tr>
+        <tr><td class="bold">Premium</td><td class="number bold">EUR 99</td><td>Blood panel credits, 1:1 reviews, exclusive events, CGM (Phase 2)</td><td class="number">70-85%</td></tr>
+        <tr class="assumption-row">
+          <td colspan="4">Assumption: Tier mix at M12: ~60% Core, ~25% Pro, ~15% Premium. Weighted ARPU: EUR 49/mo.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Gross Margin by Stream -->
+    <div class="section-label">Gross Margin by Revenue Stream</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Revenue Stream</th>
+          <th style="text-align: right;">Gross Margin</th>
+          <th style="text-align: right;">% of Y1 Revenue</th>
+          <th style="text-align: right;">% of Y3 Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Digital subscriptions</td><td class="number">85-90%</td><td class="number">52%</td><td class="number">68%</td></tr>
+        <tr><td class="bold">LED / recovery services</td><td class="number">65-75%</td><td class="number">17%</td><td class="number">10%</td></tr>
+        <tr><td class="bold">Product sales (supplements, potions)</td><td class="number">40-65%</td><td class="number">18%</td><td class="number">15%</td></tr>
+        <tr><td class="bold">Events</td><td class="number">50-70%</td><td class="number">—</td><td class="number">—</td></tr>
+        <tr><td class="bold">Physical space (net)</td><td class="number">Variable</td><td class="number">13%</td><td class="number">7%</td></tr>
+        <tr class="total-row highlight-row">
+          <td class="bold">Blended margin</td>
+          <td class="number bold">~72% Y1</td>
+          <td class="number">100%</td>
+          <td class="number bold">~80% Y3</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="4">Revenue shifts from 52% subscription Y1 to 68% Y3, pushing valuation toward SaaS-adjacent multiples (8-15x ARR) vs. premium retail (2-4x revenue).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 / Industry churn benchmarks (Recurly, Baremetrics) / Internal financial modeling</div>
+      <div class="page-footer-num">17</div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: Conversion Funnel -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">07 &mdash; Business Model</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The conversion funnel builds to 145 paying subscribers at Month 12 through a combination of digital conversion and physical space walk-ins.</div>
+
+    <!-- Conversion Funnel as Table -->
+    <div class="section-label">Subscriber Funnel at Month 12</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th style="text-align: right;">Price</th>
+          <th style="text-align: right;">Count</th>
+          <th style="text-align: right;">Conversion Rate</th>
+          <th style="text-align: right;">Monthly Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Free users (base)</td>
+          <td class="number">EUR 0</td>
+          <td class="number">2,000</td>
+          <td class="number">100%</td>
+          <td class="number">EUR 0</td>
+        </tr>
+        <tr>
+          <td class="bold">Core</td>
+          <td class="number">EUR 19</td>
+          <td class="number">~90</td>
+          <td class="number">4.5% free-to-paid</td>
+          <td class="number">EUR 1,710</td>
+        </tr>
+        <tr>
+          <td class="bold">Pro</td>
+          <td class="number">EUR 49</td>
+          <td class="number">~18</td>
+          <td class="number">20% upgrade from Core</td>
+          <td class="number">EUR 882</td>
+        </tr>
+        <tr>
+          <td class="bold">Premium</td>
+          <td class="number">EUR 99</td>
+          <td class="number">~7</td>
+          <td class="number">~8% of paid to Premium</td>
+          <td class="number">EUR 693</td>
+        </tr>
+        <tr style="border-top: 1px solid rgba(44,36,24,0.12);">
+          <td class="bold">Direct-to-paid (physical space)</td>
+          <td class="number">EUR 49 avg</td>
+          <td class="number">~30-40</td>
+          <td class="number">Walk-in conversion</td>
+          <td class="number">EUR 1,470-1,960</td>
+        </tr>
+        <tr class="total-row highlight-row">
+          <td class="bold">Total at Month 12</td>
+          <td class="number"></td>
+          <td class="number bold">~145</td>
+          <td class="number"></td>
+          <td class="number bold">EUR 4,755-5,245/mo</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Assumptions: 4.5% free-to-paid (RevenueCat 2025 health/fitness median: 2-3%, adjusted for community-led acquisition). 20% Core-to-Pro upgrade. Physical space conversion: 30-40 direct subscribers/month (modeled target). Monthly churn: 8% (vs. industry 12-15%).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Revenue Composition Visual -->
+    <div class="section-label" style="margin-top: 8px;">Revenue Composition Shift</div>
+    <div style="margin-bottom: 8px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <span style="font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600; min-width: 24px;">Y1</span>
+        <div style="flex: 1; display: flex; height: 20px; border-radius: 2px; overflow: hidden;">
+          <div style="width: 52%; background: #8B9E7C; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">52%</div>
+          <div style="width: 18%; background: #C4956A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">18%</div>
+          <div style="width: 17%; background: #B86B4A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">17%</div>
+          <div style="width: 13%; background: #9E948A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">13%</div>
+        </div>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); min-width: 60px; text-align: right;">~72% margin</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <span style="font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 600; min-width: 24px;">Y3</span>
+        <div style="flex: 1; display: flex; height: 20px; border-radius: 2px; overflow: hidden;">
+          <div style="width: 68%; background: #8B9E7C; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">68%</div>
+          <div style="width: 15%; background: #C4956A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">15%</div>
+          <div style="width: 10%; background: #B86B4A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 600; color: white;">10%</div>
+          <div style="width: 7%; background: #9E948A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 7px; font-weight: 600; color: white;">7%</div>
+        </div>
+        <span style="font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); min-width: 60px; text-align: right;">~80% margin</span>
+      </div>
+      <div style="display: flex; gap: 16px; font-size: 8px; color: rgba(44,36,24,0.45); margin-top: 4px;">
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #8B9E7C; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Subscriptions</span>
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #C4956A; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Products</span>
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #B86B4A; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Services</span>
+        <span><span style="display: inline-block; width: 8px; height: 8px; background: #9E948A; border-radius: 1px; vertical-align: middle; margin-right: 3px;"></span>Space</span>
+      </div>
+    </div>
+
+    <!-- Graveyard lessons as footnotes -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); padding-top: 10px; margin-top: 12px;">
+      <div style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5); margin-bottom: 6px;">LESSONS FROM $1.4B IN FAILURES</div>
+      <div style="font-size: 9px; color: rgba(44,36,24,0.5); line-height: 1.6;">
+        Asset-light model: Forward Health burned $657M building hardware. We partner, not build the stack. Lab partnerships for testing, curated products not manufactured.<br>
+        Community-first retention: DayTwo had 2,089 citations and died when GLP-1 drugs arrived. Science alone is not a moat. Community is the only retention layer that survives technology disruption.<br>
+        Projected 8% monthly churn vs. industry 12-15% through physical touchpoints, community identity, and longitudinal data compounding.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 / Recurly, Baremetrics churn benchmarks / Forward Health post-mortem / DayTwo Google Scholar / Internal modeling</div>
+      <div class="page-footer-num">18</div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche - The Team</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Team profile cards - ultra-compact for single page */
+    .team-profile {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      align-items: start;
+      margin-bottom: var(--space-2);
+    }
+
+    .team-profile__name {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .team-profile__title {
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      font-weight: 500;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2px;
+    }
+
+    .team-profile__bio {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+    }
+
+    /* Experience line - compact */
+    .exp-line {
+      padding-left: 10px;
+      border-left: 1.5px solid var(--deep-08);
+      margin-bottom: 2px;
+    }
+
+    .exp-line__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      font-weight: 600;
+    }
+
+    .exp-line__tag {
+      font-family: var(--font-mono);
+      font-size: 6.5px;
+      color: var(--sage);
+      background: rgba(139,158,124,0.08);
+      padding: 1px 5px;
+      border-radius: 2px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .exp-line__detail {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.4;
+    }
+
+    /* Governance table - compact */
+    .gov-table {
+      width: 100%;
+      font-size: var(--text-xs);
+    }
+
+    .gov-table td {
+      padding: 2px 0;
+      border-bottom: 1px solid var(--deep-08);
+      vertical-align: top;
+    }
+
+    .gov-table td:first-child {
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      font-weight: 500;
+      color: var(--stone);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: 80px;
+      padding-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 - The Team (single page)
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Team<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header" style="margin-bottom: var(--space-3);">
+      <span class="section-header__number">[11] The Team</span>
+      <h1 class="section-header__title"><strong>Founding Team</strong></h1>
+      <p class="section-header__subtitle" style="font-size: var(--text-sm);">Brand, growth, operations, technology, and medical expertise. The team required to build and scale alche.</p>
+    </div>
+
+    <!-- Timur -->
+    <div class="team-profile">
+      <div>
+        <div class="team-profile__name">Timur Tasdogan</div>
+        <div class="team-profile__title">Co-Founder &amp; CMO, 49% Equity, Full-Time</div>
+        <div class="team-profile__bio">MSc Data Science (GISMA Berlin), BA Economics (Koc University). Quantitative growth expertise across performance marketing, brand strategy, and data analytics.</div>
+      </div>
+    </div>
+
+    <div class="exp-line">
+      <div class="exp-line__title">Concentrix (for Meta) <span class="exp-line__tag">Consulting</span></div>
+      <div class="exp-line__detail">EUR 1.8M ad spend across 390+ advertisers. Average ROAS improved from 1.5x to 2.7x.</div>
+    </div>
+    <div class="exp-line">
+      <div class="exp-line__title">Hepsiburada <span class="exp-line__tag">NASDAQ: HEPS</span></div>
+      <div class="exp-line__detail">EUR 300K performance budget, 4x ROAS. Influencer campaigns: 29M views.</div>
+    </div>
+    <div class="exp-line mb-2">
+      <div class="exp-line__title">Quantpaper <span class="exp-line__tag">Pre-Seed</span></div>
+      <div class="exp-line__detail">Founding team. 30 user interviews, 27% activation lift.</div>
+    </div>
+
+    <div class="sep mb-2"></div>
+
+    <!-- Daria -->
+    <div class="team-profile">
+      <div>
+        <div class="team-profile__name">Daria Dijan Roth</div>
+        <div class="team-profile__title">Co-Founder &amp; COO, 51% Equity, Full-Time</div>
+        <div class="team-profile__bio">BSc Computer Engineering, BA International Business. Systems-oriented operator with production software experience and deep domain expertise from a four-year autoimmune health journey.</div>
+      </div>
+    </div>
+
+    <div class="exp-line">
+      <div class="exp-line__title">Jan Iletisim Teknolojileri <span class="exp-line__tag">Software</span></div>
+      <div class="exp-line__detail">Production backend systems. Development and product architecture for live user-facing applications.</div>
+    </div>
+    <div class="exp-line mb-2">
+      <div class="exp-line__title">MUTA-1 Reklamcilik <span class="exp-line__tag">Agency</span></div>
+      <div class="exp-line__detail">Brand positioning and performance marketing. Acquisition and retention funnel design.</div>
+    </div>
+
+    <div class="sep mb-2"></div>
+
+    <!-- AmirFarzam -->
+    <div class="team-profile">
+      <div>
+        <div class="team-profile__name">AmirFarzam Kamalpour</div>
+        <div class="team-profile__title">Technical Lead</div>
+        <div class="team-profile__bio">Self-taught developer since age 12. Brings existing server infrastructure to the alche build.</div>
+      </div>
+    </div>
+
+    <div class="exp-line">
+      <div class="exp-line__title">Star Digital (stardigital.ir) <span class="exp-line__tag">Founder</span></div>
+      <div class="exp-line__detail">IT infrastructure, hosting, web and app development.</div>
+    </div>
+    <div class="exp-line mb-2">
+      <div class="exp-line__title">Jung von Matt HAVEL, Berlin <span class="exp-line__tag">Agency</span></div>
+      <div class="exp-line__detail">IT and web development.</div>
+    </div>
+
+    <div class="sep mb-2"></div>
+
+    <!-- Medical Advisor -->
+    <div class="team-profile">
+      <div>
+        <div class="team-profile__name">Shukri Jarmoukli</div>
+        <div class="team-profile__title">Medical Advisor, Physician</div>
+        <div class="team-profile__bio">Studied Medicine, Universitat zu Koln. Runs Lifestyledoctor, a self-pay longevity practice in Berlin. Specializes in functional medicine, CGM biofeedback, and clinical psychoneuroimmunology (KPNI). Protocol design validation and biomarker interpretation.</div>
+      </div>
+    </div>
+
+    <div class="sep mb-2"></div>
+
+    <!-- Governance -->
+    <div class="section-label mb-1">Governance</div>
+
+    <table class="gov-table mb-2">
+      <tr><td>Entity</td><td>Alche GmbH (Berlin)</td></tr>
+      <tr><td>Equity</td><td>Daria 51% / Timur 49%</td></tr>
+      <tr><td>History</td><td>10-year personal friendship preceding the venture</td></tr>
+    </table>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">22</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+</body>
+</html>

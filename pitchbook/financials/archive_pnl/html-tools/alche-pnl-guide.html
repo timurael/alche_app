@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P&L Learning Guide — alche</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--cream-mid:#EDE7DC;--deep:#2C2418;
+  --deep-90:rgba(44,36,24,0.9);--deep-70:rgba(44,36,24,0.7);
+  --deep-50:rgba(44,36,24,0.5);--deep-30:rgba(44,36,24,0.3);
+  --deep-15:rgba(44,36,24,0.15);--deep-08:rgba(44,36,24,0.08);
+  --amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;
+  --rose:#C47A8A;--stone:#9E948A;
+  --glass:rgba(255,252,246,0.55);--glass-strong:rgba(255,252,246,0.75);
+  --glass-border:rgba(196,149,106,0.18);--glass-border-strong:rgba(196,149,106,0.3);
+  --positive:#4A7C59;--negative:#8B4513;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:#FEFCF9;color:var(--deep);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(196,149,106,0.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 80%,rgba(139,158,124,0.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(184,107,74,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+.skip-link{position:absolute;top:-40px;left:0;background:var(--deep);color:var(--cream);padding:8px 16px;z-index:1000;font:400 14px/1 'Outfit',sans-serif;text-decoration:none;border-radius:0 0 8px 0}
+.skip-link:focus{top:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+/* Header */
+.sticky-header{position:sticky;top:0;z-index:100;background:rgba(254,252,249,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:12px 24px;display:flex;justify-content:space-between;align-items:center}
+.header-left{display:flex;align-items:baseline;gap:16px}
+.wordmark{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--deep);letter-spacing:0.02em}
+.header-label{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--deep-50)}
+.header-right{display:flex;align-items:center;gap:16px}
+.save-indicator{font-family:'Space Mono',monospace;font-size:10px;color:var(--deep-30)}
+.reset-btn{font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;color:var(--deep-50);background:none;border:1px solid var(--deep-15);padding:6px 14px;border-radius:6px;cursor:pointer;transition:all 0.2s}
+.reset-btn:hover{color:var(--terra);border-color:var(--terra)}
+/* Layout */
+.layout{display:flex;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.sidebar-nav{position:sticky;top:60px;width:200px;height:calc(100vh - 60px);padding:24px 16px;flex-shrink:0;overflow-y:auto}
+.nav-label{font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--amber);font-weight:700;display:block;margin-bottom:16px}
+.progress-bar{height:3px;background:var(--cream-mid);border-radius:2px;margin-bottom:20px;overflow:hidden}
+.progress-fill{height:100%;background:var(--sage);border-radius:2px;transition:width 0.3s ease;width:0}
+.phase-list{list-style:none}
+.phase-item{margin-bottom:4px}
+.phase-link{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:400;color:var(--deep-50);transition:all 0.2s}
+.phase-link:hover,.phase-link.active{background:var(--glass);color:var(--deep)}
+.phase-link.active{font-weight:500}
+.phase-dot{width:8px;height:8px;border-radius:50%;border:2px solid var(--deep-30);flex-shrink:0;transition:all 0.3s}
+.phase-link.active .phase-dot{border-color:var(--amber);background:var(--amber)}
+.phase-link.complete .phase-dot{border-color:var(--sage);background:var(--sage)}
+.glossary-toggle{display:block;width:100%;margin-top:20px;padding:10px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;color:var(--deep-50);background:var(--glass);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;text-align:center;transition:all 0.2s}
+.glossary-toggle:hover{color:var(--deep);border-color:var(--glass-border-strong)}
+/* Main content */
+main{flex:1;max-width:800px;padding:32px 40px 80px}
+.title-section{margin-bottom:48px}
+.title-section h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.1;color:var(--deep);margin-bottom:12px}
+.title-section h1 strong{font-weight:600}
+.subtitle{font-size:16px;color:var(--deep-70);max-width:560px;line-height:1.6}
+/* Phase sections */
+.phase-section{margin-bottom:64px;scroll-margin-top:80px}
+.phase-header{margin-bottom:28px}
+.phase-number{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--amber);font-weight:700;display:block;margin-bottom:4px}
+.phase-header h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--deep)}
+.phase-header h2 strong{font-weight:600}
+.phase-intro{font-size:14px;color:var(--deep-70);margin-bottom:24px;line-height:1.7;max-width:600px}
+/* Glass cards */
+.glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:16px;padding:24px;margin-bottom:20px}
+.glass-elevated{background:var(--glass-strong);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border-strong);border-radius:20px;box-shadow:0 8px 32px rgba(44,36,24,0.06),0 2px 8px rgba(44,36,24,0.03);padding:28px;margin-bottom:24px}
+/* Input groups */
+.input-group{margin-bottom:16px}
+.input-group-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--deep);margin-bottom:16px}
+.input-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.input-row label{font-size:13px;font-weight:400;color:var(--deep-70);min-width:180px;flex-shrink:0}
+.input-field{position:relative;display:flex;align-items:center;gap:4px}
+.input-prefix,.input-suffix{font-family:'Space Mono',monospace;font-size:12px;color:var(--deep-50);flex-shrink:0}
+input[type="number"]{font-family:'Space Mono',monospace;font-size:14px;color:var(--deep);background:var(--cream);border:1px solid var(--deep-15);border-radius:8px;padding:8px 12px;width:120px;text-align:right;-moz-appearance:textfield;transition:border-color 0.2s}
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type="number"]:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px rgba(184,107,74,0.1)}
+.help-text{font-size:11px;color:var(--deep-30);margin-top:2px;display:block}
+/* Calculated fields */
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-radius:10px;margin-bottom:8px}
+.calc-row.subtotal{background:rgba(139,158,124,0.08);border:1px solid rgba(139,158,124,0.15)}
+.calc-row.milestone{background:var(--glass-strong);border:1px solid var(--glass-border-strong);padding:16px 20px;border-radius:14px;margin:20px 0}
+.calc-label{font-size:13px;font-weight:500;color:var(--deep)}
+.calc-value{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--deep)}
+.calc-value.positive{color:var(--positive)}
+.calc-value.negative{color:var(--negative)}
+.calc-value.large{font-size:24px}
+.calc-pct{font-family:'Space Mono',monospace;font-size:12px;color:var(--deep-50);margin-left:8px}
+/* Concept cards */
+.concept-card{border:1px solid var(--deep-15);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.concept-card.tip{border-left:3px solid var(--sage)}
+.concept-card.warning{border-left:3px solid var(--terra)}
+.concept-card.info{border-left:3px solid var(--amber)}
+.concept-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;color:var(--deep-70);text-align:left}
+.concept-toggle:hover{color:var(--deep)}
+.concept-chevron{transition:transform 0.2s;font-size:10px;color:var(--deep-30)}
+.concept-card.expanded .concept-chevron{transform:rotate(180deg)}
+.concept-content{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.concept-card.expanded .concept-content{max-height:600px}
+.concept-body{padding:0 16px 16px;font-size:13px;color:var(--deep-70);line-height:1.7}
+/* Continue button */
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:12px 24px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;color:var(--deep);background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;cursor:pointer;transition:all 0.2s}
+.continue-btn:hover{background:var(--glass-strong);border-color:var(--glass-border-strong)}
+/* Copy button */
+.copy-btn{position:fixed;bottom:24px;right:24px;z-index:90;padding:14px 24px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;color:white;background:var(--deep);border:none;border-radius:12px;cursor:pointer;box-shadow:0 4px 16px rgba(44,36,24,0.2);transition:all 0.2s;display:flex;align-items:center;gap:8px}
+.copy-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(44,36,24,0.3)}
+.copy-btn.success{background:var(--positive)}
+/* Glossary panel */
+.glossary-panel{position:fixed;right:-320px;top:60px;width:300px;height:calc(100vh - 60px);background:rgba(254,252,249,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-left:1px solid var(--glass-border);z-index:95;transition:right 0.3s ease;overflow-y:auto;padding:24px}
+.glossary-panel.open{right:0}
+.glossary-header{margin-bottom:16px}
+.glossary-header h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--deep);margin-bottom:12px}
+.glossary-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:18px;color:var(--deep-50);cursor:pointer;padding:4px}
+.glossary-search{width:100%;padding:8px 12px;font-family:'Outfit',sans-serif;font-size:13px;border:1px solid var(--deep-15);border-radius:8px;background:var(--cream);color:var(--deep)}
+.glossary-search:focus{outline:none;border-color:var(--terra)}
+.term-entry{padding:12px 0;border-bottom:1px solid var(--deep-08)}
+.term-name{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--deep);margin-bottom:4px}
+.term-def{font-size:12px;color:var(--deep-70);line-height:1.6}
+/* Narrative blocks (Phase 5) */
+.narrative-block{margin-bottom:24px}
+.narrative-block h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--deep);margin-bottom:12px}
+.narrative-block p{font-size:14px;color:var(--deep-70);line-height:1.7;margin-bottom:12px}
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
+.do-list,.dont-list{padding:16px;border-radius:12px}
+.do-list{background:rgba(74,124,89,0.06);border:1px solid rgba(74,124,89,0.15)}
+.dont-list{background:rgba(139,69,19,0.04);border:1px solid rgba(139,69,19,0.12)}
+.do-list h4{color:var(--positive);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.dont-list h4{color:var(--negative);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.do-list li,.dont-list li{font-size:13px;color:var(--deep-70);margin-bottom:6px;padding-left:4px}
+/* Red flag callouts */
+.red-flag{border:1px solid rgba(139,69,19,0.15);border-left:3px solid var(--negative);border-radius:12px;padding:16px 20px;margin-bottom:16px}
+.red-flag-title{font-size:14px;font-weight:600;color:var(--deep);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.red-flag-status{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.red-flag-status.ok{background:var(--positive)}
+.red-flag-status.warn{background:var(--amber)}
+.red-flag-desc{font-size:13px;color:var(--deep-70);line-height:1.6}
+/* Data table */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;margin:16px 0}
+.data-table th{font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:var(--deep-50);font-weight:600;text-align:left;padding:8px 12px;border-bottom:2px solid var(--deep-15);background:var(--cream)}
+.data-table th.r{text-align:right}
+.data-table td{padding:8px 12px;border-bottom:1px solid var(--deep-08);color:var(--deep)}
+.data-table td.r{text-align:right;font-family:'Space Mono',monospace;font-variant-numeric:tabular-nums}
+.data-table td.b{font-weight:600}
+.data-table tr.highlight{background:rgba(139,158,124,0.08)}
+.data-table tr.highlight td{font-weight:600}
+/* Validation */
+.validation-msg{font-size:11px;color:var(--terra);margin-top:4px;padding:6px 10px;background:rgba(184,107,74,0.06);border:1px solid rgba(184,107,74,0.15);border-radius:6px;display:none;align-items:center;gap:6px}
+.validation-msg.visible{display:flex}
+.validation-dismiss{background:none;border:none;color:var(--deep-30);cursor:pointer;font-size:14px;margin-left:auto;padding:0 2px}
+/* Summary card */
+.pnl-summary{margin-top:48px}
+.summary-table{width:100%;font-family:'Space Mono',monospace;font-size:12px;border-collapse:collapse}
+.summary-table td{padding:6px 12px;border-bottom:1px solid var(--deep-08)}
+.summary-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.summary-table .section-header td{font-family:'Outfit',sans-serif;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--deep-50);padding-top:16px;border-bottom:1px solid var(--deep-15)}
+.summary-table .total-row td{font-weight:700;border-top:2px solid var(--deep-15);border-bottom:2px solid var(--deep-15);padding:10px 12px}
+.summary-table .indent td:first-child{padding-left:24px;color:var(--deep-70)}
+/* Animations */
+.fade-in{opacity:0;transform:translateY(16px);transition:opacity 0.4s ease,transform 0.4s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+@keyframes valueFlash{0%{box-shadow:0 0 0 2px var(--amber)}100%{box-shadow:0 0 0 2px transparent}}
+.value-changed{animation:valueFlash 0.3s ease}
+/* Responsive */
+@media(max-width:1024px){
+  .sidebar-nav{display:none}
+  main{max-width:100%;padding:24px 20px 80px}
+}
+@media(max-width:768px){
+  .title-section h1{font-size:28px}
+  .phase-header h2{font-size:24px}
+  .input-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .input-row label{min-width:auto}
+  .do-dont{grid-template-columns:1fr}
+  .calc-value.large{font-size:18px}
+}
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+}
+/* Print */
+@media print{
+  .sticky-header,.sidebar-nav,.copy-btn,.glossary-panel,.glossary-toggle,.reset-btn,.continue-btn,.concept-chevron,.validation-msg,.skip-link{display:none!important}
+  body{background:white;font-size:10pt}
+  body::before{display:none}
+  .glass,.glass-elevated{background:rgba(245,240,232,0.3);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border:1px solid rgba(44,36,24,0.1)}
+  .concept-content{max-height:none!important;overflow:visible!important}
+  .phase-section{page-break-before:always}
+  .phase-section:first-of-type{page-break-before:avoid}
+  .input-group,.calc-row.milestone,.concept-card{page-break-inside:avoid}
+  input[type="number"]{border:none;background:transparent;padding:0}
+  input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none}
+  *{animation:none!important;transition:none!important}
+  @page{size:A4;margin:15mm 20mm}
+  main{max-width:100%;padding:0}
+}
+/* Reset dialog */
+.reset-dialog{position:fixed;inset:0;background:rgba(44,36,24,0.4);z-index:200;display:none;justify-content:center;align-items:center}
+.reset-dialog.open{display:flex}
+.reset-dialog-box{background:var(--cream);border-radius:16px;padding:32px;max-width:380px;box-shadow:0 16px 48px rgba(44,36,24,0.15)}
+.reset-dialog-box h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px}
+.reset-dialog-box p{font-size:14px;color:var(--deep-70);margin-bottom:20px}
+.dialog-actions{display:flex;gap:12px;justify-content:flex-end}
+.dialog-actions button{padding:10px 20px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none}
+.dialog-cancel{background:var(--glass);color:var(--deep);border:1px solid var(--deep-15)!important}
+.dialog-confirm{background:var(--terra);color:white}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="sticky-header">
+  <div class="header-left">
+    <span class="wordmark">alche</span>
+    <span class="header-label">P&L Learning Guide</span>
+  </div>
+  <div class="header-right">
+    <span class="save-indicator" id="saveIndicator">Not saved yet</span>
+    <button class="reset-btn" onclick="showResetDialog()">Reset All</button>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="sidebar-nav" aria-label="Phase navigation">
+  <span class="nav-label">P&L Guide</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <ul class="phase-list">
+    <li class="phase-item"><a href="#phase-1" class="phase-link active" data-phase="1"><span class="phase-dot"></span>Revenue</a></li>
+    <li class="phase-item"><a href="#phase-2" class="phase-link" data-phase="2"><span class="phase-dot"></span>COGS</a></li>
+    <li class="phase-item"><a href="#phase-3" class="phase-link" data-phase="3"><span class="phase-dot"></span>OpEx</a></li>
+    <li class="phase-item"><a href="#phase-4" class="phase-link" data-phase="4"><span class="phase-dot"></span>Below the Line</a></li>
+    <li class="phase-item"><a href="#phase-5" class="phase-link" data-phase="5"><span class="phase-dot"></span>The Story</a></li>
+  </ul>
+  <button class="glossary-toggle" onclick="toggleGlossary()">Glossary</button>
+</nav>
+
+<main id="main-content" role="main">
+<section class="title-section">
+  <h1>Build Your <strong>P&L Statement</strong></h1>
+  <p class="subtitle">Walk through each line item of a Profit & Loss statement using alche's actual business model. Change any number — everything recalculates in real time.</p>
+</section>
+
+<!-- PHASE 1: REVENUE -->
+<section class="phase-section" id="phase-1" aria-labelledby="p1h">
+<div class="phase-header">
+  <span class="phase-number">Phase 1</span>
+  <h2 id="p1h">Revenue <strong>(Top Line)</strong></h2>
+</div>
+<p class="phase-intro">Revenue is the total money earned from selling products and services — the very first line of a P&L. For alche, revenue comes from four streams: subscriptions, products, services, and the physical space.</p>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Subscription Revenue</div>
+    <p class="help-text" style="margin-bottom:12px">Monthly recurring subscription income from three paid tiers. Free users generate no direct revenue.</p>
+    <div class="input-row">
+      <label for="core_subs">Core subscribers (@ €19/mo)</label>
+      <div class="input-field"><input type="number" id="core_subs" value="75" min="0" max="10000" step="1" aria-label="Core subscribers"><span class="input-suffix">users</span></div>
+    </div>
+    <div class="input-row">
+      <label for="pro_subs">Pro subscribers (@ €49/mo)</label>
+      <div class="input-field"><input type="number" id="pro_subs" value="55" min="0" max="10000" step="1" aria-label="Pro subscribers"><span class="input-suffix">users</span></div>
+    </div>
+    <div class="input-row">
+      <label for="premium_subs">Premium subscribers (@ €99/mo)</label>
+      <div class="input-field"><input type="number" id="premium_subs" value="15" min="0" max="10000" step="1" aria-label="Premium subscribers"><span class="input-suffix">users</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Subscription Revenue</span>
+      <span class="calc-value" id="calc_sub_revenue">€5,605</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Product Revenue</div>
+    <p class="help-text" style="margin-bottom:12px">Curated longevity products sold via the physical space and e-commerce. Units sold per month times average retail price.</p>
+    <div class="input-row">
+      <label for="product_units">Units sold per month</label>
+      <div class="input-field"><input type="number" id="product_units" value="95" min="0" max="10000" step="1"><span class="input-suffix">units</span></div>
+    </div>
+    <div class="input-row">
+      <label for="avg_product_price">Average retail price</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="avg_product_price" value="42" min="0" max="1000" step="0.5"></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Product Revenue</span>
+      <span class="calc-value" id="calc_product_revenue">€3,990</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Service Revenue</div>
+    <p class="help-text" style="margin-bottom:12px">LED therapy, blood panel facilitation, and events. Each priced per session.</p>
+    <div class="input-row">
+      <label for="led_sessions">LED therapy sessions/mo</label>
+      <div class="input-field"><input type="number" id="led_sessions" value="40" min="0" max="500" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="led_price">LED price per session</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="led_price" value="60" min="0" max="500" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="blood_sessions">Blood panel sessions/mo</label>
+      <div class="input-field"><input type="number" id="blood_sessions" value="15" min="0" max="500" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="blood_price">Blood panel price per session</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="blood_price" value="120" min="0" max="1000" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="event_sessions">Events per month</label>
+      <div class="input-field"><input type="number" id="event_sessions" value="4" min="0" max="100" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="event_price">Average event ticket price</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="event_price" value="75" min="0" max="500" step="1"></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Service Revenue</span>
+      <span class="calc-value" id="calc_service_revenue">€4,500</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Physical Space Revenue</div>
+    <p class="help-text" style="margin-bottom:12px">Bar sales and space rental income. Set to €0 at pre-seed since the physical space is Phase 2. The space functions as a marketing channel, not a retail operation.</p>
+    <div class="input-row">
+      <label for="bar_revenue">Bar revenue per month</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="bar_revenue" value="0" min="0" max="50000" step="100"></div>
+    </div>
+    <div class="input-row">
+      <label for="rental_revenue">Space rental revenue per month</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="rental_revenue" value="0" min="0" max="50000" step="100"></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Space Revenue</span>
+      <span class="calc-value" id="calc_space_revenue">€0</span>
+    </div>
+  </div>
+</div>
+
+<div class="calc-row milestone" role="status" aria-live="polite">
+  <span class="calc-label" style="font-size:16px;font-weight:600">TOTAL MONTHLY REVENUE</span>
+  <span class="calc-value large" id="calc_total_monthly_revenue">€14,095</span>
+</div>
+<div class="calc-row" style="margin-top:-12px">
+  <span class="calc-label" style="color:var(--deep-50)">Total Annual Revenue (×12)</span>
+  <span class="calc-value" id="calc_total_annual_revenue" style="color:var(--deep-50)">€169,140</span>
+</div>
+
+<button class="continue-btn" onclick="scrollToPhase(2)">Continue to Phase 2 →</button>
+</section>
+
+<!-- PHASE 2: COGS -->
+<section class="phase-section" id="phase-2" aria-labelledby="p2h">
+<div class="phase-header">
+  <span class="phase-number">Phase 2</span>
+  <h2 id="p2h">Cost of Goods Sold <strong>(COGS)</strong></h2>
+</div>
+<p class="phase-intro">COGS are the direct costs of delivering your product or service. If you sold zero units, COGS would be zero. This section calculates your Gross Profit — revenue minus direct costs.</p>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Digital COGS</div>
+    <div class="input-row">
+      <label for="hosting">Hosting & infrastructure</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="hosting" value="350" min="0" max="10000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="api_costs">API costs (AI, data, etc.)</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="api_costs" value="200" min="0" max="10000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="stripe_rate">Payment processing rate</label>
+      <div class="input-field"><input type="number" id="stripe_rate" value="2.9" min="0" max="10" step="0.1"><span class="input-suffix">%</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Digital COGS</span>
+      <span class="calc-value" id="calc_digital_cogs">€959</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Product COGS</div>
+    <div class="input-row">
+      <label for="wholesale_cost">Wholesale cost per unit</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="wholesale_cost" value="22" min="0" max="500" step="0.5"></div>
+    </div>
+    <div class="input-row">
+      <label for="shipping_cost">Shipping cost per unit</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="shipping_cost" value="4" min="0" max="50" step="0.5"></div>
+    </div>
+    <div class="input-row">
+      <label for="packaging_cost">Packaging cost per unit</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="packaging_cost" value="1.5" min="0" max="20" step="0.1"></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Product COGS</span>
+      <span class="calc-value" id="calc_product_cogs">€2,613</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Service COGS</div>
+    <div class="input-row">
+      <label for="led_practitioner">LED practitioner fee/session</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="led_practitioner" value="25" min="0" max="200" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="blood_practitioner">Blood panel practitioner/session</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="blood_practitioner" value="50" min="0" max="200" step="1"></div>
+    </div>
+    <div class="input-row">
+      <label for="service_consumables">Monthly consumables</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="service_consumables" value="160" min="0" max="5000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="service_equip_dep">Equipment depreciation</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="service_equip_dep" value="200" min="0" max="5000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Service COGS</span>
+      <span class="calc-value" id="calc_service_cogs">€2,110</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Space COGS</div>
+    <div class="input-row">
+      <label for="ingredient_rate">Ingredient cost (% of bar rev)</label>
+      <div class="input-field"><input type="number" id="ingredient_rate" value="32" min="0" max="100" step="1"><span class="input-suffix">%</span></div>
+    </div>
+    <div class="input-row">
+      <label for="space_utilities">Direct space utilities</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="space_utilities" value="0" min="0" max="5000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Space COGS</span>
+      <span class="calc-value" id="calc_space_cogs">€0</span>
+    </div>
+  </div>
+</div>
+
+<div class="calc-row milestone" role="status" aria-live="polite" style="border-top:3px solid var(--terra)">
+  <span class="calc-label" style="font-size:16px;font-weight:600">TOTAL COGS</span>
+  <span class="calc-value large" id="calc_total_cogs">€5,681</span>
+</div>
+<div class="glass-elevated" style="margin-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500">Gross Profit</span>
+    <span class="calc-value large" id="calc_gross_profit" style="color:var(--positive)">€8,414</span>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:4px">
+    <span class="calc-pct" id="calc_gross_margin">Gross Margin: 59.7%</span>
+  </div>
+</div>
+
+<button class="continue-btn" onclick="scrollToPhase(3)">Continue to Phase 3 →</button>
+</section>
+
+<!-- PHASE 3: OPEX -->
+<section class="phase-section" id="phase-3" aria-labelledby="p3h">
+<div class="phase-header">
+  <span class="phase-number">Phase 3</span>
+  <h2 id="p3h">Operating Expenses <strong>(OpEx)</strong></h2>
+</div>
+<p class="phase-intro">Operating expenses are all costs of running the business that are not COGS. These are the overhead costs you pay regardless of how many units you sell. Subtract OpEx from Gross Profit to get EBITDA.</p>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Marketing & Acquisition</div>
+    <div class="input-row">
+      <label for="marketing">Monthly marketing budget</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="marketing" value="1400" min="0" max="50000" step="100"><span class="input-suffix">/mo</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Rent & Facilities</div>
+    <div class="input-row">
+      <label for="rent">Monthly rent</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="rent" value="500" min="0" max="20000" step="50"><span class="input-suffix">/mo</span></div>
+    </div>
+    <p class="help-text">Pre-seed: €500/mo co-working. Phase 2 with physical space: €5,800–7,300/mo (framed as marketing cost, not retail).</p>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Founder Compensation</div>
+    <div class="input-row">
+      <label for="founder1_salary">Founder 1 gross salary</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="founder1_salary" value="3800" min="0" max="20000" step="100"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="founder2_salary">Founder 2 gross salary</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="founder2_salary" value="3800" min="0" max="20000" step="100"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="employer_multiplier">Employer cost multiplier</label>
+      <div class="input-field"><input type="number" id="employer_multiplier" value="125" min="100" max="150" step="1"><span class="input-suffix">%</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total Founder Compensation</span>
+      <span class="calc-value" id="calc_founder_comp">€9,500</span>
+    </div>
+    <div class="validation-msg" id="val_founder">Investors will add salary costs to their model regardless. €0 founder salary is a red flag, not a sign of discipline.<button class="validation-dismiss" onclick="this.parentElement.classList.remove('visible')">×</button></div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Other Operating Expenses</div>
+    <div class="input-row">
+      <label for="technology">Technology (non-COGS)</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="technology" value="1000" min="0" max="20000" step="50"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="legal_total">Legal & Compliance</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="legal_total" value="720" min="0" max="10000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="insurance">Insurance</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="insurance" value="200" min="0" max="5000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="professional">Professional services</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="professional" value="500" min="0" max="10000" step="50"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="software_tools">Software & tools</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="software_tools" value="600" min="0" max="5000" step="50"><span class="input-suffix">/mo</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="calc-row milestone" role="status" aria-live="polite" style="border-top:3px solid var(--terra)">
+  <span class="calc-label" style="font-size:16px;font-weight:600">TOTAL OPERATING EXPENSES</span>
+  <span class="calc-value large" id="calc_total_opex">€14,420</span>
+</div>
+<div class="glass-elevated" style="margin-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500">EBITDA</span>
+    <span class="calc-value large" id="calc_ebitda">-€6,006</span>
+  </div>
+  <p style="font-size:12px;color:var(--deep-50);margin-top:8px">Negative EBITDA is expected at pre-seed. The trajectory (improving monthly) matters more than the absolute number.</p>
+</div>
+
+<button class="continue-btn" onclick="scrollToPhase(4)">Continue to Phase 4 →</button>
+</section>
+
+<!-- PHASE 4: BELOW THE LINE -->
+<section class="phase-section" id="phase-4" aria-labelledby="p4h">
+<div class="phase-header">
+  <span class="phase-number">Phase 4</span>
+  <h2 id="p4h">Below the Line</h2>
+</div>
+<p class="phase-intro">Items below the line relate to financing decisions, accounting conventions, and taxes — not daily operations. This phase gets you from EBITDA to the true bottom line: Net Profit or Net Loss.</p>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Depreciation & Amortization</div>
+    <div class="input-row">
+      <label for="space_depreciation">Space buildout depreciation</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="space_depreciation" value="0" min="0" max="5000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="equipment_depreciation">Equipment depreciation</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="equipment_depreciation" value="85" min="0" max="5000" step="5"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="app_amortization">App/MVP amortization</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="app_amortization" value="2800" min="0" max="10000" step="100"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="input-row">
+      <label for="ip_amortization">Patents/IP amortization</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="ip_amortization" value="0" min="0" max="5000" step="10"><span class="input-suffix">/mo</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Total D&A</span>
+      <span class="calc-value" id="calc_total_da">€2,885</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Interest Expense</div>
+    <div class="input-row">
+      <label for="loan_principal">Loan principal (Wandeldarlehen)</label>
+      <div class="input-field"><span class="input-prefix">€</span><input type="number" id="loan_principal" value="500000" min="0" max="5000000" step="10000"></div>
+    </div>
+    <div class="input-row">
+      <label for="interest_rate">Annual interest rate</label>
+      <div class="input-field"><input type="number" id="interest_rate" value="3" min="0" max="20" step="0.1"><span class="input-suffix">%</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Monthly Interest Expense</span>
+      <span class="calc-value" id="calc_monthly_interest">€1,250</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass">
+  <div class="input-group">
+    <div class="input-group-title">Corporate Tax (GmbH)</div>
+    <p class="help-text" style="margin-bottom:12px">Combined rate: Körperschaftsteuer (15%) + Soli (0.825%) + Gewerbesteuer Berlin (~14.35%) ≈ 30%. Tax is €0 when earnings before tax are negative — losses carry forward.</p>
+    <div class="input-row">
+      <label for="tax_rate">Combined corporate tax rate</label>
+      <div class="input-field"><input type="number" id="tax_rate" value="30" min="0" max="50" step="0.5"><span class="input-suffix">%</span></div>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Earnings Before Tax (EBT)</span>
+      <span class="calc-value" id="calc_ebt">-€10,141</span>
+    </div>
+    <div class="calc-row subtotal" role="status" aria-live="polite">
+      <span class="calc-label">Corporate Tax</span>
+      <span class="calc-value" id="calc_tax">€0</span>
+    </div>
+  </div>
+</div>
+
+<div class="glass-elevated" style="border-top:6px solid var(--negative)">
+  <div style="text-align:center">
+    <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--deep-50);margin-bottom:8px" id="net_label">NET LOSS</div>
+    <div class="calc-value" style="font-size:32px" id="calc_net_profit_loss">-€10,141</div>
+    <div style="display:flex;justify-content:center;gap:24px;margin-top:12px">
+      <span class="calc-pct" id="calc_net_margin">Net Margin: -71.9%</span>
+      <span class="calc-pct" id="calc_burn_rate">Monthly Burn: €10,141</span>
+      <span class="calc-pct" id="calc_runway">Runway: 49 months</span>
+    </div>
+  </div>
+</div>
+
+<button class="continue-btn" onclick="scrollToPhase(5)">Continue to Phase 5 →</button>
+</section>
+
+<!-- PHASE 5: THE STORY -->
+<section class="phase-section" id="phase-5" aria-labelledby="p5h">
+<div class="phase-header">
+  <span class="phase-number">Phase 5</span>
+  <h2 id="p5h">The Story Your <strong>P&L Tells</strong></h2>
+</div>
+<p class="phase-intro">A P&L is not just numbers — it is a narrative about your business. This section teaches you how to read and present your P&L to investors.</p>
+
+<div class="narrative-block">
+  <h3>The 3 Numbers Investors Check First</h3>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0">
+    <div class="glass" style="text-align:center;padding:20px">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:8px">Gross Margin</div>
+      <div class="calc-value" id="story_gm" style="font-size:22px">59.7%</div>
+      <div style="font-size:11px;color:var(--deep-50);margin-top:4px">Target: 70–85% (SaaS)</div>
+    </div>
+    <div class="glass" style="text-align:center;padding:20px">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:8px">Monthly Burn</div>
+      <div class="calc-value" id="story_burn" style="font-size:22px">€10,141</div>
+      <div style="font-size:11px;color:var(--deep-50);margin-top:4px">Runway: <span id="story_runway">49</span> months</div>
+    </div>
+    <div class="glass" style="text-align:center;padding:20px">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:8px">LTV : CAC</div>
+      <div class="calc-value" style="font-size:22px">5–15×</div>
+      <div style="font-size:11px;color:var(--deep-50);margin-top:4px">Minimum viable: 3×</div>
+    </div>
+  </div>
+</div>
+
+<div class="narrative-block">
+  <h3>Path to Break-Even: Month 12</h3>
+  <table class="data-table">
+    <thead><tr><th>Month</th><th>Milestone</th><th class="r">Revenue</th><th class="r">Burn</th><th class="r">Net</th></tr></thead>
+    <tbody>
+      <tr><td class="b">M0</td><td>GmbH formation</td><td class="r">€0</td><td class="r">€12K</td><td class="r" style="color:var(--negative)">-€12K</td></tr>
+      <tr><td class="b">M3</td><td>App MVP beta</td><td class="r">€500</td><td class="r">€15K</td><td class="r" style="color:var(--negative)">-€14.5K</td></tr>
+      <tr><td class="b">M6</td><td>Public launch, ~30 subs</td><td class="r">€4K</td><td class="r">€17K</td><td class="r" style="color:var(--negative)">-€13K</td></tr>
+      <tr><td class="b">M9</td><td>~80 paying subscribers</td><td class="r">€8.5K</td><td class="r">€18.5K</td><td class="r" style="color:var(--negative)">-€10K</td></tr>
+      <tr class="highlight"><td class="b">M12</td><td>~145 subs, break-even</td><td class="r">€15.5K</td><td class="r">€15.5K</td><td class="r" style="color:var(--positive)">€0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="narrative-block">
+  <h3>How to Present a Pre-Revenue P&L</h3>
+  <div class="do-dont">
+    <div class="do-list">
+      <h4>Do</h4>
+      <ul>
+        <li>Label every number as a projection</li>
+        <li>Show assumptions explicitly</li>
+        <li>Include sensitivity analysis</li>
+        <li>Keep projections to 12–18 months</li>
+        <li>Use ranges, not point estimates</li>
+      </ul>
+    </div>
+    <div class="dont-list">
+      <h4>Don't</h4>
+      <ul>
+        <li>Show projections beyond 18 months</li>
+        <li>Claim €0 for things that cost money</li>
+        <li>Hide your biggest cost items</li>
+        <li>Show a "hockey stick" revenue curve</li>
+        <li>Present a "worst case" that's still profitable</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="narrative-block">
+  <h3>Red Flags Investors Spot</h3>
+  <div class="red-flag" id="rf_cogs">
+    <div class="red-flag-title"><span class="red-flag-status" id="rf_cogs_status"></span>Missing or Under-budgeted COGS</div>
+    <div class="red-flag-desc">A subscription business showing 95%+ gross margin with no hosting, API, or payment processing costs. Every business has COGS — if yours aren't in the model, investors assume you didn't think about them.</div>
+  </div>
+  <div class="red-flag" id="rf_salary">
+    <div class="red-flag-title"><span class="red-flag-status" id="rf_salary_status"></span>No Founder Salaries</div>
+    <div class="red-flag-desc">Two full-time founders, €0 in salary expense. Investors will model this in regardless. Show €3,800/mo per founder plus employer costs — it signals discipline, not weakness.</div>
+  </div>
+  <div class="red-flag" id="rf_tax">
+    <div class="red-flag-title"><span class="red-flag-status" id="rf_tax_status"></span>Tax on Losses</div>
+    <div class="red-flag-desc">Showing tax expense when EBT is negative. You don't pay corporate tax on losses. Including tax on a loss signals the founder doesn't understand basic tax mechanics.</div>
+  </div>
+</div>
+</section>
+
+<!-- P&L SUMMARY -->
+<section class="pnl-summary glass-elevated" id="pnl-summary">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500">Your Complete P&L</h3>
+    <span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--deep-50)">MONTHLY PROJECTION</span>
+  </div>
+  <table class="summary-table" id="summaryTable">
+    <tbody id="summaryBody"></tbody>
+  </table>
+</section>
+
+</main>
+</div>
+
+<!-- Copy Button -->
+<button class="copy-btn" id="copyBtn" onclick="copyPnL()" aria-label="Copy P&L to clipboard">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V2.5A1.5 1.5 0 014.5 1H11"/></svg>
+  Copy Your P&L
+</button>
+
+<!-- Glossary Panel -->
+<aside class="glossary-panel" id="glossaryPanel" aria-label="Glossary" role="complementary">
+  <div class="glossary-header">
+    <h3>Glossary</h3>
+    <button class="glossary-close" onclick="toggleGlossary()" aria-label="Close glossary">×</button>
+    <input type="search" class="glossary-search" id="glossarySearch" placeholder="Search terms..." aria-label="Search glossary" oninput="filterGlossary()">
+  </div>
+  <div class="glossary-terms" id="glossaryTerms"></div>
+</aside>
+
+<!-- Reset Dialog -->
+<div class="reset-dialog" id="resetDialog">
+  <div class="reset-dialog-box">
+    <h3>Reset all values?</h3>
+    <p>This will clear your saved data and restore alche's default values.</p>
+    <div class="dialog-actions">
+      <button class="dialog-cancel" onclick="hideResetDialog()">Cancel</button>
+      <button class="dialog-confirm" onclick="resetAll()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div id="sr-announcements" role="status" aria-live="polite" class="sr-only"></div>
+
+<script>
+// ===== STATE =====
+const DEFAULTS = {
+  core_subs:75, pro_subs:55, premium_subs:15,
+  product_units:95, avg_product_price:42,
+  led_sessions:40, led_price:60, blood_sessions:15, blood_price:120, event_sessions:4, event_price:75,
+  bar_revenue:0, rental_revenue:0,
+  hosting:350, api_costs:200, stripe_rate:2.9,
+  wholesale_cost:22, shipping_cost:4, packaging_cost:1.5,
+  led_practitioner:25, blood_practitioner:50, service_consumables:160, service_equip_dep:200,
+  ingredient_rate:32, space_utilities:0,
+  marketing:1400, rent:500,
+  founder1_salary:3800, founder2_salary:3800, employer_multiplier:125,
+  technology:1000, legal_total:720, insurance:200, professional:500, software_tools:600,
+  space_depreciation:0, equipment_depreciation:85,
+  app_amortization:2800, ip_amortization:0,
+  loan_principal:500000, interest_rate:3, tax_rate:30
+};
+
+let state = {...DEFAULTS};
+let calc = {};
+let saveTimeout = null;
+
+// ===== RESTORE =====
+function restore() {
+  try {
+    const saved = localStorage.getItem('alche_pnl_state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      Object.keys(DEFAULTS).forEach(k => {
+        if (parsed[k] !== undefined) state[k] = parsed[k];
+      });
+    }
+  } catch(e) {}
+  Object.keys(state).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) el.value = state[k];
+  });
+}
+
+// ===== SAVE =====
+function save() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    try {
+      localStorage.setItem('alche_pnl_state', JSON.stringify(state));
+      const indicator = document.getElementById('saveIndicator');
+      const now = new Date();
+      indicator.textContent = 'Saved ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    } catch(e) {}
+  }, 500);
+}
+
+// ===== FORMAT =====
+function fmt(n) {
+  if (n === undefined || isNaN(n)) return '€0';
+  const neg = n < 0;
+  const abs = Math.abs(Math.round(n));
+  const str = abs.toLocaleString('de-DE');
+  return (neg ? '-' : '') + '€' + str;
+}
+function fmtPct(n) { return (n === undefined || isNaN(n)) ? '0.0%' : n.toFixed(1) + '%'; }
+
+// ===== RECALCULATE =====
+function recalculate() {
+  const s = state;
+  // Phase 1
+  calc.sub_revenue = (s.core_subs * 19) + (s.pro_subs * 49) + (s.premium_subs * 99);
+  calc.product_revenue = s.product_units * s.avg_product_price;
+  calc.service_revenue = (s.led_sessions * s.led_price) + (s.blood_sessions * s.blood_price) + (s.event_sessions * s.event_price);
+  calc.space_revenue = s.bar_revenue + s.rental_revenue;
+  calc.total_monthly_revenue = calc.sub_revenue + calc.product_revenue + calc.service_revenue + calc.space_revenue;
+  calc.total_annual_revenue = calc.total_monthly_revenue * 12;
+
+  // Phase 2
+  calc.digital_cogs = s.hosting + s.api_costs + (calc.total_monthly_revenue * s.stripe_rate / 100);
+  calc.product_cogs = s.product_units * (s.wholesale_cost + s.shipping_cost + s.packaging_cost);
+  calc.service_cogs = (s.led_sessions * s.led_practitioner) + (s.blood_sessions * s.blood_practitioner) + s.service_consumables + s.service_equip_dep;
+  calc.space_cogs = (s.bar_revenue * s.ingredient_rate / 100) + s.space_utilities;
+  calc.total_cogs = calc.digital_cogs + calc.product_cogs + calc.service_cogs + calc.space_cogs;
+  calc.gross_profit = calc.total_monthly_revenue - calc.total_cogs;
+  calc.gross_margin = calc.total_monthly_revenue > 0 ? (calc.gross_profit / calc.total_monthly_revenue) * 100 : 0;
+
+  // Phase 3
+  calc.founder_comp = (s.founder1_salary + s.founder2_salary) * (s.employer_multiplier / 100);
+  calc.total_opex = s.marketing + s.rent + calc.founder_comp + s.technology + s.legal_total + s.insurance + s.professional + s.software_tools;
+  calc.ebitda = calc.gross_profit - calc.total_opex;
+
+  // Phase 4
+  calc.total_depreciation = s.space_depreciation + s.equipment_depreciation;
+  calc.total_amortization = s.app_amortization + s.ip_amortization;
+  calc.total_da = calc.total_depreciation + calc.total_amortization;
+  calc.monthly_interest = (s.loan_principal * (s.interest_rate / 100)) / 12;
+  calc.ebt = calc.ebitda - calc.total_da - calc.monthly_interest;
+  calc.tax = calc.ebt > 0 ? calc.ebt * (s.tax_rate / 100) : 0;
+  calc.net_profit_loss = calc.ebt - calc.tax;
+
+  // Derived
+  calc.net_margin = calc.total_monthly_revenue > 0 ? (calc.net_profit_loss / calc.total_monthly_revenue) * 100 : 0;
+  calc.burn_rate = calc.net_profit_loss < 0 ? Math.abs(calc.net_profit_loss) : 0;
+  calc.runway = calc.burn_rate > 0 ? Math.round(500000 / calc.burn_rate) : 999;
+
+  updateDOM();
+  updateValidation();
+  updateProgress();
+  updateSummary();
+  save();
+}
+
+// ===== UPDATE DOM =====
+function updateDOM() {
+  const updates = {
+    calc_sub_revenue: fmt(calc.sub_revenue),
+    calc_product_revenue: fmt(calc.product_revenue),
+    calc_service_revenue: fmt(calc.service_revenue),
+    calc_space_revenue: fmt(calc.space_revenue),
+    calc_total_monthly_revenue: fmt(calc.total_monthly_revenue),
+    calc_total_annual_revenue: fmt(calc.total_annual_revenue),
+    calc_digital_cogs: fmt(calc.digital_cogs),
+    calc_product_cogs: fmt(calc.product_cogs),
+    calc_service_cogs: fmt(calc.service_cogs),
+    calc_space_cogs: fmt(calc.space_cogs),
+    calc_total_cogs: fmt(calc.total_cogs),
+    calc_gross_profit: fmt(calc.gross_profit),
+    calc_founder_comp: fmt(calc.founder_comp),
+    calc_total_opex: fmt(calc.total_opex),
+    calc_total_da: fmt(calc.total_da),
+    calc_monthly_interest: fmt(calc.monthly_interest),
+    calc_ebt: fmt(calc.ebt),
+    calc_tax: fmt(calc.tax),
+    calc_net_profit_loss: fmt(calc.net_profit_loss),
+  };
+
+  Object.entries(updates).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el && el.textContent !== val) {
+      el.textContent = val;
+      el.classList.add('value-changed');
+      setTimeout(() => el.classList.remove('value-changed'), 300);
+    }
+  });
+
+  // Special displays
+  const gm = document.getElementById('calc_gross_margin');
+  if (gm) gm.textContent = 'Gross Margin: ' + fmtPct(calc.gross_margin);
+
+  const ebitda = document.getElementById('calc_ebitda');
+  if (ebitda) ebitda.textContent = fmt(calc.ebitda);
+
+  const netLabel = document.getElementById('net_label');
+  if (netLabel) netLabel.textContent = calc.net_profit_loss >= 0 ? 'NET PROFIT' : 'NET LOSS';
+
+  const netMargin = document.getElementById('calc_net_margin');
+  if (netMargin) netMargin.textContent = 'Net Margin: ' + fmtPct(calc.net_margin);
+
+  const burnRate = document.getElementById('calc_burn_rate');
+  if (burnRate) burnRate.textContent = 'Monthly Burn: ' + fmt(calc.burn_rate);
+
+  const runway = document.getElementById('calc_runway');
+  if (runway) runway.textContent = 'Runway: ' + (calc.runway > 100 ? '100+' : calc.runway) + ' months';
+
+  // Color coding
+  const gpEl = document.getElementById('calc_gross_profit');
+  if (gpEl) { gpEl.className = 'calc-value large ' + (calc.gross_profit >= 0 ? 'positive' : 'negative'); }
+  const npEl = document.getElementById('calc_net_profit_loss');
+  if (npEl) { npEl.style.color = calc.net_profit_loss >= 0 ? 'var(--positive)' : 'var(--negative)'; }
+  const ebitdaEl = document.getElementById('calc_ebitda');
+  if (ebitdaEl) { ebitdaEl.style.color = calc.ebitda >= 0 ? 'var(--positive)' : 'var(--negative)'; }
+
+  // Phase 5 story numbers
+  const storyGm = document.getElementById('story_gm');
+  if (storyGm) storyGm.textContent = fmtPct(calc.gross_margin);
+  const storyBurn = document.getElementById('story_burn');
+  if (storyBurn) storyBurn.textContent = fmt(calc.burn_rate);
+  const storyRunway = document.getElementById('story_runway');
+  if (storyRunway) storyRunway.textContent = calc.runway > 100 ? '100+' : calc.runway;
+
+  // Net P/L border color
+  const netCard = document.getElementById('calc_net_profit_loss')?.closest('.glass-elevated');
+  if (netCard) netCard.style.borderTopColor = calc.net_profit_loss >= 0 ? 'var(--positive)' : 'var(--negative)';
+}
+
+// ===== VALIDATION =====
+function updateValidation() {
+  const valFounder = document.getElementById('val_founder');
+  if (valFounder) {
+    if (state.founder1_salary === 0 || state.founder2_salary === 0) {
+      valFounder.classList.add('visible');
+    } else {
+      valFounder.classList.remove('visible');
+    }
+  }
+  // Red flags
+  const rfCogsStatus = document.getElementById('rf_cogs_status');
+  if (rfCogsStatus) rfCogsStatus.className = 'red-flag-status ' + (calc.total_cogs < calc.total_monthly_revenue * 0.05 ? 'warn' : 'ok');
+  const rfSalaryStatus = document.getElementById('rf_salary_status');
+  if (rfSalaryStatus) rfSalaryStatus.className = 'red-flag-status ' + (state.founder1_salary === 0 || state.founder2_salary === 0 ? 'warn' : 'ok');
+  const rfTaxStatus = document.getElementById('rf_tax_status');
+  if (rfTaxStatus) rfTaxStatus.className = 'red-flag-status ' + (calc.ebt < 0 && calc.tax > 0 ? 'warn' : 'ok');
+}
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const inputs = document.querySelectorAll('input[type="number"]');
+  let filled = 0;
+  inputs.forEach(inp => { if (inp.value !== '' && inp.value !== '0') filled++; });
+  const pct = Math.round((filled / inputs.length) * 100);
+  const fill = document.getElementById('progressFill');
+  if (fill) fill.style.width = pct + '%';
+}
+
+// ===== SUMMARY TABLE =====
+function updateSummary() {
+  const body = document.getElementById('summaryBody');
+  if (!body) return;
+  body.innerHTML = '';
+  const rows = [
+    {type:'header', label:'REVENUE'},
+    {label:'  Core Subscriptions (' + state.core_subs + ' × €19)', value:fmt(state.core_subs * 19), indent:true},
+    {label:'  Pro Subscriptions (' + state.pro_subs + ' × €49)', value:fmt(state.pro_subs * 49), indent:true},
+    {label:'  Premium Subscriptions (' + state.premium_subs + ' × €99)', value:fmt(state.premium_subs * 99), indent:true},
+    {label:'Total Subscription Revenue', value:fmt(calc.sub_revenue)},
+    {label:'Product Revenue', value:fmt(calc.product_revenue), indent:true},
+    {label:'Service Revenue', value:fmt(calc.service_revenue), indent:true},
+    {label:'Physical Space Revenue', value:fmt(calc.space_revenue), indent:true},
+    {type:'total', label:'TOTAL REVENUE', value:fmt(calc.total_monthly_revenue)},
+    {type:'header', label:'COST OF GOODS SOLD'},
+    {label:'Digital COGS', value:fmt(calc.digital_cogs), indent:true},
+    {label:'Product COGS', value:fmt(calc.product_cogs), indent:true},
+    {label:'Service COGS', value:fmt(calc.service_cogs), indent:true},
+    {label:'Space COGS', value:fmt(calc.space_cogs), indent:true},
+    {type:'total', label:'TOTAL COGS', value:fmt(calc.total_cogs)},
+    {type:'total', label:'GROSS PROFIT', value:fmt(calc.gross_profit)},
+    {label:'Gross Margin', value:fmtPct(calc.gross_margin)},
+    {type:'header', label:'OPERATING EXPENSES'},
+    {label:'Marketing & Acquisition', value:fmt(state.marketing), indent:true},
+    {label:'Rent & Facilities', value:fmt(state.rent), indent:true},
+    {label:'Founder Compensation', value:fmt(calc.founder_comp), indent:true},
+    {label:'Technology', value:fmt(state.technology), indent:true},
+    {label:'Legal & Compliance', value:fmt(state.legal_total), indent:true},
+    {label:'Insurance', value:fmt(state.insurance), indent:true},
+    {label:'Professional Services', value:fmt(state.professional), indent:true},
+    {label:'Software & Tools', value:fmt(state.software_tools), indent:true},
+    {type:'total', label:'TOTAL OPEX', value:fmt(calc.total_opex)},
+    {type:'total', label:'EBITDA', value:fmt(calc.ebitda)},
+    {type:'header', label:'BELOW THE LINE'},
+    {label:'Depreciation', value:fmt(calc.total_depreciation), indent:true},
+    {label:'Amortization', value:fmt(calc.total_amortization), indent:true},
+    {label:'Interest Expense', value:fmt(calc.monthly_interest), indent:true},
+    {type:'total', label:'EARNINGS BEFORE TAX', value:fmt(calc.ebt)},
+    {label:'Corporate Tax (' + state.tax_rate + '%)', value:fmt(calc.tax), indent:true},
+    {type:'total', label: calc.net_profit_loss >= 0 ? 'NET PROFIT' : 'NET LOSS', value:fmt(calc.net_profit_loss)},
+  ];
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    if (r.type === 'header') tr.className = 'section-header';
+    if (r.type === 'total') tr.className = 'total-row';
+    if (r.indent) tr.className = 'indent';
+    tr.innerHTML = '<td>' + r.label + '</td><td>' + (r.value || '') + '</td>';
+    body.appendChild(tr);
+  });
+}
+
+// ===== EXPORT =====
+function copyPnL() {
+  const lines = [
+    'PROFIT & LOSS STATEMENT — ALCHE GmbH',
+    'Monthly Projection',
+    '',
+    'REVENUE',
+    'Core Subscriptions (' + state.core_subs + ' subs × €19)\t' + fmt(state.core_subs * 19),
+    'Pro Subscriptions (' + state.pro_subs + ' subs × €49)\t' + fmt(state.pro_subs * 49),
+    'Premium Subscriptions (' + state.premium_subs + ' subs × €99)\t' + fmt(state.premium_subs * 99),
+    'Total Subscription Revenue\t' + fmt(calc.sub_revenue),
+    'Product Revenue\t' + fmt(calc.product_revenue),
+    'Service Revenue\t' + fmt(calc.service_revenue),
+    'Physical Space Revenue\t' + fmt(calc.space_revenue),
+    'TOTAL REVENUE\t' + fmt(calc.total_monthly_revenue),
+    '',
+    'COST OF GOODS SOLD',
+    'Digital COGS\t' + fmt(calc.digital_cogs),
+    'Product COGS\t' + fmt(calc.product_cogs),
+    'Service COGS\t' + fmt(calc.service_cogs),
+    'Space COGS\t' + fmt(calc.space_cogs),
+    'TOTAL COGS\t' + fmt(calc.total_cogs),
+    '',
+    'GROSS PROFIT\t' + fmt(calc.gross_profit),
+    'Gross Margin\t' + fmtPct(calc.gross_margin),
+    '',
+    'OPERATING EXPENSES',
+    'Marketing & Acquisition\t' + fmt(state.marketing),
+    'Rent & Facilities\t' + fmt(state.rent),
+    'Founder Compensation\t' + fmt(calc.founder_comp),
+    'Technology\t' + fmt(state.technology),
+    'Legal & Compliance\t' + fmt(state.legal_total),
+    'Insurance\t' + fmt(state.insurance),
+    'Professional Services\t' + fmt(state.professional),
+    'Software & Tools\t' + fmt(state.software_tools),
+    'TOTAL OPEX\t' + fmt(calc.total_opex),
+    '',
+    'EBITDA\t' + fmt(calc.ebitda),
+    '',
+    'Depreciation\t' + fmt(calc.total_depreciation),
+    'Amortization\t' + fmt(calc.total_amortization),
+    'Interest Expense\t' + fmt(calc.monthly_interest),
+    'EARNINGS BEFORE TAX\t' + fmt(calc.ebt),
+    'Corporate Tax (' + state.tax_rate + '%)\t' + fmt(calc.tax),
+    '',
+    (calc.net_profit_loss >= 0 ? 'NET PROFIT' : 'NET LOSS') + '\t' + fmt(calc.net_profit_loss),
+  ];
+  const tsv = lines.join('\n');
+  navigator.clipboard.writeText(tsv).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('success');
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l4 4 6-7"/></svg> Copied!';
+    document.getElementById('sr-announcements').textContent = 'P&L copied to clipboard';
+    setTimeout(() => {
+      btn.classList.remove('success');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V2.5A1.5 1.5 0 014.5 1H11"/></svg> Copy Your P&L';
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = tsv;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+// ===== GLOSSARY =====
+const GLOSSARY = [
+  {term:'ARPU', def:'Average Revenue Per User. Total monthly revenue divided by paying users. Alche target: €49/mo.'},
+  {term:'ARR', def:'Annual Recurring Revenue. MRR × 12. Used for SaaS valuation multiples (8–15× ARR).'},
+  {term:'Amortization', def:'Spreading the cost of intangible assets (like software) over their useful life as a monthly expense.'},
+  {term:'Break-even', def:'When total revenue equals total expenses. Alche target: Month 12 at ~145 paying subscribers.'},
+  {term:'Burn Rate', def:'Monthly cash spent beyond what the business earns. Net burn = expenses minus revenue.'},
+  {term:'CAC', def:'Customer Acquisition Cost. Total marketing spend divided by new customers acquired. Alche target: €40–80.'},
+  {term:'Churn', def:'Percentage of subscribers who cancel per period. Alche models 8% monthly (industry benchmark: 12–15%).'},
+  {term:'COGS', def:'Cost of Goods Sold. Direct costs of delivering your product/service. Zero units sold = zero COGS.'},
+  {term:'Contribution Margin', def:'Revenue from a single unit minus its variable costs. Shows how much each sale contributes to fixed costs.'},
+  {term:'Convertible Note', def:'A loan (Wandeldarlehen) that converts into equity at a future financing event, typically at a discount.'},
+  {term:'Depreciation', def:'Spreading the cost of physical assets (equipment, buildout) over their useful life as a monthly expense.'},
+  {term:'EBITDA', def:'Earnings Before Interest, Taxes, Depreciation & Amortization. Measures core operational profitability.'},
+  {term:'Fixed Costs', def:'Costs that don\'t change with revenue volume. Rent, salaries, software subscriptions.'},
+  {term:'Founder Draw', def:'Salary/compensation founders take from the business. In a GmbH, formalized as Geschäftsführer salaries.'},
+  {term:'Gewerbesteuer', def:'German municipal trade tax on business profits. Berlin rate: ~14.35%. Applies on top of Körperschaftsteuer.'},
+  {term:'GmbH', def:'Gesellschaft mit beschränkter Haftung — German limited liability company. Requires €25K registered capital.'},
+  {term:'Gross Margin', def:'Gross Profit as percentage of revenue. (Revenue - COGS) / Revenue × 100. Alche: ~72% Y1 → ~80% Y3.'},
+  {term:'Gross Profit', def:'Revenue minus COGS. The money available to cover operating expenses.'},
+  {term:'Körperschaftsteuer', def:'German federal corporate income tax at 15% flat rate on GmbH profits.'},
+  {term:'LTV', def:'Lifetime Value. Total revenue a customer generates over their relationship. Alche: €280–588.'},
+  {term:'MRR', def:'Monthly Recurring Revenue. Sum of all active subscription payments in a month.'},
+  {term:'Net Profit/Loss', def:'The absolute bottom line. Revenue minus ALL costs. Positive = profit, negative = loss.'},
+  {term:'OpEx', def:'Operating Expenses. All costs of running the business that are not COGS.'},
+  {term:'Pre-seed', def:'Earliest fundraising stage. Typically €100K–1M. Alche raising €500K at this stage.'},
+  {term:'Revenue', def:'Total money earned from selling products/services. Also called "top line" — the first line of a P&L.'},
+  {term:'Runway', def:'Months a startup can operate before running out of cash. Cash / Net Monthly Burn. Alche target: 24 months.'},
+  {term:'SAFE', def:'Simple Agreement for Future Equity. US-originated instrument, less common in Germany than Wandeldarlehen.'},
+  {term:'Soli', def:'Solidaritätszuschlag. 5.5% surcharge on Körperschaftsteuer. On €15K KSt = €825 Soli.'},
+  {term:'Unit Economics', def:'Revenue and cost per customer. Core metrics: ARPU, LTV, CAC, LTV:CAC ratio.'},
+  {term:'Valuation Cap', def:'Maximum valuation for convertible note conversion. Alche: €2.5M cap. Protects early investors from dilution.'},
+  {term:'Variable Costs', def:'Costs that increase proportionally with revenue. Shipping, payment processing, wholesale costs.'},
+];
+
+function renderGlossary() {
+  const container = document.getElementById('glossaryTerms');
+  container.innerHTML = GLOSSARY.map(g =>
+    '<div class="term-entry" data-term="' + g.term.toLowerCase() + '"><div class="term-name">' + g.term + '</div><div class="term-def">' + g.def + '</div></div>'
+  ).join('');
+}
+
+function toggleGlossary() {
+  document.getElementById('glossaryPanel').classList.toggle('open');
+}
+
+function filterGlossary() {
+  const q = document.getElementById('glossarySearch').value.toLowerCase();
+  document.querySelectorAll('.term-entry').forEach(el => {
+    el.style.display = el.dataset.term.includes(q) || el.querySelector('.term-def').textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// ===== NAVIGATION =====
+function scrollToPhase(n) {
+  document.getElementById('phase-' + n)?.scrollIntoView({behavior:'smooth'});
+}
+
+// Active phase detection
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('.phase-link').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {rootMargin:'-20% 0px -70% 0px'});
+
+// Fade-in observer
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, {threshold:0.1});
+
+// ===== RESET =====
+function showResetDialog() { document.getElementById('resetDialog').classList.add('open'); }
+function hideResetDialog() { document.getElementById('resetDialog').classList.remove('open'); }
+function resetAll() {
+  localStorage.removeItem('alche_pnl_state');
+  location.reload();
+}
+
+// Close dialog on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    hideResetDialog();
+    document.getElementById('glossaryPanel').classList.remove('open');
+  }
+});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  restore();
+  recalculate();
+  renderGlossary();
+
+  // Bind inputs
+  Object.keys(DEFAULTS).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) {
+      el.addEventListener('input', () => {
+        state[k] = parseFloat(el.value) || 0;
+        recalculate();
+      });
+    }
+  });
+
+  // Observe phases
+  document.querySelectorAll('.phase-section').forEach(s => observer.observe(s));
+
+  // Fade-in
+  document.querySelectorAll('.glass, .glass-elevated, .calc-row.milestone, .narrative-block').forEach(el => {
+    el.classList.add('fade-in');
+    fadeObserver.observe(el);
+  });
+
+  // Sidebar links
+  document.querySelectorAll('.phase-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({behavior:'smooth'});
+    });
+  });
+});
+</script>
+</body>
+</html>

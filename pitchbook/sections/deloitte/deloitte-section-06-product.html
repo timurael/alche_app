@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | The Product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 20px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">06 &mdash; The Product</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Product</div>
+    <div class="action-title">Three subscription tiers from EUR 19-99/mo with 85-90% digital gross margin, each tier designed as an upgrade trigger for the next.</div>
+
+    <!-- Tier Comparison Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free (EUR 0)</th>
+          <th>Core (EUR 19/mo)</th>
+          <th class="highlight-row">Pro (EUR 49/mo)</th>
+          <th>Premium (EUR 99/mo)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Biomarker dashboard</td>
+          <td>&mdash;</td>
+          <td>Basic tracking</td>
+          <td>Advanced tracking</td>
+          <td>Full dashboard + CGM (Phase 2)</td>
+        </tr>
+        <tr>
+          <td class="bold">Wearable sync</td>
+          <td>&mdash;</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes + CGM integration</td>
+        </tr>
+        <tr>
+          <td class="bold">Protocols</td>
+          <td>&mdash;</td>
+          <td>Basic templates</td>
+          <td>AI-personalized</td>
+          <td>1:1 physician review</td>
+        </tr>
+        <tr>
+          <td class="bold">Community access</td>
+          <td>Browse only</td>
+          <td>Full access</td>
+          <td>Full + early access</td>
+          <td>Full + exclusive events</td>
+        </tr>
+        <tr>
+          <td class="bold">Content</td>
+          <td>Public content</td>
+          <td>Member content</td>
+          <td>Member + AI insights</td>
+          <td>All content + drop previews</td>
+        </tr>
+        <tr>
+          <td class="bold">Product access</td>
+          <td>Browse catalog</td>
+          <td>Member pricing</td>
+          <td>Member + smart recs</td>
+          <td>Member + replenishment</td>
+        </tr>
+        <tr>
+          <td class="bold">Blood panels</td>
+          <td>&mdash;</td>
+          <td>&mdash;</td>
+          <td>&mdash;</td>
+          <td>Credits included</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">Gross margin</td>
+          <td class="number">&mdash;</td>
+          <td class="number">85-90%</td>
+          <td class="number">85-90%</td>
+          <td class="number">70-85%</td>
+        </tr>
+        <tr>
+          <td class="bold">Target user</td>
+          <td>Curious, exploring</td>
+          <td>Health-aware, starting</td>
+          <td>Committed, optimizing</td>
+          <td>Serious, data-driven</td>
+        </tr>
+        <tr>
+          <td class="bold">Upgrade trigger</td>
+          <td>Content engagement</td>
+          <td>Wants personalization</td>
+          <td>Wants deeper data</td>
+          <td>&mdash;</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Assumption: Tier distribution at M12: 60% Core, 25% Pro, 15% Premium. Weighted ARPU: EUR 49/mo. Free tier serves as acquisition funnel, not revenue source.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Product Roadmap -->
+    <div class="section-label" style="margin-top: 4px;">Development Roadmap</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Timeline</th>
+          <th>Scope</th>
+          <th>Business Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">MVP</td>
+          <td>Months 1-4</td>
+          <td>Booking, menu, shop, membership, events, basic tracking</td>
+          <td>Transaction engine running from day one</td>
+        </tr>
+        <tr>
+          <td class="bold">V1</td>
+          <td>Months 5-9</td>
+          <td>AI concierge, smart replenishment, glucose correlations, protocols</td>
+          <td>Intelligence layer enables personalization at scale</td>
+        </tr>
+        <tr>
+          <td class="bold">V2</td>
+          <td>Months 10+</td>
+          <td>Full biomarker dashboard, bio age score, AI protocols, doctor integration</td>
+          <td>Complete KDGB flywheel at full velocity</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Physical Space -->
+    <div class="callout-box">
+      <div class="callout-box-title">Physical space: Phase 2 acquisition channel (seed-funded, not pre-seed)</div>
+      <div class="callout-box-body">
+        The Berlin flagship in Mitte operates near breakeven standalone. It generates EUR 8,800-11,700/month in subscriber LTV through walk-in conversions and creates the environmental cues that bridge the 66-day habit formation gap digital-only tools structurally cannot. The physical space is an acquisition channel, not the business.
+      </div>
+    </div>
+
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">NOTE:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> The app is the operating system. The physical space is one revenue module. Every digital interaction feeds the KDGB loop. The architecture is invisible to the user -- what they experience is a single integrated platform.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">RevenueCat 2025 Benchmarks / Lally et al. 2010, European J. Social Psychology / Stripe Integration Docs</div>
+      <div class="page-footer-num">14</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: App Screens Reference -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">06 &mdash; The Product</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The product experience: booking, tracking, shopping, and community in one integrated interface.</div>
+
+    <!-- MVP Core Screens -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(44,36,24,0.5); font-weight: 600; margin-bottom: 8px;">MVP Core Screens</div>
+      <img src="screens/row-1-mvp-core.png" alt="MVP Core Screens: Home Dashboard, Onboarding, LED Booking, Potion Menu, Session Active" style="width: 100%; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px;">
+    </div>
+
+    <!-- MVP Extended Screens -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(44,36,24,0.5); font-weight: 600; margin-bottom: 8px;">MVP Extended</div>
+      <img src="screens/row-2-mvp-extended.png" alt="MVP Extended: Shop by Outcome, Events, Membership, Profile, CGM Lite" style="width: 100%; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px;">
+    </div>
+
+    <!-- V1/V2 Screens -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(44,36,24,0.5); font-weight: 600; margin-bottom: 8px;">V1 / V2 Intelligence Layer</div>
+      <img src="screens/row-3-v1-v2.png" alt="V1/V2: CGM Smart, AI Concierge, Replenishment, Biomarkers, Digital Twin" style="width: 100%; border: 1px solid rgba(44,36,24,0.12); border-radius: 2px;">
+    </div>
+
+    <!-- User Journey Summary -->
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Action</th>
+          <th>Revenue Touchpoint</th>
+          <th style="text-align: right;">Phase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">01</td><td>Choose outcome category</td><td>Determines protocol templates + product recs</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">02</td><td>Book LED session (20-min slots)</td><td>Service booking revenue</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">03</td><td>Customize potion (EUR 7-11 + boosts)</td><td>Product revenue, avg ticket EUR 11</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">04</td><td>Check in, session, post-session log</td><td>Behavioral data for personalization</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">05</td><td>Shop by outcome (supplements, products)</td><td>Product margins 40-50%</td><td class="number">MVP</td></tr>
+        <tr><td class="bold">06</td><td>Community events, RSVP, tickets</td><td>Event ticketing + member access</td><td class="number">MVP</td></tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="page-footer-source">Product specification: alche MVP / V1 / V2 architecture</div>
+      <div class="page-footer-num">15</div>
+    </div>
+  </div>
+
+</body>
+</html>

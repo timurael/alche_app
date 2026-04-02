@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche: The Team</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* Global overflow safety */
+    img { max-width: 100%; height: auto; }
+
+    /* Team member card compact */
+    .team-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      padding-bottom: var(--space-2);
+      margin-bottom: var(--space-2);
+      border-bottom: 1px solid var(--deep-08);
+    }
+
+    .team-card:last-of-type {
+      border-bottom: none;
+      margin-bottom: var(--space-1);
+      padding-bottom: var(--space-1);
+    }
+
+    .team-card__name {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--deep);
+    }
+
+    .team-card__title {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 2px;
+    }
+
+    .team-card__edu {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-50);
+      font-style: italic;
+      margin-bottom: 2px;
+    }
+
+    .team-card__exp {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.4;
+      padding-left: 8px;
+      border-left: 1.5px solid var(--deep-08);
+      margin-bottom: 1px;
+    }
+
+    .team-card__exp strong {
+      color: var(--deep);
+      font-weight: 600;
+    }
+
+    /* Governance table compact */
+    .gov-table-compact {
+      width: 100%;
+      table-layout: fixed;
+      font-size: var(--text-xs);
+    }
+
+    .gov-table-compact td {
+      padding: 2px 0;
+      border-bottom: 1px solid var(--deep-04);
+      vertical-align: top;
+      word-wrap: break-word;
+    }
+
+    .gov-table-compact td:first-child {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 600;
+      color: var(--stone);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: 85px;
+      padding-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 (pg 23): The Team
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Team<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: var(--space-2);">
+      <span class="section-header__number">[11] The Team</span>
+      <h1 class="section-header__title"><strong>The Team</strong></h1>
+    </div>
+
+    <!-- Timur -->
+    <div class="team-card">
+      <div class="team-card__name">Timur Tasdogan</div>
+      <div class="team-card__title">Co-Founder and CMO, 49% Equity</div>
+      <div class="team-card__edu">MSc Data Science (GISMA Berlin), BA Economics (Koc University)</div>
+      <div class="team-card__exp"><strong>Concentrix / Meta:</strong> EUR 1.8M ad spend across 390+ advertisers, ROAS improved from 1.5x to 2.7x</div>
+      <div class="team-card__exp"><strong>Hepsiburada (NASDAQ: HEPS):</strong> EUR 300K performance budget, 4x ROAS</div>
+      <div class="team-card__exp"><strong>Quantpaper founding team:</strong> 30 user interviews, 27% activation lift</div>
+    </div>
+
+    <!-- Daria -->
+    <div class="team-card">
+      <div class="team-card__name">Daria Dijan Roth</div>
+      <div class="team-card__title">Co-Founder and COO, 51% Equity</div>
+      <div class="team-card__edu">BSc Computer Engineering + BA International Business</div>
+      <div class="team-card__exp"><strong>Jan Iletisim Teknolojileri:</strong> Backend development, production systems architecture</div>
+      <div class="team-card__exp"><strong>MUTA-1 Reklamcilik:</strong> Brand positioning, acquisition and retention funnel design</div>
+      <div class="team-card__exp"><strong>Domain expert:</strong> 4-year autoimmune journey; established figure in longevity and wellness</div>
+    </div>
+
+    <!-- AmirFarzam -->
+    <div class="team-card">
+      <div class="team-card__name">AmirFarzam Kamalpour</div>
+      <div class="team-card__title">Technical Lead</div>
+      <div class="team-card__exp"><strong>Self-taught developer since age 12</strong></div>
+      <div class="team-card__exp"><strong>Star Digital (stardigital.ir):</strong> IT infrastructure, hosting, web and app development</div>
+      <div class="team-card__exp"><strong>Jung von Matt HAVEL (Berlin):</strong> IT and web development</div>
+      <div class="team-card__exp"><strong>Infrastructure:</strong> Brings existing server infrastructure to the alche build</div>
+    </div>
+
+    <!-- Shukri -->
+    <div class="team-card">
+      <div class="team-card__name">Shukri Jarmoukli</div>
+      <div class="team-card__title">Medical Advisor, Physician</div>
+      <div class="team-card__edu">Medicine, Universitat zu Koln</div>
+      <div class="team-card__exp"><strong>Lifestyledoctor:</strong> Self-pay longevity practice in Berlin; entrepreneurs investing in proactive health out of pocket</div>
+      <div class="team-card__exp"><strong>Specialization:</strong> Functional medicine, psychoneuroimmunology (KPNI), CGM biofeedback, biomarker-driven protocols</div>
+    </div>
+
+    <div class="sep" style="margin: var(--space-1) 0;"></div>
+
+    <!-- Governance -->
+    <div class="section-label mb-1">Governance</div>
+
+    <table class="gov-table-compact mb-1">
+      <tr><td>Entity</td><td>Alche GmbH (Berlin), formation in progress</td></tr>
+      <tr><td>Equity</td><td>Daria 51% / Timur 49%</td></tr>
+      <tr><td>Partnership</td><td>10-year personal friendship. Not a networking match.</td></tr>
+    </table>
+
+    <div class="callout callout--sage" style="margin-top: 0; padding: var(--space-2) var(--space-3);">
+      <div class="callout__title">Why this team for this company</div>
+      <div class="callout__body" style="font-size: 8px; line-height: 1.4;">
+        Both founders are the product's first users. Both spend hundreds of euros monthly on fragmented longevity tools. The medical advisor serves the exact target demographic in his private practice. The technical lead brings production infrastructure and a decade of full-stack experience. Brand, growth, data, engineering, and medical expertise are covered.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">23</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

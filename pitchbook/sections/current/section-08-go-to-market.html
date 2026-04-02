@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Go-to-Market</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Channel cards */
+    .channel-card {
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+
+    .channel-card--primary {
+      border-left: 3px solid var(--sage);
+      background: rgba(139,158,124,0.03);
+    }
+
+    .channel-card--amplifier {
+      border-left: 3px solid var(--amber);
+      background: rgba(196,149,106,0.03);
+    }
+
+    .channel-card__name {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .channel-card__handle {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--stone);
+      margin-bottom: var(--space-2);
+    }
+
+    .channel-card__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep);
+      line-height: 1.55;
+    }
+
+    /* Roadmap phases */
+    .phase-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0;
+      margin-bottom: var(--space-3);
+    }
+
+    .phase-bar {
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .phase-bar__text {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .phase-content {
+      border: 1px solid var(--glass-border);
+      border-left: none;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: var(--space-3) var(--space-4);
+      background: var(--glass);
+    }
+
+    .phase-content__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .phase-content__sub {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      color: var(--stone);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+    }
+
+    .phase-content__list {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep);
+      line-height: 1.55;
+      padding-left: 14px;
+    }
+
+    .phase-content__list li {
+      margin-bottom: 2px;
+    }
+
+    .phase-content__list li::marker {
+      color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Go-to-Market<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[08] Go-to-Market</span>
+      <h1 class="section-header__title"><strong>Build the audience before the product.</strong></h1>
+      <p class="section-header__subtitle">Content-first. Community-first. The product comes to people who already trust the voice.</p>
+    </div>
+
+    <!-- The Thesis -->
+    <div class="prose mb-5">
+      <p>Most startups spend money to find customers. We find customers for free, then spend money to build what they already want. Our content-first strategy trades founder labor for capital: every video, newsletter, and community event builds an audience that converts directly into our waitlist, then our founding members, then our recurring revenue.</p>
+    </div>
+
+    <!-- Two Flywheels -->
+    <div class="section-label mb-3">Two Flywheels, Sequenced</div>
+    <div class="two-col mb-6">
+      <div class="glass-accent glass-accent--sage">
+        <div class="section-label mb-2">Flywheel 1 -- Running Now</div>
+        <h4 class="mb-2">The Content Engine</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Create radical-honesty science content &rarr; attract health-curious audience &rarr; they engage and share &rarr; we learn what they need &rarr; create sharper content. No product needed. No funding needed.</p>
+      </div>
+      <div class="glass-accent glass-accent--amber">
+        <div class="section-label mb-2">Flywheel 2 -- Activated by Funding</div>
+        <h4 class="mb-2">The Product Engine</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Know your body (data) &rarr; Do the protocols (action) &rarr; Get what you need (products) &rarr; Belong with others (community). Funding builds the product for an audience that already exists and trusts us.</p>
+      </div>
+    </div>
+
+    <div class="sep mb-5"></div>
+
+    <!-- Channel Strategy -->
+    <div class="section-label mb-3">Channel Strategy</div>
+
+    <div class="two-col">
+      <div>
+        <div class="channel-card channel-card--primary">
+          <div class="channel-card__name text-sage">Primary: Short-Form Video</div>
+          <div class="channel-card__handle">TikTok + Instagram Reels -- @alche.space</div>
+          <div class="channel-card__body">Radical honesty science content. 3-5 posts per week. Pattern-breaking format: first piece is a collagen deep dive across 23 studies showing only industry-funded research is positive. This IS the brand voice.</div>
+        </div>
+        <div class="channel-card channel-card--primary">
+          <div class="channel-card__name text-sage">Secondary: Newsletter</div>
+          <div class="channel-card__handle">Weekly email -- Substack or Beehiiv</div>
+          <div class="channel-card__body">One deep dive per week. Captures emails -- the only owned asset. Social algorithms change; email lists compound. Where the most engaged followers live and conversion happens.</div>
+        </div>
+      </div>
+      <div>
+        <div class="channel-card channel-card--amplifier">
+          <div class="channel-card__name text-amber">Amplifier: YouTube</div>
+          <div class="channel-card__handle">Monthly "Alche Reviewed" long-form</div>
+          <div class="channel-card__body">10-20 minute deep research episodes. Evergreen SEO pillars that rank in search for years -- the moat no short-form competitor builds.</div>
+        </div>
+        <div class="channel-card channel-card--amplifier">
+          <div class="channel-card__name text-amber">Amplifier: Berlin Events</div>
+          <div class="channel-card__handle">Quarterly "Alche Salon" -- EUR 200-500/event</div>
+          <div class="channel-card__body">Science talks over wine at existing Berlin venues. One evening generates a month of content. Doubles as customer discovery. Biohackers Berlin meetup (2,213 members) is the warm audience.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">17</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Go-to-Market<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- 12-Month Roadmap -->
+    <div class="section-label">Execution Roadmap</div>
+    <h2 class="mb-4"><strong>12 months to product-market fit.</strong></h2>
+
+    <div class="phase-row">
+      <div class="phase-bar" style="background: var(--sage);"><div class="phase-bar__text">Q1<br>M1-3</div></div>
+      <div class="phase-content">
+        <div class="phase-content__title">Foundation</div>
+        <div class="phase-content__sub">Pre-funding // EUR 0 budget // Content engine ignition</div>
+        <ul class="phase-content__list">
+          <li>Launch @alche.space. 3-5 short-form videos per week, honest science format.</li>
+          <li>Launch newsletter (Week 2). Goal: 300 subscribers by end of Q1.</li>
+          <li>10 informal customer discovery conversations from social DMs and meetup contacts.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-bar" style="background: var(--amber);"><div class="phase-bar__text">Q2<br>M4-6</div></div>
+      <div class="phase-content">
+        <div class="phase-content__title">Traction Proof</div>
+        <div class="phase-content__sub">Pre-funding // EUR 200-500 events // Waitlist opens</div>
+        <ul class="phase-content__list">
+          <li>First Alche Salon event. 30-40 people. Film everything -- one event produces 3-4 weeks of content.</li>
+          <li>Open waitlist landing page. Goal: 500 signups from newsletter + social + events.</li>
+          <li>Begin GmbH formation. Apply to GruendungsBONUS Plus (EUR 50K non-dilutive Berlin grant).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-bar" style="background: var(--terra);"><div class="phase-bar__text">Q3<br>M7-9</div></div>
+      <div class="phase-content">
+        <div class="phase-content__title">Fundraise + Build</div>
+        <div class="phase-content__sub">Funding closes // EUR 500K raise // MVP development begins</div>
+        <ul class="phase-content__list">
+          <li>Pitch with real numbers: followers, newsletter subs, waitlist, event attendees.</li>
+          <li>Post-funding: hire technical co-founder / dev lead. Begin MVP development.</li>
+          <li>Events scale to monthly with 60-80 attendees.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-bar" style="background: var(--deep);"><div class="phase-bar__text">Q4<br>M10-12</div></div>
+      <div class="phase-content">
+        <div class="phase-content__title">Beta Launch</div>
+        <div class="phase-content__sub">Post-funding // Product in hands // Founding members</div>
+        <ul class="phase-content__list">
+          <li>MVP beta to first 50-100 users from waitlist. Founding member pricing: EUR 19/month, locked for life.</li>
+          <li>Content evolves to include product teasers, beta user stories, "building in public" updates.</li>
+          <li>Physical space search begins. Berlin location planning for hybrid model proof.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep mb-4"></div>
+
+    <!-- Target Metrics -->
+    <div class="section-label mb-3">Target Metrics by Quarter</div>
+    <table class="data-table mb-5">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Q1</th>
+          <th>Q2</th>
+          <th>Q3</th>
+          <th>Q4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Social followers</td><td>1-2K</td><td>3-5K</td><td>8-12K</td><td>15-20K</td></tr>
+        <tr><td class="bold">Newsletter subs</td><td>300</td><td>1,000</td><td>2,500</td><td>5,000</td></tr>
+        <tr><td class="bold">Waitlist signups</td><td class="muted">--</td><td>500</td><td>1,500</td><td class="muted">(converts)</td></tr>
+        <tr><td class="bold">Event attendees</td><td class="muted">--</td><td>35</td><td>250</td><td>500+</td></tr>
+        <tr class="highlight"><td class="bold">Paying users</td><td class="muted">--</td><td class="muted">--</td><td class="muted">--</td><td class="bold">50-100</td></tr>
+        <tr><td class="bold">Content CAC</td><td class="bold text-sage">&euro;0*</td><td class="bold text-sage">&euro;0*</td><td class="bold text-sage">&euro;0*</td><td class="bold text-sage">&euro;0*</td></tr>
+        <tr><td colspan="5" class="muted" style="font-size: 8px; border: none; padding-top: 0;">*EUR 0 paid acquisition. Content cost is founder labor, not capital.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Sources -->
+    <div class="sources">
+      Biohackers Berlin Meetup / GruendungsBONUS Plus Program / RevenueCat 2025 Benchmarks
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">18</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

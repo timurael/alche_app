@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — The Solution</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* KDGB Flywheel visual */
+    .kdgb-flywheel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: var(--space-8) 0;
+      flex-wrap: wrap;
+    }
+
+    .kdgb-node {
+      text-align: center;
+      padding: var(--space-5) var(--space-4);
+      min-width: 110px;
+    }
+
+    .kdgb-node__label {
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .kdgb-node__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--stone);
+      margin-top: var(--space-1);
+      max-width: 120px;
+      line-height: 1.4;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .kdgb-arrow {
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      color: var(--amber);
+      opacity: 0.3;
+      padding: 0 var(--space-1);
+    }
+
+    .kdgb-node--return {
+      opacity: 0.4;
+    }
+
+    /* Architecture layers */
+    .arch-layer {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-3) var(--space-4);
+      margin-bottom: var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    .arch-layer__num {
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      line-height: 1;
+      opacity: 0.2;
+    }
+
+    .arch-layer__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 2px;
+    }
+
+    .arch-layer__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+
+    .arch-layer--amber { background: var(--amber-10); }
+    .arch-layer--sage { background: var(--sage-10); }
+    .arch-layer--terra { background: var(--terra-10); }
+    .arch-layer--rose { background: var(--rose-10); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[05] The Solution</span>
+      <h1 class="section-header__title"><strong>The Solution</strong></h1>
+      <p class="section-header__subtitle">A longevity lifestyle platform that integrates biomarker tracking, personalized protocols, curated products, and community into one membership.</p>
+    </div>
+
+    <!-- Founder Voice Intro -->
+    <div class="prose mb-6">
+      <p><em>We designed alche around a single thesis: longevity tools fail not because the science is wrong, but because nobody connects the dots. Testing companies identify problems and send users away. Supplement brands sell products without context. Fitness platforms track data without direction. The integration is the product.</em></p>
+    </div>
+
+    <!-- KDGB Framework Visual — Half Page Centerpiece -->
+    <div class="glass-elevated mb-5" style="padding: var(--space-8) var(--space-6);">
+      <div class="section-label text-center mb-3">The Product Flywheel</div>
+
+      <div class="kdgb-flywheel">
+        <div class="kdgb-node">
+          <div class="kdgb-node__label text-sage">KNOW</div>
+          <div class="kdgb-node__desc">Track your body. Biomarkers, wearable data, biological age.</div>
+        </div>
+        <div class="kdgb-arrow">&rarr;</div>
+        <div class="kdgb-node">
+          <div class="kdgb-node__label text-terra">DO</div>
+          <div class="kdgb-node__desc">Follow your protocol. Nutrition, recovery, movement.</div>
+        </div>
+        <div class="kdgb-arrow">&rarr;</div>
+        <div class="kdgb-node">
+          <div class="kdgb-node__label text-amber">GET</div>
+          <div class="kdgb-node__desc">Buy what you need. Supplements, functional products.</div>
+        </div>
+        <div class="kdgb-arrow">&rarr;</div>
+        <div class="kdgb-node">
+          <div class="kdgb-node__label text-rose">BELONG</div>
+          <div class="kdgb-node__desc">Join your people. Circles, events, shared challenges.</div>
+        </div>
+        <div class="kdgb-arrow" style="opacity: 0.15;">&rarr;</div>
+        <div class="kdgb-node kdgb-node--return">
+          <div class="kdgb-node__label text-sage" style="font-size: var(--text-lg);">KNOW</div>
+          <div class="kdgb-node__desc" style="font-size: 8px;">Better data. Repeat.</div>
+        </div>
+      </div>
+
+      <div class="prose mt-5" style="margin-left: auto; margin-right: auto; text-align: center; max-width: 480px;">
+        <p class="text-sm" style="color: var(--deep-70);">Each step creates demand for the next. KNOW creates motivation to DO. DO creates need to GET. GET creates belonging through shared rituals. BELONG generates better data. Each full rotation makes the next one stickier.</p>
+      </div>
+    </div>
+
+    <!-- Two columns: Why it compounds + Revenue at every node -->
+    <div class="two-col">
+      <div class="glass-accent glass-accent--amber">
+        <h4 class="mb-2">Why the loop compounds</h4>
+        <p class="text-sm" style="color: var(--deep-70); line-height: 1.55;">Single-vertical competitors own one layer. Oura owns wearable data. AG1 owns a supplement. Restore owns recovery. Nobody connects all four. The integration is what makes personalization work -- you cannot personalize a protocol without data, and you cannot sustain a protocol without community.</p>
+      </div>
+      <div class="glass-accent glass-accent--sage">
+        <h4 class="mb-2">Revenue at every node</h4>
+        <p class="text-sm" style="color: var(--deep-70); line-height: 1.55;">KNOW: subscription fees for biomarker dashboards. DO: service bookings. GET: product margins on curated supplements and functional products. BELONG: event ticketing, premium community access. No dead-end in the revenue architecture.</p>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">10</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- The Architecture -->
+    <div class="section-label">The Architecture</div>
+    <h2 class="mb-4"><strong>Four layers, each feeding the next.</strong></h2>
+
+    <div class="prose mb-5">
+      <p>Each layer generates data that informs the next. The architecture is the structural reason alche can personalize at scale while single-vertical competitors cannot.</p>
+    </div>
+
+    <div class="arch-layer arch-layer--amber">
+      <div class="arch-layer__num text-amber">01</div>
+      <div>
+        <div class="arch-layer__title">Biomarker Layer</div>
+        <div class="arch-layer__desc">Blood panels, CGM glucose data, wearable metrics (sleep, HRV, activity). Longitudinal tracking -- six months of data is 6x more valuable than a single snapshot.</div>
+      </div>
+    </div>
+
+    <div class="arch-layer arch-layer--sage">
+      <div class="arch-layer__num text-sage">02</div>
+      <div>
+        <div class="arch-layer__title">Protocol Layer</div>
+        <div class="arch-layer__desc">Personalized plans generated from biomarker data, goals, and lifestyle context. AI-guided, physician-informed. Calibrated to individual biology and refined as new data arrives.</div>
+      </div>
+    </div>
+
+    <div class="arch-layer arch-layer--terra">
+      <div class="arch-layer__num text-terra">03</div>
+      <div>
+        <div class="arch-layer__title">Product Layer</div>
+        <div class="arch-layer__desc">Curated supplements, functional products. Not manufactured by alche -- curated and sold through the platform. Protocol-linked: recommended based on the user's data, not a generic catalog.</div>
+      </div>
+    </div>
+
+    <div class="arch-layer arch-layer--rose">
+      <div class="arch-layer__num text-rose">04</div>
+      <div>
+        <div class="arch-layer__title">Community Layer</div>
+        <div class="arch-layer__desc">Accountability circles, shared challenges, event networks. Community is not a feature -- it is a longevity intervention itself. People with strong social connections have a 50% greater chance of longevity.</div>
+      </div>
+    </div>
+
+    <div class="sep mt-5 mb-5"></div>
+
+    <!-- Data Trust -->
+    <div class="callout callout--sage mb-5">
+      <div class="callout__title">Designed for Data Reality</div>
+      <div class="callout__body">
+        Only <strong>8% of EU consumers</strong> share health data with third parties (BEUC). We designed for this reality: GDPR-native architecture, transparent data policies, user-controlled sharing. In a market where trust is the scarcest resource, privacy-first design is a competitive advantage, not a compliance cost.
+      </div>
+    </div>
+
+    <!-- What the user feels -->
+    <div class="prose">
+      <p>The architecture is invisible to the user. What they feel is this: they track their health, receive guidance that makes sense, access products that are actually relevant to them, and belong to a community of people on the same journey. It feels simple. The integration underneath is what makes it work.</p>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      BEUC Health Data Survey 2024 / Blue Zones / American Journal of Lifestyle Medicine / WHOOP 2025 Retention Data / Fitzgerald et al. 2021, Aging
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">11</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

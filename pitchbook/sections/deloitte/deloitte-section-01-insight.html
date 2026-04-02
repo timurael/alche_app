@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | The Insight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page {
+      width: 210mm; min-height: 297mm; padding: 20mm 22mm;
+      background: #F5F0E8; position: relative; page-break-after: always;
+      box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418;
+    }
+    .page-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08);
+    }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 20px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .data-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; padding: 14px 0; border-top: 2px solid rgba(44,36,24,0.15); border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .data-strip-item { text-align: center; }
+    .data-strip-value { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: #2C2418; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 4px; }
+    .data-strip-value-accent { color: #C4956A; }
+    .data-strip-label { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.5); line-height: 1.35; }
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">01 &mdash; The Insight</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Insight</div>
+    <div class="action-title">Health-conscious consumers spend EUR 126-295/mo across 8+ disconnected services and 77% of health app users churn by Day 3.</div>
+    <div class="action-subtitle">The longevity tools market is large and growing, but structurally fragmented. Consumers are forced to be project managers of their own health.</div>
+
+    <!-- Churn / Retention Data Strip -->
+    <div class="data-strip">
+      <div class="data-strip-item">
+        <div class="data-strip-value data-strip-value-accent">77%</div>
+        <div class="data-strip-label">Health app users churn<br>by Day 3</div>
+      </div>
+      <div class="data-strip-item">
+        <div class="data-strip-value data-strip-value-accent">44%</div>
+        <div class="data-strip-label">Cancel within<br>first 90 days</div>
+      </div>
+      <div class="data-strip-item">
+        <div class="data-strip-value">84%</div>
+        <div class="data-strip-label">Consumers rank healthy<br>aging as top priority</div>
+      </div>
+    </div>
+
+    <!-- Fragmented Spend Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Service Category</th>
+          <th>Typical Monthly Cost</th>
+          <th style="text-align: right;">Integration with Others</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">Blood panels / biomarker testing</td><td>EUR 25-60 per test</td><td class="number">None</td></tr>
+        <tr><td class="bold">Wearable subscription (Oura, WHOOP)</td><td>EUR 6-30/mo</td><td class="number">Siloed data</td></tr>
+        <tr><td class="bold">Supplements (3-5 products)</td><td>EUR 30-80/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Gym / fitness membership</td><td>EUR 30-60/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Nutrition / meal planning app</td><td>EUR 10-25/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Recovery (sauna, cold plunge, LED)</td><td>EUR 15-40/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Meditation / sleep app</td><td>EUR 5-15/mo</td><td class="number">None</td></tr>
+        <tr><td class="bold">Functional beverages</td><td>EUR 20-40/mo</td><td class="number">None</td></tr>
+        <tr class="highlight-row">
+          <td class="bold">Total fragmented spend</td>
+          <td><strong>EUR 126-295/mo</strong></td>
+          <td class="number"><strong>Zero integration</strong></td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="3">Assumption: Spend ranges derived from competitive analysis of 30+ companies and 9 customer interviews (Berlin, health-conscious professionals aged 28-45)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Converging Forces -->
+    <div class="callout-box">
+      <div class="callout-box-title">Three converging forces create the opening</div>
+      <div class="callout-box-body">
+        <strong>1. Demand is proven:</strong> 84% of consumers now rank healthy aging as a top priority (McKinsey 2024). <strong>2. Prevention is underfunded:</strong> Germany spends only 4.8% of health expenditure on prevention despite EUR 495B total annual spend. <strong>3. No integrator exists in Europe:</strong> 30+ companies analyzed; zero offer integrated biomarkers + protocols + products + community. The window is 12-18 months before well-funded US players localize to DACH.
+      </div>
+    </div>
+
+    <!-- Lesson from failures -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px; margin-bottom: 0;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">LESSON FROM $1.4B IN FAILURES:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Arivale (shut down 2019) proved consumers do not pay for disease prevention. Implication: alche sells how you feel today, not prevention of future disease. (Source: Arivale post-mortem, Lee Hood interview)</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">McKinsey Health Consumer Survey 2024 / Baumel et al. 2019, JMIR / RevenueCat 2025 Benchmarks / Competitive spend analysis, Feb 2026</div>
+      <div class="page-footer-num">05</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">01 &mdash; The Insight</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="action-title">The market demands integration, not more point solutions -- and the structural barriers to building one are why it has not happened yet.</div>
+
+    <!-- Why integration has not happened -->
+    <table>
+      <thead>
+        <tr>
+          <th>Barrier to Integration</th>
+          <th>Evidence</th>
+          <th style="text-align: right;">Implication for alche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Organizational DNA mismatch</td>
+          <td>Companies optimized for one vertical (wearables, supplements, telehealth) cannot bolt on adjacent verticals without restructuring</td>
+          <td class="number">Greenfield advantage</td>
+        </tr>
+        <tr>
+          <td class="bold">Data trust deficit in EU</td>
+          <td>Only 8% of EU consumers share health data with third parties (BEUC 2024)</td>
+          <td class="number">GDPR-native design</td>
+        </tr>
+        <tr>
+          <td class="bold">US-centric market approach</td>
+          <td>Oura, Hims, Function Health are US-designed and US-priced. No localized European longevity platform exists.</td>
+          <td class="number">European positioning</td>
+        </tr>
+        <tr>
+          <td class="bold">Capital misallocation</td>
+          <td>$1.4B+ burned on hardware-first approaches (Forward Health: $657M), clinical-first approaches (DayTwo: 2,089 citations, still failed)</td>
+          <td class="number">Asset-light model</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- The Rebundling Thesis -->
+    <div style="margin-top: 16px; margin-bottom: 20px;">
+      <div class="section-label">The Rebundling Thesis</div>
+      <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; margin-top: 10px;">
+        <div style="border: 1px solid rgba(44,36,24,0.12); border-radius: 3px; padding: 14px;">
+          <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #B86B4A; margin-bottom: 6px;">Current: Fragmented</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; margin-bottom: 4px;">EUR 126-295/mo</div>
+          <div style="font-size: 9px; color: rgba(44,36,24,0.5);">8+ providers, zero integration, user is project manager</div>
+        </div>
+        <div style="font-family: 'Space Mono', monospace; font-size: 16px; color: #C4956A;">&rarr;</div>
+        <div style="border: 1px solid rgba(44,36,24,0.12); border-radius: 3px; padding: 14px; border-left: 3px solid #8B9E7C;">
+          <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #8B9E7C; margin-bottom: 6px;">alche: Integrated</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; margin-bottom: 4px;">EUR 19-99/mo</div>
+          <div style="font-size: 9px; color: rgba(44,36,24,0.5);">One platform: data + protocols + products + community</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What this means for investors -->
+    <div class="callout-box">
+      <div class="callout-box-title">Investment implication</div>
+      <div class="callout-box-body">
+        Alche does not create new demand. It consolidates existing spend (EUR 126-295/mo fragmented) into a single platform (EUR 19-99/mo). The consumer saves money. alche captures a portion of spend that was previously distributed across 8+ uncoordinated providers. This is a rebundling play, not a market creation play.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">BEUC Health Data Survey 2024 / Competitive analysis: 30+ companies, Feb 2026 / Forward Health post-mortem / DayTwo Google Scholar citation count</div>
+      <div class="page-footer-num">06</div>
+    </div>
+  </div>
+
+</body>
+</html>

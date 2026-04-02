@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — The Product</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Journey step layout */
+    .journey-steps {
+      counter-reset: journey;
+      margin: var(--space-5) 0;
+    }
+
+    .journey-step {
+      counter-increment: journey;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: var(--space-4);
+      align-items: start;
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--deep-08);
+    }
+
+    .journey-step:last-child {
+      border-bottom: none;
+    }
+
+    .journey-step__num {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--amber);
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .journey-step__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 2px;
+    }
+
+    .journey-step__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+
+    .journey-step__tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 7px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-top: var(--space-1);
+    }
+
+    .journey-step__tag--mvp {
+      background: rgba(139,158,124,0.12);
+      color: var(--sage);
+    }
+
+    .journey-step__tag--v1 {
+      background: rgba(196,149,106,0.12);
+      color: var(--amber);
+    }
+
+    /* Outcome categories */
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-3);
+      margin: var(--space-5) 0;
+    }
+
+    .outcome-item {
+      text-align: center;
+      padding: var(--space-3) var(--space-2);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+    }
+
+    .outcome-item__name {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--deep);
+      margin-bottom: 2px;
+    }
+
+    .outcome-item__desc {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--stone);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[06] The Product</span>
+      <h1 class="section-header__title"><strong>What Users See and Do</strong></h1>
+      <p class="section-header__subtitle">The app is the operating system. The physical space is the proof of concept. Every interaction feeds a single closed loop.</p>
+    </div>
+
+    <!-- Core User Journey -->
+    <div class="section-label">User Journey</div>
+    <h2 class="mb-3"><strong>One visit, fully connected.</strong></h2>
+
+    <div class="journey-steps">
+      <div class="journey-step">
+        <div class="journey-step__num">01</div>
+        <div>
+          <div class="journey-step__title">Choose Your Outcome</div>
+          <div class="journey-step__desc">User selects their primary goal from five outcome categories. This determines protocol templates, product recommendations, and content feed. One tap, one direction. Everything aligns.</div>
+          <div class="journey-step__tag journey-step__tag--mvp">MVP</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step__num">02</div>
+        <div>
+          <div class="journey-step__title">Book an LED Session</div>
+          <div class="journey-step__desc">Real-time seat availability in 20-minute slots. Two types: Glow (red light) and Recovery (near-infrared). During booking, the app suggests a smoothie + boost combo matched to the session.</div>
+          <div class="journey-step__tag journey-step__tag--mvp">MVP</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step__num">03</div>
+        <div>
+          <div class="journey-step__title">Customize Your Potion</div>
+          <div class="journey-step__desc">Six signature Alche Potions (&euro;7-11) with five functional boost add-ons (+&euro;2 each), mapped to outcome categories. Pre-ordered during booking, ready on arrival. Target average ticket: &euro;11.</div>
+          <div class="journey-step__tag journey-step__tag--mvp">MVP</div>
+          <div class="journey-step__tag journey-step__tag--v1">V1: Protocol-linked</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step__num">04</div>
+        <div>
+          <div class="journey-step__title">Check In. Session. Track.</div>
+          <div class="journey-step__desc">QR check-in on arrival. Potion ready, seat ready -- zero wait. Post-session: log how you feel, earn a milestone. This creates the behavioral data that powers personalization in V1.</div>
+          <div class="journey-step__tag journey-step__tag--mvp">MVP</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step__num">05</div>
+        <div>
+          <div class="journey-step__title">Shop by Outcome</div>
+          <div class="journey-step__desc">Own-brand blends, capsules, curated third-party products -- organized by what you want, not by ingredient. The boost you loved in your smoothie? Buy the pouch to take home.</div>
+          <div class="journey-step__tag journey-step__tag--mvp">MVP: Catalog</div>
+          <div class="journey-step__tag journey-step__tag--v1">V1: Smart replenishment</div>
+        </div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-step__num">06</div>
+        <div>
+          <div class="journey-step__title">Community and Events</div>
+          <div class="journey-step__desc">Wellness events, science talks, researcher sessions. Event RSVP, ticket purchase, member-exclusive access. Every event simultaneously strengthens community and generates revenue.</div>
+          <div class="journey-step__tag journey-step__tag--mvp">MVP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">12</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Membership Tiers -->
+    <div class="section-label">Membership</div>
+    <h2 class="mb-4"><strong>Four tiers, credit-based.</strong></h2>
+
+    <div class="four-col mb-6">
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Free</div>
+        <div class="font-serif text-2xl mb-2" style="font-weight: 300;">&euro;0</div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Content access<br>Community browsing<br>Product browsing<br>Event discovery</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Core</div>
+        <div class="font-serif text-2xl mb-2"><strong>&euro;19</strong><span class="text-sm" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Biomarker dashboard<br>Wearable sync<br>Basic protocols<br>Community access</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center; border: 2px solid var(--amber);">
+        <div class="section-label mb-2">Pro</div>
+        <div class="font-serif text-2xl mb-2"><strong>&euro;49</strong><span class="text-sm" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Personalized protocols<br>AI insights<br>Advanced tracking<br>Drop early access</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Premium</div>
+        <div class="font-serif text-2xl mb-2"><strong>&euro;99</strong><span class="text-sm" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Blood panel credits<br>1:1 reviews<br>Exclusive events<br>CGM integration (Phase 2)</p>
+      </div>
+    </div>
+
+    <div class="sep mb-5"></div>
+
+    <!-- Product Evolution -->
+    <div class="section-label">Product Roadmap</div>
+    <h2 class="mb-4"><strong>MVP is the skeleton.</strong> Intelligence comes later.</h2>
+
+    <div class="three-col mb-5">
+      <div class="glass-accent glass-accent--sage">
+        <div class="section-label mb-2">MVP -- Months 1-4</div>
+        <h4 class="mb-1">The Commerce Loop</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Booking, menu, shop, membership, events, basic tracking. Commerce-first. The transaction engine running from day one.</p>
+      </div>
+      <div class="glass-accent glass-accent--amber">
+        <div class="section-label mb-2">V1 -- Months 5-9</div>
+        <h4 class="mb-1">The Intelligence Layer</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">AI concierge, smart replenishment, glucose-smoothie correlation, curated protocols. KNOW and DO layers get real.</p>
+      </div>
+      <div class="glass-accent glass-accent--terra">
+        <div class="section-label mb-2">V2 -- Months 10+</div>
+        <h4 class="mb-1">The Full Platform</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Biomarker dashboard, bio age score, personalized AI protocols, doctor integration. The flywheel at full velocity.</p>
+      </div>
+    </div>
+
+    <!-- Physical Space Mention -->
+    <div class="callout callout--terra">
+      <div class="callout__title">Physical Space = Phase 2</div>
+      <div class="callout__body">
+        The Berlin flagship in Mitte is where the digital meets the physical: LED sessions, functional smoothies, curated products, community events. It operates near breakeven standalone, generates &euro;8,800-11,700/month in subscriber LTV through walk-in conversions, and creates the environmental cues that bridge the 66-day habit formation gap digital-only tools structurally cannot.
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      RevenueCat 2025 Benchmarks / Baumel et al. 2019, JMIR / Lally et al. 2010, European J. Social Psychology / Stripe Integration Docs
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">13</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+
+
+  <!-- ============================================================
+       PAGE 3 — App Screens
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">App Design</div>
+    <h2 class="mb-4"><strong>What the product looks like.</strong></h2>
+
+    <!-- MVP Core Screens -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: var(--space-2);">MVP — Core Screens</div>
+      <img src="screens/row-1-mvp-core.png" alt="MVP Core Screens: Home Dashboard, Onboarding, LED Booking, Potion Menu, Session Active" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+    </div>
+
+    <!-- MVP Extended Screens -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); font-weight: 600; margin-bottom: var(--space-2);">MVP — Extended</div>
+      <img src="screens/row-2-mvp-extended.png" alt="MVP Extended: Shop by Outcome, Events, Membership, Profile, CGM Lite" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+    </div>
+
+    <!-- V1/V2 Screens -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terra); font-weight: 600; margin-bottom: var(--space-2);">V1 / V2 — Intelligence Layer</div>
+      <img src="screens/row-3-v1-v2.png" alt="V1/V2: CGM Smart, AI Concierge, Replenishment, Biomarkers, Digital Twin" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">14</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 3 -->
+
+</body>
+</html>

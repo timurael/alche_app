@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ALCHE -- Go-to-Market Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#F5F0E8;--deep:#2C2418;--amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;--stone:#9E948A;--glass:rgba(255,252,246,0.55);--glass-border:rgba(196,149,106,0.18)}
+
+@media print{
+  .page{page-break-after:always;height:auto!important;min-height:100vh}
+  .page:last-child{page-break-after:avoid}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+body{font-family:'Outfit',sans-serif;background:#e8e3db;color:var(--deep);line-height:1.6;font-size:14px}
+
+.page{
+  width:210mm;min-height:297mm;max-width:210mm;
+  background:var(--cream);margin:0 auto 20px;padding:42px 48px 36px;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 40px rgba(44,36,24,0.08);
+}
+
+/* Subtle texture overlay */
+.page::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 0%,rgba(196,149,106,0.04) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 100%,rgba(139,158,124,0.03) 0%,transparent 50%);
+  pointer-events:none;z-index:0;
+}
+.page>*{position:relative;z-index:1}
+
+.sl{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);font-weight:600}
+h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.08;margin:8px 0 4px}
+h1 strong{font-weight:700}
+h2{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:8px;color:var(--deep)}
+h3{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600}
+.sub{font-size:12px;color:var(--stone);line-height:1.6;max-width:480px}
+p{font-size:11.5px;line-height:1.65}
+
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:22px 0}
+.sep-sm{height:1px;background:linear-gradient(90deg,transparent,rgba(196,149,106,0.1),transparent);margin:14px 0}
+
+/* Cards */
+.card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:12px;padding:18px 20px;margin-bottom:12px}
+
+/* Grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* Channel items */
+.ch{border-left:3px solid var(--sage);padding:10px 14px;margin-bottom:10px;background:rgba(139,158,124,0.03)}
+.ch.secondary{border-left-color:var(--amber);background:rgba(196,149,106,0.03)}
+.ch-name{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px}
+.ch-name.sage{color:var(--sage)}.ch-name.amber{color:var(--amber)}
+.ch-handle{font-size:9px;color:var(--stone);margin-bottom:4px}
+.ch p{font-size:10.5px;line-height:1.55;color:var(--deep)}
+
+/* Flywheel boxes */
+.fw{border-radius:10px;padding:16px 18px;flex:1}
+.fw.content{background:rgba(139,158,124,0.06);border:1px solid rgba(139,158,124,0.2)}
+.fw.product{background:rgba(196,149,106,0.05);border:1px solid rgba(196,149,106,0.15)}
+.fw-label{font-size:8px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.fw-label.sage{color:var(--sage)}.fw-label.amber{color:var(--amber)}
+.fw h3{margin-bottom:4px}
+.fw p{font-size:10px;line-height:1.5;color:var(--stone)}
+.fw-row{display:flex;gap:12px;margin:12px 0}
+
+/* Timeline */
+.phase{margin-bottom:14px;display:grid;grid-template-columns:90px 1fr;gap:0}
+.phase-bar{padding:6px 10px;border-radius:6px 0 0 6px;display:flex;align-items:center;justify-content:center;text-align:center}
+.phase-bar span{font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:white;writing-mode:horizontal-tb}
+.phase-bar.q1{background:var(--sage)}.phase-bar.q2{background:var(--amber)}.phase-bar.q3{background:var(--terra)}.phase-bar.q4{background:var(--deep)}
+.phase-content{border:1px solid var(--glass-border);border-left:none;border-radius:0 10px 10px 0;padding:12px 16px;background:var(--glass)}
+.phase-title{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;margin-bottom:2px}
+.phase-sub{font-size:8px;color:var(--stone);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px}
+.phase-content ul{padding-left:14px;margin:0}
+.phase-content li{font-size:10px;line-height:1.5;color:var(--deep);margin-bottom:3px}
+.phase-content li::marker{color:var(--amber)}
+
+/* Metrics table */
+.mtable{width:100%;border-collapse:collapse;font-size:10px;margin:10px 0}
+.mtable th{text-align:left;padding:6px 8px;font-size:8px;letter-spacing:0.08em;text-transform:uppercase;color:var(--amber);border-bottom:2px solid var(--glass-border);font-weight:600}
+.mtable td{padding:5px 8px;border-bottom:1px solid rgba(196,149,106,0.08)}
+.mtable tr:nth-child(even) td{background:rgba(196,149,106,0.03)}
+.mtable .metric-name{font-weight:500;color:var(--deep)}
+.mtable .muted{color:var(--stone)}
+.mtable .highlight{color:var(--sage);font-weight:600}
+
+/* Callout */
+.callout{border-radius:10px;padding:16px 18px;margin:14px 0}
+.callout.sage{background:rgba(139,158,124,0.06);border:1px solid rgba(139,158,124,0.2)}
+.callout.amber{background:rgba(196,149,106,0.04);border:1px solid rgba(196,149,106,0.12)}
+.callout h3{margin-bottom:6px}
+.callout.sage h3{color:var(--sage)}.callout.amber h3{color:var(--amber)}
+.callout p{font-size:11px;line-height:1.6}
+
+/* Footer */
+.footer{position:absolute;bottom:24px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center}
+.footer span{font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone)}
+
+/* Investor box */
+.inv-box{border:2px solid rgba(139,158,124,0.25);border-radius:12px;padding:20px 22px;background:rgba(139,158,124,0.04);margin-top:14px}
+.inv-box h3{color:var(--sage);margin-bottom:8px}
+.inv-box p{font-size:11.5px;line-height:1.7}
+</style></head><body>
+
+<!-- ============================================ -->
+<!-- PAGE 1: THE STRATEGY -->
+<!-- ============================================ -->
+<div class="page">
+  <div class="sl">Alche // Go-to-Market Strategy</div>
+  <h1><strong>Build the audience</strong><br>before the product.</h1>
+  <div class="sub">Alche launches as an editorial voice, not a product. We build trust and community through content before the app exists. By launch day, the hardest part of any startup -- getting people to care -- is already done.</div>
+
+  <div class="sep"></div>
+
+  <h2>The thesis</h2>
+  <p>Most startups spend money to find customers. We find customers for free, then spend money to build what they already want. Our content-first strategy trades founder labor for capital: every video, newsletter, and community event builds an audience that converts directly into our waitlist, then our founding members, then our recurring revenue. The content flywheel runs on EUR 0 and generates the three things pre-seed investors care about most: proof of demand, proof of voice, and proof of community.</p>
+
+  <div class="sep-sm"></div>
+
+  <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:8px">Two flywheels, sequenced</div>
+
+  <div class="fw-row">
+    <div class="fw content">
+      <div class="fw-label sage">Flywheel 1 -- Running now</div>
+      <h3>The Content Engine</h3>
+      <p>Create radical-honesty science content &rarr; attract health-curious audience &rarr; they engage and share &rarr; we learn what they need &rarr; create sharper content. Each rotation builds trust and grows the audience that becomes the customer base. No product needed. No funding needed.</p>
+    </div>
+    <div class="fw product">
+      <div class="fw-label amber">Flywheel 2 -- Activated by funding</div>
+      <h3>The Product Engine</h3>
+      <p>Know your body (data) &rarr; Do the protocols (action) &rarr; Get what you need (products) &rarr; Belong with others (community) &rarr; better data. Each layer creates demand for the next. Funding builds the product for an audience that already exists and already trusts us.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <h2>Channel strategy</h2>
+  <p style="font-size:10.5px;color:var(--stone);margin-bottom:10px">Depth over breadth. Two primary channels, two amplifiers. English-first -- the global longevity community speaks English, Berlin is 15-20% expat, and English content has 10x the addressable audience of German.</p>
+
+  <div class="g2">
+    <div>
+      <div class="ch">
+        <div class="ch-name sage">Primary: Short-Form Video</div>
+        <div class="ch-handle">TikTok + Instagram Reels &mdash; @alche.space</div>
+        <p>Radical honesty science content. We read peer-reviewed studies and give the real take -- industry-funded vs. independent results, what works and what doesn't. 3-5 posts per week. Pattern-breaking format: the first content piece is a collagen deep dive across 23 studies where we show that only industry-funded research shows positive results. This IS the brand voice.</p>
+      </div>
+      <div class="ch">
+        <div class="ch-name sage">Secondary: Newsletter</div>
+        <div class="ch-handle">Weekly email &mdash; Substack or Beehiiv</div>
+        <p>One deep dive per week. Written version of the video thesis. Captures emails -- the only owned asset. Social algorithms change; email lists compound. Free tier builds audience, paid tier follows. This is where the most engaged followers live and where conversion happens.</p>
+      </div>
+    </div>
+    <div>
+      <div class="ch secondary">
+        <div class="ch-name amber">Amplifier: YouTube</div>
+        <div class="ch-handle">Monthly "Alche Reviewed" long-form</div>
+        <p>10-20 minute deep research episodes. "Does collagen actually work? We read 23 studies." These are evergreen pillars that rank in search for years -- the SEO moat that no short-form competitor builds. One per month, compounds indefinitely.</p>
+      </div>
+      <div class="ch secondary">
+        <div class="ch-name amber">Amplifier: Berlin Events</div>
+        <div class="ch-handle">Quarterly "Alche Salon" &mdash; EUR 200-500/event</div>
+        <p>Community events at existing Berlin venues. Science talks over wine. One evening generates a month of content (film everything). Doubles as customer discovery -- face-to-face with target users. Physician partner presents for medical credibility. Biohackers Berlin meetup (2,213 members) is the warm audience.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Alche // Go-to-Market Strategy // Confidential</span>
+    <span>1 / 3</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PAGE 2: THE ROADMAP -->
+<!-- ============================================ -->
+<div class="page">
+  <div class="sl">Execution Roadmap</div>
+  <h1 style="font-size:36px"><strong>12 months</strong> to product-market fit.</h1>
+  <div class="sub" style="margin-bottom:18px">Quarter by quarter: what we do, what we measure, and what the investor sees at each stage.</div>
+
+  <div class="phase">
+    <div class="phase-bar q1"><span>Q1<br>Month 1-3</span></div>
+    <div class="phase-content">
+      <div class="phase-title">Foundation</div>
+      <div class="phase-sub">Pre-funding // EUR 0 budget // Content engine ignition</div>
+      <ul>
+        <li>Launch @alche.space on TikTok and Instagram. Publish 3-5 short-form videos per week using the "honest science" format.</li>
+        <li>Ship first content piece: the collagen video. 23 peer-reviewed studies, one honest conclusion. This is the format proof-of-concept.</li>
+        <li>Launch newsletter (Week 2). One deep dive per week. Goal: 300 subscribers by end of Q1.</li>
+        <li>Founder build-in-public content on personal accounts. The startup journey documented openly -- appeals to investors, founders, and future hires.</li>
+        <li>Attend Biohackers Berlin meetup as participants. Build relationships. Identify 10 customer interview targets.</li>
+        <li>Conduct 10 informal customer discovery conversations from social DMs and meetup contacts.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-bar q2"><span>Q2<br>Month 4-6</span></div>
+    <div class="phase-content">
+      <div class="phase-title">Traction Proof</div>
+      <div class="phase-sub">Pre-funding // EUR 200-500 events // Waitlist opens</div>
+      <ul>
+        <li>First Alche Salon event. 30-40 people, existing venue, science talk over drinks. Film everything -- one event produces 3-4 weeks of content.</li>
+        <li>Physician partner does first guest appearance (video or event). Defines the medical credibility layer.</li>
+        <li>Launch #dailyalche ritual: founders post their daily longevity practice. Followers participate and get reposted. Community feeds itself.</li>
+        <li>Open waitlist landing page. "We're building the longevity platform we couldn't find." Goal: 500 signups from newsletter + social + events.</li>
+        <li>Begin GmbH formation. Apply to GruendungsBONUS Plus (EUR 50K non-dilutive Berlin startup grant).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-bar q3"><span>Q3<br>Month 7-9</span></div>
+    <div class="phase-content">
+      <div class="phase-title">Fundraise + Build</div>
+      <div class="phase-sub">Funding closes // EUR 350-500K raise // MVP development begins</div>
+      <ul>
+        <li>Pitch with real numbers: X followers, Y newsletter subs, Z waitlist, N event attendees. "The flywheel is already spinning. Your capital builds the product."</li>
+        <li>Post-funding: hire technical co-founder / dev lead. Begin MVP development.</li>
+        <li>Content engine does not stop. This is the acquisition channel -- pausing content is like turning off the marketing budget.</li>
+        <li>Events scale to monthly with 60-80 attendees. Partnerships with Berlin wellness ecosystem.</li>
+        <li>Formalize physician advisor role and agreement.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-bar q4"><span>Q4<br>Month 10-12</span></div>
+    <div class="phase-content">
+      <div class="phase-title">Beta Launch</div>
+      <div class="phase-sub">Post-funding // Product in hands // Founding members</div>
+      <ul>
+        <li>MVP beta to first 50-100 users from waitlist. Founding member pricing: EUR 19/month, locked for life.</li>
+        <li>These users have followed Alche for 8-10 months. They're emotionally invested. Their feedback shapes v1.</li>
+        <li>Content evolves to include product teasers, beta user stories, and "building in public" updates.</li>
+        <li>Product flywheel (data + action + community) activates alongside the content flywheel. Both run simultaneously.</li>
+        <li>Physical space search begins. Berlin location planning as proof of concept for the hybrid model.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sep-sm"></div>
+
+  <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:8px">Target metrics by quarter</div>
+
+  <table class="mtable">
+    <thead>
+      <tr><th style="width:32%"></th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-name">Social followers</td><td>1-2K</td><td>3-5K</td><td>8-12K</td><td>15-20K</td></tr>
+      <tr><td class="metric-name">Newsletter subscribers</td><td>300</td><td>1,000</td><td>2,500</td><td>5,000</td></tr>
+      <tr><td class="metric-name">Waitlist signups</td><td class="muted">--</td><td>500</td><td>1,500</td><td class="muted">(converts to users)</td></tr>
+      <tr><td class="metric-name">Event attendees (cumulative)</td><td class="muted">--</td><td>35</td><td>250</td><td>500+</td></tr>
+      <tr><td class="metric-name">Paying users</td><td class="muted">--</td><td class="muted">--</td><td class="muted">--</td><td class="highlight">50-100</td></tr>
+      <tr><td class="metric-name">Content CAC</td><td class="highlight">EUR 0</td><td class="highlight">EUR 0</td><td class="highlight">EUR 0</td><td class="highlight">EUR 0</td></tr>
+      <tr><td class="metric-name">Paid CAC (post-funding)</td><td class="muted">--</td><td class="muted">--</td><td>EUR 15-25</td><td>EUR 15-25</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <span>Alche // Go-to-Market Strategy // Confidential</span>
+    <span>2 / 3</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PAGE 3: ECONOMICS + CONVICTION -->
+<!-- ============================================ -->
+<div class="page">
+  <div class="sl">Unit Economics & Conviction</div>
+  <h1 style="font-size:36px"><strong>Why this works.</strong></h1>
+  <div class="sub" style="margin-bottom:18px">The economics of content-first acquisition, the virality mechanics, and the case for why this audience converts.</div>
+
+  <h2>Customer acquisition: EUR 0 to start</h2>
+  <p>Content-first means our acquisition cost in months 1-9 is effectively zero -- we trade labor for capital. Every follower, subscriber, and waitlist signup is earned through content, not bought through ads. When funding arrives, we amplify what already works: boost the video that got 50K views organically, sponsor the event format that filled 80 seats. We never spend on untested channels.</p>
+  <p style="margin-top:6px"><strong>Post-funding allocation:</strong> 15-20% of raise (EUR 50-100K) to acquisition. But exclusively on amplifying proven organic winners. The content engine identifies what converts before we spend a euro on paid distribution.</p>
+
+  <div class="sep-sm"></div>
+
+  <h2>Organic virality mechanics</h2>
+  <div class="g3" style="margin-top:8px">
+    <div class="card" style="padding:14px 16px">
+      <h3 style="font-size:13px;color:var(--sage);margin-bottom:4px">Shareable format</h3>
+      <p style="font-size:10px;line-height:1.5">Honest, surprising science takes make the sharer look informed. "Industry-funded collagen studies show results, independent ones don't" gets screenshotted and sent to friends. The content does the distribution.</p>
+    </div>
+    <div class="card" style="padding:14px 16px">
+      <h3 style="font-size:13px;color:var(--sage);margin-bottom:4px">Identity signal</h3>
+      <p style="font-size:10px;line-height:1.5">Following @alche.space becomes a badge: "I care about aging well, but I'm not weird about it." The anti-optimization-bro identity. People share signals that flatter them.</p>
+    </div>
+    <div class="card" style="padding:14px 16px">
+      <h3 style="font-size:13px;color:var(--sage);margin-bottom:4px">Ritual participation</h3>
+      <p style="font-size:10px;line-height:1.5">#dailyalche creates a low-barrier mechanic: post your one longevity thing today. Community members discover each other through the tag. The community grows itself.</p>
+    </div>
+  </div>
+
+  <div class="sep-sm"></div>
+
+  <h2>The one channel that changes everything</h2>
+  <p><strong>TikTok.</strong> One viral science video generates 100K+ views and 2-5K followers overnight -- compressing six months of organic growth into one hit. The algorithm rewards exactly what we're built for: pattern-breaking, controversial-but-honest, science-backed short content. Every successful content-first company has one disproportionate acquisition channel. For Alche, it's short-form video where our voice is the product and the algorithm is the distribution.</p>
+
+  <div class="sep-sm"></div>
+
+  <h2>Why this audience converts</h2>
+  <p>By the time we launch the product, our audience has three characteristics that make conversion near-certain:</p>
+  <div class="g3" style="margin-top:8px">
+    <div style="border-left:3px solid var(--sage);padding:8px 12px">
+      <p style="font-size:10px;line-height:1.5"><strong>Trust is pre-built.</strong> They've consumed 6-9 months of honest, science-first content. They've seen us admit when something doesn't work. They trust the voice. Trust is the highest-friction component of any health purchase -- and we've already cleared it.</p>
+    </div>
+    <div style="border-left:3px solid var(--amber);padding:8px 12px">
+      <p style="font-size:10px;line-height:1.5"><strong>Need is validated.</strong> Every comment, DM, and event conversation is a data point. We know what they're struggling with, what they'd pay for, and what language they use. The product is shaped by real demand, not assumptions.</p>
+    </div>
+    <div style="border-left:3px solid var(--terra);padding:8px 12px">
+      <p style="font-size:10px;line-height:1.5"><strong>Community exists.</strong> They already know each other from #dailyalche, from events, from newsletter replies. The BELONG layer -- the retention moat -- is already alive before the app ships. They're not just buying a product. They're joining their people.</p>
+    </div>
+  </div>
+
+  <div class="inv-box">
+    <h3>The investor takeaway</h3>
+    <p>We are not waiting for funding to start. The content flywheel is in motion. We're building an audience that trusts us before we ask them to buy from us. Your investment doesn't start the engine -- it builds the product that this audience is already asking for. By the time we launch, the question isn't <em>"will anyone use this?"</em> It's <em>"how fast can we onboard the people already waiting?"</em></p>
+  </div>
+
+  <div class="footer">
+    <span>Alche // Go-to-Market Strategy // Confidential</span>
+    <span>3 / 3</span>
+  </div>
+</div>
+
+</body></html>

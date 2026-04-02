@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche: The Solution</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* Global overflow safety */
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; table-layout: fixed; }
+    td { word-wrap: break-word; }
+
+    /* Definition highlight box */
+    .definition-box {
+      background: var(--glass-strong);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6) var(--space-7);
+      margin-bottom: var(--space-6);
+    }
+
+    .definition-box p {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--deep);
+      margin-bottom: 0;
+    }
+
+    /* Pillar cards 2x2 grid */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+      overflow: hidden;
+    }
+
+    .pillar-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      border-left: 3px solid var(--amber);
+      overflow: hidden;
+    }
+
+    .pillar-card--sage { border-left-color: var(--sage); }
+    .pillar-card--amber { border-left-color: var(--amber); }
+    .pillar-card--terra { border-left-color: var(--terra); }
+    .pillar-card--rose { border-left-color: var(--rose); }
+
+    .pillar-card__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+    }
+
+    .pillar-card--sage .pillar-card__label { color: var(--sage); }
+    .pillar-card--amber .pillar-card__label { color: var(--amber); }
+    .pillar-card--terra .pillar-card__label { color: var(--terra); }
+    .pillar-card--rose .pillar-card__label { color: var(--rose); }
+
+    .pillar-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: var(--space-1);
+    }
+
+    .pillar-card__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.5;
+    }
+
+    /* Experience columns */
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+      overflow: hidden;
+    }
+
+    .experience-col {
+      text-align: center;
+    }
+
+    .experience-col__screen {
+      width: 100%;
+      max-width: 115px;
+      height: auto;
+      margin: 0 auto var(--space-2);
+      display: block;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+    }
+
+    .experience-col__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 2px;
+    }
+
+    .experience-col__desc {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.45;
+      max-width: 140px;
+      margin: 0 auto;
+    }
+
+    /* Flow connector bar */
+    .flow-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-1);
+      padding: var(--space-1) 0;
+      margin-bottom: var(--space-2);
+    }
+
+    .flow-bar__arrow {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      color: var(--amber);
+      opacity: 0.4;
+    }
+
+    .flow-bar__label {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    /* Bottom two-screen row */
+    .bottom-screens {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      overflow: hidden;
+    }
+
+    .bottom-screen {
+      text-align: center;
+    }
+
+    .bottom-screen__img {
+      width: 100%;
+      max-width: 110px;
+      height: auto;
+      margin: 0 auto var(--space-2);
+      display: block;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+    }
+
+    .bottom-screen__label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 2px;
+    }
+
+    .bottom-screen__desc {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      color: var(--deep-70);
+      line-height: 1.45;
+      max-width: 180px;
+      margin: 0 auto;
+    }
+
+    /* Product listing compact */
+    .product-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .product-list li {
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--deep-04);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      color: var(--deep-70);
+    }
+
+    .product-list li:last-child {
+      border-bottom: none;
+    }
+
+    .product-list li strong {
+      color: var(--deep);
+      font-weight: 600;
+    }
+
+    /* Data loop flow */
+    .data-loop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 0;
+      padding: var(--space-2) var(--space-1);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .data-loop__step {
+      font-family: var(--font-mono);
+      font-size: 6.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--deep);
+      padding: 2px 2px;
+      white-space: nowrap;
+    }
+
+    .data-loop__arrow {
+      font-family: var(--font-serif);
+      font-size: var(--text-sm);
+      color: var(--amber);
+      opacity: 0.35;
+      padding: 0 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 (pg 10): What is alche?
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-header__number">[05] The Solution</span>
+      <h1 class="section-header__title">What is <strong>alche</strong>?</h1>
+    </div>
+
+    <!-- Definition box -->
+    <div class="definition-box">
+      <p>"alche is a premium wellness ecosystem that integrates a physical flagship space, a proprietary mobile app, an outcome-based product brand, and a curated event programme into one data-enabled membership."</p>
+    </div>
+
+    <!-- 2x2 pillar grid -->
+    <div class="pillar-grid">
+      <div class="pillar-card pillar-card--sage">
+        <div class="pillar-card__label">Physical Experience</div>
+        <div class="pillar-card__title">Berlin Mitte Flagship</div>
+        <div class="pillar-card__desc">LED therapy rooms, functional smoothie bar, curated product shelf. The physical anchor that creates habit loops digital tools cannot.</div>
+      </div>
+      <div class="pillar-card pillar-card--amber">
+        <div class="pillar-card__label">Product Brand</div>
+        <div class="pillar-card__title">Outcome-Based Blends</div>
+        <div class="pillar-card__desc">Six signature formulations: Glow, Energy, Calm, Recovery, Gut, Reset. Each mapped to a wellness goal, sold as smoothies in-store and as pouches to take home.</div>
+      </div>
+      <div class="pillar-card pillar-card--terra">
+        <div class="pillar-card__label">App Platform</div>
+        <div class="pillar-card__title">10 Integrated Modules</div>
+        <div class="pillar-card__desc">Booking, tracking, shopping, community, events, membership, AI concierge, replenishment, biomarkers, and digital twin. One app, one profile.</div>
+      </div>
+      <div class="pillar-card pillar-card--rose">
+        <div class="pillar-card__label">Events and Culture</div>
+        <div class="pillar-card__title">Community Programme</div>
+        <div class="pillar-card__desc">Workshops, expert talks, community sessions. Every event builds belonging and generates revenue simultaneously.</div>
+      </div>
+    </div>
+
+    <!-- Connecting statement -->
+    <div class="callout callout--amber" style="margin-top: 0;">
+      <div class="callout__body" style="text-align: center;">
+        Each pillar generates behavioral data that feeds a central information system, enabling personalization across the entire ecosystem. The integration is the product.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">10</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       PAGE 2 (pg 11): The Experience: Physical Meets Digital
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The Experience</div>
+    <h2 class="mb-3"><strong>Physical Meets Digital</strong></h2>
+
+    <!-- Three columns: Book / Customize / Experience -->
+    <div class="experience-grid">
+      <div class="experience-col">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking Screen" class="experience-col__screen">
+        <div class="experience-col__label">Book</div>
+        <div class="experience-col__desc">Select LED session type, pick a time slot, pre-order your smoothie and boost. Everything is ready before you arrive.</div>
+      </div>
+      <div class="experience-col">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu Screen" class="experience-col__screen">
+        <div class="experience-col__label">Customize</div>
+        <div class="experience-col__desc">Six signature potions (EUR 7 to 11) with five functional boosts (+EUR 2). Matched to your wellness goal. Ready on arrival.</div>
+      </div>
+      <div class="experience-col">
+        <img src="../screens/S05-Session-Active.png" alt="Active Session Screen" class="experience-col__screen">
+        <div class="experience-col__label">Experience</div>
+        <div class="experience-col__desc">20-minute LED session. Glow (630-660nm) or Recovery (810-850nm). Functional smoothie in hand. Post-session: log how you feel.</div>
+      </div>
+    </div>
+
+    <!-- Flow connector -->
+    <div class="flow-bar">
+      <span class="flow-bar__label">arrive</span>
+      <span class="flow-bar__arrow">&rarr;</span>
+      <span class="flow-bar__label">check in</span>
+      <span class="flow-bar__arrow">&rarr;</span>
+      <span class="flow-bar__label">session</span>
+      <span class="flow-bar__arrow">&rarr;</span>
+      <span class="flow-bar__label">track</span>
+      <span class="flow-bar__arrow">&rarr;</span>
+      <span class="flow-bar__label">shop</span>
+      <span class="flow-bar__arrow">&rarr;</span>
+      <span class="flow-bar__label">return</span>
+    </div>
+
+    <!-- Bottom two screens -->
+    <div class="bottom-screens">
+      <div class="bottom-screen">
+        <img src="../screens/S06-Shop-by-Outcome.png" alt="Shop by Outcome Screen" class="bottom-screen__img">
+        <div class="bottom-screen__label">Browse and Buy</div>
+        <div class="bottom-screen__desc">Product shelf organized by outcome. The boost in your smoothie becomes the pouch on the shelf.</div>
+      </div>
+      <div class="bottom-screen">
+        <img src="../screens/S01-Home-Dashboard.png" alt="Home Dashboard Screen" class="bottom-screen__img">
+        <div class="bottom-screen__label">Track and Return</div>
+        <div class="bottom-screen__desc">Dashboard shows your journey progress. Smart reminders book your next visit. The loop repeats with better data.</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">11</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       PAGE 3 (pg 12): Product Ecosystem
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">Product Ecosystem</div>
+    <h2 class="mb-3"><strong>Products, Services, and the Data Loop</strong></h2>
+
+    <div class="two-col" style="margin-bottom: var(--space-5); overflow: hidden;">
+
+      <!-- Left column: product listing -->
+      <div>
+        <h4 class="mb-3" style="font-size: var(--text-base);">Smoothie Bar</h4>
+        <ul class="product-list" style="margin-bottom: var(--space-4);">
+          <li><strong>Glow</strong> (EUR 9): Mango, turmeric, collagen. Skin and radiance.</li>
+          <li><strong>Energy</strong> (EUR 9): Banana, maca, cacao. Focus and stamina.</li>
+          <li><strong>Calm</strong> (EUR 8): Blueberry, ashwagandha, lavender. Stress relief.</li>
+          <li><strong>Recovery</strong> (EUR 11): Tart cherry, BCAA, ginger. Muscle repair.</li>
+          <li><strong>Gut</strong> (EUR 8): Kefir, prebiotic fiber, mint. Digestive health.</li>
+          <li><strong>Reset</strong> (EUR 7): Lemon, activated charcoal, spirulina. Detox.</li>
+        </ul>
+
+        <h4 class="mb-3" style="font-size: var(--text-base);">Functional Boosts (+EUR 2 each)</h4>
+        <ul class="product-list" style="margin-bottom: var(--space-4);">
+          <li><strong>Collagen Peptides</strong>: Skin elasticity and joint support</li>
+          <li><strong>Lion's Mane</strong>: Cognitive clarity and focus</li>
+          <li><strong>Ashwagandha</strong>: Cortisol regulation and calm</li>
+          <li><strong>MCT Oil</strong>: Sustained energy and ketone support</li>
+          <li><strong>Creatine Monohydrate</strong>: Strength and recovery</li>
+        </ul>
+
+        <h4 class="mb-3" style="font-size: var(--text-base);">LED Therapy</h4>
+        <ul class="product-list" style="margin-bottom: var(--space-4);">
+          <li><strong>Glow</strong> (630-660nm): Red light. Skin, collagen, circulation.</li>
+          <li><strong>Recovery</strong> (810-850nm): Near-infrared. Muscle, joints, deep tissue.</li>
+        </ul>
+
+        <h4 class="mb-2" style="font-size: var(--text-base);">Product Shelf</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.5;">Own-brand blends (300g pouches), capsules, and curated third-party products. Organized by outcome, not by ingredient.</p>
+      </div>
+
+      <!-- Right column: Replenishment screen -->
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="../screens/S13-Replenishment.png" alt="Smart Replenishment Screen" style="width: 85%; max-width: 260px; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+      </div>
+
+    </div>
+
+    <!-- 8-step data feedback loop -->
+    <div class="section-label mb-3">Data Feedback Loop</div>
+    <div class="data-loop">
+      <span class="data-loop__step">Goal Selection</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Protocol</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Booking</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Experience</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Data Captured</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Insights</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Recommendations</span>
+      <span class="data-loop__arrow">&rarr;</span>
+      <span class="data-loop__step">Re-entry</span>
+    </div>
+
+    <div class="sources mt-5">
+      BEUC Health Data Survey 2024 / Blue Zones / American Journal of Lifestyle Medicine / Fitzgerald et al. 2021, Aging
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">12</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

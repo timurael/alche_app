@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Closing</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Vision hero block */
+    .vision-block {
+      text-align: center;
+      padding: var(--space-10) var(--space-8);
+      margin: var(--space-6) 0 var(--space-8);
+      border-radius: var(--radius-lg);
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vision-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(196,149,106,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(139,158,124,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .vision-block__label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+    }
+
+    .vision-block__title {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-serif);
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--cream);
+      max-width: 600px;
+      margin: 0 auto var(--space-4);
+    }
+
+    .vision-block__title strong {
+      font-weight: 600;
+    }
+
+    .vision-block__sub {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      color: rgba(245,240,232,0.55);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* Growth arc timeline */
+    .arc-step {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--space-4);
+      align-items: start;
+      margin-bottom: var(--space-4);
+    }
+
+    .arc-step__when {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding-top: 3px;
+    }
+
+    .arc-step__what {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+
+    .arc-step__how {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--stone);
+      line-height: 1.55;
+    }
+
+    /* Closing page */
+    .close-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: calc(var(--page-height) - var(--page-margin-y) * 2 - 80px);
+    }
+
+    .close-page__wordmark {
+      font-family: var(--font-serif);
+      font-size: 72px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--deep);
+      line-height: 0.88;
+      margin-bottom: var(--space-4);
+    }
+
+    .close-page__tagline {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--amber);
+      margin-bottom: var(--space-8);
+    }
+
+    .close-page__contact {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--stone);
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Closing<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[13] Closing</span>
+      <h1 class="section-header__title"><strong>The ambition.</strong></h1>
+      <p class="section-header__subtitle">Berlin is the proof. Europe is the unlock.</p>
+    </div>
+
+    <!-- Vision Block -->
+    <div class="vision-block">
+      <div class="vision-block__label">The Endgame</div>
+      <div class="vision-block__title">The <strong>longevity lifestyle platform</strong> for all of Europe.</div>
+      <div class="vision-block__sub">What Aesop did for skincare -- took something technical and made it beautiful, accessible, and identity-forming. That is what alche does for longevity.</div>
+    </div>
+
+    <!-- Growth Arc -->
+    <div class="section-label">From Here to There</div>
+
+    <div class="arc-step">
+      <div class="arc-step__when text-amber">Phase 1 // M0-12</div>
+      <div>
+        <div class="arc-step__what">Berlin proof of concept</div>
+        <div class="arc-step__how">App launch. One physical space in Mitte. 145 paying subscribers. Break-even on unit economics. Content flywheel spinning. Community density forming.</div>
+      </div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-step__when text-sage">Phase 2 // M6-18</div>
+      <div>
+        <div class="arc-step__what">Digital expansion across EU</div>
+        <div class="arc-step__how">Open app beyond Berlin. Ship products across the EU. Partner with existing wellness spaces. Prove digital-only members retain without a physical node.</div>
+      </div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-step__when text-terra">Phase 3 // M12-24</div>
+      <div>
+        <div class="arc-step__what">Second location + seed round</div>
+        <div class="arc-step__how">Second Berlin location where digital density is highest. Pop-ups before permanent. Seed round at EUR 2M+ MRR trajectory.</div>
+      </div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-step__when text-rose">Phase 4 // M18-36</div>
+      <div>
+        <div class="arc-step__what">Platform maturity</div>
+        <div class="arc-step__how">Open API for partner integrations. Corporate wellness tier. Expand category presence across EU.</div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">25</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2 — Conviction Close
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Closing<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Big Quote -->
+    <div class="pull-quote mb-6" style="margin-top: var(--space-8);">
+      <div class="pull-quote__text" style="font-size: 22px;">"Longevity should not be solely for tech bros of Silicon Valley. It should be for everyone who wants to live better, not just longer."</div>
+      <div class="pull-quote__attribution">Community sentiment -- r/Biohackers, r/Longevity, r/Supplements // 711K+ members</div>
+    </div>
+
+    <div class="sep mb-6"></div>
+
+    <!-- What Alche is / is not -->
+    <div class="two-col" style="margin-bottom: var(--space-8);">
+      <div class="glass-accent glass-accent--terra">
+        <h4 class="mb-2">What alche is not</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Not a wellness brand that happens to have an app. Not a longevity clinic for the already-converted. Not another personalized nutrition play. Not a Silicon Valley export.</p>
+      </div>
+      <div class="glass-accent glass-accent--sage">
+        <h4 class="mb-2">What alche is</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">The digital platform is the business. The physical space is one revenue module. Built in Berlin for European culture, regulation, and sensibility. GDPR-native from day one. An identity brand, not a feature set.</p>
+      </div>
+    </div>
+
+    <!-- Conviction Close -->
+    <div class="close-page">
+      <div class="close-page__wordmark">alche</div>
+      <div class="close-page__tagline">Your longevity, daily.</div>
+      <div class="close-page__contact">
+        Pre-Seed // Berlin, Germany<br>
+        February 2026<br>
+        Confidential<br><br>
+        Daria Dijan Roth -- daria@alche.space<br>
+        Timur Tasdogan -- timur@alche.space
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">26</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

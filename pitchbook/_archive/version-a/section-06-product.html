@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche - The Product</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Data Feedback Loop */
+    .feedback-loop {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-2);
+      margin: var(--space-4) 0;
+    }
+
+    .feedback-loop__step {
+      text-align: center;
+      padding: var(--space-2) var(--space-2);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      position: relative;
+    }
+
+    .feedback-loop__step::after {
+      content: '\2192';
+      position: absolute;
+      right: -9px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: var(--amber);
+      opacity: 0.4;
+      z-index: 2;
+    }
+
+    .feedback-loop__step:nth-child(4)::after {
+      display: none;
+    }
+
+    .feedback-loop__step:nth-child(8)::after {
+      content: '\21BB';
+      right: auto;
+      left: 50%;
+      top: auto;
+      bottom: -14px;
+      transform: translateX(-50%);
+      font-size: 12px;
+    }
+
+    .feedback-loop__num {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 1px;
+    }
+
+    .feedback-loop__title {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--deep);
+      line-height: 1.2;
+    }
+
+    .feedback-loop__desc {
+      font-family: var(--font-sans);
+      font-size: 7px;
+      color: var(--deep-70);
+      line-height: 1.3;
+      margin-top: 1px;
+    }
+
+    /* Screen grid images - responsive */
+    .screen-grid-3 img, .screen-grid-2 img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Ensure four-col membership tiers fit */
+    .four-col .glass {
+      overflow: hidden;
+      word-wrap: break-word;
+    }
+
+    /* Ensure all images are responsive */
+    .page img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 - Membership + Data Feedback Loop
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[06] The Product</span>
+      <h1 class="section-header__title"><strong>Membership &amp; Intelligence</strong></h1>
+      <p class="section-header__subtitle">Four membership tiers fund the operating system. An eight-step feedback loop transforms every interaction into personalized insight.</p>
+    </div>
+
+    <!-- Membership Tiers -->
+    <div class="section-label">Membership</div>
+    <h2 class="mb-4"><strong>Four tiers, credit-based.</strong></h2>
+
+    <div class="four-col mb-3">
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Free</div>
+        <div class="font-serif text-2xl mb-2" style="font-weight: 300;">&euro;0</div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Content access<br>Community browsing<br>Product browsing<br>Event discovery</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Core</div>
+        <div class="font-serif text-2xl mb-2"><strong>&euro;19</strong><span class="text-sm" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Biomarker dashboard<br>Wearable sync<br>Basic protocols<br>Community access</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center; border: 2px solid var(--amber);">
+        <div class="section-label mb-2">Pro</div>
+        <div class="font-serif text-2xl mb-2"><strong>&euro;49</strong><span class="text-sm" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Personalized protocols<br>AI insights<br>Advanced tracking<br>Drop early access</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Premium</div>
+        <div class="font-serif text-2xl mb-2"><strong>&euro;99</strong><span class="text-sm" style="font-weight: 300;">/mo</span></div>
+        <p class="text-xs text-stone" style="line-height: 1.6;">Blood panel credits<br>1:1 reviews<br>Exclusive events<br>CGM integration (Phase 2)</p>
+      </div>
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Data Feedback Loop -->
+    <div class="section-label">Data Feedback Loop</div>
+    <h2 class="mb-2"><strong>Eight steps, closed loop.</strong></h2>
+    <p class="text-sm mb-2" style="color: var(--deep-70); max-width: 520px; line-height: 1.45;">Every interaction generates data. The feedback loop ensures that each cycle of engagement produces increasingly precise recommendations, driving retention and average order value simultaneously.</p>
+
+    <div class="feedback-loop">
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">01</div>
+        <div class="feedback-loop__title">Goal Selection</div>
+        <div class="feedback-loop__desc">User selects primary outcome</div>
+      </div>
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">02</div>
+        <div class="feedback-loop__title">Personalized Protocol</div>
+        <div class="feedback-loop__desc">System generates tailored plan</div>
+      </div>
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">03</div>
+        <div class="feedback-loop__title">Booking</div>
+        <div class="feedback-loop__desc">LED session + smoothie reserved</div>
+      </div>
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">04</div>
+        <div class="feedback-loop__title">Experience</div>
+        <div class="feedback-loop__desc">In-space session completed</div>
+      </div>
+    </div>
+    <div class="feedback-loop mt-3">
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">05</div>
+        <div class="feedback-loop__title">Data Captured</div>
+        <div class="feedback-loop__desc">Mood, energy, skin, purchase</div>
+      </div>
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">06</div>
+        <div class="feedback-loop__title">Insights Generated</div>
+        <div class="feedback-loop__desc">Patterns identified over time</div>
+      </div>
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">07</div>
+        <div class="feedback-loop__title">Recommendations</div>
+        <div class="feedback-loop__desc">Products, sessions, protocols refined</div>
+      </div>
+      <div class="feedback-loop__step">
+        <div class="feedback-loop__num">08</div>
+        <div class="feedback-loop__title">Re-entry</div>
+        <div class="feedback-loop__desc">Next cycle, sharper personalization</div>
+      </div>
+    </div>
+
+    <div class="callout callout--sage mt-3">
+      <div class="callout__body">
+        Each completed cycle increases data density per user, improving recommendation accuracy. The loop structurally rewards repeat engagement: the more a member uses alche, the more precise and valuable the experience becomes.
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">13</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2 - Product Roadmap
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Product<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Product Roadmap -->
+    <div class="section-label">Product Roadmap</div>
+    <h2 class="mb-4"><strong>MVP is the skeleton.</strong> Intelligence comes later.</h2>
+
+    <div class="three-col mb-3">
+      <div class="glass-accent glass-accent--sage">
+        <div class="section-label mb-2">MVP: Months 1-4</div>
+        <h4 class="mb-1">The Commerce Loop</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Booking, menu, shop, membership, events, basic tracking. Commerce-first. The transaction engine running from day one.</p>
+        <div class="mt-2">
+          <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;"><strong>Modules:</strong> LED Booking, Digital Menu, Membership, Shop, Events, In-Store Mode</p>
+        </div>
+      </div>
+      <div class="glass-accent glass-accent--amber">
+        <div class="section-label mb-2">V1: Months 5-9</div>
+        <h4 class="mb-1">The Intelligence Layer</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">AI concierge, smart replenishment, glucose-smoothie correlation, curated protocols. The data layer activates.</p>
+        <div class="mt-2">
+          <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;"><strong>Modules:</strong> Goal-Based Journeys, Glow Scan, Progress Tracking, Smart Replenishment</p>
+        </div>
+      </div>
+      <div class="glass-accent glass-accent--terra">
+        <div class="section-label mb-2">V2: Months 10+</div>
+        <h4 class="mb-1">The Full Platform</h4>
+        <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;">Biomarker dashboard, bio age score, personalized AI protocols, doctor integration. The full ecosystem at velocity.</p>
+        <div class="mt-2">
+          <p class="text-xs" style="color: var(--deep-70); line-height: 1.55;"><strong>Modules:</strong> Digital Twin, AI Concierge, Biomarker Dashboard, CGM Integration</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Physical Space Callout -->
+    <div class="callout callout--terra mb-3">
+      <div class="callout__title">Physical Space: Berlin Mitte Flagship</div>
+      <div class="callout__body">
+        The Berlin flagship is where the digital meets the physical: LED sessions, functional smoothies, curated products, community events. It operates near breakeven standalone, generates EUR 8,800-11,700/month in subscriber LTV through walk-in conversions, and creates the environmental cues that bridge the 66-day habit formation gap digital-only tools structurally cannot address. The space is both a revenue-generating asset and the primary customer acquisition channel.
+      </div>
+    </div>
+
+    <!-- App Screens -->
+    <div class="mb-3">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terra); font-weight: 600; margin-bottom: var(--space-2);">V1 / V2: Intelligence Layer</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <img src="../screens/S11-CGM-Smart.png" alt="CGM Smart" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S14-Biomarkers.png" alt="Biomarkers" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: block;">
+        <img src="../screens/S15-Digital-Twin.png" alt="Digital Twin" style="width: 100%; max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: block;">
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-4">
+      RevenueCat 2025 Benchmarks / Baumel et al. 2019, JMIR / Lally et al. 2010, European J. Social Psychology / Stripe Integration Docs
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">14</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

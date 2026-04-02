@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ALCHE — Competitive Landscape</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--deep:#2C2418;--amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;
+  --rose:#A86878;--stone:#9E948A;
+  --glass:rgba(255,252,246,0.55);--glass-border:rgba(196,149,106,0.18);
+  --glass-strong:rgba(255,252,246,0.75);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--deep);line-height:1.55;font-size:14px;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 10% 15%,rgba(196,149,106,0.07) 0%,transparent 50%),radial-gradient(ellipse at 90% 85%,rgba(139,158,124,0.05) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 60px;position:relative;z-index:1}
+.section{padding:72px 0}
+.section:first-child{padding-top:48px}
+
+/* ── TYPOGRAPHY ── */
+.label{font-size:9.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:6px}
+.title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.12;margin-bottom:10px}
+.title strong{font-weight:600}
+.subtitle{font-size:14px;color:var(--stone);max-width:680px;line-height:1.65;margin-bottom:28px}
+.prose{font-size:13px;color:var(--deep);line-height:1.7;max-width:720px}
+.prose strong{color:var(--terra)}
+
+/* ── SEPARATORS ── */
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:0}
+.sep-v{width:1px;background:var(--glass-border)}
+
+/* ── GLASS CARDS ── */
+.card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:12px;padding:24px 22px;transition:transform 0.3s,box-shadow 0.3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(44,36,24,0.06)}
+.card.amber-l{border-left:4px solid var(--amber)}
+.card.terra-l{border-left:4px solid var(--terra)}
+.card.sage-l{border-left:4px solid var(--sage)}
+.card.rose-l{border-left:4px solid var(--rose)}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+
+/* ── HEADER BAR ── */
+.doc-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:2px solid var(--deep);margin-bottom:0}
+.doc-header .mark{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
+.doc-header .meta{font-size:10px;color:var(--stone);letter-spacing:0.03em}
+
+/* ── POSITIONING MAP ── */
+.map-container{position:relative;width:100%;aspect-ratio:16/11;background:var(--glass-strong);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;margin:24px 0}
+.map-grid{position:absolute;inset:60px 60px 50px 60px}
+.map-axis-x{position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(44,36,24,0.12)}
+.map-axis-y{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(44,36,24,0.12)}
+.map-label{position:absolute;font-size:8.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);font-weight:500}
+.map-label.top{top:-42px;left:50%;transform:translateX(-50%);text-align:center}
+.map-label.bottom{bottom:-36px;left:50%;transform:translateX(-50%);text-align:center}
+.map-label.left{left:-50px;top:50%;transform:translateY(-50%) rotate(-90deg);white-space:nowrap}
+.map-label.right{right:-50px;top:50%;transform:translateY(-50%) rotate(90deg);white-space:nowrap}
+
+.dot{position:absolute;transform:translate(-50%,-50%);z-index:2;cursor:default;transition:transform 0.2s}
+.dot:hover{transform:translate(-50%,-50%) scale(1.15);z-index:10}
+.dot-circle{width:10px;height:10px;border-radius:50%;border:2px solid}
+.dot-label{position:absolute;font-size:9px;font-weight:500;white-space:nowrap;color:var(--deep);line-height:1.2}
+.dot-funding{font-size:7.5px;color:var(--stone);font-weight:400}
+
+/* Alche marker */
+.dot-alche{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--amber));display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px rgba(184,107,74,0.12),0 4px 20px rgba(184,107,74,0.2)}
+.dot-alche span{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:700;color:white;letter-spacing:0.04em}
+
+/* Quadrant overlays */
+.quadrant{position:absolute;display:flex;align-items:flex-start;justify-content:flex-start;padding:8px 12px}
+.quadrant-label{font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;opacity:0.4}
+.q-tl{top:0;left:0;width:50%;height:50%;background:rgba(139,158,124,0.04);border-radius:12px 0 0 0}
+.q-tr{top:0;right:0;width:50%;height:50%;background:rgba(184,107,74,0.04);border-radius:0 12px 0 0}
+.q-bl{bottom:0;left:0;width:50%;height:50%;background:rgba(158,148,138,0.03)}
+.q-br{bottom:0;right:0;width:50%;height:50%;background:rgba(158,148,138,0.02)}
+.q-tr .quadrant-label{color:var(--terra)}
+.q-tl .quadrant-label{color:var(--sage)}
+.q-bl .quadrant-label{color:var(--stone)}
+.q-br .quadrant-label{color:var(--stone)}
+
+/* ── COMPETITOR STRIPS ── */
+.comp-strip{display:grid;grid-template-columns:140px 1fr 100px 90px;align-items:center;gap:16px;padding:14px 18px;border-bottom:1px solid rgba(44,36,24,0.05);transition:background 0.2s}
+.comp-strip:hover{background:rgba(196,149,106,0.04)}
+.comp-strip:last-child{border-bottom:none}
+.comp-name{font-weight:600;font-size:13px}
+.comp-type{font-size:10px;color:var(--stone);margin-top:1px}
+.comp-desc{font-size:11.5px;color:var(--deep);line-height:1.45}
+.comp-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--terra);text-align:right}
+.comp-val-sub{font-size:9px;color:var(--stone);text-align:right}
+.comp-threat{text-align:right}
+.threat-bar{height:4px;border-radius:2px;display:inline-block}
+.threat-high{background:var(--terra);width:40px}
+.threat-med{background:var(--amber);width:28px}
+.threat-low{background:var(--sage);width:16px}
+
+/* ── PAIN POINTS ── */
+.pain{display:flex;gap:10px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(44,36,24,0.04)}
+.pain:last-child{border-bottom:none}
+.pain-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.pain-icon.crit{background:rgba(184,107,74,0.1);color:var(--terra)}
+.pain-icon.high{background:rgba(196,149,106,0.1);color:var(--amber)}
+.pain-text{font-size:12px;line-height:1.5}.pain-text strong{display:block;font-size:12.5px;margin-bottom:1px}
+.pain-text span{color:var(--stone);font-size:11px}
+
+/* ── GRAVEYARD ── */
+.grave{display:grid;grid-template-columns:120px 80px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid rgba(44,36,24,0.04);font-size:12px;align-items:baseline}
+.grave:last-child{border-bottom:none}
+.grave-name{font-weight:600}.grave-raised{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--terra)}
+.grave-reason{color:var(--stone);font-size:11.5px;line-height:1.4}
+
+/* ── CALLOUT BOX ── */
+.callout{background:rgba(184,107,74,0.05);border:1px solid rgba(184,107,74,0.14);border-radius:12px;padding:24px;margin:20px 0}
+.callout h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--terra);margin-bottom:6px}
+.callout p{font-size:12.5px;line-height:1.65;color:var(--deep)}
+.callout.sage{background:rgba(139,158,124,0.05);border-color:rgba(139,158,124,0.14)}
+.callout.sage h3{color:var(--sage)}
+
+/* ── INSIGHT BOX ── */
+.insight{position:relative;padding:28px 28px 28px 32px;background:var(--glass-strong);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;margin:24px 0}
+.insight .insight-label{font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:6px}
+.insight p{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;line-height:1.4;color:var(--deep)}
+.insight p em{font-style:italic;color:var(--terra)}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--glass-border);border:1px solid var(--glass-border);border-radius:10px;overflow:hidden;margin:20px 0}
+.kpi{background:var(--glass-strong);padding:18px 16px;text-align:center}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;line-height:1;color:var(--deep)}
+.kpi-val.accent{color:var(--terra)}
+.kpi-label{font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:var(--stone);margin-top:5px;line-height:1.3}
+
+/* ── TAG ── */
+.tag{font-size:8px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-weight:500;display:inline-block}
+.tag.amber{background:rgba(196,149,106,0.12);color:var(--amber)}
+.tag.terra{background:rgba(184,107,74,0.1);color:var(--terra)}
+.tag.sage{background:rgba(139,158,124,0.12);color:var(--sage)}
+.tag.rose{background:rgba(168,104,120,0.1);color:var(--rose)}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:24px;margin:16px 0}
+.timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--glass-border)}
+.tl-item{position:relative;padding:0 0 20px 20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:6px;width:8px;height:8px;border-radius:50%;border:2px solid var(--amber);background:var(--cream)}
+.tl-item:last-child{padding-bottom:0}
+.tl-year{font-size:10px;font-weight:600;color:var(--amber);letter-spacing:0.04em;margin-bottom:2px}
+.tl-text{font-size:12px;color:var(--stone);line-height:1.5}
+
+/* ── FOOTER ── */
+.doc-footer{padding:20px 0;border-top:1px solid var(--glass-border);display:flex;justify-content:space-between;font-size:9px;color:var(--stone);letter-spacing:0.02em;margin-top:40px}
+
+/* ── ANIMATIONS ── */
+.fade-in{opacity:0;transform:translateY(16px);transition:opacity 0.5s ease,transform 0.5s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){.wrap{padding:0 24px}.g2,.g3,.g4,.g5{grid-template-columns:1fr}.title{font-size:30px}.map-container{aspect-ratio:1/1}.kpi-strip{grid-template-columns:1fr 1fr}.comp-strip{grid-template-columns:1fr}}
+@media print{body::before{display:none}.fade-in{opacity:1!important;transform:none!important}.section{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="mark">ALCHE</div>
+  <div class="meta">Competitive Landscape &middot; February 2026 &middot; Confidential</div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 1: HERO + INTELLIGENCE CLAIM -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">Slide 05 &middot; Competitive Landscape</div>
+  <div class="title"><strong>We mapped the terrain.</strong><br>30+ companies. 42 verified sources.</div>
+  <div class="subtitle">This is not a logo grid. This is an honest assessment of who occupies the longevity market, where the structural gaps are, and why a specific position is both open and viable.</div>
+
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-val accent">$8.49B</div><div class="kpi-label">Into longevity in 2024<br>(2x year-over-year)</div></div>
+    <div class="kpi"><div class="kpi-val">30+</div><div class="kpi-label">Companies analyzed<br>across 5 categories</div></div>
+    <div class="kpi"><div class="kpi-val accent">0</div><div class="kpi-label">Integrated EU platforms<br>serving this market</div></div>
+    <div class="kpi"><div class="kpi-val">12-18</div><div class="kpi-label">Month window before<br>US players localize</div></div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 2: POSITIONING MAP -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">The Positioning Map</div>
+  <div class="title"><strong>The gap</strong> is real.</div>
+  <div class="subtitle">Every competitor occupies one quadrant. Nobody integrates science-backed longevity with warm, human-centered design at an accessible price. That's where we live.</div>
+
+  <div class="map-container">
+    <div class="map-grid">
+      <!-- Quadrant backgrounds -->
+      <div class="quadrant q-tl"><span class="quadrant-label">Lifestyle brands<br>Single vertical</span></div>
+      <div class="quadrant q-tr"><span class="quadrant-label">The open position<br>Integrated + human</span></div>
+      <div class="quadrant q-bl"><span class="quadrant-label">Performance tools<br>Point solutions</span></div>
+      <div class="quadrant q-br"><span class="quadrant-label">Clinical platforms<br>Complex + expensive</span></div>
+
+      <!-- Axes -->
+      <div class="map-axis-x"></div>
+      <div class="map-axis-y"></div>
+
+      <!-- Axis labels -->
+      <div class="map-label top">Human / Real-Life</div>
+      <div class="map-label bottom">Optimization / Clinical</div>
+      <div class="map-label left">Single Focus</div>
+      <div class="map-label right">Integrated Platform</div>
+
+      <!-- ── COMPETITORS ── -->
+
+      <!-- TOP LEFT: lifestyle, single focus -->
+      <div class="dot" style="left:18%;top:22%">
+        <div class="dot-circle" style="border-color:var(--sage);background:rgba(139,158,124,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Noom<div class="dot-funding">Behavior change</div></div>
+      </div>
+      <div class="dot" style="left:22%;top:32%">
+        <div class="dot-circle" style="border-color:var(--sage);background:rgba(139,158,124,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Goop<div class="dot-funding">Lifestyle media</div></div>
+      </div>
+      <div class="dot" style="left:28%;top:26%">
+        <div class="dot-circle" style="border-color:var(--sage);background:rgba(139,158,124,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">AG1<div class="dot-funding">Supplements</div></div>
+      </div>
+      <div class="dot" style="left:14%;top:38%">
+        <div class="dot-circle" style="border-color:var(--sage);background:rgba(139,158,124,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Moon Juice<div class="dot-funding">Adaptogens</div></div>
+      </div>
+
+      <!-- TOP RIGHT: human + integrated -->
+      <div class="dot" style="left:62%;top:30%">
+        <div class="dot-circle" style="border-color:var(--amber);background:rgba(196,149,106,0.2);width:13px;height:13px"></div>
+        <div class="dot-label" style="left:18px;top:-2px">ZOE<div class="dot-funding">$250M &middot; Nutrition AI</div></div>
+      </div>
+      <div class="dot" style="left:58%;top:18%">
+        <div class="dot-circle" style="border-color:var(--amber);background:rgba(196,149,106,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Bevel<div class="dot-funding">$14M &middot; AI health</div></div>
+      </div>
+
+      <!-- BOTTOM LEFT: single focus, optimization -->
+      <div class="dot" style="left:20%;top:65%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Peloton<div class="dot-funding">Fitness</div></div>
+      </div>
+      <div class="dot" style="left:30%;top:62%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">WHOOP<div class="dot-funding">Wearable</div></div>
+      </div>
+
+      <!-- BOTTOM RIGHT: integrated, clinical -->
+      <div class="dot" style="left:60%;top:72%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15);width:14px;height:14px"></div>
+        <div class="dot-label" style="left:20px;top:-2px">Oura<div class="dot-funding">$11B &middot; Wearable ring</div></div>
+      </div>
+      <div class="dot" style="left:55%;top:82%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">InsideTracker<div class="dot-funding">$17.5M &middot; Biomarkers</div></div>
+      </div>
+      <div class="dot" style="left:68%;top:88%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-6px">Function Health<div class="dot-funding">$350M &middot; $2.5B val</div></div>
+      </div>
+      <div class="dot" style="left:72%;top:76%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Ultrahuman<div class="dot-funding">$65M raised</div></div>
+      </div>
+      <div class="dot" style="left:80%;top:84%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:-70px;top:-16px">Restore<div class="dot-funding">$177M &middot; 220+ locs</div></div>
+      </div>
+      <div class="dot" style="left:85%;top:92%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.1)"></div>
+        <div class="dot-label" style="left:-80px;top:-16px">Blueprint<div class="dot-funding">$361/mo supplements</div></div>
+      </div>
+      <div class="dot" style="left:42%;top:78%">
+        <div class="dot-circle" style="border-color:var(--stone);background:rgba(158,148,138,0.15)"></div>
+        <div class="dot-label" style="left:16px;top:-2px">Levels<div class="dot-funding">$67M &middot; CGM</div></div>
+      </div>
+
+      <!-- ALCHE -->
+      <div class="dot" style="left:72%;top:22%;z-index:20">
+        <div class="dot-alche"><span>A</span></div>
+        <div class="dot-label" style="left:48px;top:2px;font-size:12px;font-weight:700;color:var(--terra)">
+          ALCHE
+          <div style="font-size:9px;color:var(--amber);font-weight:500;margin-top:1px">Integrated &middot; Human &middot; European</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:12px">
+    <div class="card sage-l">
+      <div style="font-size:10px;font-weight:600;color:var(--sage);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">X-Axis: Integration depth</div>
+      <div style="font-size:12px;color:var(--deep);line-height:1.5"><strong>Left:</strong> Brands that do one thing (testing, tracking, supplements, fitness, food). <strong>Right:</strong> Brands connecting multiple health dimensions into one experience.</div>
+    </div>
+    <div class="card amber-l">
+      <div style="font-size:10px;font-weight:600;color:var(--amber);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Y-Axis: Cultural approach</div>
+      <div style="font-size:12px;color:var(--deep);line-height:1.5"><strong>Top:</strong> Human-centered, joyful, inclusive, designed for real life. <strong>Bottom:</strong> Metric-obsessed, protocol-driven, implicitly male, aspirationally extreme.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 3: CAPITAL COMPARABLES -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">Capital Comparables</div>
+  <div class="title"><strong>Billion-dollar validations</strong><br>and none serve Europe.</div>
+  <div class="subtitle">Every major comparable validates the market thesis. None of them integrate across the full longevity stack. None serve Europe-first.</div>
+
+  <div class="card" style="padding:0;overflow:hidden;border-radius:12px">
+    <div class="comp-strip" style="background:rgba(196,149,106,0.04);border-bottom:2px solid rgba(196,149,106,0.12)">
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber)">Company</div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber)">Position</div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:right">Valuation</div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:right">What's missing</div>
+    </div>
+    <div class="comp-strip">
+      <div><div class="comp-name">Function Health</div><div class="comp-type">$350M raised</div></div>
+      <div class="comp-desc">Biomarker testing + AI. US-only. Dropped to $365/yr.</div>
+      <div class="comp-val">$2.5B</div>
+      <div style="text-align:right"><span class="tag terra">No community</span></div>
+    </div>
+    <div class="comp-strip">
+      <div><div class="comp-name">Neko Health</div><div class="comp-type">$325M raised</div></div>
+      <div class="comp-desc">AI body scanning. Spotify co-founder. 100K+ waitlist. EU-based but scanning-only.</div>
+      <div class="comp-val">$1.8B</div>
+      <div style="text-align:right"><span class="tag terra">No integration</span></div>
+    </div>
+    <div class="comp-strip">
+      <div><div class="comp-name">Oura</div><div class="comp-type">$900M+ raised</div></div>
+      <div class="comp-desc">Wearable ring. 5.5M+ sold, 2M subscribers. Acquired Veri (CGM).</div>
+      <div class="comp-val">$11B</div>
+      <div style="text-align:right"><span class="tag terra">No lifestyle</span></div>
+    </div>
+    <div class="comp-strip">
+      <div><div class="comp-name">Restore</div><div class="comp-type">$177M raised</div></div>
+      <div class="comp-desc">Recovery franchise, 220+ US locations. Franchise model, no tech platform.</div>
+      <div class="comp-val">$500M</div>
+      <div style="text-align:right"><span class="tag terra">No digital</span></div>
+    </div>
+    <div class="comp-strip">
+      <div><div class="comp-name">ZOE</div><div class="comp-type">$100M+ raised</div></div>
+      <div class="comp-desc">Science + warmth. 100K+ members. Nutrition-only. UK-based.</div>
+      <div class="comp-val">$250M</div>
+      <div style="text-align:right"><span class="tag amber">Most dangerous</span></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">The thesis</div>
+    <p>Function Health reached $2.5B doing <em>one thing</em> for <em>one market.</em> Neko reached $1.8B doing <em>one thing</em> in <em>two cities.</em> The integrated European longevity platform doesn't exist yet.</p>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 4: UNIVERSAL PAIN POINTS -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">User Intelligence</div>
+  <div class="title"><strong>The same six complaints</strong><br>across every competitor.</div>
+  <div class="subtitle">We analyzed user reviews across Trustpilot, Reddit, app stores, and Glassdoor. The pattern is structural, not accidental.</div>
+
+  <div class="g2">
+    <div class="card terra-l">
+      <div class="pain">
+        <div class="pain-icon crit">01</div>
+        <div class="pain-text"><strong>"Data without implementation"</strong>InsideTracker (4.1/5, 616 reviews): users say recommendations are generic lists with no coaching to act on them.<br><span>Testing companies identify problems but send users away without a plan.</span></div>
+      </div>
+      <div class="pain">
+        <div class="pain-icon crit">02</div>
+        <div class="pain-text"><strong>"Expensive for what you get"</strong>InsideTracker $340-589/test, Function $365/yr, YEARS Berlin $3,000-16,000+.<br><span>Science-first brands price out the mainstream.</span></div>
+      </div>
+      <div class="pain">
+        <div class="pain-icon crit">03</div>
+        <div class="pain-text"><strong>"I stopped using it after a few months"</strong>3.3% health app retention at day 30. 29-30% wearable abandonment.<br><span>Data dashboards don't sustain behavior change.</span></div>
+      </div>
+    </div>
+
+    <div class="card amber-l">
+      <div class="pain">
+        <div class="pain-icon high">04</div>
+        <div class="pain-text"><strong>"It's not for people like me"</strong>Blueprint's $1M "Immortals" tier. Equinox Optimize at $40K/yr. Biohacker aesthetics coded male/extreme.<br><span>The market has been "tacitly male" (GWS 2026).</span></div>
+      </div>
+      <div class="pain">
+        <div class="pain-icon high">05</div>
+        <div class="pain-text"><strong>"I can't tell what's real science"</strong>AG1: 100+ FDA adverse event reports, disputed by Harvard and McGill. Goop: FDA warning letters.<br><span>Warm brands have a credibility problem. Clinical brands have a warmth problem.</span></div>
+      </div>
+      <div class="pain">
+        <div class="pain-icon high">06</div>
+        <div class="pain-text"><strong>"My phone already tracks this"</strong>Apple Health, Google Health Connect, Samsung Health -- all free, all improving.<br><span>Every standalone health app faces the platform aggregation threat.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:20px">
+    <h3>What these complaints reveal</h3>
+    <p>The market doesn't need another testing service, wearable, or supplement. It needs someone to connect the dots -- testing + action + community + sustained engagement -- in a way that feels human and accessible. That's the integration thesis.</p>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 5: EUROPEAN LANDSCAPE -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">European Landscape</div>
+  <div class="title"><strong>Who's building</strong> in our backyard.</div>
+  <div class="subtitle">We take European competitors seriously. Five companies are actively building toward integration -- and none have the full stack.</div>
+
+  <div class="g3" style="margin-top:4px">
+    <div class="card terra-l">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <div class="comp-name">Zoi</div>
+        <span class="tag terra">High threat</span>
+      </div>
+      <div style="font-size:11px;color:var(--stone);margin-bottom:6px">Paris &middot; EUR 20M raised</div>
+      <div style="font-size:12px;line-height:1.5">Physical center + app + 200+ biomarkers + daily recs. Closest to our model.</div>
+      <div style="font-size:11px;color:var(--terra);margin-top:8px;font-weight:500">Gap: EUR 3K+/yr. Community-weak.</div>
+    </div>
+    <div class="card amber-l">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <div class="comp-name">Loovi</div>
+        <span class="tag amber">Medium-High</span>
+      </div>
+      <div style="font-size:11px;color:var(--stone);margin-bottom:6px">Stockholm &middot; EUR 1M raised</div>
+      <div style="font-size:12px;line-height:1.5">Explicitly claims "Europe's first end-to-end digital platform for longevity." Same thesis as us.</div>
+      <div style="font-size:11px;color:var(--amber);margin-top:8px;font-weight:500">Gap: Digital-only. Very early stage.</div>
+    </div>
+    <div class="card amber-l">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <div class="comp-name">CARE</div>
+        <span class="tag amber">Medium-High</span>
+      </div>
+      <div style="font-size:11px;color:var(--stone);margin-bottom:6px">Switzerland &middot; EUR 5.6M raised</div>
+      <div style="font-size:12px;line-height:1.5">100+ biomarkers in 20 min + app. 4,000-6,000+ members. 4.7/5 rating.</div>
+      <div style="font-size:11px;color:var(--amber);margin-top:8px;font-weight:500">Gap: No physical lifestyle space.</div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:14px">
+    <div class="card sage-l">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <div class="comp-name">Holo</div>
+        <span class="tag sage">Medium</span>
+      </div>
+      <div style="font-size:11px;color:var(--stone);margin-bottom:6px">Barcelona &middot; EUR 1M &middot; ex-Factorial team</div>
+      <div style="font-size:12px;line-height:1.5">110+ biomarkers + wearable integration + AI. "Revolut of health" at EUR 199 entry. Strong tech team, no physical space.</div>
+    </div>
+    <div class="card sage-l">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <div class="comp-name">THE WELL</div>
+        <span class="tag sage">Medium</span>
+      </div>
+      <div style="font-size:11px;color:var(--stone);margin-bottom:6px">NYC -> Geneva 2026-27 &middot; $355+/mo</div>
+      <div style="font-size:12px;line-height:1.5">Members-only wellness club: yoga, food, cold plunges, coaching. 30K sq ft Geneva location. Physical + community but no science/testing.</div>
+    </div>
+  </div>
+
+  <!-- Berlin specific -->
+  <div style="margin-top:24px">
+    <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:10px">Berlin Specifically</div>
+    <div class="g4">
+      <div class="card" style="padding:16px 14px">
+        <div style="font-weight:600;font-size:12px;margin-bottom:3px">YEARS</div>
+        <div style="font-size:10.5px;color:var(--stone);line-height:1.4">Premium longevity clinic. $3K-16K+ assessments. Potential partner, not competitor.</div>
+      </div>
+      <div class="card" style="padding:16px 14px">
+        <div style="font-weight:600;font-size:12px;margin-bottom:3px">Aware</div>
+        <div style="font-size:10.5px;color:var(--stone);line-height:1.4">Blood testing. EUR 13.6M raised. Same city, biomarker overlap. No community.</div>
+      </div>
+      <div class="card" style="padding:16px 14px">
+        <div style="font-weight:600;font-size:12px;margin-bottom:3px">ANTI Berlin</div>
+        <div style="font-size:10.5px;color:var(--stone);line-height:1.4">Longevity + culture venue. 20K Instagram. Proves demand for science-meets-lifestyle.</div>
+      </div>
+      <div class="card" style="padding:16px 14px">
+        <div style="font-weight:600;font-size:12px;margin-bottom:3px">Recover Society</div>
+        <div style="font-size:10.5px;color:var(--stone);line-height:1.4">Premium recovery. EUR 500/mo. Frankfurt & Baden-Baden, expanding to Berlin.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 6: THE GRAVEYARD -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">Learning from the Dead</div>
+  <div class="title"><strong>Execution failures,</strong> not market failures.</div>
+  <div class="subtitle">Every failed company made at least one of three mistakes: owning the entire value chain, confusing science with product, or building without community.</div>
+
+  <div class="card" style="padding:20px 22px">
+    <div class="grave" style="border-bottom:2px solid rgba(196,149,106,0.12);padding-bottom:8px;margin-bottom:4px">
+      <div style="font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);font-weight:600">Company</div>
+      <div style="font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);font-weight:600">Raised</div>
+      <div style="font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);font-weight:600">What went wrong</div>
+    </div>
+    <div class="grave">
+      <div class="grave-name">Forward Health</div>
+      <div class="grave-raised">$657M</div>
+      <div class="grave-reason">$1M custom hardware pods, $25K CAC. Patients got stuck in pods. Collapsed.</div>
+    </div>
+    <div class="grave">
+      <div class="grave-name">Modern Age</div>
+      <div class="grave-raised">$33M</div>
+      <div class="grave-reason">Unsustainable clinical + retail rent + staffing costs. Closed March 2024.</div>
+    </div>
+    <div class="grave">
+      <div class="grave-name">Ever/Body</div>
+      <div class="grave-raised">$100M+</div>
+      <div class="grave-reason">Aesthetic + clinical model didn't generate margin. PE distressed sale June 2025.</div>
+    </div>
+    <div class="grave">
+      <div class="grave-name">DayTwo</div>
+      <div class="grave-raised">$85M</div>
+      <div class="grave-reason">World-class science (2,089 citations). GLP-1 drugs destroyed the use case overnight.</div>
+    </div>
+    <div class="grave">
+      <div class="grave-name">Human Longevity</div>
+      <div class="grave-raised">$1.6B peak</div>
+      <div class="grave-reason">Over-promised on genomics, under-delivered on consumer value. Valuation collapsed to $310M.</div>
+    </div>
+    <div class="grave">
+      <div class="grave-name">Habit</div>
+      <div class="grave-raised">$60M</div>
+      <div class="grave-reason">Test-cook-deliver food supply chain killed unit economics. Dead.</div>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-top:16px">
+    <div class="card terra-l" style="padding:18px">
+      <div style="font-size:10px;font-weight:600;color:var(--terra);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Mistake #1</div>
+      <div style="font-size:12px;line-height:1.5"><strong>Owned the entire value chain.</strong> Forward ($1M pods), Habit (test-cook-deliver). Full vertical integration in healthcare is ruinously expensive.</div>
+    </div>
+    <div class="card terra-l" style="padding:18px">
+      <div style="font-size:10px;font-weight:600;color:var(--terra);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Mistake #2</div>
+      <div style="font-size:12px;line-height:1.5"><strong>Confused science with product.</strong> DayTwo had 2,089 citations. Still died. InsideTracker has MIT founders. Still ~$3.8M ARR after 15 years.</div>
+    </div>
+    <div class="card terra-l" style="padding:18px">
+      <div style="font-size:10px;font-weight:600;color:var(--terra);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Mistake #3</div>
+      <div style="font-size:12px;line-height:1.5"><strong>No community moat.</strong> When GLP-1 arrived, DayTwo had nothing. When users got bored of Oura, no social reason to stay.</div>
+    </div>
+  </div>
+
+  <div class="callout sage" style="margin-top:16px">
+    <h3>Our structural response</h3>
+    <p><strong>Partner, don't build.</strong> Lab partnerships for testing. Product curation, not manufacturing. The cafe generates revenue; it's not a cost center. <strong>Community is the product,</strong> not an add-on. If our community hypothesis validates, social fabric becomes the moat that survives GLP-1 disruptions, wearable commoditization, and big tech encroachment.</p>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 7: 2029 LANDSCAPE -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">Forward View</div>
+  <div class="title"><strong>The 2029 landscape,</strong> not today's.</div>
+
+  <div class="g2" style="margin-top:4px">
+    <div>
+      <div class="subtitle">By 2029, most longevity data will be commoditized. The companies that built genuine community and cultural identity will have the strongest retention and lowest CAC.</div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">2026-2027</div>
+          <div class="tl-text">Neko, Lanserhof, CLP fund see deal flow. Consolidation begins. Well-funded players acquire digital platforms with weak distribution.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2027-2028</div>
+          <div class="tl-text">EU member states pilot insurance reimbursement for preventive longevity diagnostics. Partial coverage dramatically expands addressable market.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2028-2029</div>
+          <div class="tl-text">Blood tests cheaper. AI interpretation better. Wearables more accurate. Data is commoditized. Community is the only moat that survives.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="padding:18px">
+        <div style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:10px">Where each category lands</div>
+
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(44,36,24,0.04);font-size:12px">
+          <div><strong>Premium scans</strong></div>
+          <div style="color:var(--stone)">Neko, Function</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(44,36,24,0.04);font-size:12px">
+          <div><strong>Consumer blood testing</strong></div>
+          <div style="color:var(--stone)">Aware, Holo, CARE</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(44,36,24,0.04);font-size:12px">
+          <div><strong>Luxury resorts</strong></div>
+          <div style="color:var(--stone)">Lanserhof, CLP</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(44,36,24,0.04);font-size:12px">
+          <div><strong>Wearable ecosystem</strong></div>
+          <div style="color:var(--stone)">Apple, Samsung, Oura</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(44,36,24,0.04);font-size:12px">
+          <div><strong>Recovery services</strong></div>
+          <div style="color:var(--stone)">Restore, Recover Society</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:12px">
+          <div style="color:var(--terra);font-weight:600">Integrated lifestyle platform</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--terra)">ALCHE</div>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top:16px">
+        <div class="insight-label">The AI-proof layer</div>
+        <p>When AI makes health advice free, the premium is on <em>implementation, community, and experience.</em> Everyone will know what to do. We help you actually do it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SECTION 8: THE INVESTOR TAKEAWAY -->
+<!-- ════════════════════════════════════════ -->
+<div class="section fade-in">
+  <div class="label">The Takeaway</div>
+  <div class="title"><strong>What this map tells</strong> an investor.</div>
+
+  <div class="insight" style="border-left-color:var(--terra);margin:4px 0 24px">
+    <p>Nobody is doing rigorous, multi-dimensional longevity science with warm, inclusive positioning, a physical space anchor, and community architecture at an accessible price point -- <em>especially in Europe, especially centering women.</em></p>
+  </div>
+
+  <div class="g2">
+    <div class="card" style="padding:20px">
+      <div style="font-size:10px;font-weight:600;color:var(--terra);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">What they each do</div>
+      <div style="font-size:12px;line-height:1.8;color:var(--deep)">
+        ZOE does nutrition-only.<br>
+        YEARS charges $3K+.<br>
+        Restore is clinical-only.<br>
+        Bevel is digital-only.<br>
+        Hims is distribution, not brand.<br>
+        THE WELL is community-only.<br>
+        <strong style="color:var(--terra)">Each does a piece. Nobody does the whole thing.</strong>
+      </div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-size:10px;font-weight:600;color:var(--sage);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">What we've learned from the dead</div>
+      <div style="font-size:12px;line-height:1.8;color:var(--deep)">
+        Partner, don't build the whole stack.<br>
+        Community is the product, not an add-on.<br>
+        The cafe generates revenue, it's not a cost center.<br>
+        Data gets commoditized. Identity doesn't.<br>
+        Science is necessary but not sufficient.<br>
+        Speed beats capital in early markets.<br>
+        <strong style="color:var(--sage)">The question isn't "will integration work?" It's "will we execute?"</strong>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:32px;padding:28px 0">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--deep);line-height:1.3;max-width:660px;margin:0 auto">The companies that tried the whole thing and failed all made <strong>specific, identifiable, avoidable mistakes.</strong></div>
+    <div style="font-size:13px;color:var(--terra);margin-top:10px;font-weight:500">That's what pre-seed capital is for.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div>Alche &middot; Your Longevity, Daily.</div>
+  <div>Competitive Landscape &middot; February 2026 &middot; Confidential</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// Intersection Observer for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body></html>

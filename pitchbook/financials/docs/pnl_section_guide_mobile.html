@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>alche — P&L Section Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --amber:#C4956A; --amber-bg:rgba(196,149,106,0.10);
+    --deep:#1C1409; --mid:#3D3020; --muted:#6B5E50; --faint:#A8998A;
+    --rule:rgba(196,149,106,0.22); --card:#F9F7F4;
+  }
+  @page { size:390px 844px; margin:0; }
+  html,body { width:390px; background:#fff; font-family:'Outfit',sans-serif; color:var(--deep);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  /* COVER */
+  .cover { width:390px; min-height:844px; background:var(--deep); padding:56px 28px 44px;
+    display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; }
+  .cv-brand { font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+    letter-spacing:0.24em; text-transform:uppercase; color:var(--amber); margin-bottom:52px; }
+  .cv-title { font-family:'Cormorant Garamond',serif; font-size:50px; font-weight:600;
+    line-height:1.05; color:#fff; margin-bottom:16px; }
+  .cv-title em { font-style:italic; font-weight:400; color:rgba(255,255,255,0.6); }
+  .cv-desc { font-size:13px; font-weight:400; line-height:1.65; color:rgba(255,255,255,0.55);
+    max-width:290px; margin-bottom:40px; }
+  .cv-rule { height:1px; background:rgba(196,149,106,0.3); margin-bottom:22px; }
+  .cv-row { display:flex; justify-content:space-between; margin-bottom:7px; }
+  .cv-k { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.07em;
+    text-transform:uppercase; color:rgba(255,255,255,0.3); }
+  .cv-v { font-family:'Space Mono',monospace; font-size:9px; color:rgba(255,255,255,0.6); }
+
+  /* PAGE */
+  .page { width:390px; min-height:844px; background:#fff; padding:24px 18px 20px;
+    page-break-after:always; display:flex; flex-direction:column; gap:10px; }
+  .pg-hd { display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:10px; border-bottom:2px solid var(--amber); margin-bottom:2px; }
+  .pg-hd-l { font-family:'Space Mono',monospace; font-size:8px; font-weight:700;
+    letter-spacing:0.15em; text-transform:uppercase; color:var(--amber); }
+  .pg-hd-r { font-family:'Space Mono',monospace; font-size:8px; color:var(--faint); }
+
+  /* CARD */
+  .card { background:var(--card); border-radius:9px; border-left:3px solid var(--amber);
+    padding:14px 14px 12px; break-inside:avoid; }
+  .lbl { font-family:'Space Mono',monospace; font-size:8px; font-weight:700;
+    letter-spacing:0.17em; text-transform:uppercase; color:var(--amber); margin-bottom:7px; }
+  .sum { font-family:'Cormorant Garamond',serif; font-size:16.5px; font-weight:600;
+    line-height:1.38; color:var(--deep); margin-bottom:9px; }
+  .det { font-size:11.5px; font-weight:500; line-height:1.65; color:var(--mid); margin-bottom:9px; }
+  .det strong { font-weight:700; color:var(--deep); }
+  .trm { border-top:1px solid var(--rule); padding-top:8px; font-family:'Space Mono',monospace;
+    font-size:8px; line-height:1.75; color:var(--muted); }
+  .trm strong { color:var(--mid); font-weight:700; }
+  .pill { display:inline-block; background:var(--amber-bg); border:1px solid var(--rule);
+    border-radius:3px; padding:1px 4px; font-family:'Space Mono',monospace; font-size:8.5px;
+    font-weight:700; color:var(--amber); }
+  .ft { margin-top:auto; padding-top:10px; border-top:1px solid var(--rule);
+    font-family:'Space Mono',monospace; font-size:7px; color:var(--faint); line-height:1.6; }
+
+  /* section divider label */
+  .sheet-banner { background:var(--deep); border-radius:7px; padding:10px 14px; margin-bottom:4px; }
+  .sheet-banner p { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600;
+    color:#fff; margin-bottom:2px; }
+  .sheet-banner span { font-family:'Space Mono',monospace; font-size:8px;
+    color:rgba(255,255,255,0.45); letter-spacing:0.1em; }
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover">
+  <div>
+    <div class="cv-brand">alche</div>
+    <div class="cv-title">P&amp;L<br><em>Section</em><br>Guide</div>
+    <div class="cv-desc">A complete reference for every row and sheet in the financial model. What each section is, what to look for, and what the number means.</div>
+  </div>
+  <div>
+    <div class="cv-rule"></div>
+    <div class="cv-row"><span class="cv-k">Model</span><span class="cv-v">alche-pnl-24mo-v4.xlsx</span></div>
+    <div class="cv-row"><span class="cv-k">Sheets</span><span class="cv-v">7 connected sheets</span></div>
+    <div class="cv-row"><span class="cv-k">Sections</span><span class="cv-v">All rows covered</span></div>
+    <div class="cv-row"><span class="cv-k">Raise</span><span class="cv-v">EUR 500K @ EUR 2.5M cap</span></div>
+    <div class="cv-row"><span class="cv-k">Entity</span><span class="cv-v">Berlin GmbH, pre-seed</span></div>
+    <div class="cv-row"><span class="cv-k">Period</span><span class="cv-v">24 months</span></div>
+  </div>
+</div>
+
+<!-- ═══ P1 — P&L Overview + Subscriber Metrics ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Overview</span><span class="pg-hd-r">1 / 32</span></div>
+
+  <div class="sheet-banner"><p>P&amp;L Sheet</p><span>FORMULA-BASED · 189 ROWS · ALL CELLS PULL FROM ASSUMPTIONS + GROWTH CURVES</span></div>
+
+  <div class="card">
+    <div class="lbl">Subscriber Metrics Block</div>
+    <p class="sum">The very first block in the P&L — before any revenue — shows the subscriber funnel each month: new subs added, churned subs, and total active subscribers broken out by tier. This block feeds directly into subscription revenue rows below.</p>
+    <p class="det">Three rows + three tier sub-rows. <strong>New Subs Added</strong> pulls the monthly rate from the Growth Curves sheet (itself driven by Assumptions B14–B19). <strong>Churned Subs</strong> applies the 8% monthly churn rate to the prior month's total. <strong>Total Subscribers</strong> = prior total − churn + new. The three tier rows (Core 52%, Pro 38%, Premium 10%) split the total by the tier mix from Assumptions B9–B11. At M24: <strong>~339 total subscribers</strong>.</p>
+    <div class="trm"><strong>Churn</strong> — 8% of active subscribers cancel each month (~1 in 12). <strong>Tier mix</strong> — the split between Core (EUR 19), Pro (EUR 49), and Premium (EUR 99) plans. <strong>Feeds into</strong> — subscription revenue rows further down the P&L.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">How the P&L is Structured</div>
+    <p class="sum">The P&L does not contain hardcoded numbers — every revenue and cost cell is a formula referencing either the Assumptions sheet or the Growth Curves sheet. Change either of those and the entire P&L recalculates instantly.</p>
+    <p class="det">The sheet is organized top to bottom: Subscriber Metrics → Income (all streams) → COGS → Gross Profit → Operating Expenses → EBITDA → CapEx → Depreciation/EBIT → Tax → Net P&L → Cumulative Cash → Key Metrics → Break-Even Indicators. The column header row (row 4) shows M1 through M24, plus a TOTAL column. Freeze panes are set at B5 so months stay visible when scrolling.</p>
+    <div class="trm"><strong>Formula-based</strong> — no hardcoded values in the P&L body; all numbers trace back to Assumptions or Growth Curves. <strong>Freeze panes</strong> — locks the row/column headers so they remain visible when scrolling through 24 months.</div>
+  </div>
+</div>
+
+<!-- ═══ P2 — Revenue: Retail + Smoothie ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Income (1 of 4)</span><span class="pg-hd-r">2 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Retail Products</div>
+    <p class="sum">Curated third-party items sold off the shelf in the space and online. This is the primary revenue engine — ~85% of total M24 revenue. Revenue = units sold × EUR 49 price/unit (validated in D11, R10).</p>
+    <p class="det">Units sold pull from Growth Curves row 4: starts at <strong>50 units/month in M4</strong>, scaling to <strong>4,600 units/month by M24</strong>. Price per unit is <strong>EUR 49</strong> (Assumptions B22). Note: this is the validated retail price for the product line; individual item prices vary, but EUR 49 is the weighted average used for modeling. Three COGS rows sit directly below in the COGS section: product cost (EUR 23.50/unit), waste/spoilage (5.5%), and 3PL fulfillment (EUR 2.50/unit from M4).</p>
+    <div class="trm"><strong>EUR 49 retail price</strong> — validated blended average across curated shelf products (D11, R10). <strong>3PL</strong> — Third-Party Logistics; a fulfillment warehouse that ships online orders; fee activates M4 when physical stock begins. <strong>4,600 units/M24</strong> — ~92% from walk-in/e-commerce; only 339 are subscribers.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Smoothie Bar</div>
+    <p class="sum">In-space smoothie bar with an average selling price of EUR 9.67 and 35% COGS (ingredients + packaging). Starts at 100 units/month in M4, grows to 2,000 units/month by M24. Gross margin: ~65%.</p>
+    <p class="det">Units pull from Growth Curves row 6. Price (Assumptions B26: <strong>EUR 9.67</strong>) reflects R2 Cost Analysis — a blended average of menu items. COGS rate (B27: <strong>35%</strong>) covers raw ingredients and packaging. Smoothies serve a foot-traffic function as much as a revenue one — customers who come for a smoothie discover products and book events. The smoothie bar requires the space to be open; <strong>revenue is EUR 0 in M1–M3</strong> (pre-launch).</p>
+    <div class="trm"><strong>EUR 9.67 avg</strong> — blended average across the smoothie menu (R2). <strong>35% COGS</strong> — ingredients and packaging only; staff cost is in Payroll. <strong>Foot traffic driver</strong> — smoothies bring people in; product discovery and event conversion follow.</div>
+  </div>
+</div>
+
+<!-- ═══ P3 — Revenue: LED + Events + Doctor ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Income (2 of 4)</span><span class="pg-hd-r">3 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">LED Therapy — Free Amenity</div>
+    <p class="sum">The LED therapy row is in the P&L for transparency — but price is EUR 0 and COGS is EUR 0. It is a free amenity offered with smoothie purchase; no revenue, no practitioner cost, no separate line on the invoice.</p>
+    <p class="det">Sessions pull from Growth Curves row 5 (starts 10/month M4, grows to 300/month by M18). Price is Assumptions B24 = <strong>EUR 0</strong>. Practitioner cost is Assumptions B25 = <strong>EUR 0</strong> (self-service panels; no trained operator needed). The EUR 5K LED device CapEx (M3) is a one-time investment. The row exists so investors can see session volume and confirm there is no hidden revenue or cost attached to this amenity. Previously this line had pricing (EUR 45/session, EUR 25 practitioner); that was removed in v3.2.</p>
+    <div class="trm"><strong>Self-service</strong> — customers use the panels themselves; no practitioner license or booking system required. <strong>v3.2 change</strong> — LED moved from EUR 45/session paid service to free amenity, removing ~EUR 151K projected revenue and ~EUR 84K COGS from the 24-month model.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Community Events</div>
+    <p class="sum">Events generate revenue from ticket sales (EUR 35/ticket) with 40% COGS in fixed venue costs (EUR 250/event) and 7% ticketing platform fees. Event count scales from 1/month in M4 to 5/month by M24.</p>
+    <p class="det">Event count pulls from Growth Curves row 7; avg attendees/event from row 8 (starts 12, grows to 25). Revenue = count × attendees × EUR 35 ticket price (Assumptions B28). COGS = count × EUR 250 fixed venue cost (B29) + revenue × 7% platform fee (B30). Events serve primarily a community-building and brand function — they bring in non-subscribers and convert some to members. <strong>M24 contribution: ~2% of total revenue.</strong></p>
+    <div class="trm"><strong>EUR 250 fixed cost/event</strong> — venue preparation, equipment, and setup per event. <strong>7% ticketing fee</strong> — Luma or Eventbrite processing rate. <strong>~2% of M24 revenue</strong> — small monetarily, high value for community and brand.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Doctor SaaS</div>
+    <p class="sum">EUR 99/month per clinic, scaling from 2 clinics at M6 to a cap of 20 clinics by M15. Legally structured as a software subscription — not a referral commission — to comply with StGB §299a (anti-corruption in healthcare).</p>
+    <p class="det">Clinic count pulls from Growth Curves row 9. Fee is Assumptions B31: <strong>EUR 99/month</strong>. COGS includes a one-time <strong>EUR 25 doctor verification cost</strong> (B32) per new clinic onboarded. Maximum capped at <strong>20 clinics</strong> (B33), producing EUR 1,980/month at full capacity. The SaaS structure follows Doctolib precedent (EUR 139–475/month). Commission-based referral fees were the original model (D1) but were changed after the compliance lawyer persona (P6) flagged StGB §299a risk.</p>
+    <div class="trm"><strong>StGB §299a</strong> — German criminal law banning referral fees from healthcare providers to third parties. <strong>SaaS model</strong> — EUR 99/month is a software access fee, not a per-patient commission; legally safe. <strong>EUR 25 verification cost</strong> — one-time background check per new clinic.</div>
+  </div>
+</div>
+
+<!-- ═══ P4 — Revenue: CGM + Restaurant + Subscriptions ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Income (3 of 4)</span><span class="pg-hd-r">4 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">CGM Referral Commission</div>
+    <p class="sum">Pure affiliate income — EUR 15 per active CGM user per month, zero COGS. Starts at EUR 45/month in M7 (first Premium subscribers hit the 3-month gate) and scales to EUR 630/month by M24 (~42 active CGM users).</p>
+    <p class="det">Values are hardcoded in the P&L row (not formula-driven) based on the modeled CGM activation ramp: M7 = EUR 45 (3 users), M8 = EUR 90 (6 users), incrementing monthly to M24 = EUR 630 (42 users). Access is <strong>gated</strong>: a user must either be on the Premium tier for 3 consecutive months, or purchase CGM as an explicit add-on. alche earns EUR 15/month per active Dexcom G7 or Libre 3 referral. No hardware purchased, no RMA, no logistics. <strong>Zero COGS — the highest-margin revenue in the model.</strong></p>
+    <div class="trm"><strong>CGM</strong> — Continuous Glucose Monitor; wearable blood sugar sensor. <strong>Affiliate/referral</strong> — alche earns a monthly commission from the device manufacturer when a user stays active; no hardware is sold or stocked. <strong>3-month gate</strong> — Premium subscribers must stay 3 months before CGM access unlocks (reduces churn-and-use risk).</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Restaurant — Phase 2 (EUR 0)</div>
+    <p class="sum">The restaurant revenue row exists in the model as a placeholder but shows EUR 0 for all 24 months. Restaurant was deferred to Phase 2 (500+ users) per Decision D2. The row is informational only.</p>
+    <p class="det">Decision D2 evaluated expanding into a full restaurant model at M6+ (previously estimated at EUR 1.50/cover). This was deferred — the smoothie bar covers the in-space F&B need without requiring food service licensing (Gaststättenerlaubnis), kitchen staffing, or cooking infrastructure. The row remains in the model so investors can see the decision explicitly, rather than wondering why there is no restaurant revenue. Phase 2 restaurant expansion is not in the current 24-month plan.</p>
+    <div class="trm"><strong>Phase 2</strong> — post-seed growth phase, contingent on reaching ~500 active subscribers. <strong>Gaststättenerlaubnis</strong> — German food service license required for a full restaurant operation; not needed for a smoothie bar. <strong>EUR 0 all 24 months</strong> — not a modeling gap; a deliberate decision.</div>
+  </div>
+</div>
+
+<!-- ═══ P5 — Subscriptions + Annual Cash Row ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Income (4 of 4)</span><span class="pg-hd-r">5 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Subscriptions — Monthly &amp; Annual (EX-01)</div>
+    <p class="sum">Three tiers (Core EUR 19, Pro EUR 49, Premium EUR 99 per month) with annual options (EUR 190 / 490 / 990 per year). Revenue recognised monthly at the equivalent monthly rate — not as a lump sum when annual payment is received. Annual mix starts at 20% of new subscribers and grows to 30% by M12.</p>
+    <p class="det">Each tier row uses a blended ARPU formula: <strong>(1 − annual_mix) × monthly_price + annual_mix × (annual_price ÷ 12)</strong>. Annual mix phases: M1–M6 = 20% (Assumptions B131), M7–M11 = 25%, M12+ = 30% (B132). Tier split: Core 52%, Pro 38%, Premium 10% (Assumptions B9–B11). True blended subscription ARPU across all tiers and mixes = <strong>EUR 38.44</strong> — not EUR 49. The subscription total row (Subscription MRR recognised) feeds into Key Metrics and Unit Economics.</p>
+    <div class="trm"><strong>Revenue recognition</strong> — annual payments are spread across 12 months in the P&L; the cash arrives upfront but revenue is recognised monthly (German HGB). <strong>EUR 38.44 ARPU</strong> — blended actual average; not the Pro tier midpoint. <strong>Annual mix</strong> — the share of new subscribers who pay annually vs. monthly.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">[INFO] Annual Cash Collected — Not P&L Revenue</div>
+    <p class="sum">This greyed-out informational row shows how much actual cash is collected upfront from annual subscribers each month — which is larger than the P&L revenue recognised. It is NOT included in Total Income. It exists to help reconcile the P&L vs Cash Flow gap.</p>
+    <p class="det">Annual cash collected = new subs × annual_mix × weighted annual price (EUR 190 × 52% + EUR 490 × 38% + EUR 990 × 10% = <strong>EUR 384 weighted average annual price</strong>). This cash arrives in the month of signup but is spread across 12 months of P&L revenue. The difference between this row and the subscription MRR row is one component of the Cash Flow sheet's "working capital" adjustment. Investors reviewing cash should note this row — it means cash position improves faster than P&L alone suggests when annual subscriptions are growing.</p>
+    <div class="trm"><strong>[INFO] row</strong> — greyed-out; for reference only; does NOT add to Total Income. <strong>EUR 384 weighted annual price</strong> — average annual subscription fee across the tier mix. <strong>Cash timing advantage</strong> — annual subscribers pay 12 months upfront; the P&L recognises 1/12 per month.</div>
+  </div>
+</div>
+
+<!-- ═══ P6 — B2B + Gift Cards + Total ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Income &amp; Total</span><span class="pg-hd-r">6 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">B2B Corporate Wellness (EX-02)</div>
+    <p class="sum">Activates M9 with 1 client at EUR 585/month, 2 clients (EUR 1,170) by M12, 3 clients (EUR 1,755) by M18. Billed at EUR 39 per employee per month under the BGM corporate health framework. Zero COGS.</p>
+    <p class="det">Values are hardcoded in the row: M1–M8 = EUR 0, M9–M11 = EUR 585 (1 client × 15 employees × EUR 39), M12–M17 = EUR 1,170 (2 clients), M18–M24 = EUR 1,755 (3 clients). Billing is structured as a software/services fee — not a per-session or per-product charge — making it a recurring contractual revenue line. EUR 39/PEPM sits just under the EUR 600 BGM employer tax allowance, maximising employer incentive to pay. <strong>Zero COGS</strong> — no physical delivery, no additional staff required per client.</p>
+    <div class="trm"><strong>BGM (Betriebliches Gesundheitsmanagement)</strong> — German statutory corporate health programme; employers receive tax incentives up to EUR 600/employee/year. <strong>PEPM</strong> — Per Employee Per Month; standard B2B wellness billing unit. <strong>EUR 39 PEPM</strong> — 15 employees × EUR 39 = EUR 585/month per client.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Gift Cards (EX-03)</div>
+    <p class="sum">EUR 441/month net revenue from M4 onward. Formula references Assumptions B135. 10% breakage is already deducted — EUR 441 is the recognised amount, not the face value sold. Zero COGS; every euro goes to gross profit.</p>
+    <p class="det">Formula: <code>IF(month ≥ 4, Assumptions!B135, 0)</code>. Assumption B135 = EUR 441 = 10 cards × EUR 49 × 90% recognised. The 10% breakage (EUR 49) represents cards sold but never redeemed, recognised immediately as revenue under German HGB. M1–M3 = EUR 0 (space not yet open; nothing to sell). Gift cards also drive new customer acquisition — purchasers give them to people who have never visited, converting strangers into first-time visitors at zero marginal cost.</p>
+    <div class="trm"><strong>Breakage (10%)</strong> — gift card value sold but never redeemed; recognised as revenue immediately under German accounting. <strong>B135 = EUR 441</strong> — the net recognised revenue per month after breakage deduction. <strong>Zero COGS</strong> — digital/physical card production cost is negligible and absorbed in G&A.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">TOTAL INCOME</div>
+    <p class="sum">Sum of all nine revenue streams (Retail + LED + Smoothie + Events + Doctor + CGM + Subscriptions + B2B + Gift Cards). LED contributes EUR 0 every month. M24 blended total: approximately EUR 264K/month.</p>
+    <p class="det">The formula sums all revenue row references for each month column. The TOTAL column (column Z) is a 24-month sum. This row is the starting point for the Gross Profit calculation, all percentage margin calculations, and the Profitability Bridge section. <strong>Revenue mix at M24: Retail ~85%, Smoothie ~7%, Subscriptions ~5%, Events ~2%, B2B ~1%, Doctor ~1%, CGM &lt;1%, Gift Cards &lt;1%.</strong></p>
+    <div class="trm"><strong>Revenue mix</strong> — the percentage contribution of each stream to Total Income in a given month. At M24, retail dominates (~85%), confirming this is a product commerce business. <strong>EUR 264K/month at M24</strong> — 24-month cumulative total approximately EUR 2.65–2.85M.</div>
+  </div>
+</div>
+
+<!-- ═══ P7 — COGS Part 1 ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — COGS (1 of 2)</span><span class="pg-hd-r">7 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Retail COGS — Product Cost + Waste + 3PL</div>
+    <p class="sum">Three separate lines make up retail COGS. Product cost: EUR 23.50/unit (wholesale). Waste/spoilage: 5.5% of retail revenue. 3PL fulfillment: EUR 2.50/unit from M4 onward. Combined retail COGS: ~48% of retail revenue (~52% gross margin).</p>
+    <p class="det"><strong>Product cost</strong> (B23: EUR 23.50/unit) × units sold. This is the wholesale landed cost for curated shelf products. <strong>Waste/spoilage</strong> (B36: 5.5%) × retail revenue — a blended rate across product categories (capsules 4%, powders 7%). <strong>3PL fulfillment</strong> (B37: EUR 2.50/unit) activates M4 — covers the 3rd-party logistics warehouse picking, packing, and shipping each unit for online orders. In-store sales do not incur 3PL fees but the model applies the rate to all units conservatively. Each of these three rows has its own formula referencing Assumptions.</p>
+    <div class="trm"><strong>EUR 23.50/unit COGS</strong> — wholesale price including co-packing if applicable; validated in R10. <strong>5.5% waste</strong> — blended spoilage rate: 4% for capsule products, 7% for powder products (D7). <strong>3PL</strong> — Third-Party Logistics; fulfillment warehouse; EUR 2.50/unit covers pick, pack, ship.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">LED COGS</div>
+    <p class="sum">EUR 0 per session — no practitioner, no consumables, no COGS. The row exists to confirm the LED service has zero direct cost, not because any cost is incurred. Sessions pull from Growth Curves row 5.</p>
+    <p class="det">LED COGS formula: sessions × Assumptions B25 (EUR 0). The row is included for completeness and model integrity — it was not always zero. In v3.1 the LED therapy service had a EUR 25/session practitioner cost. When the decision was made to move to self-service free amenity (v3.2), the practitioner cost went to zero. The row remaining at EUR 0 lets any reviewer audit that the change was applied correctly.</p>
+    <div class="trm"><strong>v3.2 change</strong> — LED moved from EUR 25/session practitioner COGS to EUR 0 (self-service). The EUR 5K LED device CapEx (M3) is a one-time investment, not a per-session cost. <strong>Self-service</strong> — customers operate the panels themselves; no trained therapist required.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Smoothie COGS + Events COGS + Doctor Verification</div>
+    <p class="sum">Smoothie: 35% of smoothie revenue (ingredients + packaging). Events: EUR 250 fixed cost per event + 7% ticketing fee on event revenue. Doctor: EUR 25 per new clinic onboarded (one-time verification cost).</p>
+    <p class="det"><strong>Smoothie COGS</strong> (B27: 35%) is a rate applied to smoothie revenue each month — scales directly with volume. <strong>Events COGS</strong> = event count × EUR 250 venue cost (B29) + event revenue × 7% platform fee (B30). The EUR 250 fixed cost per event covers setup and space regardless of attendance. <strong>Doctor verification</strong> (B32: EUR 25/new clinic) = incremental new doctors added each month × EUR 25 — the cost of background-checking and onboarding a new clinic. Once a clinic is active, no recurring COGS applies.</p>
+    <div class="trm"><strong>35% smoothie COGS</strong> — ingredients and packaging only; staff is in Payroll. <strong>EUR 250/event fixed</strong> — venue and setup cost regardless of how many attend. <strong>EUR 25/new clinic</strong> — one-time verification cost; recurring clinic fees are pure margin.</div>
+  </div>
+</div>
+
+<!-- ═══ P8 — COGS Part 2 ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — COGS (2 of 2)</span><span class="pg-hd-r">8 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">AI API COGS (User-Facing)</div>
+    <p class="sum">EUR 0.35 per subscriber per month covers the AI personalization API cost for user-facing features. At 339 subscribers in M24, this is approximately EUR 119/month — a negligible cost relative to subscription revenue.</p>
+    <p class="det">Formula: total subscribers × Assumptions B39 (EUR 0.35/sub/month). This is the hybrid Claude + Gemini model cost (Decision D6) for user-facing personalization features — health recommendations, protocol adjustments, insights. Internal AI usage (team productivity) is a separate fixed monthly cost in the Management & APIs section (EUR 210/month for Claude Max, B57). The EUR 0.35/sub rate assumes moderate engagement; if users engage with AI features more intensively than modeled, this line will grow faster.</p>
+    <div class="trm"><strong>EUR 0.35/sub/month</strong> — per-user AI API cost for personalization features (D6, R9). <strong>Hybrid model</strong> — uses both Claude (Anthropic) and Gemini (Google) APIs to optimize cost and capability. <strong>Separate from internal AI</strong> — the EUR 210/month Claude Max in Management is for team use only.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Refund Reserve + Bad Debt Provision + Stripe Processing</div>
+    <p class="sum">Three shared COGS items: 1.5% refund/returns reserve on physical product revenue, 0.5% bad debt provision on total revenue, and 2.9% Stripe processing fee on total revenue. Together these add ~4–5% to blended COGS in early months.</p>
+    <p class="det"><strong>Refund reserve</strong> (B40: 1.5%) applies only to retail products, smoothies, and events — not to subscriptions, B2B, or affiliate commissions. <strong>Bad debt provision</strong> (B41: 0.5%) applies to total revenue — covers uncollected invoices and chargebacks (P5 finding). <strong>Stripe processing</strong> (B38: 2.9%) applies to total revenue — the standard payment processing fee for all digital and in-person transactions. These three items are part of TOTAL COGS and reduce Gross Profit accordingly.</p>
+    <div class="trm"><strong>1.5% refund reserve</strong> — provision for product returns and exchanges on physical goods. <strong>0.5% bad debt</strong> — provision for invoices that go unpaid (B2B) or chargebacks (P5 persona finding). <strong>2.9% Stripe fee</strong> — payment processor fee on all transactions; unavoidable across all revenue streams.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">TOTAL COGS</div>
+    <p class="sum">Sum of all 11 COGS lines. Blended rate starts at ~45–55% of revenue in early operating months and compresses toward ~32% by M24 as zero-COGS streams (CGM, B2B, gift cards, subscriptions) grow their share.</p>
+    <p class="det">The 11 COGS lines summed: retail product cost, retail waste, retail 3PL, LED (EUR 0), smoothie ingredients, events (venue + platform), doctor verification, AI API, refund reserve, bad debt provision, and Stripe processing. The downward trend in blended COGS % is a model health signal — it should compress over time. A rising blended COGS % after M9 would indicate that the lower-margin physical streams are outpacing the high-margin digital streams. TOTAL COGS feeds directly into GROSS PROFIT.</p>
+    <div class="trm"><strong>Blended COGS %</strong> — total COGS divided by total revenue; the weighted average cost rate across all streams. <strong>~32% by M24</strong> — reflects the growing share of zero-COGS streams (CGM, B2B, gift cards). <strong>Feeds into</strong> — Gross Profit = Total Income − Total COGS.</div>
+  </div>
+</div>
+
+<!-- ═══ P9 — Gross Profit + Payroll ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Gross Profit &amp; Payroll</span><span class="pg-hd-r">9 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Gross Profit &amp; Gross Margin %</div>
+    <p class="sum">Gross Profit = Total Income − Total COGS. Gross Margin % = Gross Profit ÷ Total Income. Starts at 45–55% in early operating months, improves toward ~68% by M24. An upward trend here is the primary health indicator for unit economics.</p>
+    <p class="det">The Gross Margin % row uses an IF formula to avoid division-by-zero in M1–M3 (no revenue). It is shown as a percentage. The improvement over time reflects the revenue mix shift: as zero/near-zero COGS streams (CGM, B2B, gift cards, subscriptions) grow their share relative to physical retail and smoothies, every EUR of revenue costs less to deliver. A flat or declining gross margin after M9 would indicate the physical streams are growing faster than planned — worth investigating in Growth Curves before assuming it is a problem.</p>
+    <div class="trm"><strong>Gross Profit</strong> — revenue remaining after direct delivery costs; before fixed costs (rent, staff, marketing). <strong>Gross Margin %</strong> — the fraction of each EUR of revenue that survives to cover fixed costs. 68% at M24 means EUR 0.68 of every EUR earned flows to gross profit.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Payroll — All Staff Lines</div>
+    <p class="sum">Seven lines: Timu (CEO), Daria (COO), Space Staff (M4+), Partner Manager (M6+), CTO (M18+), BG Insurance (0.5% of payroll), KSK Levy (4.9% on freelancer payments). All apply the 1.25× employer multiplier for social security contributions.</p>
+    <p class="det"><strong>Timu + Daria</strong>: EUR 4,166/month each gross × 1.25 employer multiplier = EUR 5,208/month each (EUR 50K/yr gross salary, P7: viable for Berlin pre-seed). <strong>Space Staff</strong> (M4+): EUR 1,230/month gross × 1.25 = Midijob ~25 hrs/week. <strong>Partner Manager</strong> (M6+): EUR 2,000/month gross × 1.25. <strong>CTO</strong> (M18+): EUR 6,500/month gross × 1.25 (EUR 78K/year — below 25th percentile for Berlin CTOs, P7). <strong>BG Insurance</strong>: 0.5% of total payroll (B49 — revised down from 1.5% per P7). <strong>KSK Levy</strong>: 4.9% × creative freelancer spend from Growth Curves row 11.</p>
+    <div class="trm"><strong>1.25× employer multiplier</strong> — total employer cost includes pension, health, unemployment, and accident insurance contributions (P2/P7; revised from 1.22×). <strong>Midijob</strong> — German employment classification for part-time roles between EUR 520–2,000/month; reduced social security. <strong>KSK</strong> — Künstlersozialkasse; mandatory levy when paying creative freelancers.</div>
+  </div>
+</div>
+
+<!-- ═══ P10 — R&D + S&M ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — R&amp;D &amp; Sales/Marketing</span><span class="pg-hd-r">10 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">R&amp;D — App Contractor (EX-06)</div>
+    <p class="sum">EUR 0 in M1–M4 (app is being built under CapEx). EUR 12,000/month from M5 onward — a senior Flutter contractor sourced via Arc.dev. This is the largest single OpEx line in the model.</p>
+    <p class="det">Formula: <code>IF(month ≥ 5, Assumptions!B136, 0)</code>. B136 = EUR 12,000/month. This is a v4 correction (EX-06): the previous model used EUR 1,500/month as a placeholder app retainer, which significantly understated the real cost of maintaining and developing a health app. The EUR 20K FlutterFlow MVP build (M1) is in CapEx — that covers the initial app build. From M5, ongoing feature development, bug fixing, and infrastructure maintenance costs EUR 12K/month. R&D Total = this row only (no other R&D lines).</p>
+    <div class="trm"><strong>EUR 0 M1–M4</strong> — app is being built as CapEx (FlutterFlow EUR 20K). R&D OpEx starts only once the app is live. <strong>EUR 12K/month from M5</strong> — senior Flutter contractor rate via Arc.dev (EX-06; was EUR 1,500 placeholder). <strong>Largest single OpEx line</strong> — investors should note this explicitly.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Sales &amp; Marketing</div>
+    <p class="sum">Three lines: Paid Ads (from Growth Curves, scales with growth phases), Content Creation (EUR 150/month fixed), and Influencer Seeding (EUR 200/month from M7). S&M Total is the sum of all three.</p>
+    <p class="det"><strong>Paid Ads</strong> scale through phases from Growth Curves row 10: EUR 50 in M1–M2, EUR 100 in M3, EUR 200 in M4, EUR 400 in M5, EUR 600 in M6, EUR 800 M7–M8, EUR 1,000 M9, EUR 1,200 M10... growing to EUR 3,000/month by M22–M24. <strong>Content Creation</strong> (B86: EUR 150/month) — Canva, stock imagery, and other creation tools. <strong>Influencer Seeding</strong> (B87: EUR 200/month, starts M7) — product gifting to micro-influencers; triggers when the app is live and products are in stock. Total S&M remains lean by design — brand is expected to grow through community and editorial, not paid performance.</p>
+    <div class="trm"><strong>Paid Ads phasing</strong> — increases stepwise as the business grows through its phases; not a flat budget. <strong>Content Creation EUR 150</strong> — tools only; team creates content in-house (D10). <strong>EUR 200 influencer seeding M7+</strong> — product gifting, not cash fees; activates once app and physical products are available.</div>
+  </div>
+</div>
+
+<!-- ═══ P11 — G&A Part 1 ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — G&amp;A (1 of 2)</span><span class="pg-hd-r">11 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">G&amp;A — Rent, Insurance, Utilities</div>
+    <p class="sum">Rent switches from EUR 750/month co-working (M1–M3) to EUR 1,500/month all-in space (M4+, EX-07). Four insurance policies total EUR 650/month. Utilities, cleaning, maintenance, and waste disposal activate at M4 when the physical space opens.</p>
+    <p class="det"><strong>Rent</strong>: M1–M3 = EUR 750 co-working (B61); M4+ = EUR 1,500 all-in including Nebenkosten (B62 — EX-07 correction; was EUR 2,500 Kaltmiete + EUR 325 Nebenkosten separately). <strong>Nebenkosten</strong> row is EUR 0 from M4 (bundled into the EUR 1,500 all-in rate). <strong>Insurance</strong>: General liability EUR 200 (B65) + D&O EUR 100 (B66, P6: mandatory with investors) + Cyber EUR 150 (B67, P6: Art. 9 GDPR health data) + Product liability EUR 100 (B68) + Product recall EUR 100 M4+ (B69, P4) = EUR 650/month total. <strong>Utilities M4+</strong>: electricity/gas/water EUR 500 (B70) + cleaning EUR 300 (B71) + maintenance reserve EUR 200 (B72) + waste disposal EUR 120 (B73, BSR commercial) + WiFi EUR 50 (B74) = EUR 1,170/month space ops.</p>
+    <div class="trm"><strong>EUR 1,500 all-in rent (EX-07)</strong> — includes Nebenkosten; significant downward correction from earlier model. <strong>D&O insurance</strong> — Directors and Officers liability; mandatory when accepting investor money (P6). <strong>Cyber insurance</strong> — required for businesses processing Art. 9 GDPR special category health data (P6).</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">G&amp;A — Compliance &amp; Regulatory Lines</div>
+    <p class="sum">Eight compliance lines totalling ~EUR 930/month from M4: Steuerberater EUR 400, DSB (data protection officer) EUR 400, CMP cookie tool EUR 25, food safety compliance EUR 80, IHK Berlin EUR 10, GEMA EUR 35, Rundfunkbeitrag EUR 6, Verpackungsgesetz EUR 6. Plus bank fees EUR 35 and a one-time EUR 500 permit cost in M3.</p>
+    <p class="det"><strong>Steuerberater</strong> (B64: EUR 400/month) — monthly tax advisor, required for German GmbH. <strong>DSB</strong> (B76: EUR 400/month) — external Data Protection Officer; legally mandatory under GDPR Art. 37 for processors of health data. <strong>CMP tool</strong> (B77: EUR 25/month) — cookie consent management platform; required under TDDDG. <strong>Food safety</strong> (B78: EUR 80/month M4+) — HACCP monitoring and compliance. <strong>IHK Berlin</strong> (B79: EUR 10/month, corrected from EUR 25) — Chamber of Commerce annual fee EUR 120/yr ÷ 12. <strong>GEMA</strong> (B80: EUR 35/month M4+, EX-13 correction from EUR 31) — music licensing for in-space audio. <strong>Rundfunkbeitrag</strong> (B81: EUR 6/month, starts M4 not M1 — fix). <strong>Verpackungsgesetz</strong> (B82: EUR 6/month) — German packaging registry (LUCID + dual system). <strong>Bank fees</strong> (B94: EUR 35/month) — Geschäftskonto monthly fee.</p>
+    <div class="trm"><strong>DSB mandatory</strong> — processing health data (Art. 9 GDPR special category) legally requires a Data Protection Officer; not optional (P6). <strong>GEMA</strong> — German music rights society; any business playing music in a public space must pay monthly. <strong>Rundfunkbeitrag starts M4</strong> — the broadcast contribution only applies once a physical business location is active (EX-13 fix).</div>
+  </div>
+</div>
+
+<!-- ═══ P12 — Management/APIs + Travel + Contingency ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Management, Travel &amp; Contingency</span><span class="pg-hd-r">12 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Management &amp; APIs</div>
+    <p class="sum">Two lines: SaaS Stack (phases from EUR 338 to EUR 750/month) and Claude Max internal AI (EUR 210/month fixed). This section covers team productivity tools, not user-facing infrastructure — that is in R&D.</p>
+    <p class="det"><strong>SaaS Stack</strong>: M1–M6 = EUR 338 (B58, D9: Google Workspace, Figma, Notion, Crisp); M7–M12 = EUR 500 (B59: additional tools added); M13+ = EUR 750 (B60: full stack). The phased SaaS budget was itemised in research session R8 and documented in Decision D9. <strong>Claude Max</strong> (B57: EUR 210/month) — internal AI budget for team use (writing, analysis, planning). Note: the EUR 0.35/sub AI API cost for user-facing features is a COGS item, not here. POS SaaS (EUR 39/month from M4, B75) lives in G&A — not in this section.</p>
+    <div class="trm"><strong>SaaS Stack phasing</strong> — starts lean, adds tools as the team and operations grow. Itemised in R8 and D9. <strong>EUR 210/month Claude Max</strong> — internal team AI use only; separate from user-facing AI API costs in COGS. <strong>Management Total</strong> = SaaS Stack + Claude Max only.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Travel</div>
+    <p class="sum">Three lines: Investor Travel EUR 150/month (all months), Conferences EUR 100/month from M7, Local Transport EUR 50/month (BVG pass). Total travel is a minor but consistent OpEx item from day one.</p>
+    <p class="det"><strong>Investor Travel</strong> (B88: EUR 150/month) — flights, trains, and accommodation for investor meetings and fundraising activity; starts M1. <strong>Conferences</strong> (B89: EUR 100/month from M7) — industry events, longevity conferences, wellness summits; activates once the app is live and there is something to present. <strong>Local Transport</strong> (B90: EUR 50/month) — BVG Berlin public transport monthly pass for team. Travel Total = sum of all three. This section is often missing from first-draft models; it is included here per P1 (angel investor audit) finding.</p>
+    <div class="trm"><strong>EUR 150/month investor travel</strong> — starts M1; fundraising is active from day one. <strong>Conferences M7+</strong> — activates once the app is live (M5 launch + 2 months). <strong>P1 audit</strong> — angel investor persona flagged missing travel costs in the original model.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">CTO Recruitment Row + Contingency Buffer (10%)</div>
+    <p class="sum">The CTO Recruitment OpEx row shows EUR 0 (recruitment cost moved to CapEx in EX-10). CTO Onboarding/Equipment appears in M18 (EUR 3,500). The 10% Contingency Buffer is applied to total pre-contingency OpEx each month.</p>
+    <p class="det"><strong>CTO Recruitment</strong>: EUR 0 in all 24 months here — the EUR 19K recruitment fee was moved to the CapEx section (contingency row, M14) per EX-10. The OpEx row is kept for structural continuity with earlier versions. <strong>CTO Onboarding</strong> (B52: EUR 3,500 in M18) — equipment purchase and workspace setup for the incoming CTO. <strong>Contingency Buffer</strong> (B93: 10% × pre-contingency OpEx total) — a 10% cushion applied to the entire OpEx subtotal each month; covers unmodeled cost overruns. This is the last row before TOTAL OPEX.</p>
+    <div class="trm"><strong>EUR 0 recruitment row</strong> — the EUR 19K cost is in CapEx (M14 contingency row), not here. <strong>10% contingency</strong> — standard pre-seed buffer to absorb unplanned costs; calculated on total OpEx before the buffer is added. <strong>TOTAL OPEX</strong> = pre-contingency OpEx + 10% buffer.</div>
+  </div>
+</div>
+
+<!-- ═══ P13 — Profitability Bridge + EBITDA ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Profitability Bridge</span><span class="pg-hd-r">13 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Profitability Bridge</div>
+    <p class="sum">A recap section that repeats Total Income, COGS, Gross Profit (with Gross Margin %), and Total OpEx in a clean waterfall format — making EBITDA calculation transparent. These are formula references to rows above, not new values.</p>
+    <p class="det">The bridge shows: <strong>Total Income → − COGS → = Gross Profit (+ Gross Margin %) → − Total OpEx → = EBITDA</strong>. Each row in the bridge is a reference formula pointing to the corresponding total row above — no double-counting, no new calculation. The purpose is readability: an investor scrolling to this section sees the full profitability calculation in one place without having to scroll up through 100+ rows of detail. EBITDA Margin % (EBITDA ÷ Total Income) also appears here.</p>
+    <div class="trm"><strong>Waterfall</strong> — a presentation format showing how revenue reduces step-by-step through costs to reach a profit figure. <strong>Formula references</strong> — no hardcoded values; these rows recalculate when any upstream assumption changes. <strong>EBITDA Margin %</strong> — EBITDA as a percentage of revenue; should trend upward from M13 onward.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">EBITDA &amp; EBITDA Margin %</div>
+    <p class="sum">EBITDA = Gross Profit − Total OpEx. The business reaches EBITDA break-even between M11 and M13. By M24, EBITDA is solidly positive. EBITDA Margin % should trend upward from break-even onward — this is the operating leverage signal.</p>
+    <p class="det">Formula: <code>EBITDA = GP_row − OpEx_row</code> (per month). The EBITDA break-even month is flagged in the Break-Even Indicators section below. EBITDA positive does not mean cash-positive — the Cash Flow sheet accounts for working capital and deposits that the P&L does not. A recovery dip in EBITDA after first turning positive (i.e., EBITDA goes negative again) would signal a structural cost problem; in the base model EBITDA should turn positive and stay positive. EBITDA Margin % = EBITDA ÷ Total Income, shown with an IF to avoid division-by-zero in early months.</p>
+    <div class="trm"><strong>EBITDA</strong> — Earnings Before Interest, Taxes, Depreciation, and Amortization. Day-to-day operational profitability. <strong>EBITDA ≠ cash</strong> — does not account for CapEx payments, inventory build, or refundable deposits. See Cash Flow sheet for actual cash position.</div>
+  </div>
+</div>
+
+<!-- ═══ P14 — CapEx M1 + M3 Items ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — CapEx (1 of 2)</span><span class="pg-hd-r">14 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">CapEx — Month 1 Items</div>
+    <p class="sum">Eight CapEx items land in M1: GmbH formation (EUR 2,500), HWG legal opinion (EUR 3,500), R&D stability testing (EUR 5,000), DPIA (EUR 7,500), MDR classification opinion (EUR 7,500), Privacy Policy + ToS (EUR 5,000), App Design & Development (EUR 15,000), and App MVP FlutterFlow build (EUR 20,000). M1 CapEx total: EUR 66,000.</p>
+    <p class="det"><strong>GmbH Formation</strong> (B102: EUR 2,500) — notary and commercial register fees to incorporate the entity. <strong>HWG Legal Opinion</strong> (B103: EUR 3,500) — Heilmittelwerbegesetz compliance review; required before marketing any health or wellness claims. <strong>R&D Stability Testing</strong> (B104: EUR 5,000) — supplement formulation and shelf-life testing. <strong>DPIA</strong> (B105: EUR 7,500) — Data Protection Impact Assessment; mandatory under GDPR Art. 35 before processing health data. <strong>MDR Classification Opinion</strong> (B106: EUR 7,500) — Medical Device Regulation legal opinion; mandatory before launching any digital health tool that could be classified as a medical device. <strong>Privacy Policy + ToS</strong> (B107: EUR 5,000) — GDPR-compliant legal documents (Art. 13/14 notices). <strong>App Design & Development</strong> (B108: EUR 15,000) — UX/UI design, capitalized. <strong>App MVP FlutterFlow</strong> (B137: EUR 20,000) — full MVP app build via agency using FlutterFlow (EX-06).</p>
+    <div class="trm"><strong>DPIA mandatory</strong> — GDPR Art. 35 requires a Data Protection Impact Assessment before processing special category (health) data at scale. <strong>MDR mandatory</strong> — any digital tool that could be interpreted as providing medical advice must have a legal classification opinion before launch (P6). <strong>HWG</strong> — Heilmittelwerbegesetz; German health advertising law regulating wellness claims.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">CapEx — Month 3 Items</div>
+    <p class="sum">Ten items land in M3: Space Buildout (EUR 25,000), Kitchen Equipment (EUR 20,000), LED Devices (EUR 5,000), Fire Safety (EUR 300), Signage (EUR 500), HACCP Plan Setup (EUR 1,000), Hygiene Training (EUR 60), Food Safety Equipment (EUR 500), Ablöse key money (EUR 50,000), and POS Hardware (EUR 1,250). M3 CapEx total: ~EUR 103,610.</p>
+    <p class="det"><strong>Space Buildout</strong> (B109: EUR 25,000, P3: raised from EUR 15,000). <strong>Kitchen Equipment</strong> (B110: EUR 20,000) — smoothie bar equipment. <strong>LED Devices</strong> (B111: EUR 5,000) — MITO LIGHT self-service red light panels. <strong>Fire Safety</strong> (B112: EUR 300, P3) — extinguishers and signage. <strong>Signage</strong> (B113: EUR 500, P3) — exterior and window branding. <strong>HACCP Plan Setup</strong> (B114: EUR 1,000, P4) — food safety consultant fee. <strong>Hygiene Training</strong> (B115: EUR 60, P4) — IfSG §43 certification × 4 persons. <strong>Food Safety Equipment</strong> (B116: EUR 500, P4) — thermometers and sensors. <strong>Ablöse</strong> (B117: EUR 50,000) — key money to outgoing occupant; capitalized as intangible leasehold premium, amortized over lease term. <strong>POS Hardware</strong> (B138: EUR 1,250, EX-11) — SumUp POS Kit + TSE hardware module (legal requirement for fiscal registers in Germany).</p>
+    <div class="trm"><strong>Ablöse</strong> — key money; compensation to outgoing occupant for fixtures/goodwill. Standard in Berlin commercial leases. NOT a deposit — not refundable. <strong>TSE module</strong> — Technische Sicherheitseinrichtung; legally required tamper-proof device for all German cash registers (KassenSichV). <strong>P3/P4 additions</strong> — buildout, safety, and food compliance costs raised after operations and food safety persona audits.</div>
+  </div>
+</div>
+
+<!-- ═══ P15 — CapEx v4 + Depreciation + Tax + Net P&L ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — CapEx (2 of 2) &amp; Net P&amp;L</span><span class="pg-hd-r">15 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">CapEx — CTO Contingency (M14) + Depreciation + EBIT</div>
+    <p class="sum">CTO Recruitment Contingency: EUR 19,000 in M14 (Assumptions B139 — only if network hire fails). Depreciation: ~EUR 5,522/month from M3 onward (linear / 36 months across total CapEx pool). EBIT = EBITDA − Depreciation.</p>
+    <p class="det"><strong>CTO Recruitment Contingency</strong> (B139: EUR 19,000 at M14) — treated as CapEx because it is a one-time investment in team capacity (EX-10). The base case assumes network hire succeeds and this cost is EUR 0; M14 is the contingency scenario. <strong>Depreciation</strong> spreads the full CapEx pool (M1 items + M3 items + M14 items) linearly over <strong>36 months</strong> (B119). From M3 onward: (EUR 66K + EUR 103,610) ÷ 36 ≈ EUR 4,654/month; from M14 onward the CTO contingency adds EUR 528/month. <strong>Total CapEx (cash) row</strong> sums all 19 CapEx line items per month. <strong>EBIT</strong> = EBITDA − Depreciation; always lower than EBITDA but should trend in the same direction.</p>
+    <div class="trm"><strong>EUR ~188K total CapEx</strong> — M1 (EUR 66K) + M3 (EUR 103,610) + M14 contingency (EUR 19K). <strong>36-month depreciation</strong> — linear straight-line method over the lease term. <strong>EBIT</strong> — Earnings Before Interest and Taxes; EBITDA minus depreciation. The depreciation gap is not new cash leaving; it is an accounting write-off of already-spent investment.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Tax Provision + NET P&L Before &amp; After Tax + Cumulative Cash</div>
+    <p class="sum">Tax (~30%) applies only when BOTH the current month is profitable AND cumulative P&L is positive. Net P&L (after tax) is the bottom line. Cumulative Cash starts at EUR 500K and adds each month's Net P&L — this is the P&L version of runway (use Cash Flow sheet for the real number).</p>
+    <p class="det"><strong>NET P&L before tax</strong> = EBITDA − Total CapEx (cash). <strong>Cumulative Pre-Tax P&L</strong> row tracks running total of pre-tax results — tax provision only activates when this turns positive. <strong>Tax Provision</strong> formula: <code>IF(month profit &gt; 0 AND cumulative &gt; 0, month_profit × 30%, 0)</code>. Combined ~30% rate: Körperschaftsteuer 15.825% + Gewerbesteuer 14.35% (P2). <strong>NET P&L after tax</strong> = before tax − tax provision. <strong>Cumulative Cash</strong>: starts EUR 500K in M1; adds each month's Net P&L (after tax). This row will diverge from the Cash Flow sheet's cumulative balance by ~EUR 218K due to working capital — always verify cash floor in the Cash Flow sheet.</p>
+    <div class="trm"><strong>~30% German tax rate</strong> — Körperschaftsteuer 15% + solidarity surcharge + Berlin Gewerbesteuer ~14–17%. <strong>Cumulative threshold</strong> — tax only kicks in once total accumulated profits across all months turn positive; early losses shelter early gains. <strong>P&L cash ≠ real cash</strong> — use the Cash Flow sheet for the true cash balance.</div>
+  </div>
+</div>
+
+<!-- ═══ P16 — Key Metrics + Break-Even Indicators ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">P&amp;L Sheet — Key Metrics &amp; Break-Even</span><span class="pg-hd-r">16 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Key Metrics Block</div>
+    <p class="sum">Six metrics calculated monthly: Monthly Burn (if losing money), Total ARPU (revenue ÷ subscribers), Subscription ARPU (sub revenue only ÷ subscribers), Subscription MRR, Subscription % of Total Revenue, Gross Margin %, and Months of Runway Remaining.</p>
+    <p class="det"><strong>Monthly Burn</strong> = ABS(Net P&L) when Net P&L &lt; 0; shows EUR 0 once profitable. <strong>Total ARPU</strong> = Total Income ÷ total subscribers — measures how much total revenue is generated per subscriber (including retail, smoothies, etc. attributed to subscriber footprint). <strong>Subscription ARPU</strong> = subscription MRR only ÷ total subscribers — this is the <strong>EUR 38.44</strong> figure (not EUR 49). <strong>Subscription MRR</strong> = recognised subscription revenue per month. <strong>Subscription % of Total</strong> = subscription MRR ÷ Total Income — shows ~4.7% at M24. <strong>Months of Runway</strong> = Cumulative Cash ÷ Monthly Burn (shows 99 when profitable).</p>
+    <div class="trm"><strong>EUR 38.44 Subscription ARPU</strong> — blended actual average across tier mix; not the EUR 49 Pro tier price. <strong>Total ARPU vs Subscription ARPU</strong> — two different metrics; Total ARPU is much higher because it includes retail revenue generated by the subscriber base. <strong>Months of runway</strong> — how long at current burn rate before cash runs out; shows 99 (placeholder for "infinite") once profitable.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Break-Even Indicators</div>
+    <p class="sum">Four rows with binary flags and calculated break-even months: EBITDA Positive? (1/0), Net P&L Positive? (1/0), Cash &gt; EUR 500K? (1/0), EBITDA Break-Even Month (first month where EBITDA &gt; 0), and Net P&L Break-Even Month.</p>
+    <p class="det"><strong>EBITDA Positive flag</strong>: 1 when EBITDA &gt; 0, 0 otherwise. TOTAL column shows the first month number where the flag turns to 1 (MATCH function). <strong>Net P&L Positive flag</strong>: same structure for after-tax profit. <strong>Cash &gt; EUR 500K flag</strong>: 1 when cumulative cash exceeds the starting EUR 500K — i.e., the business has generated net positive returns beyond the initial raise. <strong>EBITDA Break-Even Month</strong>: a text cell showing e.g. "M12" — the first month EBITDA turns positive. <strong>Net P&L Break-Even Month</strong>: same for after-tax. In the base model, EBITDA break-even lands between M11 and M13.</p>
+    <div class="trm"><strong>MATCH function</strong> — Excel formula that finds the first position in a range matching a value; used here to find the first month the flag = 1. <strong>Cash &gt; EUR 500K</strong> — this flag turning 1 means the business has fully paid back the raise and is net-positive; expect this around M23–M24 at earliest. <strong>Two different break-evens</strong> — EBITDA (operations only) and Net P&L (after tax + depreciation impact) turn positive at different months.</div>
+  </div>
+</div>
+
+<!-- ═══ P17 — Assumptions Sheet Part 1 ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Assumptions Sheet — Subscription &amp; Growth</span><span class="pg-hd-r">17 / 32</span></div>
+
+  <div class="sheet-banner"><p>Assumptions Sheet</p><span>~125 INPUT CELLS · CHANGE ANY VALUE → ENTIRE MODEL RECALCULATES · DO NOT EDIT P&amp;L ROWS DIRECTLY</span></div>
+
+  <div class="card">
+    <div class="lbl">Subscription Model (B5–B11)</div>
+    <p class="sum">Six inputs: Core EUR 19/month (B5), Pro EUR 49/month (B6), Premium EUR 99/month (B7), monthly churn rate 8% (B8), Core tier share 52% (B9), Pro share 38% (B10), Premium share 10% (B11). These seven cells drive all subscription revenue calculations.</p>
+    <p class="det">Prices are monthly list prices. Annual prices are in the v4 new assumptions section (B128–B130). Churn is <strong>locked at 8%</strong> based on industry benchmark data — this is the most important assumption in the subscriber model because it determines the equilibrium subscriber count. Tier shares determine how the total subscriber base is split across tiers; they are fixed proportions, not dynamic. If the actual tier split differs from 52/38/10, subscription ARPU will differ from EUR 38.44 accordingly.</p>
+    <div class="trm"><strong>8% monthly churn</strong> — ~1 in 12 subscribers cancels each month; compound effect means an acquired subscriber has an average tenure of ~12.5 months (1 ÷ 8%). <strong>Tier shares</strong> — fixed splits applied to total subscriber count each month; the 52/38/10 distribution reflects early market behaviour where most users start on the entry tier. <strong>ARPU sensitivity</strong> — if Premium grows to 20% of the mix, blended ARPU rises significantly.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Subscriber Growth (B14–B19)</div>
+    <p class="sum">Six phase-based rates for new subscribers added per month: M1–M3 = 0 (pre-launch), M4–M6 = 15, M7–M9 = 22, M10–M12 = 28, M13–M18 = 32, M19–M24 = 38. These are the key levers for total subscriber count at M24.</p>
+    <p class="det">The growth rates represent the number of new subscribers the marketing and sales effort acquires each month during each phase. They are inputs — not outputs — meaning the model does not calculate what marketing spend produces these rates; the rates are set here and the cost of achieving them is set separately in the Growth Curves marketing spend row. If an investor believes the acquisition rates are optimistic, they should reduce these values to stress-test. At base rates, the model reaches ~339 subscribers by M24. <strong>Sensitivity: changing M19–M24 from 38 to 25 reduces M24 total by ~70 subscribers.</strong></p>
+    <div class="trm"><strong>Phase-based rates</strong> — each phase has a different acquisition rate reflecting the maturity of marketing and product. <strong>0 in M1–M3</strong> — app is not live; no subscribers possible before the space and app launch in M4. <strong>Stress test</strong> — reduce B18 (M13–M18) and B19 (M19–M24) to model slower-than-expected acquisition; most conservative scenario.</div>
+  </div>
+</div>
+
+<!-- ═══ P18 — Assumptions: Product Pricing + Cost Rates + Payroll ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Assumptions Sheet — Pricing, Costs &amp; Payroll</span><span class="pg-hd-r">18 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Product Pricing (B22–B33)</div>
+    <p class="sum">Retail product EUR 49 / COGS EUR 23.50 (B22–B23). LED EUR 0 (B24–B25). Smoothie EUR 9.67 / 35% COGS (B26–B27). Event EUR 35 ticket / EUR 250 fixed / 7% platform fee (B28–B30). Doctor SaaS EUR 99/clinic / EUR 25 verification / 20-clinic cap (B31–B33).</p>
+    <p class="det">These are the unit-level pricing inputs that drive all revenue and direct COGS calculations. Changing B22 (retail price) or B23 (retail COGS) has the largest P&L impact since retail is ~85% of revenue. <strong>EUR 49 retail price</strong> was validated in Decision D11 and research session R10 — it is the modeled weighted average for the curated product range. <strong>EUR 23.50 retail COGS</strong> = ~48% of the EUR 49 price, giving ~52% gross margin on retail. All other pricing inputs are locked based on market research (R2 for smoothies, community research for events).</p>
+    <div class="trm"><strong>D11 + R10 validation</strong> — EUR 49 price and EUR 23.50 COGS confirmed against competitive analysis of Berlin wellness retail. Earlier model used EUR 11.50 COGS (76% margin) — corrected to EUR 23.50 (52% margin). <strong>B24–B25 = EUR 0</strong> — LED therapy is free; no price or practitioner cost. Change these only if the service becomes a paid offering in Phase 2.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Cost Rates (B36–B41) + Payroll (B44–B52)</div>
+    <p class="sum">Cost rates: 5.5% waste (B36), EUR 2.50 3PL (B37), 2.9% Stripe (B38), EUR 0.35/sub AI API (B39), 1.5% refund reserve (B40), 0.5% bad debt (B41). Payroll inputs cover all staff rates, the 1.25× multiplier, BG insurance, KSK rate, and CTO recruitment/onboarding costs.</p>
+    <p class="det"><strong>Cost rates section</strong> (B35–B41): inputs for variable COGS items. Changing B38 (Stripe rate) or B37 (3PL) has direct impact on retail and total COGS. <strong>Payroll section</strong> (B43–B52): Founder gross EUR 4,166/month each (B44); employer multiplier 1.25× (B45); space staff EUR 1,230/month (B46); partner manager EUR 2,000/month (B47); CTO EUR 6,500/month (B48); BG insurance 0.5% (B49); KSK levy 4.9% (B50); CTO recruitment contingency EUR 19,000 (B51); CTO onboarding EUR 3,500 (B52). The 1.25× multiplier is the most impactful payroll assumption — it converts gross salaries to total employer cost including all social security contributions.</p>
+    <div class="trm"><strong>1.25× employer multiplier</strong> — covers pension (9.3%), health (7.3%), unemployment (1.3%), accident/BG insurance contribution on each gross salary. <strong>BG insurance</strong> — Berufsgenossenschaft; employer accident insurance; 0.5% for office/retail (revised down from 1.5% per P7). <strong>KSK 4.9%</strong> — applied to creative freelancer payments recorded in Growth Curves row 11.</div>
+  </div>
+</div>
+
+<!-- ═══ P19 — Assumptions: Fixed OpEx + Compliance ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Assumptions Sheet — Operating Costs</span><span class="pg-hd-r">19 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Fixed Operating Costs — Rent &amp; SaaS (B55–B63)</div>
+    <p class="sum">App maintenance legacy row (B56, EUR 1,500) is superseded by B136 from M5. SaaS Stack phases: EUR 338 (M1–M6), EUR 500 (M7–M12), EUR 750 (M13+). Rent: EUR 750 co-working M1–M3 (B61), EUR 1,500 all-in space M4+ (B62), Nebenkosten EUR 0 M4+ (B63 — bundled into B62).</p>
+    <p class="det"><strong>B56 (legacy app retainer EUR 1,500)</strong> — this value is no longer used in the P&L from M5 onward (replaced by the B136 contractor EUR 12,000 in the R&D section via an IF formula). It remains in the sheet for reference. <strong>SaaS Stack</strong> was itemised in research session R8 and validated in D9. <strong>Rent M4+ EUR 1,500 all-in (EX-07)</strong> — major correction from earlier versions; Kaltmiete + Nebenkosten was previously modeled at EUR 2,500 + EUR 325 separately. B63 now = EUR 0 because Nebenkosten is included in the all-in rent, confirmed by EX-07.</p>
+    <div class="trm"><strong>B56 legacy</strong> — the EUR 1,500 app retainer placeholder is overridden by B136 (EUR 12,000/month) from M5; do not confuse the two rows. <strong>EUR 1,500 all-in rent</strong> — confirmed EX-07; includes heating, water, electricity, common area maintenance. <strong>Kaltmiete</strong> — "cold rent" (base rent without utilities); the old model used Kaltmiete + Nebenkosten separately.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Fixed Operating Costs — Insurance, Space Ops &amp; Compliance (B65–B82)</div>
+    <p class="sum">Insurance 4-way split: EUR 200 + EUR 100 D&O + EUR 150 cyber + EUR 100 product liability + EUR 100 recall M4+ = EUR 650/month total. Space ops M4+: EUR 500 utilities + EUR 300 cleaning + EUR 200 maintenance + EUR 120 waste + EUR 50 WiFi. Compliance: DSB EUR 400, CMP EUR 25, food safety EUR 80, IHK EUR 10, GEMA EUR 35, Rundfunk EUR 6, Verpackungsgesetz EUR 6.</p>
+    <p class="det">Insurance inputs (B65–B69) were split into four categories after the compliance lawyer audit (P6) — the original EUR 200 general liability was insufficient for a health data processor with investor involvement. D&O and cyber are now mandatory inputs. Space operations (B70–B74) were revised upward by the operations manager persona (P3). All compliance inputs (B76–B82) were added in v3 after the P1 angel investor audit identified them as missing. <strong>Bank fees</strong> (B94: EUR 35/month) — Geschäftskonto monthly fee (P5 finding). Changing any of these cells immediately updates the G&A section of the P&L.</p>
+    <div class="trm"><strong>D&O insurance (B66)</strong> — mandatory once investors are involved; covers directors against personal liability claims. <strong>Cyber insurance (B67)</strong> — mandatory for health data processors under Art. 9 GDPR (P6). <strong>DSB (B76: EUR 400)</strong> — external Data Protection Officer monthly retainer; mandatory, not optional.</div>
+  </div>
+</div>
+
+<!-- ═══ P20 — Assumptions: S&M + Buffers + Tax + Scenarios + v4 ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Assumptions Sheet — S&amp;M, Tax, Scenarios &amp; v4 New</span><span class="pg-hd-r">20 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">S&amp;M, Buffers &amp; Tax Inputs (B86–B99)</div>
+    <p class="sum">S&M: Content EUR 150 (B86), Influencer seeding EUR 200 M7+ (B87), Investor travel EUR 150 (B88), Conferences EUR 100 M7+ (B89), Local transport EUR 50 (B90). Contingency buffer 10% (B93), bank fees EUR 35 (B94). Tax: Gewerbesteuer 14.35% (B97), KSt + Soli 15.825% (B98), combined ~30% (B99).</p>
+    <p class="det"><strong>S&M inputs (B86–B90)</strong> — these feed the Sales & Marketing and Travel sections in the P&L. They are separate from the marketing spend in Growth Curves (row 10) which covers paid ads — these inputs cover content tools, influencer seeding, and travel. <strong>Contingency buffer (B93: 10%)</strong> — applied as a multiplier to total pre-contingency OpEx each month. <strong>Tax inputs (B97–B99)</strong>: B97 (14.35%) is the Berlin Gewerbesteuer rate (3.5% × 410% Hebesatz); B98 (15.825%) is Körperschaftsteuer including Solidaritätszuschlag; B99 (30%) is the combined simplified rate used in the tax provision formula. These are based on P2 (German tax advisor) audit findings.</p>
+    <div class="trm"><strong>Hebesatz 410%</strong> — Berlin's Gewerbesteuer multiplier applied to the base rate of 3.5%. <strong>Solidaritätszuschlag</strong> — German solidarity surcharge on corporate income tax (5.5% of KSt). <strong>Combined 30% (B99)</strong> — conservative rounding of the ~30.18% total; the rate applied in the tax provision formula.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">CapEx, Scenario Multipliers &amp; v4 New Assumptions (B101–B140)</div>
+    <p class="sum">CapEx inputs B102–B119 define each CapEx line item and the 36-month depreciation period. Scenario multipliers: Bull 1.3× revenue / 0.75× churn (B121–B122), Bear 0.6× revenue / 1.5× churn / 2.0× CAC (B123–B125). v4 new assumptions B128–B140 cover annual subscription pricing, B2B rates, gift cards, app contractor, POS hardware, CTO contingency, and space deposits.</p>
+    <p class="det"><strong>CapEx inputs (B102–B119)</strong>: each item has its own cell; changing any updates the corresponding CapEx row in the P&L. <strong>Scenario multipliers (B121–B125)</strong>: used in the Scenarios sheet — not applied in the main P&L. <strong>v4 new (B127–B140)</strong>: Annual prices B128–B130 (EUR 190/490/990); annual mix B131–B132; B2B PEPM EUR 39 (B133) and employees/client 15 (B134); gift card net EUR 441 (B135); app contractor EUR 12,000 (B136); app MVP EUR 20,000 (B137); POS hardware EUR 1,250 (B138); CTO recruitment EUR 19,000 (B139); space security deposit EUR 3,600 (B140). These cells are referenced directly in the P&L and Cash Flow formulas.</p>
+    <div class="trm"><strong>B121–B125 scenario inputs</strong> — used only in the Scenarios sheet; the main P&L always runs at base case. <strong>B140: EUR 3,600 space deposit</strong> — the EX-07 security deposit for the physical space; separate from Kaution (B118: EUR 7,500). Both are Cash Flow only — not P&L costs. <strong>B136: EUR 12,000 app contractor</strong> — the critical EX-06 correction; was EUR 1,500 placeholder.</div>
+  </div>
+</div>
+
+<!-- ═══ P21 — Growth Curves ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Growth Curves Sheet</span><span class="pg-hd-r">21 / 32</span></div>
+
+  <div class="sheet-banner"><p>Growth Curves Sheet</p><span>EDIT THESE NUMBERS TO CHANGE UNIT VOLUMES · P&amp;L PULLS FROM THIS SHEET VIA FORMULA REFERENCES</span></div>
+
+  <div class="card">
+    <div class="lbl">Unit Volume Inputs (Rows 4–11)</div>
+    <p class="sum">Eight volume curves define how many units of each product or service are delivered each month. These are the only rows an investor should edit when testing alternative growth scenarios — the P&L recalculates automatically from these inputs.</p>
+    <p class="det"><strong>Row 4 — Retail Units</strong>: 0 in M1–M3, 50 in M4, scaling to 4,600 by M24. <strong>Row 5 — LED Sessions</strong>: 0 to 300/month by M18 (self-service free amenity). <strong>Row 6 — Smoothie Units</strong>: 0 to 2,000/month by M24. <strong>Row 7 — Event Count</strong>: 0 to 5/month by M24. <strong>Row 8 — Event Avg Attendees</strong>: 12 at M4, 25 by M18. <strong>Row 9 — Doctor Clinics</strong>: 0 to 20 (cap) by M15. <strong>Row 10 — Marketing Spend (EUR)</strong>: EUR 50 in M1 scaling to EUR 3,000 by M24 — this is the paid ads budget that feeds the S&M section in the P&L. <strong>Row 11 — KSK-Eligible Freelancer Spend</strong>: EUR 500 in M1–M3, EUR 800 from M4 — drives the KSK levy calculation in Payroll. <strong>Row 12 — New Doctors (delta)</strong>: calculated = MAX(0, current_month_clinics − previous_month_clinics); drives doctor verification COGS.</p>
+    <div class="trm"><strong>Do not add rows</strong> — the P&L references specific row numbers (row 4, 5, 6, etc.); inserting rows above or between these will break formulas. <strong>M1–M3 = 0 for all operating metrics</strong> — the space is not open; no retail, smoothie, event, or doctor revenue before M4. <strong>Row 10 paid ads</strong> — this is the primary marketing investment; increasing it should be accompanied by a higher subscriber acquisition rate in Assumptions B15–B19.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Subscriber Model (Rows 14–20)</div>
+    <p class="sum">Six rows compute the subscriber funnel: New Subs Rate (from Assumptions phases), Churned Subs (8% × prior month total), Total Subscribers, Core (52%), Pro (38%), and Premium (10%). Total Subscribers at M24: ~339.</p>
+    <p class="det"><strong>Row 15 — New Subs Rate</strong>: formula pulls the phase rate from Assumptions B14–B19 based on current month number. <strong>Row 16 — Churned Subs</strong>: = ROUND(prior_month_total × 8%, 0). <strong>Row 17 — Total Subscribers</strong>: M1 = MAX(0, new_M1 − churn_M1); subsequent months = MAX(0, prior_total − current_churn + current_new). The MAX(0) prevents negative subscriber counts in early months. Rows 18–20 split the total by tier shares (Assumptions B9–B11). These rows feed the P&L subscription revenue formulas and the Key Metrics ARPU calculations. <strong>Changing Assumptions churn rate (B8) here immediately changes every churned subs cell.</strong></p>
+    <div class="trm"><strong>ROUND function</strong> — churn is rounded to whole subscribers per month; fractional subscribers are not modeled. <strong>MAX(0)</strong> — prevents formula errors if churn theoretically exceeds the subscriber base in very early months. <strong>Key sensitivity</strong> — the total subscriber count at M24 is extremely sensitive to the churn rate; 8% vs 10% changes M24 subs from ~339 to ~280.</div>
+  </div>
+</div>
+
+<!-- ═══ P22 — Cash Flow: Operating + Investing ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Cash Flow Sheet — Operating &amp; Investing Activities</span><span class="pg-hd-r">22 / 32</span></div>
+
+  <div class="sheet-banner"><p>Cash Flow Sheet</p><span>THE REAL CASH PICTURE · P&amp;L CUMULATIVE CASH OVERSTATES ACTUAL CASH BY ~EUR 218K · USE THIS SHEET</span></div>
+
+  <div class="card">
+    <div class="lbl">Operating Activities</div>
+    <p class="sum">Three rows: EBITDA (pulled from P&L), Tax Provision (negative outflow), and Working Capital Build — inventory purchased before it is sold. Operating Cash Flow = EBITDA − Tax − Inventory Build. The inventory build is the primary cause of the EUR ~218K gap.</p>
+    <p class="det"><strong>EBITDA row</strong>: formula reference to P&L EBITDA row — no recalculation. <strong>Tax Provision row</strong>: negative mirror of P&L tax row — shown as cash outflow. <strong>Working Capital Build (inventory)</strong>: most critical row in the Cash Flow sheet. Formula: M1 = −ROUND(units_M1 × EUR 23.50 × 2, 0); subsequent months = −ROUND(MAX(0, (units_current − units_prior) × EUR 23.50 × 2), 0). The × 2 reflects a 2-month inventory pipeline — stock is purchased 2 months ahead of expected sales. This cash leaves the account in the month of purchase but only appears in the P&L as COGS when units are actually sold. <strong>Operating Cash Flow</strong> = EBITDA + Tax (negative) + Inventory (negative in growth months).</p>
+    <div class="trm"><strong>2-month inventory pipeline</strong> — retail stock is ordered 2 months before expected sale; this front-loads cash outflows relative to P&L recognition. <strong>Working capital drag</strong> — as unit sales scale, the inventory build cash outflow grows; this is why Operating Cash Flow lags EBITDA. <strong>MAX(0)</strong> — only bills new inventory when unit volume increases; no cash inflow modeled when volume declines.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Investing Activities — CapEx + Security Deposits</div>
+    <p class="sum">Three outflows: CapEx (negative mirror of P&L Total CapEx row), Kaution EUR 7,500 in M3 (Assumptions B118 — refundable, not P&L), Space Security Deposit EUR 3,600 in M3 (B140, EX-07 — also refundable, not P&L). These two deposits are the key Cash Flow items invisible in the P&L.</p>
+    <p class="det"><strong>CapEx outflow</strong>: = −P&L!TOTAL_CAPEX_ROW per month; already on the P&L as an expense, so it appears in both places (the P&L expenses it; the Cash Flow treats it as an investing outflow). <strong>Kaution (B118: EUR 7,500)</strong>: a refundable security deposit paid to the landlord in M3; appears in the Cash Flow as a real cash outflow but is NOT in the P&L because it is refundable at lease end. This sits on the balance sheet as a receivable. <strong>Space Security Deposit (B140: EUR 3,600)</strong>: a separate deposit for the physical space (EX-07); also refundable, also Cash Flow only. Combined deposits: <strong>EUR 11,100 in M3</strong> that the P&L completely ignores. <strong>Investing Cash Flow</strong> = CapEx + Kaution + Space deposit.</p>
+    <div class="trm"><strong>Kaution (B118: EUR 7,500)</strong> — landlord security deposit; 3 months × ~EUR 2,500/month cold rent. Refundable at lease end. <strong>Space deposit (B140: EUR 3,600)</strong> — separate deposit for the physical space location (EX-07). <strong>Neither deposit is in the P&L</strong> — they are balance sheet items (receivables), not expenses. The total EUR 11,100 disappears from cash but does not appear as a cost.</div>
+  </div>
+</div>
+
+<!-- ═══ P23 — Cash Flow: Financing + Net + Gap ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Cash Flow Sheet — Financing, Net &amp; Gap Analysis</span><span class="pg-hd-r">23 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Financing Activities</div>
+    <p class="sum">One row: Pre-Seed Funding EUR 500,000 in M1. This is the only financing activity in the 24-month model. EUR 500K hits the cash balance in M1 and is not repaid within the model period.</p>
+    <p class="det">Formula: <code>IF(month = 1, 500000, 0)</code>. The EUR 500K raise is modeled as a one-time cash inflow at M1. No debt repayment, no additional equity rounds, no interest expense — the model is intentionally clean to represent the pre-seed raise only. Financing Cash Flow = EUR 500K in M1, EUR 0 in all other months. Investors reviewing this section should note that the model does not include any follow-on financing; if the business reaches M24 and needs another raise, that scenario is not modeled here.</p>
+    <div class="trm"><strong>EUR 500K at M1</strong> — the pre-seed raise is the only financing event in the 24-month model. <strong>No debt</strong> — no loans, no convertible notes modeled (the EUR 2.5M valuation cap applies to the equity instrument, not debt). <strong>No follow-on</strong> — the model is deliberately standalone for the pre-seed period.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Net Cash Flow + Cumulative Cash Balance</div>
+    <p class="sum">Net Cash Flow = Operating + Investing + Financing each month. Cumulative Cash Balance accumulates from M1 — this is the true cash picture. This number will always be lower than the P&L cumulative cash by ~EUR 218K in late months.</p>
+    <p class="det"><strong>Net Cash Flow per month</strong>: Operating CF + Investing CF + Financing CF. Positive = cash entering the bank; negative = cash leaving. The deepest negative Net Cash Flow months are M1–M3 when EUR 500K arrives (M1 positive spike) but CapEx and deposits (M3) create large outflows. <strong>Cumulative Cash Balance</strong>: M1 = Net CF M1; subsequent = prior cumulative + current Net CF. This row is the single most important number for the investment decision — it must stay above EUR 0 in every month. Compare this to the P&L Cumulative Cash row — the gap should be approximately EUR 218K by M24.</p>
+    <div class="trm"><strong>Must stay above EUR 0</strong> — if Cumulative Cash Balance dips below zero in any month, the raise is insufficient and additional funding is needed. <strong>~EUR 218K gap vs P&L</strong> — the difference between P&L cumulative cash and actual cash; primarily from inventory working capital and deposits. <strong>M3 is the trough month</strong> — deepest cash outflow month when CapEx + both deposits all hit simultaneously.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">P&amp;L vs Cash Gap Analysis</div>
+    <p class="sum">Three rows: P&L Cumulative Cash (pulled from P&L), Actual Cash (from this sheet), and the GAP (Working Capital Drag) = actual − P&L. This section explicitly quantifies the EUR ~218K discrepancy so investors can see it clearly.</p>
+    <p class="det">The gap row = Actual Cash − P&L Cash per month. In the early months the gap is small; it grows as the retail business scales and inventory purchases accelerate. The gap stabilises when unit volume growth plateaus (M22–M24 in the base model). The section is titled "P&L vs CASH GAP ANALYSIS" — it was added specifically in response to the Growth CFO persona (P5) finding that the original model did not account for working capital and therefore overstated investable runway. <strong>The EUR ~218K gap means the business needs its raise to cover not just operating losses but also the cash tied up in inventory.</strong></p>
+    <div class="trm"><strong>Working capital drag</strong> — the cumulative cash tied up in inventory at any point in time; grows with the business. <strong>P5 finding</strong> — the Growth CFO persona audit (P5) specifically flagged the EUR 218K gap and required the Cash Flow sheet to be built to address it. <strong>Gap stabilises M22–M24</strong> — when retail unit volume growth rate slows, new inventory purchases slow, and the drag stops growing.</div>
+  </div>
+</div>
+
+<!-- ═══ P24 — Unit Economics ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Unit Economics Sheet</span><span class="pg-hd-r">24 / 32</span></div>
+
+  <div class="sheet-banner"><p>Unit Economics Sheet</p><span>PER-CUSTOMER &amp; PER-STREAM PROFITABILITY · SUBSCRIPTION ARPU = EUR 38.44, NOT EUR 49</span></div>
+
+  <div class="card">
+    <div class="lbl">Subscription Metrics — ARPU, LTV, CAC, LTV:CAC, Payback</div>
+    <p class="sum">Five rows: Subscription ARPU (EUR 38.44 blended), Subscription LTV (ARPU ÷ churn rate), CAC (paid ads ÷ new subs), LTV:CAC ratio, and CAC Payback period in months. These are the five numbers investors reference in the follow-up meeting.</p>
+    <p class="det"><strong>Subscription ARPU</strong> = subscription MRR ÷ total subscribers. Blended actual = EUR 38.44 (not EUR 49) because the subscriber base is weighted toward Core (EUR 19, 52%). <strong>Subscription LTV</strong> = ARPU ÷ 8% churn rate = EUR 38.44 ÷ 0.08 = EUR ~481 per subscriber over their tenure. <strong>CAC</strong> = paid ads spend (Growth Curves row 10) ÷ new subscribers added that month. <strong>LTV:CAC ratio</strong> = LTV ÷ CAC; should trend above 3:1 as unit economics improve. <strong>CAC Payback</strong> = CAC ÷ ARPU in months; models how quickly subscription revenue recovers acquisition cost. Note: CAC here uses paid ads only, not total S&M — the actual all-in CAC including content and influencer spend would be higher.</p>
+    <div class="trm"><strong>EUR 38.44 ARPU</strong> — the actual blended average; EUR 49 is the Pro tier price only. <strong>LTV EUR ~481</strong> — calculated at 8% churn; at 6% churn LTV rises to EUR ~641. <strong>CAC uses paid ads only</strong> — conservative definition; total S&M ÷ new subs would give a higher, more inclusive CAC figure.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Contribution Margin by Stream</div>
+    <p class="sum">Four streams measured: Retail (revenue − product cost − waste − 3PL) ÷ retail revenue, LED (EUR 0 ÷ EUR 0 — both zero), Smoothie (revenue − 35% COGS) ÷ smoothie revenue, Subscription (subscription revenue − AI API cost) ÷ subscription revenue. Shows which stream actually contributes most per EUR of revenue.</p>
+    <p class="det"><strong>Retail contribution margin</strong> = (retail revenue − product cost − waste − 3PL) ÷ retail revenue ≈ 52% at constant volume. <strong>LED margin</strong> is undefined (0 ÷ 0); the formula returns 0 via the IF guard. <strong>Smoothie margin</strong> ≈ 65% (1 − 35% COGS). <strong>Subscription margin</strong> = (sub MRR − AI API cost) ÷ sub MRR ≈ 87–90% (only variable cost is EUR 0.35/sub/month). CGM, B2B, and Gift Cards are not broken out as separate contribution margin rows in this version — they all have near-100% margin with zero direct COGS. The contribution margin by stream confirms that subscriptions and digital streams are structurally higher-margin than physical retail, even though retail drives total revenue.</p>
+    <div class="trm"><strong>Contribution margin</strong> — revenue minus direct variable costs for that specific stream; what that stream contributes toward covering shared fixed costs (rent, payroll, marketing). <strong>~87% subscription margin</strong> — the EUR 0.35/sub AI API cost is the only variable cost subtracted. <strong>~52% retail margin</strong> — after product cost, waste, and 3PL; before any shared overhead.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Revenue Mix (P5 Finding)</div>
+    <p class="sum">Six percentage rows showing each stream's share of Total Income per month: Retail, LED, Smoothie, Events, Doctor SaaS, and Subscriptions. At M24: Retail ~85%, Subscriptions ~5%. This section exists because P5 (Growth CFO) flagged that subscription-only investors may misread this as a subscription business.</p>
+    <p class="det">Formula per row: stream_revenue ÷ Total Income, with IF guard against division-by-zero. LED % = 0% every month (revenue = EUR 0). Subscriptions % trends from 0% (M1–M3) up to ~5% by M24 — despite 339 paying members, the high volume of retail and smoothie transactions means subscription revenue is a small fraction of total. Note: B2B and Gift Cards are not broken out separately in this version's revenue mix — they roll into the implicit "other" portion visible by subtraction. The section header explicitly labels this "P5: only 4.7% subs at M24" as a reminder of the counter-intuitive finding.</p>
+    <div class="trm"><strong>4.7% subscription revenue at M24</strong> — subscriptions provide retention and data, not revenue scale. The business is product commerce. <strong>P5 persona finding</strong> — the Growth CFO review flagged that subscription % of revenue is a critical investor framing issue; this row makes it explicit. <strong>LED = 0% always</strong> — serves as a sanity check that LED is correctly modeled as free.</div>
+  </div>
+</div>
+
+<!-- ═══ P25 — Scenarios Sheet ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Scenarios Sheet</span><span class="pg-hd-r">25 / 32</span></div>
+
+  <div class="sheet-banner"><p>Scenarios Sheet</p><span>BASE / BULL (1.3×) / BEAR (0.6×) · BEAR CASE IS THE INVESTMENT SIZING TEST · COSTS FIXED ACROSS ALL THREE</span></div>
+
+  <div class="card">
+    <div class="lbl">Base / Bull / Bear — 24-Month Summary Table</div>
+    <p class="sum">Seven metrics compared across three scenarios: Total Revenue, Total COGS, Gross Profit, Total OpEx, Total CapEx, EBITDA, and Net P&L (pre-tax) — all on a 24-month cumulative basis. Bull and Bear apply multipliers to Base revenue only; costs are identical in all three.</p>
+    <p class="det"><strong>Base</strong>: formula references to P&L TOTAL (column Z) rows — no recalculation. <strong>Bull (1.3×)</strong>: revenue rows × Bull multiplier (B121 = 1.3); COGS scales proportionally; OpEx and CapEx remain identical to Base. <strong>Bear (0.6×)</strong>: revenue rows × Bear multiplier (B123 = 0.6); COGS scales proportionally; OpEx and CapEx remain identical to Base. <strong>The fixed costs assumption is intentional</strong> — it tests whether the business can survive at lower revenue without cutting costs. If Bear cash stays positive, the raise is sized correctly for the downside. <strong>Estimated Cash at M24</strong> = EUR 500K + Net P&L (24-month cumulative pre-tax) for each scenario — a simplified proxy for cash remaining.</p>
+    <div class="trm"><strong>Bull 1.3× / Bear 0.6×</strong> — multipliers from Assumptions B121 and B123; change these cells to adjust scenario boundaries. <strong>Costs fixed across scenarios</strong> — payroll, rent, compliance, CapEx stay at base-case levels; tests cost-coverage, not cost-cutting ability. <strong>Cash proxy simplified</strong> — EUR 500K + Net P&L is an approximation; the full cash position requires the Cash Flow sheet's working capital adjustment.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Scenario Interpretation Notes</div>
+    <p class="sum">Three interpretation notes are written into the sheet: (1) Bear case tests if EUR 500K is sufficient. (2) If Bear cash &lt; 0, raise must increase or scope must be reduced. (3) Bull case shows working capital stress at higher volume — more revenue can actually tighten cash if inventory build accelerates faster than cash collection.</p>
+    <p class="det">The interpretation notes explain how to read the scenario table. The Bear case is the investment decision test — if Cash at M24 (Bear) stays above zero, the raise is sized correctly. The Bull case is a stress test of a different kind: higher revenue means higher inventory purchases (working capital build), which can tighten cash even as profits improve. This counter-intuitive dynamic is why the Cash Flow sheet exists — the Scenarios sheet uses the simplified EUR 500K + Net P&L proxy, not the full Cash Flow calculation. Always verify Bear scenario cash using the Cash Flow sheet's working capital model for a precise answer.</p>
+    <div class="trm"><strong>Bear cash &lt; 0</strong> — if this happens, either the raise needs to increase, or a cost (likely R&D contractor EUR 12K/month) needs to be deferred. <strong>Bull working capital stress</strong> — at 1.3× revenue, retail units scale 30% faster, requiring 30% more inventory cash upfront; this can tighten cash despite higher profits. <strong>Investment decision</strong> — the raise is sized primarily against the Bear scenario, not the Base.</div>
+  </div>
+</div>
+
+<!-- ═══ P26 — Decisions: D1–D11 ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Decisions Sheet — D1–D11 Decision Log</span><span class="pg-hd-r">26 / 32</span></div>
+
+  <div class="sheet-banner"><p>Decisions Sheet</p><span>FULL AUDIT TRAIL · D1–D11 DECISIONS · v3.1–v3.3 CORRECTIONS · 7 PERSONA AUDITS</span></div>
+
+  <div class="card">
+    <div class="lbl">D1–D6 — Revenue &amp; Cost Model Decisions</div>
+    <p class="sum">Six foundational decisions: D1 Doctor revenue model (SaaS not commission), D2 Restaurant deferral (Phase 2), D3 CGM commission model (EUR 15/user/month, Premium gate), D4 Physical space (smoothie bar + retail), D5 CapEx section included, D6 AI cost model (internal + user-facing separate).</p>
+    <p class="det"><strong>D1</strong>: Doctor revenue switched from EUR 150/month commission × clinics (legally unsafe, StGB §299a) to EUR 99/month SaaS × 20 clinics (legally safe). Revenue impact: −75% on doctor stream but legally bulletproof. <strong>D2</strong>: Restaurant deferred to 500+ users Phase 2 — EUR 0 all 24 months. <strong>D3</strong>: CGM hardware sales rejected in favour of EUR 15/user/month affiliate commission (no inventory, no RMA, pure margin; Premium 3-month gate added). Old model: EUR 130 × units. <strong>D4</strong>: Physical space chosen over digital-only; adds EUR 2,825/month operating costs but enables retail, smoothie, event revenue and community. <strong>D5</strong>: CapEx section added explicitly — earlier model had all costs as OpEx. <strong>D6</strong>: AI costs split into internal (EUR 210/month Claude Max) and user-facing (EUR 0.35/sub/month API) — previously lumped as EUR 210 + EUR 499 Terra API (Terra deferred per D8).</p>
+    <div class="trm"><strong>D1 legal basis</strong> — StGB §299a prohibits referral fees in German healthcare; SaaS model follows Doctolib precedent. <strong>D3 no inventory</strong> — alche earns commission without touching hardware; ZOE dropped hardware, Supersapiens shut down; lesson taken. <strong>D8 cross-reference</strong> — Terra CGM API (EUR 499/month) deferred; free Apple Health / Google Fit used instead (saves EUR 9,481).</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">D7–D11 — Operational &amp; Pricing Decisions</div>
+    <p class="sum">Five operational decisions: D7 product waste rate (5.5% blended), D8 Terra CGM API deferred (saves EUR 9,481), D9 SaaS stack itemised (EUR 338→500→750/month phases), D10 menu analysis done in-house (saves EUR 12,000), D11 retail product pricing validated (EUR 49 price / EUR 23.50 COGS).</p>
+    <p class="det"><strong>D7</strong>: Waste rate set at category-weighted 5.5% blended (4% capsules, 7% powders) — replaced flat 5% assumption. <strong>D8</strong>: Terra API (EUR 499/month) deferred in favour of free Apple Health / Google Fit HealthKit integration; saves EUR 9,481 over model period. API costs reassessed at M7 based on user engagement data. <strong>D9</strong>: SaaS stack itemised in R8: Google Workspace, Figma, Notion, Crisp, and others — replacing EUR 350 flat estimate with phased EUR 338/500/750 actual budget. <strong>D10</strong>: Competitive menu analysis done by founding team — removes EUR 500/month external consultant cost (saves EUR 12,000 over 24 months). <strong>D11</strong>: EUR 49 retail price validated in R10 against Berlin wellness retail benchmarks; COGS corrected from EUR 11.50 to EUR 23.50 (margin corrected from 76% to 52%).</p>
+    <div class="trm"><strong>D11 margin correction</strong> — the original 76% gross margin on retail was unrealistically high; EUR 23.50 COGS (52% margin) reflects actual wholesale costs for premium supplement retail. <strong>D8 Terra deferral</strong> — EUR 9,481 saved over 24 months by using free platform health data instead of the Terra paid API. <strong>D9 itemisation</strong> — every SaaS subscription listed individually in R8; total is more than typical pre-seed estimates but more reliable.</div>
+  </div>
+</div>
+
+<!-- ═══ P27 — Model Corrections ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Decisions Sheet — Model Corrections</span><span class="pg-hd-r">27 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">v3.1 Corrections</div>
+    <p class="sum">Four v3.1 corrections: Growth Marketer removed (Timu IS the growth marketer, saves EUR 73K), subscribers gated to M4+ (app launches with space; no subs in M1–M3), UX/UI moved to CapEx (EUR 15K one-off vs EUR 800/month OpEx), B19 label updated.</p>
+    <p class="det"><strong>Growth Marketer removed</strong>: original model had a dedicated growth marketer at EUR 4,500/month from M12. Removed because Timu's role is explicitly growth and brand marketing — this was double-counting headcount. Saves EUR 73K (M12–M24 avoided cost). <strong>Subscribers gated M4+</strong>: original model showed 3 new subs/month from M1 — physically impossible as the app and space launch in M4. Corrected to EUR 0 subs M1–M3. <strong>UX/UI → CapEx</strong>: EUR 800/month app design OpEx (M1–M18) replaced with EUR 15,000 one-time CapEx at M1 — saves EUR 19,200 in OpEx and correctly capitalizes the design work. <strong>B19 label</strong>: label-only change; no financial impact.</p>
+    <div class="trm"><strong>EUR 73K savings</strong> — by removing the duplicate growth marketer headcount. <strong>M4 gate</strong> — the app cannot have subscribers before it launches; M1–M3 subscriber assumptions in the original model were unrealistic. <strong>CapEx capitalization</strong> — UX/UI design for an app is an intangible asset under German HGB; it should be capitalized and depreciated, not expensed monthly.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">v3.2 &amp; v3.3 Corrections</div>
+    <p class="sum">v3.2: LED therapy moved to free amenity (removes EUR 151K revenue, saves EUR 84K COGS). v3.3: Ablöse EUR 50K added as CapEx (amortized 36 months), Kaution EUR 7.5K added to Cash Flow only (refundable, not P&L). Both changes tightened runway materially.</p>
+    <p class="det"><strong>v3.2 LED → free</strong>: LED therapy previously modeled as EUR 45/session paid service with EUR 25/session practitioner cost. Removed entirely from revenue (approx. EUR 151K over 24 months) because: self-service requires no practitioner, the dwell-time and smoothie attachment value exceeds the session revenue, and no booking system is required. COGS also reduced by EUR 84K (no practitioner cost). <strong>v3.3 Ablöse EUR 50K</strong>: key money payment to outgoing occupant added as M3 CapEx — was previously not modeled. Capitalized as intangible leasehold premium; amortized over 36 months. Increased total CapEx from EUR 98K to EUR 148K. <strong>v3.3 Kaution EUR 7.5K</strong>: refundable security deposit added to Cash Flow sheet in M3 — was missing from earlier versions. Not a P&L cost; sits as a balance sheet receivable. Combined tightened runway by approximately EUR 57.5K additional M3 outflow.</p>
+    <div class="trm"><strong>EUR 151K revenue forgone</strong> — LED therapy revenue removed in v3.2; the strategic bet is that free LED drives more smoothie and retail revenue than the sessions themselves would generate. <strong>EUR 50K Ablöse</strong> — not a deposit; permanent payment to the outgoing occupant. Cannot be recovered at lease end. <strong>EUR 7.5K Kaution</strong> — refundable at lease end; appears on balance sheet as a receivable, not on P&L.</div>
+  </div>
+</div>
+
+<!-- ═══ P28 — Persona Audit Results ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Decisions Sheet — 7 Persona Audit Results</span><span class="pg-hd-r">28 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">P1 — Angel Investor &amp; P2 — German Tax Advisor</div>
+    <p class="sum">P1 found EUR 113–236K in missing costs and flagged CAC too low at EUR 40. All items added. P2 found tax rate understated, IHK overstated, and that KSt + Soli + Gewerbesteuer = ~30% combined rate only when cumulative profits positive.</p>
+    <p class="det"><strong>P1 Angel Investor</strong> (EUR 175K midpoint missing costs): flagged missing travel budget, absent insurance coverage, no contingency buffer, underestimated legal setup, and missing compliance costs for a health data business. All items identified in P1 were added to the model. CAC of EUR 40 flagged as too low for Berlin wellness market — the model's paid ads budget was increased accordingly. <strong>P2 German Tax Advisor (Steuerberater)</strong>: corrected tax rate from flat estimate to Gewerbesteuer 14.35% (3.5% × 410% Hebesatz) + KSt 15.825% = 30.18% combined, applied only when cumulative profits turn positive; IHK corrected from EUR 25/month to EUR 10/month (EUR 120/year); KSK rate confirmed at 4.9%; employer multiplier raised from 1.22× to 1.25×.</p>
+    <div class="trm"><strong>EUR 175K midpoint</strong> — the average of P1's EUR 113K–EUR 236K missing cost range; all items incorporated. <strong>CAC EUR 40 flagged</strong> — the original paid ads budget implied very low CAC; marketing spend was revised upward in Growth Curves. <strong>KSt + Soli + GewSt</strong> — three separate German taxes combining to ~30.18%; rounded to 30% in B99.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">P3 — Operations Manager &amp; P4 — Food Safety Inspector</div>
+    <p class="sum">P3 found rent was Kaltmiete not all-in (revised in EX-07), buildout EUR 25K not EUR 15K, utilities EUR 500 not EUR 400, and that Nebenkosten must be modeled separately until confirmed all-in. P4 found NMN is NOT EU-approved (product range adjusted), Gaststättenerlaubnis not needed for smoothie bar, and HACCP + hygiene training are mandatory CapEx.</p>
+    <p class="det"><strong>P3 Operations Manager</strong>: rent corrected — original model used Kaltmiete (base rent only); P3 flagged that Nebenkosten adds EUR 300–500/month. Later resolved by EX-07 confirming an all-in EUR 1,500 rate. Buildout raised from EUR 15K to EUR 25K. Utilities raised EUR 400→EUR 500/month. Cleaning EUR 300/month, maintenance reserve EUR 200/month, waste disposal EUR 120/month (BSR commercial) all added. <strong>P4 Food Safety Inspector</strong>: flagged that NMN (nicotinamide mononucleotide) is on the EU Novel Foods list and cannot be sold without authorisation — product range adjusted to remove NMN. Gaststättenerlaubnis not required for smoothie-only (no hot food); HACCP plan setup EUR 1,000 CapEx, hygiene training EUR 60 CapEx, food safety monitoring EUR 80/month added.</p>
+    <div class="trm"><strong>NMN not EU-approved</strong> — removed from product range per P4; cannot be sold as a food supplement in Germany without Novel Foods authorisation. <strong>HACCP mandatory</strong> — even for a smoothie bar, a documented Hazard Analysis plan is legally required (P4). <strong>Gaststättenerlaubnis not needed</strong> — this license is for food service restaurants; a smoothie bar with no cooking is exempt (P4).</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">P5 — Growth CFO, P6 — Compliance Lawyer &amp; P7 — HR Manager</div>
+    <p class="sum">P5 found the EUR 218K P&L vs cash gap and corrected ARPU from EUR 49 to EUR 38.44. P6 found DSB mandatory, DPIA mandatory, and that insurance needed four-way split (EUR 650/month). P7 confirmed CTO EUR 19K recruitment, raised employer multiplier to 1.25×, and flagged BG insurance rate at 0.5% not 1.5%.</p>
+    <p class="det"><strong>P5 Growth CFO</strong>: most impactful single audit finding — identified the EUR 218K working capital gap and required the Cash Flow sheet to be built. Also corrected subscription ARPU from EUR 49 (Pro tier price) to EUR 38.44 (blended actual tier mix). Added bad debt provision 0.5% of revenue. <strong>P6 Compliance Lawyer</strong>: DSB (Data Protection Officer) added as mandatory cost (GDPR Art. 37); DPIA mandatory (Art. 35); MDR classification opinion mandatory; insurance split into 4 categories adding D&O EUR 100, Cyber EUR 150, Product Liability EUR 100 — total EUR 650/month (was EUR 200). Switches from illegal commission model to SaaS confirmed here. <strong>P7 HR Manager</strong>: CTO recruitment fee revised EUR 5K → EUR 19K (agency rate for senior Berlin CTO); employer multiplier 1.22× → 1.25×; BG insurance 1.5% → 0.5% (correct rate for office/retail classification); CTO onboarding EUR 3,500 added.</p>
+    <div class="trm"><strong>P5 most impactful</strong> — the EUR 218K cash gap finding fundamentally changed the runway analysis and required a new sheet. <strong>GDPR Art. 37 DSB mandatory</strong> — processing health data at scale requires a DPO; not optional; EUR 400/month external retainer. <strong>BG insurance 0.5%</strong> — the original 1.5% applied to hazardous industries; office/retail category is 0.5% (P7 correction saves ~EUR 300/month).</div>
+  </div>
+</div>
+
+<!-- ═══ P29 — v4 Changes Summary ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Decisions Sheet — v4 Changes (Feb 2026)</span><span class="pg-hd-r">29 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">EX-01 &amp; EX-06 — Annual Subscriptions + App Build (Critical)</div>
+    <p class="sum">EX-01: Annual subscription tiers added (EUR 190/490/990/yr); annual mix grows from 20% to 30% by M12; revenue recognised monthly not at point of payment. EX-06: App contractor EUR 12K/month from M5 (was EUR 1,500 placeholder) + EUR 20K FlutterFlow MVP build added to CapEx M1.</p>
+    <p class="det"><strong>EX-01</strong>: annual tiers at 10-month pricing (2 months free): Core EUR 190/yr, Pro EUR 490/yr, Premium EUR 990/yr. Mix: 20% of new subs choose annual M1–M6, 25% M7–M11, 30% M12+. Revenue recognition: annual price ÷ 12 per month in P&L; full cash collected upfront (visible in the [INFO] Annual Cash Collected row). Cash timing advantage: annual subscribers pre-pay, improving real cash vs P&L cash. <strong>EX-06</strong>: original app retainer of EUR 1,500/month was identified as a placeholder for "some developer cost." Real cost for a senior Flutter contractor via Arc.dev is EUR 12,000/month — an EUR 10,500/month increase from M5 onward. The app MVP build (EUR 20K) was also missing from CapEx. Combined EX-06 impact: significant increase in total R&D cost over 24 months.</p>
+    <div class="trm"><strong>Annual tiers as cash advantage</strong> — annual subscribers pay EUR 190–990 upfront; the Cash Flow sheet captures this as a larger M1 inflow per subscriber than the monthly model. <strong>EUR 12K/month correction</strong> — the most significant single cost correction in v4; original EUR 1,500 was a gross underestimate for qualified app development. <strong>FlutterFlow MVP EUR 20K</strong> — app development agency build cost for the M1 MVP; capitalized, not expensed.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">EX-07, EX-10, EX-11 &amp; Other v4 Changes (High Priority)</div>
+    <p class="sum">EX-07: Rent corrected to EUR 1,500 all-in (saves EUR 1,325/month), space deposit EUR 3,600 added to Cash Flow. EX-10: CTO recruitment moved to M14 CapEx contingency (EUR 19K). EX-11: POS hardware EUR 1,250 CapEx M3 + EUR 39/month SaaS M4+. Plus: B2B (EX-02), Gift Cards (EX-03), GEMA correction (EX-13).</p>
+    <p class="det"><strong>EX-07</strong>: Rent corrected from EUR 2,500 Kaltmiete + EUR 325 Nebenkosten (EUR 2,825/month) to EUR 1,500 all-in — a EUR 1,325/month reduction based on confirmed lease terms for a 50sqm B-location Berlin space. Space security deposit EUR 3,600 (3 months × EUR 1,200) added to Cash Flow only (refundable). <strong>EX-10</strong>: CTO recruitment moved from M17 OpEx to M14 CapEx contingency (reflects updated hiring timeline and correct accounting treatment). Fee raised EUR 18K → EUR 19K. <strong>EX-11</strong>: POS hardware (SumUp Kit + TSE module) added: EUR 1,250 CapEx M3 + EUR 39/month SaaS from M4 (EX-11). TSE module is legally required for all German cash registers. <strong>EX-02 B2B + EX-03 Gift Cards + EX-13 GEMA EUR 35 correction</strong> — all incorporated as described in their respective sections. Fix: Rundfunkbeitrag gated to M4+. Fix: Nebenkosten EUR 0 M4+ (bundled in all-in rent). Fix: App maintenance EUR 0 M1–M4 (app being built under CapEx).</p>
+    <div class="trm"><strong>EX-07 EUR 1,325/month rent saving</strong> — the most impactful v4 cost reduction; significantly improves runway in early months. <strong>TSE module mandatory</strong> — German Kassensicherungsverordnung (KassenSichV) requires a tamper-proof security module in all fiscal registers; the SumUp POS Kit includes this. <strong>M14 vs M17 CTO</strong> — recruitment moved earlier (M14 contingency) to reflect realistic hiring lead time; onboarding still M18.</div>
+  </div>
+</div>
+
+<!-- ═══ P30 — How to Use + What Not to Change ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Navigation Guide</span><span class="pg-hd-r">30 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">What to Change, What Not to Touch</div>
+    <p class="sum">Change only Assumptions (B cells) and Growth Curves (rows 4–11, 15 rate) when modelling scenarios. Never edit formula cells in the P&L, Cash Flow, Unit Economics, or Scenarios sheets directly — those are outputs, not inputs.</p>
+    <p class="det"><strong>Safe to edit</strong>: any cell in column B of the Assumptions sheet, and any value cell in rows 4–11 and the "New Subs Rate" inputs in row 15 of the Growth Curves sheet. These are the model's input layer. <strong>Never edit</strong>: any cell in the P&L body (rows 5–189), Cash Flow formulas, Unit Economics formulas, or Scenarios formulas. These are outputs — editing them directly breaks the model's integrity and the outputs will no longer reflect the Assumptions. <strong>To run a scenario</strong>: change values in Assumptions, read results in Scenarios sheet or P&L column Z totals. To stress-test subscriber growth: change Assumptions B14–B19 (new subs phases). To stress-test pricing: change B22 (retail price) or B23 (retail COGS). To test rent change: change B62. To test churn change: change B8.</p>
+    <div class="trm"><strong>Input cells</strong> — Assumptions column B and Growth Curves data rows; these drive everything. <strong>Output cells</strong> — P&L, Cash Flow, Unit Economics, Scenarios; these calculate from inputs. <strong>Formula integrity</strong> — if an output cell is manually overridden, it loses its formula and will no longer update when assumptions change; use Ctrl+Z immediately if this happens accidentally.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Sheet Navigation Summary</div>
+    <p class="sum">Seven sheets in this order: P&L (main model) → Assumptions (all inputs) → Growth Curves (unit volumes + subscriber funnel) → Cash Flow (real cash) → Unit Economics (per-customer metrics) → Scenarios (Base/Bull/Bear) → Decisions (audit trail). Use them in this sequence when reviewing.</p>
+    <p class="det"><strong>P&L first</strong> — start here for the monthly revenue, cost, and profit picture. Freeze panes at B5 keep headers visible. <strong>Assumptions second</strong> — understand every input that drives the P&L before questioning any output. <strong>Growth Curves third</strong> — review unit volume assumptions; these are the operational bets the model makes. <strong>Cash Flow fourth</strong> — verify the real cash position; never rely on P&L cumulative cash alone. <strong>Unit Economics fifth</strong> — per-customer and per-stream profitability; subscription ARPU, LTV:CAC. <strong>Scenarios sixth</strong> — stress-test the raise sizing against Bear case. <strong>Decisions last</strong> — for any assumption you question, the rationale is documented here. If a decision is not listed in D1–D11 or the persona audit, it traces to a locked CLAUDE.md data point.</p>
+    <div class="trm"><strong>Tab colours</strong> — Amber (P&L), Sage (Assumptions), Green (Growth Curves), Terra (Cash Flow + Decisions), Rose (Unit Economics), Stone (Scenarios). <strong>Freeze panes</strong> — B5 on P&L, B4 on Cash Flow and Unit Economics; keeps month headers visible when scrolling right. <strong>TOTAL column</strong> — column Z shows 24-month cumulative sum for every row.</div>
+  </div>
+</div>
+
+<!-- ═══ P31 — Locked Numbers Reference ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Locked Numbers Reference</span><span class="pg-hd-r">31 / 32</span></div>
+
+  <div class="sheet-banner"><p>Locked Data</p><span>DO NOT SUBSTITUTE THESE FIGURES · ALL SOURCED FROM 35+ RESEARCH SESSIONS · VERIFIED IN CLAUDE.MD</span></div>
+
+  <div class="card">
+    <div class="lbl">Model Outputs — M24 &amp; 24-Month Totals</div>
+    <p class="sum">Key M24 and 24-month numbers that should match the model at base case. If the Excel shows materially different figures, check that the correct assumptions are in place and the model has not been manually edited.</p>
+    <p class="det">
+      <strong>M24 monthly revenue</strong>: ~EUR 264K<br>
+      <strong>M24 total subscribers</strong>: ~339<br>
+      <strong>Subscription ARPU</strong>: EUR 38.44 (not EUR 49)<br>
+      <strong>Subscription % of M24 revenue</strong>: ~4.7%<br>
+      <strong>Blended gross margin</strong>: 45–55% early, ~68% at maturity<br>
+      <strong>EBITDA break-even</strong>: M11–M13<br>
+      <strong>Total CapEx</strong>: ~EUR 188K<br>
+      <strong>P&L vs Cash gap</strong>: ~EUR 218K<br>
+      <strong>Two deposits (Cash Flow only)</strong>: EUR 7,500 Kaution + EUR 3,600 space deposit = EUR 11,100<br>
+      <strong>CGM revenue at M24</strong>: EUR 630/month (42 users × EUR 15)<br>
+      <strong>B2B revenue at M18+</strong>: EUR 1,755/month (3 clients × 15 employees × EUR 39)<br>
+      <strong>Monthly churn</strong>: 8% (locked)<br>
+      <strong>Tax rate</strong>: ~30% (when cumulative positive)<br>
+      <strong>App contractor M5+</strong>: EUR 12,000/month
+    </p>
+    <div class="trm"><strong>If these numbers don't match</strong> — check Assumptions B5–B140 first, then Growth Curves rows 4–11, before suspecting a formula error. Most discrepancies trace to a changed assumption, not a broken formula. <strong>EUR 188K total CapEx</strong> = M1 EUR 66K + M3 EUR 103.6K + M14 EUR 19K contingency.</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Market Context Numbers (CLAUDE.md Locked)</div>
+    <p class="sum">External market figures used in narrative and investor materials — these do not appear in the Excel but are referenced in the pitch book and investor brief. Do not substitute with different sources.</p>
+    <p class="det">
+      <strong>Global wellness market</strong>: USD 6.3T (GWI 2024)<br>
+      <strong>German wellness market growth</strong>: 3.3% CAGR (not 3.4%)<br>
+      <strong>Germany prevention spending</strong>: 4.8% of health expenditure (not 3.1%)<br>
+      <strong>Berlin purchasing power index</strong>: 92.4 (GfK)<br>
+      <strong>Berlin tech worker median salary</strong>: EUR 75,000 gross<br>
+      <strong>Germans willing to pay OOP for apps</strong>: 27% (SpringerMedizin)<br>
+      <strong>EU consumers sharing health data</strong>: 8% (BEUC)<br>
+      <strong>Competitive window</strong>: 12–18 months (not 18–24)<br>
+      <strong>Oura valuation</strong>: USD 11B, 5.5M rings sold<br>
+      <strong>Hims revenue</strong>: USD 2.3B, 2.5M subscribers<br>
+      <strong>ZOE</strong>: ~USD 100M revenue, 300K microbiome profiles<br>
+      <strong>AG1</strong>: USD 600M revenue, profitable<br>
+      <strong>Health app churn</strong>: 77% by Day 3; 44% cancel within first 90 days
+    </p>
+    <div class="trm"><strong>Source</strong> — all figures verified across 35+ research sessions and locked in project documentation. Do not replace with newer or different source figures without re-verifying the full context. <strong>OOP</strong> — out-of-pocket; the 27% figure refers to Germans willing to pay from personal funds for health apps (not reimbursed by insurance).</div>
+  </div>
+</div>
+
+<!-- ═══ P32 — Quick Reference ═══ -->
+<div class="page">
+  <div class="pg-hd"><span class="pg-hd-l">Quick Reference — Common Investor Questions</span><span class="pg-hd-r">32 / 32</span></div>
+
+  <div class="card">
+    <div class="lbl">Questions &amp; Where to Find the Answer in the Model</div>
+    <p class="sum">The 10 most common investor questions and the exact sheet, section, or row that answers each one. Use this page as a navigation cheat sheet during investor meetings.</p>
+    <p class="det">
+      <strong>"Is EUR 500K enough?"</strong> → Cash Flow sheet, Cumulative Cash Balance row. Must stay above EUR 0 every month.<br><br>
+      <strong>"When do you break even?"</strong> → P&L, Break-Even Indicators section. EBITDA: M11–M13. Net P&L: M13–M16.<br><br>
+      <strong>"What's your ARPU?"</strong> → P&L Key Metrics, Subscription ARPU row. EUR 38.44 (not EUR 49).<br><br>
+      <strong>"What does a subscriber generate in lifetime value?"</strong> → Unit Economics, Subscription LTV row. ~EUR 481 at 8% churn.<br><br>
+      <strong>"Why is retail 85% of revenue?"</strong> → P&L, Revenue section. Physical space drives product discovery; subscriptions are retention, not revenue.<br><br>
+      <strong>"What happens in the downside case?"</strong> → Scenarios sheet, Bear column (0.6× revenue multiplier).<br><br>
+      <strong>"Why does the P&L show more cash than the Cash Flow sheet?"</strong> → Cash Flow, P&L vs Cash Gap Analysis. EUR ~218K working capital in inventory.<br><br>
+      <strong>"What's the biggest cost?"</strong> → P&L, R&D section. App contractor EUR 12K/month from M5.<br><br>
+      <strong>"Why no founder salary?"</strong> → Decisions sheet. Standard Berlin pre-seed practice; documented in P7 HR persona audit.<br><br>
+      <strong>"How are annual subscriptions handled?"</strong> → P&L, [INFO] Annual Cash Collected row. Cash arrives upfront; revenue recognised monthly at annual_price ÷ 12.
+    </p>
+    <div class="trm"><strong>Ablöse vs Kaution</strong> — often confused. Ablöse (EUR 50K): permanent CapEx, not refundable. Kaution (EUR 7.5K) + Space Deposit (EUR 3.6K): refundable deposits, Cash Flow only, not in P&L. <strong>ARPU EUR 38.44 not EUR 49</strong> — the most frequently cited wrong number; EUR 49 is the Pro tier monthly price, not the blended average.</div>
+  </div>
+
+  <div class="ft">
+    Source: alche-pnl-24mo-v4.xlsx · build_excel_pnl_v4.py · PNL_INVESTOR_BRIEF.md · PNL_EXPLANATION_GUIDE.md · ALCHE_BUSINESS_LOGIC_COMPLETE.md · CLAUDE.md locked data
+  </div>
+</div>
+
+</body>
+</html>

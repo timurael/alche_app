@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche Pitch Book — Review &amp; Annotation Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #F5F0E8;
+      --cream-mid: #EDE7DC;
+      --deep: #2C2418;
+      --deep-90: rgba(44, 36, 24, 0.9);
+      --deep-70: rgba(44, 36, 24, 0.7);
+      --deep-50: rgba(44, 36, 24, 0.5);
+      --deep-30: rgba(44, 36, 24, 0.3);
+      --deep-15: rgba(44, 36, 24, 0.15);
+      --deep-08: rgba(44, 36, 24, 0.08);
+      --amber: #C4956A;
+      --sage: #8B9E7C;
+      --terra: #B86B4A;
+      --rose: #C47A8A;
+      --stone: #9E948A;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #F0EBE3;
+      color: var(--deep);
+      min-height: 100vh;
+    }
+
+    /* Top bar */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--deep);
+      color: var(--cream);
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(44, 36, 24, 0.15);
+    }
+
+    .top-bar-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .top-bar-subtitle {
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(245, 240, 232, 0.5);
+      margin-top: 2px;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      background: var(--amber);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: white;
+    }
+    .btn-primary:hover { background: #b8875e; }
+
+    .btn-secondary {
+      background: rgba(245, 240, 232, 0.15);
+      color: var(--cream);
+      border: 1px solid rgba(245, 240, 232, 0.2);
+    }
+    .btn-secondary:hover { background: rgba(245, 240, 232, 0.25); }
+
+    .btn-danger {
+      background: var(--terra);
+      color: white;
+    }
+    .btn-danger:hover { background: #a55f42; }
+
+    /* Progress bar */
+    .progress-bar-container {
+      background: var(--cream-mid);
+      padding: 8px 32px;
+      border-bottom: 1px solid var(--deep-08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--deep-50);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 4px;
+      background: var(--deep-08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--sage);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--deep-50);
+      white-space: nowrap;
+    }
+
+    /* Main content */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 32px 80px;
+    }
+
+    /* Section card */
+    .section-card {
+      background: white;
+      border: 1px solid var(--deep-08);
+      border-radius: 4px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .section-card:hover {
+      box-shadow: 0 2px 12px rgba(44, 36, 24, 0.06);
+    }
+
+    .section-card.has-notes {
+      border-left: 3px solid var(--sage);
+    }
+
+    .section-card.has-notes .section-status {
+      color: var(--sage);
+    }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      gap: 14px;
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--deep-30);
+      min-width: 28px;
+      padding-top: 2px;
+    }
+
+    .section-info {
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 3px;
+    }
+
+    .section-meta {
+      font-size: 10px;
+      color: var(--deep-50);
+      line-height: 1.5;
+    }
+
+    .section-priority {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .priority-critical { background: rgba(184, 107, 74, 0.12); color: var(--terra); }
+    .priority-high { background: rgba(196, 149, 106, 0.12); color: var(--amber); }
+    .priority-medium { background: rgba(158, 148, 138, 0.12); color: var(--stone); }
+    .priority-low { background: rgba(139, 158, 124, 0.12); color: var(--sage); }
+
+    .section-status {
+      font-size: 10px;
+      color: var(--deep-30);
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+
+    .section-toggle {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--deep-30);
+      padding-top: 1px;
+      transition: transform 0.2s ease;
+    }
+
+    .section-card.open .section-toggle {
+      transform: rotate(90deg);
+    }
+
+    /* Section body */
+    .section-body {
+      display: none;
+      border-top: 1px solid var(--deep-08);
+      padding: 16px 20px;
+    }
+
+    .section-card.open .section-body {
+      display: block;
+    }
+
+    /* Content summary */
+    .content-summary {
+      font-size: 11px;
+      color: var(--deep-70);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      background: rgba(44, 36, 24, 0.02);
+      border-radius: 3px;
+      border-left: 2px solid var(--deep-08);
+    }
+
+    .content-summary strong {
+      color: var(--deep);
+    }
+
+    /* Note types */
+    .note-type-selector {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .note-type-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border: 1px solid var(--deep-15);
+      border-radius: 2px;
+      background: white;
+      color: var(--deep-70);
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .note-type-btn:hover { border-color: var(--amber); color: var(--amber); }
+    .note-type-btn.active { background: var(--amber); color: white; border-color: var(--amber); }
+
+    /* Note input */
+    .note-input-area {
+      position: relative;
+    }
+
+    .note-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      color: var(--deep);
+      border: 1px solid var(--deep-15);
+      border-radius: 3px;
+      background: white;
+      resize: vertical;
+      line-height: 1.6;
+      transition: border-color 0.15s ease;
+    }
+
+    .note-textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+
+    .note-textarea::placeholder {
+      color: var(--deep-30);
+    }
+
+    .note-add-btn {
+      margin-top: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 8px 20px;
+      background: var(--deep);
+      color: var(--cream);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .note-add-btn:hover { background: rgba(44, 36, 24, 0.8); }
+
+    /* Saved notes */
+    .saved-notes {
+      margin-top: 14px;
+    }
+
+    .saved-note {
+      padding: 10px 14px;
+      background: rgba(139, 158, 124, 0.06);
+      border: 1px solid rgba(139, 158, 124, 0.15);
+      border-radius: 3px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .saved-note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .saved-note-type {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--amber);
+    }
+
+    .saved-note-time {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--deep-30);
+    }
+
+    .saved-note-text {
+      font-size: 12px;
+      color: var(--deep-90);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .saved-note-delete {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 14px;
+      color: var(--deep-30);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    .saved-note-delete:hover {
+      color: var(--terra);
+      background: rgba(184, 107, 74, 0.08);
+    }
+
+    /* Export modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(44, 36, 24, 0.6);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 6px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 48px rgba(44, 36, 24, 0.2);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--deep-08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      font-size: 20px;
+      color: var(--deep-50);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow: auto;
+      padding: 16px 20px;
+    }
+
+    .export-output {
+      width: 100%;
+      min-height: 400px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--deep);
+      padding: 16px;
+      border: 1px solid var(--deep-15);
+      border-radius: 3px;
+      background: var(--cream);
+      resize: vertical;
+    }
+
+    .modal-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--deep-08);
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--deep);
+      color: var(--cream);
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      z-index: 300;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Autosave indicator */
+    .autosave-indicator {
+      font-size: 9px;
+      color: rgba(245, 240, 232, 0.4);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .autosave-indicator.saving { color: var(--amber); }
+    .autosave-indicator.saved { color: var(--sage); }
+
+    @media (max-width: 768px) {
+      .top-bar { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+      .container { padding: 16px; }
+      .section-header { padding: 12px 14px; }
+      .section-body { padding: 12px 14px; }
+      .progress-bar-container { padding: 8px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>
+      <div class="top-bar-title">alche Pitch Book — Review &amp; Annotation Tool</div>
+      <div class="top-bar-subtitle">Deloitte Consulting Style | Add notes per section, export all for revision</div>
+    </div>
+    <div class="top-bar-actions">
+      <span class="autosave-indicator" id="autosaveIndicator">auto-saved</span>
+      <span class="badge" id="totalNotesCount">0 notes</span>
+      <button class="btn btn-primary" onclick="exportNotes()">Export All Notes</button>
+      <button class="btn btn-secondary" onclick="expandAll()">Expand All</button>
+      <button class="btn btn-secondary" onclick="collapseAll()">Collapse All</button>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container">
+    <span class="progress-label">Sections reviewed</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <span class="progress-count" id="progressCount">0 / 16</span>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container" id="sectionsContainer"></div>
+
+  <!-- Export Modal -->
+  <div class="modal-overlay" id="exportModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Export Review Notes</div>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <textarea class="export-output" id="exportOutput" readonly></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-secondary" onclick="downloadNotes()">Download .md</button>
+        <button class="btn btn-primary" onclick="copyToClipboard()">Copy to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ─────────────────────────────────────────
+    // SECTION DEFINITIONS
+    // ─────────────────────────────────────────
+    const sections = [
+      {
+        id: 'section-00',
+        num: '00',
+        title: 'Cover',
+        file: 'deloitte-section-00-cover.html',
+        pages: '1',
+        priority: 'medium',
+        summary: '<strong>Action:</strong> Professional investment memorandum cover. alche wordmark (56px), "Pre-Seed Investment Memorandum | Berlin, Germany | February 2026". Three business pillars: EUR 500K Pre-Seed | EUR 2.5M Valuation Cap | Longevity Lifestyle Platform. Bottom: Wandeldarlehen, 24-month runway, break-even at M12.'
+      },
+      {
+        id: 'section-00b',
+        num: '00b',
+        title: 'Table of Contents',
+        file: 'deloitte-section-00b-toc.html',
+        pages: '1',
+        priority: 'high',
+        isNew: true,
+        summary: '<strong>NEW SECTION.</strong> Functional table of contents with dot leaders and page numbers. Grouped into: Overview, Problem & Market, Solution & Product, Business Case, Team & Terms. Critical sections (Exec Summary, Business Model, Traction, Team) bold-weighted.'
+      },
+      {
+        id: 'section-00c',
+        num: '00c',
+        title: 'Executive Summary',
+        file: 'deloitte-section-00c-executive-summary.html',
+        pages: '2',
+        priority: 'critical',
+        isNew: true,
+        summary: '<strong>NEW SECTION — MOST IMPORTANT.</strong> 5-metric KPI strip (EUR 500K / EUR 2.5M / M12 / 145 subs / 72% margin). 2x2 summary grid (Opportunity, Solution, Business Model, Traction). Investment thesis table. Key risks acknowledged (CTO gap, pre-revenue, retention assumptions). Page 2: execution timeline, market comparables table (Oura, Hims, ZOE, AG1), team summary, deal structure callout.'
+      },
+      {
+        id: 'section-01',
+        num: '01',
+        title: 'The Insight',
+        file: 'deloitte-section-01-insight.html',
+        pages: '2',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "Health-conscious consumers spend EUR 126-295/mo across 8+ disconnected services and 77% of health app users churn by Day 3." Data strip (77%, 44%, 84%). Fragmented spend table (8 service categories). Three converging forces callout. Page 2: Barriers to integration table, rebundling thesis (EUR 126-295 → EUR 19-99), investment implication.'
+      },
+      {
+        id: 'section-02',
+        num: '02',
+        title: 'Who We Serve',
+        file: 'deloitte-section-02-who-we-serve.html',
+        pages: '2',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "108K residents aged 30-44 in Berlin Mitte, spending EUR 126-295/mo." Quantified segment table (population, income, PKV, purchasing power). Psychographic profile table (9 interview signals). Mira persona compressed to callout. Page 2: Side-by-side rebundling comparison (fragmented vs. integrated). Acquisition channels table. Expansion segments.'
+      },
+      {
+        id: 'section-03',
+        num: '03',
+        title: 'The Market',
+        file: 'deloitte-section-03-market.html',
+        pages: '2',
+        priority: 'low',
+        summary: '<strong>Action title:</strong> "Germany\'s EUR 495B healthcare system spends 4.8% on prevention." German Health Paradox callout. Health spend comparison table (Germany vs. peers). TAM/SAM/SOM table — TAM grayed out as context, SOM highlighted (145 subscribers, 0.13% penetration). Page 2: European structural advantages. German wellness segments. Market timing: 12-18 month window.'
+      },
+      {
+        id: 'section-04',
+        num: '04',
+        title: 'Competitive Landscape',
+        file: 'deloitte-section-04-competitive.html',
+        pages: '2',
+        priority: 'low',
+        summary: '<strong>Action title:</strong> "30+ companies analyzed. No integrated European longevity platform exists." 2x2 positioning map (simplified, alche in empty upper-right). Competitor comparison table (Oura, Hims, ZOE, AG1, Function Health, Restore). Page 2: $1.4B graveyard analysis table (Forward, DayTwo, Arivale, Noom). Three survivor patterns. 12-18 month competitive window.'
+      },
+      {
+        id: 'section-05',
+        num: '05',
+        title: 'The Solution',
+        file: 'deloitte-section-05-solution.html',
+        pages: '1',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "Four integrated layers, each creating demand for the next — and each generating revenue." KDGB as 4-box business process diagram (not brand framework). Each box: layer name, user action, revenue lever. Layer-to-business mapping table. Integration thesis callout. Data trust footnote (8% EU share health data).'
+      },
+      {
+        id: 'section-06',
+        num: '06',
+        title: 'The Product',
+        file: 'deloitte-section-06-product.html',
+        pages: '2',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "Three subscription tiers from EUR 19-99/mo with 85-90% digital gross margin." Full tier comparison table (Free/Core/Pro/Premium) with features, margins, target users, upgrade triggers. Development roadmap (MVP/V1/V2). Physical space flagged as Phase 2. Page 2: App screen mockups (3 rows). User journey table (6 steps with revenue touchpoints).'
+      },
+      {
+        id: 'section-07',
+        num: '07',
+        title: 'Business Model & Unit Economics',
+        file: 'deloitte-section-07-business-model.html',
+        pages: '3',
+        priority: 'critical',
+        summary: '<strong>Hero stat: "145 subscribers to break-even."</strong> Page 1: Break-even path (EUR 500K vs. EUR 400K raise). NEW sensitivity analysis (base/downside/worst/upside scenarios — worst case still within 24-month runway). Page 2: Unit economics table (conservative 5.1x vs. realistic 14.7x LTV:CAC). Pricing structure. Gross margin by revenue stream. Page 3: Conversion funnel as data table. Revenue composition shift bars (Y1 72% → Y3 80% margin). Graveyard lessons as footnotes.'
+      },
+      {
+        id: 'section-08',
+        num: '08',
+        title: 'Go-to-Market Strategy',
+        file: 'deloitte-section-08-go-to-market.html',
+        pages: '2',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "Content-first GTM: build the audience at EUR 0 capital cost." 5-step process flow diagram. Channel strategy table (TikTok, newsletter, YouTube, Berlin events). Quarterly milestone table (followers, subs, waitlist, paying users). Page 2: 4-phase roadmap (Foundation → Traction Proof → Fundraise → Beta Launch). Two flywheels (pre-funding vs. post-funding). Risk reduction callout.'
+      },
+      {
+        id: 'section-09',
+        num: '09',
+        title: 'Traction & Validation',
+        file: 'deloitte-section-09-traction.html',
+        pages: '2',
+        priority: 'critical',
+        summary: '<strong>FUNDAMENTALLY RESTRUCTURED.</strong> Action title: "Pre-product, pre-revenue — here is what we know and what funding proves." Evidence table with confidence levels (High/Medium/Low + "unproven" for conversion and churn). Hypothesis invalidation table (3 killed). Page 2: Two-column split — Validated Pre-Funding (7 items, green) vs. Requires Funding (6 items, terra). 90-day post-funding roadmap. Investor context callout.'
+      },
+      {
+        id: 'section-10',
+        num: '10',
+        title: 'Defensibility',
+        file: 'deloitte-section-10-moat.html',
+        pages: '1',
+        priority: 'low',
+        summary: '<strong>Action title:</strong> "No moat exists at pre-seed. Here is our thesis for building one." Three-layer moat table: Social Identity (M0-12), Network Effects (M6-18), Switching Costs (M12+). AI resilience assessment table (3 threats, vulnerable vs. resilient layers). Integration thesis callout. No aspirational comparisons (CrossFit/Peloton/Soho House removed).'
+      },
+      {
+        id: 'section-11',
+        num: '11',
+        title: 'Team & Governance',
+        file: 'deloitte-section-11-team.html',
+        pages: '2',
+        priority: 'critical',
+        summary: '<strong>Action title:</strong> "Two co-founders with technical and commercial credentials. CTO is the first funded hire." Capability matrix table (4 domains: Brand/Data, Ops/Strategy, Medical, CTO gap). Detailed experience tables for Timur (CMO) and Daria (COO). Page 2: CTO gap honest assessment table. Medical advisor detail. Governance structure. Founder-market fit footnote.'
+      },
+      {
+        id: 'section-12',
+        num: '12',
+        title: 'The Ask & Deal Terms',
+        file: 'deloitte-section-12-ask.html',
+        pages: '1',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "EUR 500K Wandeldarlehen at EUR 2.5M cap. 24-month runway. Tranche-gated against milestones." Terms strip (EUR 500K / EUR 2.5M / 20%). Deal structure table. NEW tranche milestones (EUR 200K signing / EUR 150K at MVP+100 users / EUR 150K at EUR 10K MRR). What EUR 500K unlocks: Build, Launch, Prove (bullet lists).'
+      },
+      {
+        id: 'section-13',
+        num: '13',
+        title: 'Growth Trajectory & Contact',
+        file: 'deloitte-section-13-closing.html',
+        pages: '1',
+        priority: 'medium',
+        summary: '<strong>Action title:</strong> "From Berlin proof-of-concept to European platform in 24 months." Three-phase growth table (Berlin Proof → Digital Expansion → Scale + Seed). What alche is / is not (bullet lists). Contact info (Daria + Timur emails). CTA: "Detailed term sheet, use of funds, and data room available upon request." No Phase 4, no Aesop comparison, no dark vision block.'
+      }
+    ];
+
+    const noteTypes = [
+      'Change content',
+      'Change data/numbers',
+      'Change design/layout',
+      'Add something',
+      'Remove something',
+      'Question',
+      'Team update',
+      'Factual correction'
+    ];
+
+    // ─────────────────────────────────────────
+    // STATE
+    // ─────────────────────────────────────────
+    let allNotes = loadNotes();
+
+    function loadNotes() {
+      try {
+        const raw = localStorage.getItem('alche_review_notes');
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveNotes() {
+      const indicator = document.getElementById('autosaveIndicator');
+      indicator.textContent = 'saving...';
+      indicator.className = 'autosave-indicator saving';
+      localStorage.setItem('alche_review_notes', JSON.stringify(allNotes));
+      setTimeout(() => {
+        indicator.textContent = 'auto-saved';
+        indicator.className = 'autosave-indicator saved';
+      }, 400);
+      updateCounts();
+    }
+
+    // ─────────────────────────────────────────
+    // RENDER
+    // ─────────────────────────────────────────
+    function renderSections() {
+      const container = document.getElementById('sectionsContainer');
+      container.innerHTML = sections.map(s => {
+        const notes = allNotes[s.id] || [];
+        const hasNotes = notes.length > 0;
+        return `
+          <div class="section-card ${hasNotes ? 'has-notes' : ''}" id="card-${s.id}">
+            <div class="section-header" onclick="toggleSection('${s.id}')">
+              <div class="section-num">${s.num}</div>
+              <div class="section-info">
+                <div class="section-title">${s.title} ${s.isNew ? '<span style="font-size:9px;color:var(--terra);font-weight:700;margin-left:6px;">NEW</span>' : ''}</div>
+                <div class="section-meta">${s.pages} page${s.pages !== '1' ? 's' : ''} · ${s.file}</div>
+              </div>
+              <div class="section-priority priority-${s.priority}">${s.priority}</div>
+              <div class="section-status">${hasNotes ? notes.length + ' note' + (notes.length > 1 ? 's' : '') : ''}</div>
+              <div class="section-toggle">&#9654;</div>
+            </div>
+            <div class="section-body">
+              <div class="content-summary">${s.summary}</div>
+
+              <!-- Saved notes -->
+              <div class="saved-notes" id="notes-${s.id}">
+                ${notes.map((n, i) => renderNote(s.id, n, i)).join('')}
+              </div>
+
+              <!-- Add note -->
+              <div class="note-type-selector" id="types-${s.id}">
+                ${noteTypes.map((t, i) => `<button class="note-type-btn ${i === 0 ? 'active' : ''}" onclick="selectType('${s.id}', this, '${t}')">${t}</button>`).join('')}
+              </div>
+              <div class="note-input-area">
+                <textarea class="note-textarea" id="input-${s.id}" placeholder="Describe the change you want for this section. Be specific — what to change, what the new content should be, or what to add/remove."></textarea>
+                <button class="note-add-btn" onclick="addNote('${s.id}')">+ Add Note</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      updateCounts();
+    }
+
+    function renderNote(sectionId, note, index) {
+      return `
+        <div class="saved-note">
+          <div class="saved-note-header">
+            <span class="saved-note-type">${note.type}</span>
+            <span class="saved-note-time">${note.timestamp}</span>
+          </div>
+          <div class="saved-note-text">${escapeHtml(note.text)}</div>
+          <button class="saved-note-delete" onclick="deleteNote('${sectionId}', ${index})" title="Delete note">&times;</button>
+        </div>
+      `;
+    }
+
+    // ─────────────────────────────────────────
+    // INTERACTIONS
+    // ─────────────────────────────────────────
+    const selectedTypes = {};
+
+    function selectType(sectionId, btn, type) {
+      const container = btn.parentElement;
+      container.querySelectorAll('.note-type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedTypes[sectionId] = type;
+    }
+
+    function toggleSection(sectionId) {
+      const card = document.getElementById('card-' + sectionId);
+      card.classList.toggle('open');
+    }
+
+    function expandAll() {
+      document.querySelectorAll('.section-card').forEach(c => c.classList.add('open'));
+    }
+
+    function collapseAll() {
+      document.querySelectorAll('.section-card').forEach(c => c.classList.remove('open'));
+    }
+
+    function addNote(sectionId) {
+      const input = document.getElementById('input-' + sectionId);
+      const text = input.value.trim();
+      if (!text) return;
+
+      const type = selectedTypes[sectionId] || noteTypes[0];
+      const section = sections.find(s => s.id === sectionId);
+      const now = new Date();
+      const timestamp = now.toISOString().slice(0, 16).replace('T', ' ');
+
+      if (!allNotes[sectionId]) allNotes[sectionId] = [];
+      allNotes[sectionId].push({
+        type,
+        text,
+        timestamp,
+        sectionTitle: section.title,
+        sectionNum: section.num,
+        file: section.file
+      });
+
+      input.value = '';
+      saveNotes();
+      renderSections();
+
+      // Re-open the section
+      const card = document.getElementById('card-' + sectionId);
+      card.classList.add('open');
+
+      showToast('Note added to ' + section.title);
+    }
+
+    function deleteNote(sectionId, index) {
+      if (!confirm('Delete this note?')) return;
+      allNotes[sectionId].splice(index, 1);
+      if (allNotes[sectionId].length === 0) delete allNotes[sectionId];
+      saveNotes();
+      renderSections();
+      const card = document.getElementById('card-' + sectionId);
+      card.classList.add('open');
+      showToast('Note deleted');
+    }
+
+    // ─────────────────────────────────────────
+    // EXPORT
+    // ─────────────────────────────────────────
+    function exportNotes() {
+      let output = '';
+      output += '# ALCHE PITCH BOOK — REVISION BRIEF\n';
+      output += '## Deloitte Consulting Style | Review Notes Export\n';
+      output += `Generated: ${new Date().toISOString().slice(0, 16).replace('T', ' ')}\n\n`;
+      output += '---\n\n';
+
+      let totalNotes = 0;
+      let sectionsWithNotes = 0;
+
+      sections.forEach(s => {
+        const notes = allNotes[s.id] || [];
+        if (notes.length === 0) return;
+
+        sectionsWithNotes++;
+        totalNotes += notes.length;
+
+        output += `### Section ${s.num} — ${s.title}\n`;
+        output += `File: ${s.file} | Pages: ${s.pages} | Priority: ${s.priority.toUpperCase()}\n\n`;
+
+        notes.forEach((n, i) => {
+          output += `**[${n.type.toUpperCase()}]** (${n.timestamp})\n`;
+          output += `${n.text}\n\n`;
+        });
+
+        output += '---\n\n';
+      });
+
+      // Summary stats
+      const summaryHeader = `## Summary\n- Total notes: ${totalNotes}\n- Sections with notes: ${sectionsWithNotes} / ${sections.length}\n- Sections without notes: ${sections.length - sectionsWithNotes}\n\n`;
+
+      // Sections without notes
+      let untouched = '## Sections Without Notes (no changes requested)\n';
+      sections.forEach(s => {
+        if (!allNotes[s.id] || allNotes[s.id].length === 0) {
+          untouched += `- Section ${s.num} — ${s.title}\n`;
+        }
+      });
+      untouched += '\n';
+
+      output = output.slice(0, output.indexOf('---\n\n') + 5) + summaryHeader + untouched + '---\n\n' + output.slice(output.indexOf('---\n\n') + 5);
+
+      output += '\n## INSTRUCTIONS FOR CLAUDE\n';
+      output += 'Apply all changes above to the corresponding deloitte-section HTML files.\n';
+      output += 'Then regenerate the combined file: deloitte-combined.html\n';
+      output += 'Do not change any locked data numbers.\n';
+      output += 'Preserve the Deloitte consulting style (no glassmorphism, action titles, tables, visible assumptions).\n';
+
+      document.getElementById('exportOutput').value = output;
+      document.getElementById('exportModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('exportModal').classList.remove('active');
+    }
+
+    function copyToClipboard() {
+      const textarea = document.getElementById('exportOutput');
+      textarea.select();
+      document.execCommand('copy');
+      showToast('Copied to clipboard — paste into Claude');
+    }
+
+    function downloadNotes() {
+      const text = document.getElementById('exportOutput').value;
+      const blob = new Blob([text], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `alche-review-notes-${new Date().toISOString().slice(0, 10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Downloaded as .md file');
+    }
+
+    // ─────────────────────────────────────────
+    // CLEAR ALL
+    // ─────────────────────────────────────────
+    function clearAllNotes() {
+      if (!confirm('Delete ALL notes across ALL sections? This cannot be undone.')) return;
+      allNotes = {};
+      saveNotes();
+      renderSections();
+      showToast('All notes cleared');
+    }
+
+    // ─────────────────────────────────────────
+    // UTILS
+    // ─────────────────────────────────────────
+    function updateCounts() {
+      let totalNotes = 0;
+      let sectionsWithNotes = 0;
+
+      sections.forEach(s => {
+        const notes = allNotes[s.id] || [];
+        totalNotes += notes.length;
+        if (notes.length > 0) sectionsWithNotes++;
+      });
+
+      document.getElementById('totalNotesCount').textContent = totalNotes + ' note' + (totalNotes !== 1 ? 's' : '');
+      document.getElementById('progressCount').textContent = sectionsWithNotes + ' / ' + sections.length;
+      document.getElementById('progressFill').style.width = (sectionsWithNotes / sections.length * 100) + '%';
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // ─────────────────────────────────────────
+    // KEYBOARD SHORTCUT
+    // ─────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ─────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────
+    renderSections();
+  </script>
+
+</body>
+</html>

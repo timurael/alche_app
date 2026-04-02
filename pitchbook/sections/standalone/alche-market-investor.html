@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<title>Alche — Market Opportunity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 28mm 24mm 24mm 24mm; }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;--deep:#2C2418;--amber:#C4956A;--sage:#8B9E7C;--terra:#B86B4A;
+  --stone:#9E948A;--midnight:#1A1510
+}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:'Outfit',sans-serif;color:var(--deep);line-height:1.55;font-size:9.5pt;background:#fff}
+
+/* Header bar */
+.header{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1.5px solid var(--amber);margin-bottom:18px}
+.header-brand{font-family:'Cormorant Garamond',serif;font-size:18pt;font-weight:600;letter-spacing:0.02em}
+.header-meta{font-size:7pt;color:var(--stone);text-align:right;letter-spacing:0.05em;text-transform:uppercase}
+
+/* Section titles */
+h1{font-family:'Cormorant Garamond',serif;font-size:22pt;font-weight:300;line-height:1.15;margin-bottom:6px;color:var(--deep)}
+h1 strong{font-weight:700}
+h2{font-family:'Cormorant Garamond',serif;font-size:13pt;font-weight:600;color:var(--terra);margin-bottom:4px;margin-top:16px}
+h3{font-family:'Cormorant Garamond',serif;font-size:10.5pt;font-weight:600;color:var(--deep);margin-bottom:3px}
+.label{font-size:7pt;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:3px}
+
+/* Body text */
+p{font-size:9pt;line-height:1.55;margin-bottom:6px}
+.sm{font-size:8pt;color:var(--stone);line-height:1.45}
+
+/* Grids */
+.g2{display:flex;gap:14px}.g2>div{flex:1}
+.g3{display:flex;gap:12px}.g3>div{flex:1}
+
+/* Cards */
+.card{background:#FDFAF5;border:1px solid rgba(196,149,106,0.2);border-radius:6px;padding:10px 12px;margin-bottom:8px}
+.card-accent{border-left:2.5px solid var(--terra)}
+.card-dark{background:var(--midnight);color:#F5F0E8;border:none;border-radius:6px;padding:14px 16px}
+.card-dark .label{color:var(--amber)}
+.card-dark p{color:rgba(245,240,232,0.8)}
+
+/* Big numbers */
+.big{font-family:'Cormorant Garamond',serif;font-weight:700;line-height:1}
+.big.terra{color:var(--terra)}.big.amber{color:var(--amber)}.big.sage{color:var(--sage)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:8.5pt;margin:6px 0}
+th{text-align:left;padding:5px 6px;font-size:7pt;letter-spacing:0.06em;text-transform:uppercase;color:var(--stone);border-bottom:1px solid rgba(196,149,106,0.25);font-weight:600}
+td{padding:4px 6px;border-bottom:1px solid rgba(44,36,24,0.05);vertical-align:top}
+.val{font-weight:600;color:var(--terra)}
+.src{font-size:7pt;color:var(--stone)}
+
+/* Callout */
+.call{background:rgba(184,107,74,0.05);border:1px solid rgba(184,107,74,0.15);border-radius:6px;padding:10px 12px;margin:8px 0}
+.call p{font-size:8.5pt;line-height:1.5}
+.call strong{color:var(--terra)}
+
+/* Divider */
+.sep{height:0.5px;background:linear-gradient(90deg,transparent,rgba(196,149,106,0.3),transparent);margin:14px 0}
+
+/* Sources */
+.sources{font-size:6.5pt;color:var(--stone);line-height:1.4;margin-top:8px;padding-top:6px;border-top:0.5px solid rgba(196,149,106,0.2);column-count:2;column-gap:16px}
+
+/* Page breaks */
+.pb{page-break-before:always}
+
+/* Footer */
+.footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:6pt;color:var(--stone);letter-spacing:0.08em;text-transform:uppercase;padding:8px 0}
+
+@media screen {
+  body{max-width:210mm;margin:0 auto;padding:28mm 24mm;background:var(--cream)}
+}
+</style>
+</head><body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="header">
+<div class="header-brand">alche</div>
+<div class="header-meta">Market Opportunity<br>February 2026 // Confidential</div>
+</div>
+
+<div class="label">The window</div>
+<h1><strong>The European longevity market is forming now.</strong><br>No integrated player exists. That changes fast.</h1>
+
+<p>The global wellness economy reached <strong>$6.8 trillion</strong> in 2024 and is projected to grow 7.6% annually to $9.8T by 2029 (GWI 2025). It's larger than sports, tourism, IT, and 4x the pharmaceutical industry. Longevity capital more than doubled from 2023 to 2024, with $8.49B flowing into the sector.</p>
+
+<p>Yet in Europe's largest economy -- Germany, a $281B wellness market -- no company integrates biomarker tracking, personalised protocols, curated products, and community into a single platform. US leaders (Function Health, Levels, Oura, Restore) haven't localised. The window is 18-24 months before that changes.</p>
+
+<div class="card-dark" style="margin:12px 0">
+<div class="g2" style="gap:20px">
+<div>
+<div class="label">Converging right now</div>
+<p style="font-size:8.5pt">CGM wellness market growing 18%+ CAGR. Germany's 8.7M private insurance holders can partially reimburse prevention. 68% of Germans 18-35 pay out-of-pocket for preventive health. 33M Germans already using health apps. Berlin is continental Europe's #1 startup city.</p>
+</div>
+<div>
+<div class="label">Not here yet</div>
+<p style="font-size:8.5pt">Oura hasn't localised beyond hardware retail. Hims EU expansion is nascent. Levels and Function Health are US-only. Neko Health (Spotify founder, $260M Series B) focuses on scanning, not integrated wellness. The full-stack European longevity platform is wide open.</p>
+</div>
+</div>
+</div>
+
+<h2>Three irreversible forces</h2>
+<div class="g3">
+<div class="card">
+<div class="big terra" style="font-size:26pt">29%</div>
+<div style="font-size:7.5pt;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--stone);margin:3px 0">of Germany will be 65+ by 2040</div>
+<p class="sm">Healthcare costs from people over 50 account for 71% of total spend. The treatment-only model is fiscally unsustainable. Prevention is an economic necessity.</p>
+</div>
+<div class="card">
+<div class="big amber" style="font-size:26pt">$6.8T</div>
+<div style="font-size:7.5pt;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--stone);margin:3px 0">Global wellness economy (2024)</div>
+<p class="sm">Growing 7.6% CAGR to $9.8T by 2029. Prevention is the #2 projected growth leader at 10.8% CAGR. Consumer demand is proven across every demographic.</p>
+</div>
+<div class="card">
+<div class="big sage" style="font-size:26pt">84%</div>
+<div style="font-size:7.5pt;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--stone);margin:3px 0">Say wellness is their #1 priority</div>
+<p class="sm">Gen Z + Millennials represent 41% of wellness spend. 67% purchased functional nutrition in 2024. Less likely to cut wellness than clothing or entertainment.</p>
+</div>
+</div>
+<div class="sources" style="column-count:1">GWI 2025 Global Wellness Economy Monitor | McKinsey Future of Wellness 2025 | Destatis 15th Population Projection | Longevity.Technology 2024 Funding Report</div>
+
+<h2>Germany: highest spend, mediocre outcomes</h2>
+<p>Germany spends nearly EUR 495 billion on healthcare annually (12.8% of GDP) -- the highest in the EU. But life expectancy trails Switzerland, Sweden, France, and Japan, all of which spend less. With 7.7 hospital beds per 1,000 people (OECD average: 4.2), the system was architecturally built to treat illness, not prevent it. Consumers are filling the gap themselves.</p>
+
+<table>
+<thead><tr><th>Country</th><th>Health spend (% GDP)</th><th>Life expectancy</th><th>Gap</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600">Germany</td><td class="val">12.3%</td><td>81.1 yrs</td><td class="sm">Spends #1 in EU, outcomes below 5 cheaper systems</td></tr>
+<tr><td>Switzerland</td><td>11.3%</td><td>83.4 yrs</td><td class="sm">+2.3 years, spends less</td></tr>
+<tr><td>France</td><td>12.1%</td><td>82.2 yrs</td><td class="sm">+1.1 years, spends less</td></tr>
+<tr><td>Japan</td><td>11.5%</td><td>84.5 yrs</td><td class="sm">+3.4 years, spends less</td></tr>
+<tr style="color:var(--stone)"><td>OECD avg</td><td>9.3%</td><td>80.3 yrs</td><td></td></tr>
+</tbody>
+</table>
+<div class="sources" style="column-count:1">OECD Health at a Glance 2025 (November 2025) | Destatis 2023</div>
+
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="pb"></div>
+<div class="header">
+<div class="header-brand">alche</div>
+<div class="header-meta">Market Opportunity<br>February 2026 // Confidential</div>
+</div>
+
+<div class="label">Market sizing</div>
+<h1><strong>TAM / SAM / SOM</strong></h1>
+
+<div class="g2" style="margin-top:8px">
+<div>
+<div class="card">
+<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+<div class="big amber" style="font-size:16pt">TAM</div>
+<div class="sm" style="font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Total addressable market</div>
+</div>
+<div class="big" style="font-size:30pt;color:var(--deep)">$6.8T</div>
+<p class="sm" style="margin-top:4px">Global wellness economy (2024). Alche operates at the intersection of longevity & preventive wellness ($784.9B), functional food ($398.8B), consumer wearables ($52B), CGM wellness ($12.7B), and supplements ($177.5B).</p>
+<div class="sources" style="border:none;padding:0;column-count:1;margin-top:4px">GWI 2025 | Fortune Business Insights | Global Insight Services</div>
+</div>
+
+<div class="card card-accent">
+<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+<div class="big terra" style="font-size:16pt">SAM</div>
+<div class="sm" style="font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Serviceable addressable market</div>
+</div>
+<div class="big" style="font-size:30pt;color:var(--deep)">EUR 3.2-4.1B</div>
+<p class="sm" style="margin-top:4px">Germany. The spend we're competing for: health-conscious Germans who currently pay for fragmented longevity services. Supplements (EUR 2.67B), functional beverages (EUR 2.8-3.2B), digital health apps (EUR 263M), premium wellness memberships (EUR 300-500M).</p>
+<div class="sources" style="border:none;padding:0;column-count:1;margin-top:4px">Statista 2024 | Euromonitor 2024 | DSSV 2024</div>
+</div>
+</div>
+</div>
+
+<div class="card" style="border:1.5px solid var(--terra);margin-top:8px">
+<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+<div class="big terra" style="font-size:16pt">SOM</div>
+<div class="sm" style="font-weight:600;text-transform:uppercase;letter-spacing:0.05em">What we can capture // bottom-up from Berlin</div>
+</div>
+
+<div class="g3" style="margin-bottom:10px">
+<div class="card" style="text-align:center;margin:0;padding:8px">
+<div class="big" style="font-size:18pt;color:var(--deep)">~108K</div>
+<div class="sm">Mitte 30-44 yr olds</div>
+</div>
+<div class="card" style="text-align:center;margin:0;padding:8px">
+<div class="big" style="font-size:18pt;color:var(--deep)">250-280K</div>
+<div class="sm">High-income households<br>(>EUR 4,500 net/mo)</div>
+</div>
+<div class="card" style="text-align:center;margin:0;padding:8px">
+<div class="big" style="font-size:18pt;color:var(--deep)">~400K</div>
+<div class="sm">PKV holders in Berlin<br>(prevention coverage)</div>
+</div>
+</div>
+
+<table>
+<thead><tr><th></th><th style="text-align:center">Conservative</th><th style="text-align:center">Base case</th><th style="text-align:center">Optimistic</th></tr></thead>
+<tbody>
+<tr><td colspan="4" style="font-size:7pt;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);font-weight:600;padding-top:8px">Year 1-2 // Berlin only</td></tr>
+<tr><td>Members (EUR 49-149/mo)</td><td style="text-align:center">300 / EUR 220K</td><td style="text-align:center">600 / EUR 480K</td><td style="text-align:center">1,000 / EUR 840K</td></tr>
+<tr><td>In-store + products + events</td><td style="text-align:center">EUR 280K</td><td style="text-align:center">EUR 620K</td><td style="text-align:center">EUR 1.15M</td></tr>
+<tr><td style="font-weight:600">Total ARR</td><td class="val" style="text-align:center">EUR 500K</td><td class="val" style="text-align:center">EUR 1.1M</td><td class="val" style="text-align:center">EUR 2.0M</td></tr>
+<tr><td colspan="4" style="font-size:7pt;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);font-weight:600;padding-top:10px">Year 3-5 // DACH expansion</td></tr>
+<tr><td>Members (2 locations + digital-only)</td><td style="text-align:center">1,500 / EUR 1.2M</td><td style="text-align:center">3,000 / EUR 2.5M</td><td style="text-align:center">5,000 / EUR 4.5M</td></tr>
+<tr><td>Physical + e-comm + B2B + CGM/AI</td><td style="text-align:center">EUR 1.1M</td><td style="text-align:center">EUR 2.6M</td><td style="text-align:center">EUR 4.8M</td></tr>
+<tr><td style="font-weight:600">Total ARR</td><td class="val" style="text-align:center">EUR 2.3M</td><td class="val" style="text-align:center">EUR 5.1M</td><td class="val" style="text-align:center">EUR 9.3M</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>The rebundling thesis</h2>
+<p>We're not creating demand. We're consolidating fragmented spend. Our target customer already pays EUR 100-300/mo across 3-8 disconnected services (biomarker tests, CGM, supplements, recovery memberships, health apps). Alche integrates this at EUR 49-99/mo with better outcomes. This is a rebundling play with a lower risk profile than demand creation.</p>
+
+<div class="g2" style="margin-top:6px">
+<div class="card card-accent" style="margin:0">
+<h3>What they pay now (fragmented)</h3>
+<table style="margin:4px 0">
+<tr><td>Biomarker testing</td><td class="val">$499-761/yr</td></tr>
+<tr><td>CGM tracking</td><td class="val">$199/mo</td></tr>
+<tr><td>Supplements</td><td class="val">$35-200/mo</td></tr>
+<tr><td>Recovery membership</td><td class="val">$150-1,000/mo</td></tr>
+<tr><td>Health apps (3-5 subs)</td><td class="val">$15-50/mo</td></tr>
+</table>
+<p class="sm" style="color:var(--terra);font-weight:600">Total: $8,900-21,100/yr across 6+ providers</p>
+</div>
+<div class="card" style="margin:0">
+<h3>What Alche offers (integrated)</h3>
+<table style="margin:4px 0">
+<tr><td>Core (content + tracking + community)</td><td class="val">EUR 19/mo</td></tr>
+<tr><td>Pro (protocols + biomarker integration)</td><td class="val">EUR 49/mo</td></tr>
+<tr><td>Premium (CGM + AI + concierge)</td><td class="val">EUR 99/mo</td></tr>
+</table>
+<p class="sm" style="color:var(--sage);font-weight:600">EUR 228-1,188/yr for an integrated experience</p>
+<p class="sm">Not replacing all spend -- consolidating the core. Users keep their Oura. They stop paying for 4 apps, 2 supplement subscriptions, and a recovery membership they use twice.</p>
+</div>
+</div>
+
+
+<!-- ==================== PAGE 3 ==================== -->
+<div class="pb"></div>
+<div class="header">
+<div class="header-brand">alche</div>
+<div class="header-meta">Market Opportunity<br>February 2026 // Confidential</div>
+</div>
+
+<div class="label">Capital momentum</div>
+<h1><strong>$8.49B</strong> into longevity in 2024</h1>
+<p>Longevity financing more than doubled year-over-year. The sector has moved from fringe to institutional. Every major comparable validates the market thesis -- and none of them serve Europe with an integrated platform.</p>
+
+<table style="margin-top:6px">
+<thead><tr><th>Company</th><th>Raised</th><th>Latest round</th><th>Valuation</th><th>Relevance</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600">Function Health</td><td>$350M</td><td>$298M Series B (Nov '25)</td><td class="val">$2.5B</td><td class="sm">Biomarker testing + AI. US-only. Dropped to $365/yr.</td></tr>
+<tr><td style="font-weight:600">Neko Health</td><td>$325M</td><td>$260M Series B (Jan '25)</td><td class="val">$1.8B</td><td class="sm">AI body scanning. 100K+ waitlist. EU-based, scanning-only.</td></tr>
+<tr><td style="font-weight:600">Oura</td><td>$200M+</td><td>$200M Series D</td><td class="val">$2.5B+</td><td class="sm">Wearable ring. Acquired Veri (CGM). No community layer.</td></tr>
+<tr><td style="font-weight:600">Restore Hyper Wellness</td><td>$177M</td><td>$27.5M note (Jul '24)</td><td class="val">$500M</td><td class="sm">Recovery franchise, 209 locations. Physical-only.</td></tr>
+<tr><td style="font-weight:600">Levels Health</td><td>$67M</td><td>$10M extension (Aug '24)</td><td class="val">$300M</td><td class="sm">CGM wellness. US-only. Users report diminishing returns.</td></tr>
+</tbody>
+</table>
+
+<div class="call">
+<p>Function Health reached $2.5B doing <strong>one thing</strong> (biomarker testing) for <strong>one market</strong> (US). Neko reached $1.8B doing <strong>one thing</strong> (body scanning) in <strong>two cities</strong>. None of them integrate across the full longevity stack. None serve Europe-first. <strong>The integrated European play is wide open.</strong></p>
+</div>
+
+<h2>Europe is structurally different, not just behind</h2>
+<p>If Europe were simply "the US but 3 years later," US companies would eventually arrive and win. But the market is structurally different -- and that's the moat.</p>
+
+<div class="g2" style="margin-top:6px">
+<div class="card" style="margin:0">
+<h3>Structural advantages</h3>
+<p class="sm"><strong style="color:var(--deep)">Insurance covers prevention.</strong> PKV (8.73M holders) reimburses EUR 200-500/yr in wellness. GKV bonus programs offer EUR 100-300/yr. US consumers pay 100% out-of-pocket.</p>
+<p class="sm"><strong style="color:var(--deep)">Centuries of Kur culture.</strong> European wellness isn't a Silicon Valley import. It's built on apothecary traditions and state-supported spa systems. Alche speaks to that lineage.</p>
+<p class="sm"><strong style="color:var(--deep)">GDPR as trust differentiator.</strong> Health data sensitivity is higher in Europe. A GDPR-native platform is a feature, not a compliance cost.</p>
+<p class="sm"><strong style="color:var(--deep)">Lower pricing works here.</strong> EUR 19-99/mo matches European spending norms. US players entering at $199/mo will feel overpriced.</p>
+</div>
+<div class="card" style="margin:0">
+<h3>Hidden distribution channels</h3>
+<p class="sm"><strong style="color:var(--deep)">PKV opportunity.</strong> 8.73M full private insurance + 29M supplementary coverage. PKV requires EUR 69,300/yr income to qualify -- this IS our demographic. ~70% of tariffs cover alternative medicine.</p>
+<p class="sm"><strong style="color:var(--deep)">Corporate wellness (B2B).</strong> EUR 600 per employee per year tax-free for health promotion (Sec. 3 Nr. 34 EStG). With 90-100K startup employees in Berlin alone, corporate partnerships are a meaningful channel.</p>
+<p class="sm"><strong style="color:var(--deep)">Berlin specifically.</strong> 3.878M population, 800K aged 25-45, 30-40% cheaper than London, 300+ digital health startups. #1 continental European startup city.</p>
+</div>
+</div>
+
+<div class="sep"></div>
+
+<h2>Resilience: what if the hype cycle pops?</h2>
+<p>Alche isn't built on longevity hype -- it's built on structural demand. Even if the buzzword fades: aging populations don't reverse (29% of Germany 65+ by 2040), consumer wellness spending is recession-resilient (McKinsey), we're consolidating existing spend (not creating new behaviour), and our "imperfect longevity" positioning is explicitly anti-hype. If the optimisation culture collapses, our positioning gets stronger.</p>
+
+<div class="sep"></div>
+
+<div style="text-align:center;padding:12px 0">
+<div class="big terra" style="font-size:14pt;margin-bottom:6px">Six things to remember</div>
+<div class="g3" style="gap:10px">
+<div class="card" style="text-align:center;padding:8px;margin:0">
+<div style="font-size:7pt;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--terra);margin-bottom:2px">Massive & growing</div>
+<div class="sm">$6.8T wellness economy, 7.6% CAGR. Germany #3 globally.</div>
+</div>
+<div class="card" style="text-align:center;padding:8px;margin:0">
+<div style="font-size:7pt;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--terra);margin-bottom:2px">Validated demand</div>
+<div class="sm">84% prioritise wellness. 68% of young Germans pay OOP. 33M use health apps.</div>
+</div>
+<div class="card" style="text-align:center;padding:8px;margin:0">
+<div style="font-size:7pt;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--terra);margin-bottom:2px">Structural gap</div>
+<div class="sm">EUR 495B health spend, mediocre outcomes. System treats, doesn't prevent.</div>
+</div>
+</div>
+<div class="g3" style="gap:10px;margin-top:8px">
+<div class="card" style="text-align:center;padding:8px;margin:0">
+<div style="font-size:7pt;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--terra);margin-bottom:2px">Window closing</div>
+<div class="sm">18-24 months before US players localise. No integrated EU platform exists.</div>
+</div>
+<div class="card" style="text-align:center;padding:8px;margin:0">
+<div style="font-size:7pt;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--terra);margin-bottom:2px">Capital flowing</div>
+<div class="sm">$8.49B in 2024 (2x YoY). Function at $2.5B, Neko at $1.8B.</div>
+</div>
+<div class="card" style="text-align:center;padding:8px;margin:0">
+<div style="font-size:7pt;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--terra);margin-bottom:2px">Berlin advantage</div>
+<div class="sm">30-40% cheaper than London. 400K PKV holders. EUR 600/employee B2B tax benefit.</div>
+</div>
+</div>
+</div>
+
+<div class="sources" style="margin-top:16px">
+GWI 2025 Global Wellness Economy Monitor (Nov 2025) | OECD Health at a Glance 2025 (Nov 2025) | Destatis 2023 | McKinsey Future of Wellness 2025 | Statista 2024 | Euromonitor 2024 | Bitkom 2024 | TK Gesundheitsreport 2024 | Deloitte Health Survey Germany 2023 | PKV-Verband 2024 | Longevity.Technology 2024 Funding Report | TechCrunch / Fierce Healthcare (funding data) | EY / Berlin Partner (startup ecosystem) | Mercer Cost of Living 2024
+</div>
+
+<div style="text-align:center;padding:20px 0 0;font-size:7pt;color:var(--stone);letter-spacing:0.1em;text-transform:uppercase">
+alche // your longevity, daily.
+</div>
+
+</body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>alche Bio-Sync Scan</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "editorial-black": "#0d121b",
+                        "editorial-muted": "#8d96a6",
+                        "editorial-accent": "#c4cad6",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }.breathing-icon {
+            animation: breathe 6s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-editorial-black dark:text-white font-display overflow-x-hidden transition-colors duration-300">
+<div class="relative flex min-h-screen flex-col w-full max-w-md mx-auto border-x border-editorial-black/10 dark:border-white/10 shadow-2xl bg-[#fcfcfd] dark:bg-background-dark">
+<header class="flex items-center justify-between px-6 pt-6 pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-editorial-black dark:text-white text-[20px]">radar</span>
+</div>
+<div class="text-[10px] tracking-[0.2em] font-bold uppercase text-editorial-muted">Bio-Sync Protocol</div>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
+<p class="text-[10px] tracking-widest font-bold uppercase text-editorial-black dark:text-white">Active</p>
+</div>
+</header>
+<div class="w-full h-px bg-editorial-black/5 dark:bg-white/10 mx-auto max-w-[90%]"></div>
+<main class="flex-1 flex flex-col items-center justify-center relative p-6 w-full">
+<div class="relative w-80 h-80 flex items-center justify-center mb-10">
+<div class="absolute inset-0 border border-dashed border-primary/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+<div class="absolute inset-8 border border-editorial-black/5 dark:border-white/5 rounded-full"></div>
+<div class="absolute inset-0 rounded-full border-t border-primary/60 animate-[spin_2s_linear_infinite]"></div>
+<div class="absolute inset-0 rounded-full border-r border-transparent border-t border-primary/30 animate-[spin_3s_ease-in-out_infinite_reverse]"></div>
+<div class="relative w-48 h-48 rounded-full overflow-hidden border border-editorial-black/10 dark:border-white/10 bg-gray-50 shadow-inner">
+<div class="absolute inset-0 bg-center bg-cover opacity-70 mix-blend-multiply dark:mix-blend-luminosity breathing-icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDvRbrbodov2jklkVauD-BZ3OeXszFTxV0p1PsbVo90UJXdOZbu7bMHIOFF23LPg0a6tESj7GQ57xcLidSoVlW59DeJqVsHUDaKqfg9xP_nV0q3kILO8U53gChNlyIapufZDZJW6AULLATHE35dvfJqG0HWHTJMxM6fZWBGNnns9wgqAPjJFJHi74ckLjXoIs5JOo_rAENTQTiuyzidL4a9FGXh3tPvXYpYcveX15u8EC3dmSdTN9cuX1-idvdVYricyAzF8MJppp9U");'></div>
+<div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#1152d4 1px, transparent 1px); background-size: 12px 12px;"></div>
+</div>
+<div class="absolute top-8 right-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur border border-editorial-black/10 px-2 py-1 shadow-sm rounded-sm">
+<span class="text-[8px] font-sans uppercase tracking-widest text-primary font-bold">Scanning</span>
+</div>
+</div>
+<h1 class="text-4xl font-display font-light italic text-center text-editorial-black dark:text-white leading-none mb-3 tracking-tight">
+                Synchronizing<br/>
+<span class="not-italic font-normal font-display tracking-tight">Bio-Data</span>
+</h1>
+<p class="text-[10px] font-sans text-editorial-muted uppercase tracking-[0.25em] mb-16">Establishing Secure Handshake</p>
+<div class="w-full max-w-xs space-y-8">
+<div class="space-y-3 group">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-bold uppercase tracking-widest text-editorial-black dark:text-white group-hover:text-primary transition-colors">Lipid Analysis</span>
+<span class="text-xs font-serif italic text-primary">Complete</span>
+</div>
+<div class="h-[2px] w-full bg-editorial-black/5 dark:bg-white/10">
+<div class="h-full w-full bg-primary shadow-[0_0_10px_rgba(17,82,212,0.3)]"></div>
+</div>
+</div>
+<div class="space-y-3 group">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-bold uppercase tracking-widest text-editorial-black dark:text-white group-hover:text-primary transition-colors">Metabolic Mapping</span>
+<span class="text-xs font-serif italic text-editorial-muted">Processing...</span>
+</div>
+<div class="h-[2px] w-full bg-editorial-black/5 dark:bg-white/10">
+<div class="h-full w-[65%] bg-editorial-black dark:bg-white animate-pulse relative">
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-primary shadow-[0_0_8px_rgba(17,82,212,0.8)]"></div>
+</div>
+</div>
+</div>
+<div class="space-y-3 opacity-40">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-bold uppercase tracking-widest text-editorial-black dark:text-white">Hormonal Baseline</span>
+<span class="text-xs font-serif italic text-editorial-muted">Queued</span>
+</div>
+<div class="h-[2px] w-full bg-editorial-black/5 dark:bg-white/10">
+<div class="h-full w-0 bg-editorial-black dark:bg-white"></div>
+</div>
+</div>
+</div>
+</main>
+<nav class="sticky bottom-0 z-10 w-full bg-[#fcfcfd]/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-editorial-black dark:border-white/20">
+<div class="grid grid-cols-3 h-16">
+<button class="flex flex-col items-center justify-center gap-1 group border-r border-editorial-black/5 dark:border-white/10">
+<span class="material-symbols-outlined text-editorial-muted text-[24px] group-hover:text-primary transition-colors">circle</span>
+<span class="text-[9px] uppercase tracking-widest font-sans font-bold text-editorial-muted group-hover:text-primary transition-colors">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 group border-r border-editorial-black/5 dark:border-white/10 bg-editorial-black/5 dark:bg-white/5">
+<span class="material-symbols-outlined text-primary text-[24px]">qr_code_scanner</span>
+<span class="text-[9px] uppercase tracking-widest font-sans font-bold text-primary">Scan</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 group">
+<span class="material-symbols-outlined text-editorial-muted text-[24px] group-hover:text-primary transition-colors">person</span>
+<span class="text-[9px] uppercase tracking-widest font-sans font-bold text-editorial-muted group-hover:text-primary transition-colors">Profile</span>
+</button>
+</div>
+</nav>
+</div>
+
+</body></html>

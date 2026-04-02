@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>alche Hormonal Balance</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#334155", 
+                        "background-light": "#ffffff",
+                        "background-dark": "#101622",
+                        "editorial-black": "#1a1a1a",
+                        "editorial-muted": "#94a3b8",
+                        "editorial-accent": "#e2e8f0",
+                        "pastel-rose": "#fda4af",
+                        "pastel-indigo": "#a5b4fc",
+                        "pastel-sage": "#a7f3d0",
+                        "pastel-lemon": "#fef08a",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"],
+                        "mono": ["Space Mono", "monospace"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f1f5f9 1px, transparent 1px), linear-gradient(to bottom, #f1f5f9 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chart-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 2.5s ease-out forwards;
+        }
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-editorial-black dark:text-white font-display overflow-x-hidden transition-colors duration-300 selection:bg-pastel-indigo/30">
+<div class="relative flex min-h-screen flex-col w-full max-w-md mx-auto border-x border-editorial-black/10 dark:border-white/10 shadow-2xl bg-white dark:bg-background-dark">
+<header class="flex items-center justify-between px-6 pt-6 pb-4 bg-white/80 backdrop-blur-sm sticky top-0 z-20 border-b border-editorial-black/5">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-editorial-black dark:text-white text-[20px] cursor-pointer">arrow_back</span>
+<h1 class="font-display italic text-xl font-medium tracking-tight">alche</h1>
+</div>
+<div class="text-[9px] tracking-[0.2em] font-mono font-bold uppercase text-editorial-muted">Hormonal Balance</div>
+</header>
+<main class="flex-1 flex flex-col relative p-6 space-y-8">
+<div class="flex justify-between items-end fade-in-up">
+<div>
+<span class="block text-[10px] uppercase tracking-widest font-mono text-pastel-indigo font-bold mb-1">Current Phase</span>
+<h2 class="text-3xl font-light text-editorial-black dark:text-white">
+                        Late <span class="italic font-normal font-display">Follicular</span>
+</h2>
+</div>
+<div class="text-right">
+<span class="block text-[10px] uppercase tracking-widest font-mono text-editorial-muted mb-1">Cycle Day</span>
+<span class="text-2xl font-mono text-editorial-black dark:text-white">12<span class="text-sm text-editorial-muted">/28</span></span>
+</div>
+</div>
+<div class="relative w-full h-64 border border-editorial-black/10 rounded-sm overflow-hidden bg-white fade-in-up delay-100 group">
+<div class="absolute inset-0 bg-grid-pattern bg-[length:24px_24px]"></div>
+<div class="absolute bottom-2 left-2 text-[8px] font-mono text-editorial-muted">DAY 1</div>
+<div class="absolute bottom-2 right-2 text-[8px] font-mono text-editorial-muted">DAY 28</div>
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[8px] font-mono text-editorial-muted">OVULATION</div>
+<svg class="absolute inset-0 w-full h-full p-4" preserveAspectRatio="none" viewBox="0 0 400 200">
+<path d="M0,180 C80,180 150,180 180,160 C210,140 240,60 280,60 C320,60 350,140 400,160" fill="none" stroke="#a5b4fc" stroke-opacity="0.4" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path class="chart-line" d="M0,150 C50,150 100,60 160,40 C200,30 220,120 250,140 C280,160 320,100 360,120 C380,130 400,140 400,140" fill="none" stroke="#fda4af" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+<line opacity="0.8" stroke="#1a1a1a" stroke-dasharray="4 4" stroke-width="1" x1="150" x2="150" y1="0" y2="200"></line>
+<circle cx="150" cy="50" fill="#ffffff" r="4" stroke="#fda4af" stroke-width="2"></circle>
+</svg>
+<div class="absolute top-8 left-[35%] bg-white/90 backdrop-blur border border-editorial-black/10 px-2 py-1 shadow-sm">
+<span class="text-[9px] font-mono uppercase tracking-wider text-editorial-black flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-pastel-rose rounded-full animate-pulse"></span>
+                        Estrogen Peak
+                    </span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-px bg-editorial-black/5 border border-editorial-black/5 fade-in-up delay-200">
+<div class="bg-white p-5 flex flex-col justify-between h-32 hover:bg-gray-50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<h3 class="text-[9px] font-mono uppercase tracking-widest text-editorial-muted group-hover:text-primary transition-colors">Cortisol</h3>
+<span class="material-symbols-outlined text-[16px] text-pastel-sage">check_circle</span>
+</div>
+<div>
+<div class="text-lg font-display italic text-editorial-black">Stable</div>
+<div class="text-[10px] font-mono text-editorial-muted mt-1">+2% vs avg</div>
+</div>
+</div>
+<div class="bg-white p-5 flex flex-col justify-between h-32 hover:bg-gray-50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<h3 class="text-[9px] font-mono uppercase tracking-widest text-editorial-muted group-hover:text-primary transition-colors">Estrogen</h3>
+<span class="material-symbols-outlined text-[16px] text-pastel-rose">trending_up</span>
+</div>
+<div>
+<div class="text-lg font-display italic text-editorial-black">Surging</div>
+<div class="text-[10px] font-mono text-editorial-muted mt-1">Pre-ovulatory</div>
+</div>
+</div>
+<div class="bg-white p-5 flex flex-col justify-between h-32 hover:bg-gray-50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<h3 class="text-[9px] font-mono uppercase tracking-widest text-editorial-muted group-hover:text-primary transition-colors">Temp (BBT)</h3>
+</div>
+<div>
+<div class="text-lg font-mono text-editorial-black">97.4°F</div>
+<div class="w-full h-1 bg-gray-100 mt-2 rounded-full overflow-hidden">
+<div class="h-full w-[40%] bg-pastel-indigo"></div>
+</div>
+</div>
+</div>
+<div class="bg-white p-5 flex flex-col justify-between h-32 hover:bg-gray-50 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<h3 class="text-[9px] font-mono uppercase tracking-widest text-editorial-muted group-hover:text-primary transition-colors">Readiness</h3>
+</div>
+<div>
+<div class="text-lg font-mono text-editorial-black">High</div>
+<p class="text-[10px] font-display italic text-editorial-muted mt-1 leading-tight">Ideal for HIIT training today.</p>
+</div>
+</div>
+</div>
+<div class="border-l-2 border-pastel-rose pl-4 py-1 fade-in-up delay-300">
+<p class="font-display text-lg italic leading-tight text-editorial-black">
+                    "Estrogen is boosting your energy and verbal skills. Connect with your community today."
+                </p>
+<div class="flex items-center gap-2 mt-3">
+<div class="h-px w-8 bg-editorial-black/20"></div>
+<span class="text-[9px] font-mono uppercase tracking-widest text-editorial-muted">Daily Insight</span>
+</div>
+</div>
+</main>
+<div class="px-8 py-6 flex justify-between items-end border-t border-editorial-black/5 bg-white">
+<div class="flex flex-col gap-1">
+<span class="text-[9px] uppercase tracking-widest text-editorial-muted font-mono font-bold">Oura Sync</span>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-pastel-sage animate-pulse"></div>
+<span class="text-xs font-serif italic text-editorial-black">Connected</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[9px] uppercase tracking-widest text-editorial-muted font-mono font-bold">Last Update</p>
+<p class="text-xs font-mono text-editorial-black">14:02 PM</p>
+</div>
+</div>
+<nav class="sticky bottom-0 z-10 w-full bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-editorial-black/10">
+<div class="grid grid-cols-3 h-16">
+<button class="flex flex-col items-center justify-center gap-1 group border-r border-editorial-black/5">
+<span class="material-symbols-outlined text-editorial-black text-[22px] group-hover:text-pastel-indigo transition-colors">water_drop</span>
+<span class="text-[8px] uppercase tracking-widest font-mono font-bold text-editorial-black group-hover:text-pastel-indigo transition-colors">Cycle</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 group border-r border-editorial-black/5">
+<span class="material-symbols-outlined text-editorial-muted text-[22px] group-hover:text-pastel-indigo transition-colors">show_chart</span>
+<span class="text-[8px] uppercase tracking-widest font-mono font-bold text-editorial-muted group-hover:text-pastel-indigo transition-colors">Trends</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 group">
+<span class="material-symbols-outlined text-editorial-muted text-[22px] group-hover:text-pastel-indigo transition-colors">spa</span>
+<span class="text-[8px] uppercase tracking-widest font-mono font-bold text-editorial-muted group-hover:text-pastel-indigo transition-colors">Wellness</span>
+</button>
+</div>
+</nav>
+</div>
+
+</body></html>

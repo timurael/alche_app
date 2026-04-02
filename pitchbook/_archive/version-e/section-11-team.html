@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche: The Team</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* Global image safety */
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Founder cards side by side */
+    .founders-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .founder-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .founder-card__name {
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 2px;
+    }
+
+    .founder-card__title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-2);
+    }
+
+    .founder-card__cred {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .founder-card__cred li {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+      padding: 2px 0;
+      padding-left: 10px;
+      position: relative;
+      border-bottom: 1px solid var(--deep-04);
+    }
+
+    .founder-card__cred li:last-child {
+      border-bottom: none;
+    }
+
+    .founder-card__cred li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0.5;
+    }
+
+    /* Second row: tech lead + advisor side by side */
+    .team-second-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Advisor card */
+    .advisor-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .advisor-card__badge {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: var(--space-2);
+    }
+
+    .advisor-card__name {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 2px;
+    }
+
+    .advisor-card__title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-2);
+    }
+
+    .advisor-card__bio {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+      margin-bottom: var(--space-1);
+    }
+
+    .advisor-card__role {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-50);
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    /* Governance footer */
+    .gov-footer {
+      background: var(--deep-04);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-5);
+    }
+
+    .gov-footer__title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: var(--space-2);
+    }
+
+    .gov-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+
+    .gov-grid__item {
+      font-family: var(--font-sans);
+    }
+
+    .gov-grid__label {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 2px;
+    }
+
+    .gov-grid__value {
+      font-size: var(--text-xs);
+      color: var(--deep);
+      line-height: 1.45;
+    }
+
+    /* Tables overflow safety */
+    table { width: 100%; table-layout: fixed; }
+    td, th { word-wrap: break-word; }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Team<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: var(--space-4);">
+      <span class="section-header__number">[11] The Team</span>
+      <h1 class="section-header__title" style="font-size: var(--text-3xl);"><strong>The Team</strong></h1>
+    </div>
+
+    <!-- Two Founders Side by Side -->
+    <div class="founders-row">
+
+      <div class="founder-card">
+        <div class="founder-card__name">Timur Tasdogan</div>
+        <div class="founder-card__title">Co-Founder and CMO, 49% Equity</div>
+        <ul class="founder-card__cred">
+          <li>MSc Data Science (GISMA Berlin), BA Economics (Koc University)</li>
+          <li>Concentrix / Meta: EUR 1.8M ad spend, ROAS 1.5x to 2.7x</li>
+          <li>Hepsiburada (NASDAQ: HEPS): EUR 300K budget, 4x ROAS</li>
+          <li>Quantpaper founding team, 27% activation lift</li>
+        </ul>
+      </div>
+
+      <div class="founder-card">
+        <div class="founder-card__name">Daria Dijan Roth</div>
+        <div class="founder-card__title">Co-Founder and COO, 51% Equity</div>
+        <ul class="founder-card__cred">
+          <li>BSc Computer Engineering + BA International Business</li>
+          <li>Backend development (Jan Iletisim Teknolojileri)</li>
+          <li>Brand positioning (MUTA-1 Reklamcilik)</li>
+          <li>Domain expert: 4-year autoimmune journey</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Technical Lead + Medical Advisor Side by Side -->
+    <div class="team-second-row">
+
+      <div class="founder-card">
+        <div class="founder-card__name">AmirFarzam Kamalpour</div>
+        <div class="founder-card__title">Technical Lead</div>
+        <ul class="founder-card__cred">
+          <li>Self-taught developer since age 12</li>
+          <li>Runs Star Digital (stardigital.ir): IT infrastructure, hosting, web and app development</li>
+          <li>Previously at Jung von Matt HAVEL (Berlin): IT and web development</li>
+          <li>Brings existing server infrastructure to the alche build</li>
+        </ul>
+      </div>
+
+      <div class="advisor-card">
+        <div class="advisor-card__badge">Medical Advisor</div>
+        <div class="advisor-card__name">Shukri Jarmoukli</div>
+        <div class="advisor-card__title">Physician, Functional Medicine</div>
+        <div class="advisor-card__bio">Medicine, Universitat zu Koln. Runs Lifestyledoctor, a self-pay longevity practice in Berlin. Functional medicine, psychoneuroimmunology (KPNI), and CGM biofeedback. His patients are alche's exact target demographic.</div>
+        <div class="advisor-card__role">Role: protocol validation, medical content review, biomarker interpretation, regulatory compliance.</div>
+      </div>
+
+    </div>
+
+    <!-- Governance Footer -->
+    <div class="gov-footer">
+      <div class="gov-footer__title">Governance</div>
+      <div class="gov-grid">
+        <div class="gov-grid__item">
+          <div class="gov-grid__label">Entity</div>
+          <div class="gov-grid__value">Alche GmbH (Berlin)</div>
+        </div>
+        <div class="gov-grid__item">
+          <div class="gov-grid__label">Equity</div>
+          <div class="gov-grid__value">Daria 51% / Timur 49%</div>
+        </div>
+        <div class="gov-grid__item">
+          <div class="gov-grid__label">History</div>
+          <div class="gov-grid__value">10-year partnership</div>
+        </div>
+        <div class="gov-grid__item">
+          <div class="gov-grid__label">First Hire</div>
+          <div class="gov-grid__value">Technical lead</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">24</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Business Model</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Revenue composition bars */
+    .rev-bar {
+      display: flex;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 24px;
+      margin-bottom: var(--space-2);
+    }
+
+    .rev-bar__seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .rev-bar__seg--subs { background: var(--sage); }
+    .rev-bar__seg--products { background: var(--amber); }
+    .rev-bar__seg--services { background: var(--terra); }
+    .rev-bar__seg--space { background: var(--stone); }
+
+    .rev-bar__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--deep-70);
+      margin-right: var(--space-3);
+      min-width: 24px;
+    }
+
+    .rev-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .rev-row__bar-container {
+      flex: 1;
+    }
+
+    .rev-row__margin {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--stone);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    /* Margin bars */
+    .margin-bar-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 60px;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .margin-bar-label {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      text-align: right;
+    }
+
+    .margin-bar-track {
+      height: 18px;
+      background: var(--deep-08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .margin-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .margin-bar-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--deep);
+      text-align: right;
+    }
+
+    /* Funnel step */
+    .funnel {
+      margin: var(--space-5) 0;
+    }
+
+    .funnel-step {
+      display: grid;
+      grid-template-columns: 70px 1fr 80px;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: 3px;
+    }
+
+    .funnel-step__tier {
+      text-align: right;
+    }
+
+    .funnel-step__name {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+
+    .funnel-step__price {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--stone);
+    }
+
+    .funnel-step__bar {
+      height: 24px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .funnel-step__rate {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 600;
+    }
+
+    .funnel-arrow {
+      padding-left: 70px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--stone);
+      margin: 1px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Business Model<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[07] Business Model</span>
+      <h1 class="section-header__title"><strong>Business Model</strong></h1>
+      <p class="section-header__subtitle">Subscription-first digital platform. Physical space drives acquisition. Path to break-even at Month 12.</p>
+    </div>
+
+    <!-- KPI Strip -->
+    <div class="kpi-grid kpi-grid--5 mb-6">
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value kpi-grid__value--accent">&euro;49</div>
+        <div class="kpi-grid__label">Weighted ARPU</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value">5.1x</div>
+        <div class="kpi-grid__label">LTV : CAC (conservative)<br>up to 15x realistic</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value">M12</div>
+        <div class="kpi-grid__label">Break-even<br>145 paying users</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value">72%</div>
+        <div class="kpi-grid__label">Blended Margin Y1<br>&rarr; 80% by Y3</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value kpi-grid__value--accent">&euro;500K</div>
+        <div class="kpi-grid__label">Raise Target</div>
+      </div>
+    </div>
+
+    <!-- Pricing Table -->
+    <div class="section-label">Pricing</div>
+    <table class="data-table mb-5">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th class="align-right">Monthly</th>
+          <th>Value Proposition</th>
+          <th class="align-right">Gross Margin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Free</td>
+          <td class="numeric" style="color: var(--stone);">&euro;0</td>
+          <td>Content, community access, product browsing</td>
+          <td class="numeric" style="color: var(--stone);">&mdash;</td>
+        </tr>
+        <tr>
+          <td class="bold">Core</td>
+          <td class="numeric bold">&euro;19</td>
+          <td>Biomarker dashboard, wearable sync, basic protocols</td>
+          <td class="numeric">85-90%</td>
+        </tr>
+        <tr>
+          <td class="bold">Pro</td>
+          <td class="numeric bold">&euro;49</td>
+          <td>Personalized protocols, AI insights, advanced tracking</td>
+          <td class="numeric">85-90%</td>
+        </tr>
+        <tr class="highlight">
+          <td class="bold">Premium</td>
+          <td class="numeric bold">&euro;99</td>
+          <td>Blood panel credits, 1:1 reviews, exclusive events, CGM (Phase 2)</td>
+          <td class="numeric">70-85%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Revenue Mix -->
+    <div class="section-label">Revenue Composition</div>
+    <div class="prose mb-3">
+      <p class="text-sm">Subscription share grows from ~52% to ~68%, shifting valuation toward SaaS-adjacent multiples (8-15x ARR) vs. premium retail (2-4x revenue).</p>
+    </div>
+
+    <div class="glass mb-5" style="padding: var(--space-4);">
+      <div class="rev-row">
+        <div class="rev-bar__label">Y1</div>
+        <div class="rev-row__bar-container">
+          <div class="rev-bar">
+            <div class="rev-bar__seg rev-bar__seg--subs" style="width: 52%;">52%</div>
+            <div class="rev-bar__seg rev-bar__seg--products" style="width: 18%;">18%</div>
+            <div class="rev-bar__seg rev-bar__seg--services" style="width: 17%;">17%</div>
+            <div class="rev-bar__seg rev-bar__seg--space" style="width: 13%;">13%</div>
+          </div>
+        </div>
+        <div class="rev-row__margin">~72% margin</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-bar__label">Y3</div>
+        <div class="rev-row__bar-container">
+          <div class="rev-bar">
+            <div class="rev-bar__seg rev-bar__seg--subs" style="width: 68%;">68%</div>
+            <div class="rev-bar__seg rev-bar__seg--products" style="width: 15%;">15%</div>
+            <div class="rev-bar__seg rev-bar__seg--services" style="width: 10%;">10%</div>
+            <div class="rev-bar__seg rev-bar__seg--space" style="width: 7%;">7%</div>
+          </div>
+        </div>
+        <div class="rev-row__margin">~80% margin</div>
+      </div>
+    </div>
+
+    <!-- Graveyard Rule #1 Sidebar -->
+    <div class="sidebar mb-0">
+      <div class="sidebar__label">Lesson from $1.4B in failures</div>
+      <div class="sidebar__text">Forward Health burned $657M building $1M hardware pods. We partner, we do not build the stack. Lab partnerships for testing, curated products not manufactured, and the physical space generates revenue -- it is not a cost center.</div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">14</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Business Model<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Conversion Funnel -->
+    <div class="section-label">Conversion</div>
+    <h2 class="mb-4"><strong>Subscriber funnel at Month 12</strong></h2>
+
+    <div class="glass mb-5" style="padding: var(--space-5);">
+      <div class="funnel">
+        <div class="funnel-step">
+          <div class="funnel-step__tier">
+            <div class="funnel-step__name">Free</div>
+            <div class="funnel-step__price">&euro;0/mo</div>
+          </div>
+          <div class="funnel-step__bar" style="width: 100%; background: var(--deep);">2,000</div>
+          <div class="funnel-step__rate">100%</div>
+        </div>
+        <div class="funnel-arrow">&darr; 4.5% convert to paid (modeled target)</div>
+        <div class="funnel-step">
+          <div class="funnel-step__tier">
+            <div class="funnel-step__name">Core</div>
+            <div class="funnel-step__price">&euro;19/mo</div>
+          </div>
+          <div class="funnel-step__bar" style="width: 45%; background: var(--amber);">~90</div>
+          <div class="funnel-step__rate">4-5%</div>
+        </div>
+        <div class="funnel-arrow">&darr; 20% upgrade to Pro</div>
+        <div class="funnel-step">
+          <div class="funnel-step__tier">
+            <div class="funnel-step__name">Pro</div>
+            <div class="funnel-step__price">&euro;49/mo</div>
+          </div>
+          <div class="funnel-step__bar" style="width: 22%; background: var(--sage);">~18</div>
+          <div class="funnel-step__rate">20%</div>
+        </div>
+        <div class="funnel-arrow">&darr; ~8% of paid upgrade to Premium</div>
+        <div class="funnel-step">
+          <div class="funnel-step__tier">
+            <div class="funnel-step__name">Premium</div>
+            <div class="funnel-step__price">&euro;99/mo</div>
+          </div>
+          <div class="funnel-step__bar" style="width: 12%; background: var(--rose);">~7</div>
+          <div class="funnel-step__rate">~8%</div>
+        </div>
+      </div>
+
+      <div class="glass" style="margin-top: var(--space-4); padding: var(--space-3); display: flex; justify-content: space-between; align-items: center;">
+        <span class="text-sm"><strong>+ Direct-to-paid from physical space:</strong> est. 30-40 subscribers (modeled target)</span>
+        <span class="font-mono" style="font-size: var(--text-base); font-weight: 700;">Total M12: ~145 paying</span>
+      </div>
+    </div>
+
+    <!-- Unit Economics -->
+    <div class="section-label">Unit Economics</div>
+    <div class="two-col mb-5">
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Conservative</div>
+        <div class="font-mono" style="font-size: 36px; font-weight: 700; line-height: 1;">5.1x</div>
+        <p class="text-xs text-stone mt-2">&euro;35 ARPU x 8-month lifetime<br>LTV &euro;280 / CAC &euro;55</p>
+      </div>
+      <div class="glass" style="padding: var(--space-4); text-align: center;">
+        <div class="section-label mb-2">Realistic</div>
+        <div class="font-mono" style="font-size: 36px; font-weight: 700; line-height: 1;">14.7x</div>
+        <p class="text-xs text-stone mt-2">&euro;49 ARPU x 12-month lifetime<br>LTV &euro;588 / CAC &euro;40</p>
+      </div>
+    </div>
+
+    <!-- Graveyard Rule #4 Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar__label">Lesson from the graveyard</div>
+      <div class="sidebar__text">DayTwo had 2,089 citations (Google Scholar, 2026) and still died when GLP-1 drugs arrived. Science is necessary but not sufficient. Community is the only retention moat that survives technology disruption. Our projected 8% monthly churn beats industry average (12-15%) through physical touchpoints, community identity, and longitudinal data compounding.</div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">15</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+
+  <!-- ============================================================
+       PAGE 3 (half page — margins + break-even)
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Business Model<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Gross Margins -->
+    <div class="section-label">Margins</div>
+    <h2 class="mb-4"><strong>Gross margin by revenue stream</strong></h2>
+
+    <div class="glass mb-5" style="padding: var(--space-5);">
+      <div class="margin-bar-row">
+        <div class="margin-bar-label">Digital subs</div>
+        <div class="margin-bar-track"><div class="margin-bar-fill" style="width: 87.5%; background: var(--sage);">85-90%</div></div>
+        <div class="margin-bar-value">87.5%</div>
+      </div>
+      <div class="margin-bar-row">
+        <div class="margin-bar-label">LED / recovery</div>
+        <div class="margin-bar-track"><div class="margin-bar-fill" style="width: 70%; background: var(--sage);">65-75%</div></div>
+        <div class="margin-bar-value">70%</div>
+      </div>
+      <div class="margin-bar-row">
+        <div class="margin-bar-label">Events</div>
+        <div class="margin-bar-track"><div class="margin-bar-fill" style="width: 60%; background: var(--amber);">50-70%</div></div>
+        <div class="margin-bar-value">60%</div>
+      </div>
+      <div class="margin-bar-row">
+        <div class="margin-bar-label">Potions</div>
+        <div class="margin-bar-track"><div class="margin-bar-fill" style="width: 60%; background: var(--amber);">55-65%</div></div>
+        <div class="margin-bar-value">60%</div>
+      </div>
+      <div class="margin-bar-row">
+        <div class="margin-bar-label">Supplements</div>
+        <div class="margin-bar-track"><div class="margin-bar-fill" style="width: 45%; background: var(--terra);">40-50%</div></div>
+        <div class="margin-bar-value">45%</div>
+      </div>
+    </div>
+
+    <div class="sep mb-5"></div>
+
+    <!-- Break-even Summary -->
+    <div class="section-label">Path to Break-Even</div>
+    <div class="glass-elevated mb-5" style="padding: var(--space-6);">
+      <div class="three-col">
+        <div style="text-align: center;">
+          <div class="font-mono" style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--stone); font-weight: 600;">Launch</div>
+          <div class="font-mono" style="font-size: 30px; font-weight: 700; margin-top: 4px;">M4</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="font-mono" style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sage); font-weight: 600;">Break-Even</div>
+          <div class="font-mono" style="font-size: 30px; font-weight: 700; color: var(--sage); margin-top: 4px;">M12</div>
+          <div class="font-mono text-xs text-stone">145 paying + &euro;10K/mo space</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="font-mono" style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--amber); font-weight: 600;">Buffer at Break-Even</div>
+          <div class="font-mono" style="font-size: 30px; font-weight: 700; color: var(--amber); margin-top: 4px;">&euro;142K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p class="text-sm" style="color: var(--deep-70);">24-month runway with &euro;500K raise. Pre-launch burn: &euro;7,600/month. Break-even achieved through a combination of ~145 paying digital subscribers and ~&euro;10,000/month in physical space revenue (products, services, events). Even at &euro;400K raise, the model reaches break-even with a &euro;42K buffer.</p>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      RevenueCat 2025 State of Subscription Apps / Industry churn benchmarks (Recurly, Baremetrics) / DSSV 2024 / Stripe Payment Infrastructure
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">16</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 3 -->
+
+</body>
+</html>

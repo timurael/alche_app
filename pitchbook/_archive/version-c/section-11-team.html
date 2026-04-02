@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche | The Team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    img { max-width: 100%; height: auto; }
+    table { width: 100%; table-layout: fixed; }
+
+    /* Compact team profile for single-page layout */
+    .team-card {
+      padding: var(--space-2) 0;
+    }
+    .team-card__name {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 1px;
+    }
+    .team-card__title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-1);
+    }
+    .team-card__credentials {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+      margin-bottom: var(--space-1);
+    }
+    .team-card__exp {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+      padding-left: var(--space-3);
+      border-left: 1.5px solid var(--deep-08);
+      margin-bottom: var(--space-1);
+    }
+    .team-card__exp strong {
+      color: var(--deep);
+      font-weight: 600;
+    }
+    .team-card__owns {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Advisor compact */
+    .advisor-block {
+      padding: var(--space-2) var(--space-3);
+      background: var(--deep-04);
+      border-radius: var(--radius-sm);
+    }
+    .advisor-block__name {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 1px;
+    }
+    .advisor-block__title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-1);
+    }
+    .advisor-block__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+    }
+
+    /* Governance compact inline */
+    .gov-inline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+    .gov-inline__item {
+      text-align: center;
+      padding: var(--space-2);
+    }
+    .gov-inline__label {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: var(--space-1);
+    }
+    .gov-inline__value {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 — The Team (single page)
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Team<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header" style="margin-bottom: var(--space-3);">
+      <span class="section-header__number">[11] The Team</span>
+      <h1 class="section-header__title"><strong>The Team</strong></h1>
+      <p class="section-header__subtitle">Operational expertise in brand, growth, data, technology, and medicine.</p>
+    </div>
+
+    <!-- Founders: three-col grid -->
+    <div class="section-label mb-2">Founders</div>
+    <div class="three-col mb-3">
+
+      <!-- Timur -->
+      <div class="team-card">
+        <div class="team-card__name">Timur Tasdogan</div>
+        <div class="team-card__title">Co-Founder &amp; CMO, 49% Equity</div>
+        <div class="team-card__credentials">MSc Data Science (GISMA Berlin), BA Economics (Ko&ccedil; University).</div>
+        <div class="team-card__exp">
+          <strong>Concentrix / Meta:</strong> EUR 1.8M ad spend, 390+ advertisers, ROAS 1.5x &rarr; 2.7x.<br>
+          <strong>Hepsiburada (NASDAQ: HEPS):</strong> EUR 300K budget, 4x ROAS.<br>
+          <strong>Quantpaper:</strong> Founding team, 27% activation lift.
+        </div>
+        <div class="team-card__owns">&rarr; Owns: data, brand, growth</div>
+      </div>
+
+      <!-- Daria -->
+      <div class="team-card">
+        <div class="team-card__name">Daria Dijan Roth</div>
+        <div class="team-card__title">Co-Founder &amp; COO, 51% Equity</div>
+        <div class="team-card__credentials">BSc Computer Engineering + BA International Business.</div>
+        <div class="team-card__exp">
+          <strong>Jan Iletisim:</strong> Production backend systems.<br>
+          <strong>MUTA-1:</strong> Brand positioning &amp; marketing.<br>
+          <strong>Domain expert:</strong> 4-year autoimmune journey, established figure in longevity community.
+        </div>
+        <div class="team-card__owns">&rarr; Owns: vision, architecture, operations</div>
+      </div>
+
+      <!-- AmirFarzam -->
+      <div class="team-card">
+        <div class="team-card__name">AmirFarzam Kamalpour</div>
+        <div class="team-card__title">Technical Lead</div>
+        <div class="team-card__credentials">Self-taught developer since age 12.</div>
+        <div class="team-card__exp">
+          <strong>Star Digital (stardigital.ir):</strong> Founder. IT infrastructure, hosting, web and app development.<br>
+          <strong>Jung von Matt HAVEL (Berlin):</strong> IT and web development.<br>
+          <strong>Brings existing server infrastructure</strong> to the alche build.
+        </div>
+        <div class="team-card__owns">&rarr; Owns: technology, infrastructure</div>
+      </div>
+
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Medical Advisor -->
+    <div class="section-label mb-1">Medical Advisor</div>
+    <div class="advisor-block mb-3">
+      <div class="advisor-block__name">Shukri Jarmoukli</div>
+      <div class="advisor-block__title">Physician, Universit&auml;t zu K&ouml;ln</div>
+      <div class="advisor-block__body">
+        Operates Lifestyledoctor, a self-pay longevity practice in Berlin. Specializes in functional medicine, psychoneuroimmunology (KPNI), and CGM biofeedback. His patients, entrepreneurs investing in proactive health out of pocket, are alche's exact target demographic. Role: protocol validation, medical content review, regulatory compliance.
+      </div>
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Governance -->
+    <div class="section-label mb-1">Governance</div>
+    <div class="gov-inline">
+      <div class="gov-inline__item">
+        <div class="gov-inline__label">Entity</div>
+        <div class="gov-inline__value">Alche GmbH<br>(Berlin)</div>
+      </div>
+      <div class="gov-inline__item">
+        <div class="gov-inline__label">Equity Split</div>
+        <div class="gov-inline__value">Daria 51%<br>Timur 49%</div>
+      </div>
+      <div class="gov-inline__item">
+        <div class="gov-inline__label">Partnership</div>
+        <div class="gov-inline__value">10-year personal<br>partnership</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">22</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Cover</title>
+
+  <!-- Google Fonts — Cormorant Garamond (serif), Outfit (sans), Space Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Cover — full-bleed atmospheric page, no header/footer chrome */
+    .cover {
+      width: var(--page-width);
+      min-height: var(--page-height);
+      margin: 0 auto;
+      position: relative;
+      background: var(--cream);
+      page-break-after: always;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 var(--page-margin-x);
+    }
+
+    /* Gradient accent bar — top */
+    .cover__bar-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--terra) 0%, var(--amber) 40%, var(--sage) 80%);
+    }
+
+    /* Gradient accent bar — bottom */
+    .cover__bar-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--sage) 0%, var(--amber) 50%, var(--terra) 100%);
+      opacity: 0.75;
+    }
+
+    .cover__content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cover__wordmark {
+      font-family: var(--font-serif);
+      font-size: 120px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--deep);
+      line-height: 0.88;
+      margin-bottom: var(--space-3);
+    }
+
+    .cover__tagline {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.01em;
+      color: var(--amber);
+      line-height: 1.15;
+      margin-bottom: var(--space-8);
+    }
+
+    .cover__divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--terra));
+      border-radius: 2px;
+      margin-bottom: var(--space-7);
+    }
+
+    .cover__descriptor {
+      font-family: var(--font-sans);
+      font-size: var(--text-lg);
+      font-weight: 300;
+      color: var(--stone);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: var(--space-10);
+    }
+
+    .cover__pillars {
+      display: flex;
+      gap: var(--space-9);
+    }
+
+    .cover__pillar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .cover__pillar-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+
+    .cover__pillar-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--deep-70);
+      font-weight: 400;
+    }
+
+    /* Bottom metadata */
+    .cover__bottom {
+      position: absolute;
+      bottom: var(--page-margin-y);
+      left: var(--page-margin-x);
+      right: var(--page-margin-x);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 2;
+    }
+
+    .cover__bottom-left {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--stone);
+      line-height: 1.7;
+    }
+
+    .cover__bottom-right {
+      text-align: right;
+    }
+
+    .cover__daily {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--amber);
+      letter-spacing: 0.02em;
+    }
+
+    .cover__confidential {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-top: var(--space-1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cover">
+    <div class="cover__bar-top"></div>
+
+    <div class="cover__content">
+      <div class="cover__wordmark">alche</div>
+      <div class="cover__tagline">The Art of Curated Longevity</div>
+      <div class="cover__divider"></div>
+      <div class="cover__descriptor">
+        Pre-Seed Investment Memorandum
+      </div>
+      <div class="cover__pillars">
+        <div class="cover__pillar">
+          <div class="cover__pillar-dot"></div>
+          <div class="cover__pillar-text">Taste</div>
+        </div>
+        <div class="cover__pillar">
+          <div class="cover__pillar-dot"></div>
+          <div class="cover__pillar-text">Trust</div>
+        </div>
+        <div class="cover__pillar">
+          <div class="cover__pillar-dot"></div>
+          <div class="cover__pillar-text">Cultural Authority</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover__bottom">
+      <div class="cover__bottom-left">
+        Pre-Seed // Berlin, Germany<br>
+        February 2026
+      </div>
+      <div class="cover__bottom-right">
+        <div class="cover__daily">Your longevity, daily.</div>
+        <div class="cover__confidential">Confidential</div>
+      </div>
+    </div>
+
+    <div class="cover__bar-bottom"></div>
+  </div>
+
+</body>
+</html>

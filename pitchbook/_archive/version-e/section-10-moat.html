@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche, The Moat</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    /* Triple-lock visual */
+    .lock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+
+    .lock-card {
+      padding: var(--space-5) var(--space-4);
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+    }
+
+    .lock-card__phase {
+      font-family: var(--font-mono);
+      font-size: 7px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-bottom: var(--space-2);
+    }
+
+    .lock-card__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: var(--space-2);
+    }
+
+    .lock-card__body {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.55;
+    }
+
+    .lock-card__moat-type {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      margin-top: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 (MAX 1 page per blueprint)
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Moat<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[10] The Moat</span>
+      <h1 class="section-header__title"><strong>We do not claim a moat. We have a thesis about what compounds.</strong></h1>
+      <p class="section-header__subtitle">At pre-seed, no moat exists yet. What investors evaluate is whether the model has the structural potential to build one.</p>
+    </div>
+
+    <!-- Triple-Lock -->
+    <div class="lock-grid">
+      <div class="lock-card" style="border-left: 3px solid var(--amber);">
+        <div class="lock-card__phase" style="background: rgba(196,149,106,0.12); color: var(--amber);">Phase 1 // Month 0-12</div>
+        <div class="lock-card__title">Social Identity</div>
+        <div class="lock-card__body">"Being in my Alche era" becomes part of how people talk about themselves. Brand, content, and the physical Berlin space build identity. People do not leave brands they identify with, this is structural, not aspirational.</div>
+        <div class="lock-card__moat-type text-amber">Taste-dependent. Hardest to copy.</div>
+      </div>
+      <div class="lock-card" style="border-left: 3px solid var(--sage);">
+        <div class="lock-card__phase" style="background: rgba(139,158,124,0.12); color: var(--sage);">Phase 2 // Month 6-18</div>
+        <div class="lock-card__title">Network Effects</div>
+        <div class="lock-card__body">As community grows, each new member increases value for existing members. Accountability groups, shared challenges, event networks, protocol sharing. The value of being in the community increases with its size.</div>
+        <div class="lock-card__moat-type text-sage">Time-dependent. Impossible to fast-track.</div>
+      </div>
+      <div class="lock-card" style="border-left: 3px solid var(--terra);">
+        <div class="lock-card__phase" style="background: rgba(184,107,74,0.12); color: var(--terra);">Phase 3 // Month 12+</div>
+        <div class="lock-card__title">Switching Costs</div>
+        <div class="lock-card__body">12 months of biomarker data, personalized protocols, supplement subscriptions, and community connections create real friction to leave. GDPR means data is portable, but insights, calibrated protocols, and social graphs are not.</div>
+        <div class="lock-card__moat-type text-terra">Volume-dependent. Gets more valuable.</div>
+      </div>
+    </div>
+
+    <div class="sep mb-5"></div>
+
+    <!-- AI-Proof Frame -->
+    <div class="section-label">What AI Cannot Replace</div>
+    <div class="prose mb-4">
+      <p>If Apple Health + ChatGPT gives personalized longevity advice for free, the pure data-and-insights layer is commoditized. What survives: <strong>physical experiences</strong> (AI cannot give you a smoothie or a community event), <strong>social identity and belonging</strong> (people join for community, not because the algorithm is optimal), <strong>accountability and motivation</strong> (knowing what to do is not the hard part, doing it consistently is).</p>
+    </div>
+
+    <!-- Integration is the moat callout -->
+    <div class="callout callout--sage">
+      <div class="callout__title">Integration is the thesis</div>
+      <div class="callout__body">
+        None of alche's competitors combine biomarker data + personalized protocols + curated products + physical experiences + community in one platform. They each do one or two layers. Integration is structurally hard to bolt on because it requires different organizational DNA than single-vertical excellence. GDPR-native data trust gives a European entrant a structural advantage US platforms cannot retrofit. When the data layer gets cheaper and AI interpretation improves, the companies that built genuine community, cultural identity, and regulatory trust are the ones still standing.
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-5">
+      Competitive analysis: 30+ companies, Feb 2026 / Blue Zones / WHOOP 2025 Retention Data / Fortune Business Insights 2025
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">21</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+</body>
+</html>

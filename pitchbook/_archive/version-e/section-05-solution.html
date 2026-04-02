@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche: The Solution</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* Global image safety */
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Tables overflow safety */
+    table { width: 100%; table-layout: fixed; }
+    td, th { word-wrap: break-word; }
+
+    /* Pillar cards */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin: var(--space-5) 0;
+    }
+
+    .pillar-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar-card__bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .pillar-card__bar--sage { background: var(--sage); }
+    .pillar-card__bar--amber { background: var(--amber); }
+    .pillar-card__bar--terra { background: var(--terra); }
+    .pillar-card__bar--rose { background: var(--rose); }
+
+    .pillar-card__label {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--deep);
+      margin-top: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+
+    .pillar-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pillar-card__list li {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.55;
+      padding: 2px 0;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .pillar-card__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--deep-30);
+    }
+
+    /* Screen showcase row */
+    .screen-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-4);
+      margin: var(--space-5) 0;
+    }
+
+    .screen-item {
+      text-align: center;
+      min-width: 0;
+    }
+
+    .screen-item img {
+      width: 100%;
+      max-width: 160px;
+      height: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 16px rgba(44, 36, 24, 0.08);
+      margin: 0 auto;
+    }
+
+    .screen-item__label {
+      font-family: var(--font-serif);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--deep);
+      margin-top: var(--space-3);
+      margin-bottom: 2px;
+    }
+
+    .screen-item__desc {
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.45;
+      max-width: 160px;
+      margin: 0 auto;
+    }
+
+    /* Product ecosystem compact */
+    .product-compact {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+
+    .product-compact__col h5 {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: var(--space-2);
+    }
+
+    .product-compact__col p {
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+      line-height: 1.5;
+      margin-bottom: var(--space-1);
+    }
+
+    /* Horizontal flow */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: var(--space-4) 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      font-weight: 600;
+      color: var(--deep);
+      padding: var(--space-1) var(--space-2);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      letter-spacing: 0.02em;
+      max-width: 140px;
+      line-height: 1.35;
+    }
+
+    .flow-step--doctor {
+      background: rgba(184,107,74,0.08);
+      border: 1px solid rgba(184,107,74,0.25);
+      color: var(--terra);
+    }
+
+    .flow-arrow {
+      font-size: 10px;
+      color: var(--amber);
+      padding: 0 4px;
+      opacity: 0.4;
+    }
+
+    /* Outcome pills */
+    .outcome-pills {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-top: var(--space-3);
+    }
+
+    .outcome-pill {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: var(--space-1) var(--space-3);
+      border-radius: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--deep-70);
+    }
+
+    /* Product shelf layout */
+    .shelf-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+      align-items: start;
+      min-width: 0;
+    }
+
+    .shelf-layout__image {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .shelf-layout__image img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 16px rgba(44, 36, 24, 0.08);
+    }
+
+    .shelf-categories {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .shelf-categories li {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--deep-04);
+      font-size: var(--text-sm);
+      color: var(--deep);
+      line-height: 1.5;
+    }
+
+    .shelf-categories li strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 1px;
+    }
+
+    .shelf-categories li span {
+      font-size: var(--text-xs);
+      color: var(--deep-70);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 (pg 10): "The Ecosystem"
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-header__number">[05] The Solution</span>
+      <h1 class="section-header__title" style="font-size: var(--text-3xl);"><strong>One ecosystem.</strong> Four pillars.</h1>
+    </div>
+
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <div class="pillar-card__bar pillar-card__bar--sage"></div>
+        <div class="pillar-card__label">Physical Space</div>
+        <ul class="pillar-card__list">
+          <li>LED red light therapy</li>
+          <li>Functional smoothie bar (six signature potions)</li>
+          <li>Own-brand blends and capsule products</li>
+          <li>Curated third-party supplements</li>
+          <li>Walk-in to member conversion engine</li>
+        </ul>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card__bar pillar-card__bar--amber"></div>
+        <div class="pillar-card__label">Product Brand</div>
+        <ul class="pillar-card__list">
+          <li>Own-brand blends and capsules</li>
+          <li>Curated third-party supplements</li>
+          <li>Outcome-organized catalog</li>
+        </ul>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card__bar pillar-card__bar--terra"></div>
+        <div class="pillar-card__label">App and Membership Platform</div>
+        <ul class="pillar-card__list">
+          <li>Booking, tracking, commerce, community</li>
+          <li>AI concierge and personalized protocols</li>
+          <li>Biomarker dashboard and digital twin</li>
+        </ul>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-card__bar pillar-card__bar--rose"></div>
+        <div class="pillar-card__label">Events and Culture</div>
+        <ul class="pillar-card__list">
+          <li>Wellness events and science talks</li>
+          <li>Community circles and challenges</li>
+          <li>Cultural authority through curation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-7);">
+      <div class="pull-quote" style="margin: 0;">
+        <div class="pull-quote__text" style="font-size: var(--text-lg);">Every pillar generates data. Every data point feeds the system. Every cycle makes the next one smarter.</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">10</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       PAGE 2 (pg 11): "Book. Arrive. Experience."
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The Physical Journey</div>
+    <h2 class="mb-4"><strong>Book. Arrive. Experience.</strong></h2>
+
+    <div class="screen-row">
+      <div class="screen-item">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking">
+        <div class="screen-item__label">Book</div>
+        <div class="screen-item__desc">LED session and smoothie, pre-ordered in the app</div>
+      </div>
+      <div class="screen-item">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu">
+        <div class="screen-item__label">Customize</div>
+        <div class="screen-item__desc">Six potions (EUR 7 to 11), five boosts (+EUR 2)</div>
+      </div>
+      <div class="screen-item">
+        <img src="../screens/S05-Session-Active.png" alt="Active Session">
+        <div class="screen-item__label">Experience</div>
+        <div class="screen-item__desc">20 minutes of LED therapy with a functional smoothie</div>
+      </div>
+    </div>
+
+    <div class="sep mb-4 mt-4"></div>
+
+    <div class="product-compact">
+      <div class="product-compact__col">
+        <h5>Smoothie Bar</h5>
+        <p>N&#176;1 The Radiance Potion: Mango, passion fruit, banana, coconut milk, vanilla</p>
+        <p>N&#176;2 The Clarity Potion: Ceremonial matcha, banana, oat milk, honey, spinach</p>
+        <p>N&#176;3 The Stillness Potion: Raw cacao, banana, almond butter, oat milk, cinnamon, date</p>
+        <p>N&#176;4 The Repair Potion: Pineapple, fresh turmeric, fresh ginger, coconut water, banana, black pepper</p>
+        <p>N&#176;5 The Balance Potion: Acai, blueberry, banana, coconut yogurt, apple</p>
+        <p>N&#176;6 The Clean Potion: Young coconut, coconut water, banana, lime, vanilla, sea salt</p>
+      </div>
+      <div class="product-compact__col">
+        <h5>Functional Boosts</h5>
+        <p>Collagen peptides</p>
+        <p>Lion's mane extract</p>
+        <p>Ashwagandha KSM-66</p>
+        <p>MCT oil powder</p>
+        <p>Vitamin D3 + K2</p>
+      </div>
+      <div class="product-compact__col">
+        <h5>LED Therapy</h5>
+        <p><strong>Glow</strong> (630-660nm): skin health, collagen synthesis, circulation</p>
+        <p><strong>Recovery</strong> (810-850nm): deep tissue repair, inflammation, muscle recovery</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">11</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       PAGE 3 (pg 12): "Browse. Track. Return."
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">The Digital Loop</div>
+    <h2 class="mb-4"><strong>Browse. Track. Return.</strong></h2>
+
+    <div class="screen-row">
+      <div class="screen-item">
+        <img src="../screens/S06-Shop-by-Outcome.png" alt="Shop by Outcome">
+        <div class="screen-item__label">Browse</div>
+        <div class="screen-item__desc">Products organized by outcome, not ingredient</div>
+      </div>
+      <div class="screen-item">
+        <img src="../screens/S01-Home-Dashboard.png" alt="Home Dashboard">
+        <div class="screen-item__label">Track</div>
+        <div class="screen-item__desc">Dashboard shows journey progress and wellness scores</div>
+      </div>
+      <div class="screen-item">
+        <img src="../screens/S13-Replenishment.png" alt="Smart Replenishment">
+        <div class="screen-item__label">Return</div>
+        <div class="screen-item__desc">Smart replenishment reminds and reorders automatically</div>
+      </div>
+    </div>
+
+    <div class="sep mb-4 mt-4"></div>
+
+    <div class="section-label mb-3">The Data Feedback Loop</div>
+
+    <div class="prose mb-4">
+      <p style="font-size: var(--text-sm); line-height: 1.6; color: var(--deep-70);">The entire system is built around a feedback loop that connects physical and digital layers. This is the core contribution: a continuous data-driven feedback loop.</p>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-step">1. AI Glow Scan + Goal Selection</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">2. Personalised Protocol Created</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step flow-step--doctor">2A. Doctor validates and enhances protocol (CGM users)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">3. Booking (LED + smoothie pre-order)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">4. Experience (physical visit)</div>
+    </div>
+    <div class="flow-row" style="margin-top: var(--space-2);">
+      <div class="flow-step">5. Data Captured (mood, energy, skin, purchases)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step flow-step--doctor">5A. CGM Glucose Stream (continuous biometric data)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">6. Insights Generated (patterns + glucose correlations)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">7. Recommendations (replenishment, events, protocol adjust)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step flow-step--doctor">7A. Doctor Review (medical-grade adjustment based on CGM + all data)</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">8. User Re-Entry (smarter protocol, continuous learning)</div>
+    </div>
+
+    <div class="callout callout--amber mt-4">
+      <div class="callout__body" style="font-size: var(--text-xs); line-height: 1.55;">
+        The doctor does not slow down the loop. Steps 2A and 7A operate asynchronously. The user continues through the loop without interruption while the doctor reviews data and refines the protocol in the background. When an update is ready, the user receives a notification: "Dr. Jarmoukli has updated your protocol. View your new wellness plan." This architecture transforms alche from a simple wellness app into a medical-grade wellness intelligence platform.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">12</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       PAGE 4 (pg 13): "The Product Shelf"
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-label">What You Can Buy</div>
+    <h2 class="mb-5"><strong>The Product Shelf</strong></h2>
+
+    <div class="shelf-layout">
+      <div>
+        <ul class="shelf-categories">
+          <li>
+            <strong>Own-brand blends</strong>
+            <span>300g pouches, 5 varieties. Matched to outcome categories.</span>
+          </li>
+          <li>
+            <strong>Single ingredients</strong>
+            <span>Collagen, matcha, spirulina, lion's mane, ashwagandha.</span>
+          </li>
+          <li>
+            <strong>Capsules</strong>
+            <span>Omega-3, NAC, CoQ10, NR, probiotics, glutathione.</span>
+          </li>
+          <li>
+            <strong>Curated third-party products</strong>
+            <span>Vetted supplements and functional tools from partner brands.</span>
+          </li>
+        </ul>
+
+        <div class="sep mt-5 mb-4"></div>
+
+        <div class="section-label mb-3">Outcome Categories</div>
+        <div class="outcome-pills">
+          <span class="outcome-pill">Glow</span>
+          <span class="outcome-pill">Energy</span>
+          <span class="outcome-pill">Calm</span>
+          <span class="outcome-pill">Sleep</span>
+          <span class="outcome-pill">Recovery</span>
+          <span class="outcome-pill">Anti-Inflammatory</span>
+        </div>
+
+        <p class="text-xs text-deep-70 mt-4" style="line-height: 1.6;">Products are organized by what you want to achieve, not by ingredient name. Every item maps to at least one outcome. The app recommends products based on user goals, session history, and biomarker data.</p>
+      </div>
+
+      <div class="shelf-layout__image">
+        <img src="../screens/S06-Shop-by-Outcome.png" alt="Shop by Outcome">
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">13</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

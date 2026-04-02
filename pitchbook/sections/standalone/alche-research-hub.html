@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Hub — alche P&L Decisions</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --black: #1A1A1A;
+  --red: #8B1A1A;
+  --red-light: rgba(139, 26, 26, 0.08);
+  --red-border: rgba(139, 26, 26, 0.2);
+  --gray: #666666;
+  --gray-light: #999999;
+  --border: #E0E0E0;
+  --card: #FAFAFA;
+  --card-hover: #F5F5F5;
+  --amber: #B8860B;
+  --amber-bg: rgba(184, 134, 11, 0.08);
+  --amber-border: rgba(184, 134, 11, 0.25);
+  --green: #2E7D32;
+  --green-bg: rgba(46, 125, 50, 0.08);
+  --green-border: rgba(46, 125, 50, 0.25);
+  --sidebar-w: 260px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+.mono { font-family: 'Space Mono', monospace; }
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: 0.02em;
+}
+
+.sidebar-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+  margin-top: 2px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-item:hover { background: var(--card); }
+.sidebar-item.active { background: var(--red-light); border-left-color: var(--red); }
+
+.sidebar-priority {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--gray-light);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.sidebar-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.sidebar-dot.not-started { background: var(--border); }
+.sidebar-dot.in-progress { background: var(--amber); }
+.sidebar-dot.complete { background: var(--green); }
+
+.sidebar-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-footer .btn { width: 100%; justify-content: center; font-size: 11px; }
+
+/* MAIN AREA */
+.main {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+}
+
+/* TOP BAR */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 40px;
+}
+
+.progress-row {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.progress-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.progress-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.progress-label strong { color: var(--black); font-weight: 600; }
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.progress-fill.research { background: var(--red); }
+.progress-fill.decisions { background: var(--green); }
+
+.progress-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--black);
+  font-weight: 700;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* CONTAINER */
+.content {
+  padding: 40px;
+  max-width: 860px;
+}
+
+/* DEPENDENCY GRAPH */
+.dep-graph {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.dep-graph-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+  margin-bottom: 16px;
+}
+
+.dep-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.dep-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.dep-row .dep-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  width: 22px;
+  flex-shrink: 0;
+}
+
+.dep-row .dep-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dep-arrows {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.dep-arrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.dep-arrow.blocks {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+
+.dep-arrow.blocked-by {
+  background: var(--amber-bg);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+}
+
+.dep-arrow.none {
+  color: var(--gray-light);
+  font-style: italic;
+}
+
+/* RESEARCH PAGE CARD */
+.research-page {
+  margin-bottom: 32px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.research-page:target,
+.research-page.highlighted {
+  box-shadow: 0 0 0 2px var(--red-border);
+}
+
+.rp-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  background: var(--card);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s;
+}
+
+.rp-header:hover { background: var(--card-hover); }
+
+.rp-chevron {
+  font-size: 14px;
+  color: var(--gray-light);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+}
+
+.research-page.expanded .rp-chevron { transform: rotate(90deg); }
+
+.rp-priority {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--white);
+  background: var(--red);
+  padding: 2px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.rp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--black);
+  flex: 1;
+  line-height: 1.2;
+}
+
+.rp-owner {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--gray);
+  flex-shrink: 0;
+}
+
+.rp-status-select {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+  cursor: pointer;
+  background: var(--white);
+  outline: none;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+}
+
+.rp-status-select.not-started { color: var(--gray); border-color: var(--border); }
+.rp-status-select.in-progress { color: var(--amber); border-color: var(--amber-border); background-color: var(--amber-bg); }
+.rp-status-select.complete { color: var(--green); border-color: var(--green-border); background-color: var(--green-bg); }
+
+.rp-body {
+  display: none;
+  padding: 0 24px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.research-page.expanded .rp-body { display: block; }
+
+/* SECTIONS INSIDE RESEARCH PAGE */
+.rp-section {
+  margin-top: 24px;
+}
+
+.rp-section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.rp-deliverable {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--black);
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* DEPENDENCIES DISPLAY */
+.dep-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dep-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.dep-tag.blocks-tag {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+
+.dep-tag.blocked-tag {
+  background: var(--amber-bg);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+}
+
+.dep-note {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 8px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* DECISION CARDS */
+.decision-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+
+.decision-card.decided { border-color: var(--green-border); }
+
+.dc-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dc-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red);
+  padding: 2px 6px;
+  background: var(--red-light);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dc-question {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+  flex: 1;
+  line-height: 1.4;
+}
+
+.dc-status-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dc-status-badge.pending {
+  color: var(--red);
+  border: 1px solid var(--red-border);
+  background: var(--white);
+}
+
+.dc-status-badge.decided {
+  color: var(--white);
+  background: var(--green);
+  border: 1px solid var(--green);
+}
+
+.dc-form {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.decision-card.decided .dc-form { display: block; }
+
+.dc-form label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+
+.dc-form label:first-child { margin-top: 0; }
+
+.dc-form textarea {
+  width: 100%;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--black);
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.dc-form textarea:focus { border-color: var(--red); }
+
+.dc-form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.dc-form-row > div { flex: 1; }
+
+.dc-form input[type="date"],
+.dc-form select {
+  width: 100%;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.dc-form input[type="date"]:focus,
+.dc-form select:focus { border-color: var(--red); }
+
+/* NOTES TEXTAREA */
+.rp-notes {
+  width: 100%;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--black);
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.rp-notes:focus { border-color: var(--red); }
+
+.rp-notes::placeholder { color: var(--gray-light); }
+
+/* COPY BUTTON INSIDE PAGE */
+.rp-copy-btn {
+  margin-top: 20px;
+}
+
+/* BUTTONS */
+.btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--black);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn:hover { border-color: var(--red); color: var(--red); }
+
+.btn-dark {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-dark:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+
+.btn-sm { font-size: 11px; padding: 5px 10px; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  z-index: 9999;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* PRINT */
+@media print {
+  .sidebar, .topbar, .toast, .btn, .rp-copy-btn { display: none !important; }
+  .main { margin-left: 0 !important; }
+  .research-page { break-inside: avoid; }
+  .rp-body { display: block !important; }
+  .content { padding: 20px; max-width: 100%; }
+  .dep-graph { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-wordmark">alche</div>
+    <div class="sidebar-label">Research Hub</div>
+  </div>
+  <nav class="sidebar-nav" id="sidebarNav"></nav>
+  <div class="sidebar-footer">
+    <button class="btn btn-sm" onclick="copyAllDecisions()">Copy All Decisions</button>
+    <button class="btn btn-sm" onclick="copyStatusReport()">Copy Status Report</button>
+    <button class="btn btn-sm" onclick="exportTSV()">Export TSV</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="progress-row">
+      <div class="progress-item">
+        <span class="progress-label"><strong id="researchCount">0</strong> of 8 Research Tasks Complete</span>
+        <div class="progress-track"><div class="progress-fill research" id="researchBar" style="width:0%"></div></div>
+        <span class="progress-count mono" id="researchPct">0%</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-label"><strong id="decisionCount">0</strong> of 22 Decisions Made</span>
+        <div class="progress-track"><div class="progress-fill decisions" id="decisionBar" style="width:0%"></div></div>
+        <span class="progress-count mono" id="decisionPct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <!-- DEPENDENCY GRAPH -->
+    <div class="dep-graph">
+      <div class="dep-graph-title">Dependency Map</div>
+      <div class="dep-grid" id="depGraph"></div>
+    </div>
+
+    <!-- RESEARCH PAGES -->
+    <div id="researchPages"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA — 8 Research Tasks, 22 Decisions
+   ═══════════════════════════════════════════════ */
+const RESEARCH = [
+  {
+    id: 'R1', title: 'CGM Unit Economics', priority: 1, owner: 'Daria',
+    deliverable: 'Finalize cgm_analysis_cost doc into unit economics model. Determine resale vs referral vs white-label.',
+    blocks: ['R4', 'R7'],
+    blockedBy: [],
+    depNote: 'Blocks R4 (Restaurant \u2014 needs to know full revenue line count), R7 (Waste \u2014 if CGM includes physical sensors, waste applies).',
+    decisions: [
+      { id: 'D1', question: 'CGM Business Model \u2014 Resale vs Referral vs White-label? (affects Revenue Line 3 and COGS-CGM Sensors)' },
+      { id: 'D2', question: 'CGM Y1 volume \u2014 How many units in Year 1?' },
+      { id: 'D3', question: 'CGM Sensor Sourcing \u2014 Abbott FreeStyle Libre vs Dexcom?' },
+      { id: 'D4', question: 'CGM API Integration Cost estimate' }
+    ]
+  },
+  {
+    id: 'R2', title: 'Supplier Quotes for Products', priority: 2, owner: 'Timu',
+    deliverable: 'Get 3+ supplier quotes for "potions" first batch. Include MOQ, lead time, payment terms, waste policy.',
+    blocks: ['R7'],
+    blockedBy: [],
+    depNote: 'Blocks R7 (Waste \u2014 need product categories to estimate waste). Informs wholesale COGS validation.',
+    decisions: [
+      { id: 'D5', question: 'First batch supplier \u2014 Which supplier for initial order?' },
+      { id: 'D6', question: 'Product pricing validation \u2014 Does 52% wholesale hold with real quotes?' },
+      { id: 'D7', question: 'Inventory model \u2014 Pre-order vs maintain stock? MOQ implications?' }
+    ]
+  },
+  {
+    id: 'R3', title: 'HWG Legal Opinion', priority: 3, owner: 'External',
+    deliverable: 'Written legal opinion on HWG compliance for doctor booking commission model.',
+    blocks: [],
+    blockedBy: [],
+    depNote: 'If HWG blocks commission, Line 6 may need to pivot to SaaS model (like Doctolib at EUR 50\u2013200/mo) or be dropped. No dependencies on other research items.',
+    decisions: [
+      { id: 'D8', question: 'Doctor revenue model \u2014 Commission vs SaaS to doctors vs lead-gen?' },
+      { id: 'D9', question: 'Doctor Booking Line go/no-go \u2014 Is Revenue Line 6 legally viable?' }
+    ]
+  },
+  {
+    id: 'R4', title: 'Restaurant Partnership Validation', priority: 4, owner: 'Daria',
+    deliverable: 'Manually test with 3 Berlin restaurants. Document commission willingness, menu analysis cost, and user interest.',
+    blocks: [],
+    blockedBy: ['R1'],
+    depNote: 'Blocked by R1 (need CGM decision to know total revenue line count \u2014 investor optics of 6 lines with no CTO). Investor warning: "Prove core subscription works before restaurant partnerships."',
+    decisions: [
+      { id: 'D10', question: 'Commission rate \u2014 8\u201315% range, what will restaurants accept?' },
+      { id: 'D11', question: 'Launch scale \u2014 3\u20135 vs 10 restaurants at launch?' },
+      { id: 'D12', question: 'Analysis method \u2014 In-house vs outsourced nutritional analysis (EUR 200\u2013500/restaurant)?' },
+      { id: 'D13', question: 'Restaurant Line go/no-go \u2014 Is Revenue Line 5 viable at pre-seed?' }
+    ]
+  },
+  {
+    id: 'R5', title: 'Claude AI Classification', priority: 5, owner: 'Timu',
+    deliverable: 'Map all AI use cases to user-facing (COGS) vs internal (OpEx). Document scaling cost model.',
+    blocks: [],
+    blockedBy: [],
+    depNote: 'Affects gross margin calculation. No hard blockers, but should be resolved before finalizing P&L for pitch book.',
+    decisions: [
+      { id: 'D14', question: 'AI cost classification \u2014 COGS (user-facing features) or OpEx (internal tooling)?' },
+      { id: 'D15', question: 'AI cost scaling model \u2014 How does EUR 210/mo scale with users? Step function or linear?' }
+    ]
+  },
+  {
+    id: 'R6', title: 'UX Design Scope', priority: 6, owner: 'Timu',
+    deliverable: 'Define UX deliverables, freelancer vs agency decision, classify as COGS or OpEx.',
+    blocks: [],
+    blockedBy: [],
+    depNote: 'No hard blockers. Informs OpEx total and hiring timeline.',
+    decisions: [
+      { id: 'D16', question: 'UX budget \u2014 EUR 600\u20132,000/mo range, what\u2019s the actual scope?' },
+      { id: 'D17', question: 'UX sourcing \u2014 Freelancer vs agency?' },
+      { id: 'D18', question: 'UX classification \u2014 COGS (product UX) or OpEx (general design)?' }
+    ]
+  },
+  {
+    id: 'R7', title: 'Product Waste Analysis', priority: 7, owner: 'Daria',
+    deliverable: 'Category-level waste data. Which product types have highest spoilage risk? Define expiry management SOP.',
+    blocks: [],
+    blockedBy: ['R1', 'R2'],
+    depNote: 'Blocked by R1 (CGM sensor waste) and R2 (need product categories from supplier quotes). Validates the 5% Y1 / 3% Y2 waste assumptions.',
+    decisions: [
+      { id: 'D19', question: 'Waste rate by category \u2014 Different rates for perishables vs supplements?' },
+      { id: 'D20', question: 'Expiry management process \u2014 How to track and manage approaching expiry dates?' }
+    ]
+  },
+  {
+    id: 'R8', title: 'Software License Audit', priority: 8, owner: 'Timu',
+    deliverable: 'List all SaaS tools needed, cost per tool, phased rollout plan. Validate EUR 600/mo estimate.',
+    blocks: [],
+    blockedBy: [],
+    depNote: 'No hard blockers. Validates Management & Software OpEx line.',
+    decisions: [
+      { id: 'D21', question: 'Software stack \u2014 Which tools for analytics, CRM, email, project management?' },
+      { id: 'D22', question: 'Phased rollout \u2014 Which tools at launch vs which after M6/M12?' }
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════════
+   STATE MANAGEMENT (localStorage)
+   ═══════════════════════════════════════════════ */
+const LS = {
+  get(key, fallback) {
+    try { const v = localStorage.getItem('alche-research-' + key); return v !== null ? JSON.parse(v) : fallback; }
+    catch { return fallback; }
+  },
+  set(key, val) {
+    try { localStorage.setItem('alche-research-' + key, JSON.stringify(val)); } catch {}
+  }
+};
+
+function getStatus(rId) { return LS.get('status-' + rId, 'not-started'); }
+function setStatus(rId, val) { LS.set('status-' + rId, val); }
+function getNotes(rId) { return LS.get('notes-' + rId, ''); }
+function setNotes(rId, val) { LS.set('notes-' + rId, val); }
+function getDecision(dId) { return LS.get('decision-' + dId, { status: 'pending', text: '', date: '', by: 'Pending' }); }
+function setDecision(dId, val) { LS.set('decision-' + dId, val); }
+
+/* ═══════════════════════════════════════════════
+   RENDER
+   ═══════════════════════════════════════════════ */
+let activeResearch = null;
+
+function render() {
+  renderSidebar();
+  renderDepGraph();
+  renderPages();
+  updateProgress();
+}
+
+function renderSidebar() {
+  const nav = document.getElementById('sidebarNav');
+  nav.innerHTML = RESEARCH.map(r => {
+    const st = getStatus(r.id);
+    return `<div class="sidebar-item ${activeResearch === r.id ? 'active' : ''}" data-rid="${r.id}" onclick="scrollToResearch('${r.id}')">
+      <span class="sidebar-priority">P${r.priority}</span>
+      <span class="sidebar-dot ${st}"></span>
+      <span class="sidebar-title">${r.title}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderDepGraph() {
+  const el = document.getElementById('depGraph');
+  el.innerHTML = RESEARCH.map(r => {
+    let arrows = '';
+    if (r.blocks.length) {
+      arrows += r.blocks.map(b => `<span class="dep-arrow blocks">Blocks ${b}</span>`).join('');
+    }
+    if (r.blockedBy.length) {
+      arrows += r.blockedBy.map(b => `<span class="dep-arrow blocked-by">Blocked by ${b}</span>`).join('');
+    }
+    if (!r.blocks.length && !r.blockedBy.length) {
+      arrows = '<span class="dep-arrow none">Independent</span>';
+    }
+    const st = getStatus(r.id);
+    return `<div class="dep-row">
+      <span class="dep-id">${r.id}</span>
+      <span class="sidebar-dot ${st}" style="width:6px;height:6px;"></span>
+      <span class="dep-name">${r.title}</span>
+      <div class="dep-arrows">${arrows}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderPages() {
+  const el = document.getElementById('researchPages');
+  el.innerHTML = RESEARCH.map(r => {
+    const st = getStatus(r.id);
+    const expanded = activeResearch === r.id;
+    const notes = getNotes(r.id);
+
+    const decisionsHtml = r.decisions.map(d => {
+      const dec = getDecision(d.id);
+      const isDecided = dec.status === 'decided';
+      return `<div class="decision-card ${isDecided ? 'decided' : ''}" id="dc-${d.id}">
+        <div class="dc-header">
+          <span class="dc-id">${d.id}</span>
+          <span class="dc-question">${d.question}</span>
+          <span class="dc-status-badge ${isDecided ? 'decided' : 'pending'}" onclick="toggleDecisionStatus('${d.id}')">${isDecided ? 'Decided' : 'Pending'}</span>
+        </div>
+        <div class="dc-form">
+          <label>Decision Made</label>
+          <textarea placeholder="What was decided..." onchange="saveDecisionField('${d.id}','text',this.value)" oninput="saveDecisionField('${d.id}','text',this.value)">${dec.text || ''}</textarea>
+          <div class="dc-form-row">
+            <div>
+              <label>Date</label>
+              <input type="date" value="${dec.date || ''}" onchange="saveDecisionField('${d.id}','date',this.value)">
+            </div>
+            <div>
+              <label>Decided By</label>
+              <select onchange="saveDecisionField('${d.id}','by',this.value)">
+                <option value="Pending" ${dec.by === 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Timu" ${dec.by === 'Timu' ? 'selected' : ''}>Timu</option>
+                <option value="Daria" ${dec.by === 'Daria' ? 'selected' : ''}>Daria</option>
+                <option value="Both" ${dec.by === 'Both' ? 'selected' : ''}>Both</option>
+                <option value="External" ${dec.by === 'External' ? 'selected' : ''}>External</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    let depHtml = '';
+    if (r.blocks.length || r.blockedBy.length) {
+      depHtml = '<div class="dep-tags">';
+      depHtml += r.blocks.map(b => `<span class="dep-tag blocks-tag">Blocks ${b}</span>`).join('');
+      depHtml += r.blockedBy.map(b => `<span class="dep-tag blocked-tag">Blocked by ${b}</span>`).join('');
+      depHtml += '</div>';
+    }
+    if (r.depNote) {
+      depHtml += `<div class="dep-note">${r.depNote}</div>`;
+    }
+
+    return `<div class="research-page ${expanded ? 'expanded' : ''}" id="${r.id}">
+      <div class="rp-header" onclick="toggleExpand('${r.id}')">
+        <span class="rp-chevron">\u25B6</span>
+        <span class="rp-priority">P${r.priority}</span>
+        <span class="rp-title">${r.title}</span>
+        <span class="rp-owner">${r.owner}</span>
+        <select class="rp-status-select ${st}" onclick="event.stopPropagation()" onchange="changeStatus('${r.id}', this.value)">
+          <option value="not-started" ${st === 'not-started' ? 'selected' : ''}>Not Started</option>
+          <option value="in-progress" ${st === 'in-progress' ? 'selected' : ''}>In Progress</option>
+          <option value="complete" ${st === 'complete' ? 'selected' : ''}>Complete</option>
+        </select>
+      </div>
+      <div class="rp-body">
+        <div class="rp-section">
+          <div class="rp-section-label">Deliverable</div>
+          <div class="rp-deliverable">${r.deliverable}</div>
+        </div>
+
+        ${depHtml ? `<div class="rp-section">
+          <div class="rp-section-label">Dependencies</div>
+          ${depHtml}
+        </div>` : ''}
+
+        <div class="rp-section">
+          <div class="rp-section-label">Connected Decisions (${r.decisions.length})</div>
+          ${decisionsHtml}
+        </div>
+
+        <div class="rp-section">
+          <div class="rp-section-label">Notes</div>
+          <textarea class="rp-notes" placeholder="Add research notes here..." oninput="saveNotes('${r.id}', this.value)">${notes}</textarea>
+        </div>
+
+        <div class="rp-copy-btn">
+          <button class="btn btn-sm" onclick="copyResearchPage('${r.id}')">Copy This Page</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateProgress() {
+  let rComplete = 0;
+  RESEARCH.forEach(r => { if (getStatus(r.id) === 'complete') rComplete++; });
+  let dComplete = 0;
+  RESEARCH.forEach(r => { r.decisions.forEach(d => { if (getDecision(d.id).status === 'decided') dComplete++; }); });
+
+  document.getElementById('researchCount').textContent = rComplete;
+  document.getElementById('researchBar').style.width = (rComplete / 8 * 100) + '%';
+  document.getElementById('researchPct').textContent = Math.round(rComplete / 8 * 100) + '%';
+
+  document.getElementById('decisionCount').textContent = dComplete;
+  document.getElementById('decisionBar').style.width = (dComplete / 22 * 100) + '%';
+  document.getElementById('decisionPct').textContent = Math.round(dComplete / 22 * 100) + '%';
+}
+
+/* ═══════════════════════════════════════════════
+   INTERACTIONS
+   ═══════════════════════════════════════════════ */
+function scrollToResearch(rId) {
+  activeResearch = rId;
+  render();
+  const el = document.getElementById(rId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.classList.add('highlighted');
+    setTimeout(() => el.classList.remove('highlighted'), 1500);
+  }
+}
+
+function toggleExpand(rId) {
+  if (activeResearch === rId) {
+    activeResearch = null;
+  } else {
+    activeResearch = rId;
+  }
+  render();
+}
+
+function changeStatus(rId, val) {
+  setStatus(rId, val);
+  renderSidebar();
+  renderDepGraph();
+  updateProgress();
+  // update the select styling in place
+  const page = document.getElementById(rId);
+  if (page) {
+    const sel = page.querySelector('.rp-status-select');
+    if (sel) {
+      sel.className = 'rp-status-select ' + val;
+    }
+  }
+}
+
+function toggleDecisionStatus(dId) {
+  const dec = getDecision(dId);
+  if (dec.status === 'pending') {
+    dec.status = 'decided';
+    if (!dec.date) dec.date = new Date().toISOString().split('T')[0];
+  } else {
+    dec.status = 'pending';
+  }
+  setDecision(dId, dec);
+  // re-render the card
+  const card = document.getElementById('dc-' + dId);
+  if (card) {
+    const badge = card.querySelector('.dc-status-badge');
+    const form = card.querySelector('.dc-form');
+    if (dec.status === 'decided') {
+      card.classList.add('decided');
+      badge.className = 'dc-status-badge decided';
+      badge.textContent = 'Decided';
+      form.style.display = 'block';
+    } else {
+      card.classList.remove('decided');
+      badge.className = 'dc-status-badge pending';
+      badge.textContent = 'Pending';
+      form.style.display = 'none';
+    }
+  }
+  updateProgress();
+}
+
+function saveDecisionField(dId, field, val) {
+  const dec = getDecision(dId);
+  dec[field] = val;
+  setDecision(dId, dec);
+}
+
+function saveNotes(rId, val) {
+  setNotes(rId, val);
+}
+
+/* ═══════════════════════════════════════════════
+   COPY FUNCTIONS
+   ═══════════════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {}).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function copyResearchPage(rId) {
+  const r = RESEARCH.find(x => x.id === rId);
+  if (!r) return;
+  const st = getStatus(r.id);
+  const notes = getNotes(r.id);
+  let text = `${r.id}: ${r.title}\n`;
+  text += `Priority: P${r.priority} | Owner: ${r.owner} | Status: ${st.replace('-', ' ')}\n`;
+  text += `Deliverable: ${r.deliverable}\n\n`;
+
+  if (r.blocks.length || r.blockedBy.length) {
+    text += 'Dependencies:\n';
+    if (r.blocks.length) text += `  Blocks: ${r.blocks.join(', ')}\n`;
+    if (r.blockedBy.length) text += `  Blocked by: ${r.blockedBy.join(', ')}\n`;
+    text += '\n';
+  }
+
+  text += 'Decisions:\n';
+  r.decisions.forEach(d => {
+    const dec = getDecision(d.id);
+    text += `  ${d.id}: ${d.question}\n`;
+    text += `    Status: ${dec.status}\n`;
+    if (dec.status === 'decided') {
+      if (dec.text) text += `    Decision: ${dec.text}\n`;
+      if (dec.date) text += `    Date: ${dec.date}\n`;
+      if (dec.by && dec.by !== 'Pending') text += `    Decided by: ${dec.by}\n`;
+    }
+  });
+
+  if (notes) {
+    text += `\nNotes:\n${notes}\n`;
+  }
+
+  copyToClipboard(text);
+  showToast('Copied ' + r.id + ' to clipboard');
+}
+
+function copyAllDecisions() {
+  let text = 'ALCHE P&L DECISIONS \u2014 Status Report\n';
+  text += '='.repeat(50) + '\n\n';
+
+  RESEARCH.forEach(r => {
+    text += `\u2500\u2500 ${r.id}: ${r.title} (${getStatus(r.id).replace('-', ' ').toUpperCase()}) \u2500\u2500\n`;
+    r.decisions.forEach(d => {
+      const dec = getDecision(d.id);
+      const icon = dec.status === 'decided' ? '\u2713' : '\u2022';
+      text += `  ${icon} ${d.id}: ${d.question}\n`;
+      if (dec.status === 'decided') {
+        if (dec.text) text += `      \u2192 ${dec.text}\n`;
+        if (dec.date) text += `      Date: ${dec.date}`;
+        if (dec.by && dec.by !== 'Pending') text += ` | By: ${dec.by}`;
+        text += '\n';
+      }
+    });
+    text += '\n';
+  });
+
+  copyToClipboard(text);
+  showToast('Copied all 22 decisions to clipboard');
+}
+
+function copyStatusReport() {
+  let rComplete = 0;
+  RESEARCH.forEach(r => { if (getStatus(r.id) === 'complete') rComplete++; });
+  let dComplete = 0;
+  let dTotal = 0;
+  RESEARCH.forEach(r => { r.decisions.forEach(d => { dTotal++; if (getDecision(d.id).status === 'decided') dComplete++; }); });
+
+  let text = 'ALCHE RESEARCH HUB \u2014 Full Status Report\n';
+  text += '='.repeat(50) + '\n';
+  text += `Generated: ${new Date().toISOString().split('T')[0]}\n\n`;
+  text += `PROGRESS: ${rComplete}/8 Research Tasks Complete | ${dComplete}/${dTotal} Decisions Made\n\n`;
+
+  RESEARCH.forEach(r => {
+    const st = getStatus(r.id);
+    const notes = getNotes(r.id);
+    text += `${'='.repeat(50)}\n`;
+    text += `${r.id}: ${r.title}\n`;
+    text += `Priority: P${r.priority} | Owner: ${r.owner} | Status: ${st.replace(/-/g, ' ').toUpperCase()}\n`;
+    text += `Deliverable: ${r.deliverable}\n`;
+    if (r.blocks.length) text += `Blocks: ${r.blocks.join(', ')}\n`;
+    if (r.blockedBy.length) text += `Blocked by: ${r.blockedBy.join(', ')}\n`;
+    text += '\nDecisions:\n';
+    r.decisions.forEach(d => {
+      const dec = getDecision(d.id);
+      const icon = dec.status === 'decided' ? '\u2713' : '\u2022';
+      text += `  ${icon} ${d.id}: ${d.question}\n`;
+      if (dec.status === 'decided') {
+        if (dec.text) text += `      Decision: ${dec.text}\n`;
+        const meta = [];
+        if (dec.date) meta.push('Date: ' + dec.date);
+        if (dec.by && dec.by !== 'Pending') meta.push('By: ' + dec.by);
+        if (meta.length) text += `      ${meta.join(' | ')}\n`;
+      }
+    });
+    if (notes) text += `\nNotes:\n${notes}\n`;
+    text += '\n';
+  });
+
+  copyToClipboard(text);
+  showToast('Copied full status report to clipboard');
+}
+
+function exportTSV() {
+  let rows = ['Research ID\tResearch Title\tPriority\tOwner\tResearch Status\tDecision ID\tDecision Question\tDecision Status\tDecision Text\tDecision Date\tDecided By'];
+
+  RESEARCH.forEach(r => {
+    const st = getStatus(r.id);
+    r.decisions.forEach(d => {
+      const dec = getDecision(d.id);
+      rows.push([
+        r.id, r.title, 'P' + r.priority, r.owner, st.replace(/-/g, ' '),
+        d.id, d.question.replace(/\t/g, ' '), dec.status,
+        (dec.text || '').replace(/\t/g, ' ').replace(/\n/g, ' '),
+        dec.date || '', dec.by || ''
+      ].join('\t'));
+    });
+  });
+
+  copyToClipboard(rows.join('\n'));
+  showToast('Copied TSV to clipboard \u2014 paste into spreadsheet');
+}
+
+/* ═══════════════════════════════════════════════
+   KEYBOARD NAVIGATION
+   ═══════════════════════════════════════════════ */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    activeResearch = null;
+    render();
+    return;
+  }
+
+  // Only arrow keys if not inside a text field
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    const ids = RESEARCH.map(r => r.id);
+    let idx = activeResearch ? ids.indexOf(activeResearch) : -1;
+    if (e.key === 'ArrowDown') {
+      idx = idx < ids.length - 1 ? idx + 1 : 0;
+    } else {
+      idx = idx > 0 ? idx - 1 : ids.length - 1;
+    }
+    scrollToResearch(ids[idx]);
+  }
+});
+
+/* ═══════════════════════════════════════════════
+   SCROLL SPY — highlight sidebar on scroll
+   ═══════════════════════════════════════════════ */
+let scrollSpyRAF = null;
+function onScrollSpy() {
+  if (scrollSpyRAF) return;
+  scrollSpyRAF = requestAnimationFrame(() => {
+    scrollSpyRAF = null;
+    const pages = document.querySelectorAll('.research-page');
+    let closestId = null;
+    let closestDist = Infinity;
+    pages.forEach(p => {
+      const rect = p.getBoundingClientRect();
+      const dist = Math.abs(rect.top - 80);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestId = p.id;
+      }
+    });
+    if (closestId && closestId !== activeResearch) {
+      // Update sidebar highlight without full re-render
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.rid === closestId);
+      });
+    }
+  });
+}
+document.addEventListener('scroll', onScrollSpy, { passive: true });
+
+/* ═══════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════ */
+render();
+</script>
+</body>
+</html>

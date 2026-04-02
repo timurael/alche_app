@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Traction</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="_design-system.css">
+
+  <style>
+    .traction-card { padding: var(--space-4); margin-bottom: var(--space-3); }
+    .traction-card__eyebrow { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: var(--space-2); }
+    .traction-card__body { font-family: var(--font-sans); font-size: var(--text-sm); color: var(--deep-70); line-height: 1.55; }
+    .finding-item { padding: var(--space-2) 0; border-bottom: 1px solid var(--deep-04); }
+    .finding-item:last-child { border-bottom: none; }
+    .finding-item__number { font-family: var(--font-mono); font-size: 9px; font-weight: 700; color: var(--amber); letter-spacing: 0.05em; margin-bottom: 2px; display: block; }
+    .finding-item__text { font-family: var(--font-sans); font-size: var(--text-xs); color: var(--deep); line-height: 1.5; }
+    .hypothesis-card { padding: var(--space-2) var(--space-3); margin-bottom: var(--space-2); background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-md); border-left: 3px solid var(--rose); }
+    .hypothesis-card__claim { font-family: var(--font-serif); font-size: var(--text-xs); font-weight: 600; color: var(--deep); margin-bottom: 2px; text-decoration: line-through; text-decoration-color: var(--rose); }
+    .hypothesis-card__reason { font-family: var(--font-sans); font-size: 10px; color: var(--deep-70); line-height: 1.45; }
+    .validated-list { list-style: none; padding: 0; margin: 0; }
+    .validated-list li { font-family: var(--font-sans); font-size: 10px; color: var(--deep); line-height: 1.45; padding: 2px 0; padding-left: var(--space-4); position: relative; }
+    .validated-list li::before { content: ''; position: absolute; left: 4px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--sage); }
+    .solves-list { list-style: none; padding: 0; margin: 0; }
+    .solves-list li { font-family: var(--font-sans); font-size: 10px; color: var(--deep); line-height: 1.45; padding: 2px 0; padding-left: var(--space-4); position: relative; }
+    .solves-list li::before { content: ''; position: absolute; left: 4px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--amber); }
+    .timeline--compact .timeline__item { padding-bottom: var(--space-2); }
+    .timeline--compact .timeline__item:last-child { padding-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1 — Market Signal + Customer Discovery
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Traction<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-header__number">[09] Traction</span>
+      <h1 class="section-header__title"><strong>9 conversations that changed our product.<br>3 hypotheses we killed.</strong></h1>
+      <p class="section-header__subtitle">No product yet. What we bring: proof of market understanding, intellectual honesty, and a 90-day plan to generate the data that matters.</p>
+    </div>
+
+    <!-- KPI Grid -->
+    <div class="kpi-grid kpi-grid--3 mb-1">
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value kpi-grid__value--accent">$8.9-21.1K</div>
+        <div class="kpi-grid__label">Spent per user/yr on<br>fragmented alternatives<sup>1</sup></div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value kpi-grid__value--accent">711K+</div>
+        <div class="kpi-grid__label">Subscribers across r/Biohackers,<br>r/Longevity, r/Supplements<sup>2</sup></div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value kpi-grid__value--accent">18-24 mo</div>
+        <div class="kpi-grid__label">Window before US players<br>localize to DACH<sup>3</sup></div>
+      </div>
+    </div>
+
+    <div class="sep mb-4"></div>
+
+    <!-- Customer Discovery -->
+    <div class="section-label mb-2">Customer Discovery — 9 Interviews</div>
+    <p class="text-xs mb-3" style="color: var(--stone);">Health-conscious professionals in Berlin, 28-45, 60-min open-ended sessions.</p>
+
+    <div class="finding-item">
+      <span class="finding-item__number">01</span>
+      <div class="finding-item__text"><strong>"Longevity with intention" tested strongest.</strong> Interviewees rejected both "biohacker" and "anti-perfectionist" labels.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-item__number">02</span>
+      <div class="finding-item__text"><strong>Fragmentation creates guilt, not just inconvenience.</strong> People feel like they're failing at wellness because the ecosystem is impossible to navigate.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-item__number">03</span>
+      <div class="finding-item__text"><strong>Accountability without judgment.</strong> Small consistent groups over leaderboards. Gamification does not work for longevity.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-item__number">04</span>
+      <div class="finding-item__text"><strong>Already spending EUR 50-200/mo</strong> on fragmented services — willing to consolidate. Non-spenders need a trigger event (content-first GTM).</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-item__number">05</span>
+      <div class="finding-item__text"><strong>Local community events as entry point</strong> got the strongest positive signal of anything tested.</div>
+    </div>
+
+    <div class="sep mt-4 mb-4"></div>
+
+    <!-- What Changed -->
+    <div class="callout callout--amber">
+      <div class="callout__title">What Changed Based on Interviews</div>
+      <div class="callout__body">
+        <strong>Positioning:</strong> "longevity with intention" replaced "anti-perfectionist." <strong>Community:</strong> small accountability circles, not open forums. <strong>Entry point:</strong> content + local events first, app second.
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources mt-4">
+      <sup>1</sup> Alche competitive spend analysis, Feb 2026 / <sup>2</sup> Reddit subscriber counts, Feb 2026 / <sup>3</sup> Competitive intelligence; no US player has announced DACH expansion
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">19</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2 — Validated / Invalidated / Roadmap
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        Traction<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Validated + What Funding Solves -->
+    <div class="two-col mb-3">
+      <div class="glass" style="padding: var(--space-3) var(--space-4);">
+        <div class="section-label mb-2">Validated</div>
+        <ul class="validated-list">
+          <li>Market demand (711K+ community, $8.9-21K/yr fragmented spend)</li>
+          <li>Positioning thesis (3 research cycles + 9 interviews)</li>
+          <li>"Longevity with intention" language (emerged from interviews)</li>
+          <li>Competitive white space (10+ competitors, none integrated)</li>
+          <li>Berlin as launch market (ecosystem + timing window)</li>
+          <li>GTM sequence: content, events, app</li>
+          <li>Medical advisor secured</li>
+        </ul>
+      </div>
+      <div class="glass" style="padding: var(--space-3) var(--space-4);">
+        <div class="section-label mb-2" style="color: var(--amber);">What Funding Solves</div>
+        <ul class="solves-list">
+          <li>Product-market fit (build MVP, test with real users)</li>
+          <li>Conversion data (waitlist → signup → paid)</li>
+          <li>Retention and engagement metrics</li>
+          <li>Unit economics in practice</li>
+          <li>Technical build (CTO hire, dev team)</li>
+          <li>Physical space proof-of-concept</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep mb-3"></div>
+
+    <!-- Hypotheses Invalidated -->
+    <div class="section-label mb-2" style="color: var(--rose);">Hypotheses Invalidated</div>
+
+    <div class="hypothesis-card">
+      <div class="hypothesis-card__claim">"Anti-perfectionist" is the right language</div>
+      <div class="hypothesis-card__reason">Killed by interviews. Reactive, confusing. "Longevity with intention" emerged from users' own words.</div>
+    </div>
+    <div class="hypothesis-card">
+      <div class="hypothesis-card__claim">Physical space first, digital second</div>
+      <div class="hypothesis-card__reason">Killed by Berlin failure patterns. Capital-intensive physical retail fails. Model flipped: digital-first.</div>
+    </div>
+    <div class="hypothesis-card">
+      <div class="hypothesis-card__claim">Bootstrap as a lifestyle business</div>
+      <div class="hypothesis-card__reason">Killed by competitive timing. 18-24 month window. Speed to market matters more than capital efficiency.</div>
+    </div>
+
+    <div class="sep mt-3 mb-3"></div>
+
+    <!-- 90-Day Roadmap -->
+    <div class="section-label mb-2">90-Day Traction Roadmap</div>
+
+    <div class="timeline timeline--compact">
+      <div class="timeline__item">
+        <div class="timeline__label">Day 1-30</div>
+        <div class="timeline__title">Foundation</div>
+        <div class="timeline__body">GmbH formed. 20 interviews complete. Waitlist live. CTO search launched.</div>
+      </div>
+      <div class="timeline__item timeline__item--sage">
+        <div class="timeline__label">Day 30-60</div>
+        <div class="timeline__title">Traction</div>
+        <div class="timeline__body">Content channel at 1,000+ followers. First Berlin event (50+ attendees). Medical advisor formalized.</div>
+      </div>
+      <div class="timeline__item timeline__item--terra">
+        <div class="timeline__label">Day 60-90</div>
+        <div class="timeline__title">Momentum</div>
+        <div class="timeline__body">MVP spec finalized, development underway. Community pilot with founding members. Measurable KPIs: waitlist conversion, event attendance, content engagement.</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer__number">20</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

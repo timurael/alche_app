@@ -1,0 +1,86 @@
+[
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtImSqn7B6D.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "300",
+    "style": "italic"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtImSqn7B6D.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtKky2F7g.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "300",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtKky2F7g.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtKky2F7g.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtKky2F7g.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtKky2F7g.woff2",
+    "family": "Cormorant Garamond",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2",
+    "family": "Outfit",
+    "weight": "300",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2",
+    "family": "Outfit",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2",
+    "family": "Outfit",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2",
+    "family": "Outfit",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2",
+    "family": "Outfit",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/spacemono/v17/i7dPIFZifjKcF5UAWdDRYEF8RXi4EwQ.woff2",
+    "family": "Space Mono",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/spacemono/v17/i7dMIFZifjKcF5UAWdDRaPpZUFWaHi6WZ3Q.woff2",
+    "family": "Space Mono",
+    "weight": "700",
+    "style": "normal"
+  }
+]

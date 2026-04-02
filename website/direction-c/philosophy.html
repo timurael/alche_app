@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philosophy — alche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #F5F0E8;
+  --bg-dark: #EDE7DB;
+  --bg-darker: #E5DECE;
+  --text: #2C2418;
+  --text-secondary: #5C5144;
+  --text-tertiary: #8A7E6F;
+  --amber: #C4956A;
+  --sage: #8B9E7C;
+  --terra: #B86B4A;
+  --rose: #C4858A;
+  --stone: #9B9588;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Outfit', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 clamp(24px, 4vw, 64px);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 200ms, backdrop-filter 200ms;
+}
+
+nav.scrolled {
+  background: rgba(245, 240, 232, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.nav-wordmark {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  position: relative;
+  transition: color 200ms;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--terra);
+  transition: width 250ms ease;
+}
+
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  background: var(--terra) !important;
+  color: var(--bg) !important;
+  padding: 10px 20px !important;
+  border-radius: 4px;
+  transition: background 200ms, transform 200ms !important;
+}
+
+.nav-cta::after { display: none !important; }
+.nav-cta:hover {
+  background: #A35B3D !important;
+  color: var(--bg) !important;
+  transform: translateY(-1px);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 20px;
+  position: relative;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  position: absolute;
+  left: 0;
+  transition: all 250ms;
+}
+
+.mobile-menu-btn span:nth-child(1) { top: 0; }
+.mobile-menu-btn span:nth-child(2) { top: 9px; }
+.mobile-menu-btn span:nth-child(3) { top: 18px; }
+
+/* SECTION LABELS */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 20px;
+}
+
+/* HERO */
+.philo-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px clamp(24px, 4vw, 64px) 0;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.philo-hero .section-label {
+  margin-bottom: 28px;
+}
+
+.philo-hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(56px, 9vw, 120px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.philo-hero .subline {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(18px, 1.6vw, 24px);
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+/* MANIFESTO */
+.manifesto-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px clamp(24px, 4vw, 64px);
+  text-align: center;
+}
+
+.manifesto-section:nth-child(even) {
+  background: var(--bg-dark);
+}
+
+.manifesto-inner {
+  max-width: 900px;
+}
+
+.manifesto-quote {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1.15;
+  margin-bottom: 36px;
+  color: var(--text);
+}
+
+.manifesto-body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* MARKET GAP */
+.market-gap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+}
+
+.market-gap-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.market-gap h2 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 56px;
+}
+
+.chart-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 40px;
+  gap: 20px;
+  align-items: center;
+}
+
+.chart-label {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.chart-bar-track {
+  height: 32px;
+  background: rgba(44, 36, 24, 0.04);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 0;
+}
+
+.chart-bar-fill.animated {
+  /* width set inline */
+}
+
+.chart-row:nth-child(1) .chart-bar-fill { background: var(--stone); }
+.chart-row:nth-child(2) .chart-bar-fill { background: var(--stone); }
+.chart-row:nth-child(3) .chart-bar-fill { background: var(--stone); }
+.chart-row:nth-child(4) .chart-bar-fill { background: var(--stone); }
+.chart-row:nth-child(5) .chart-bar-fill { background: var(--stone); }
+.chart-row:nth-child(6) .chart-bar-fill { background: var(--stone); }
+.chart-row.alche-row .chart-bar-fill { background: var(--terra) !important; }
+
+.chart-score {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+
+.chart-row.alche-row .chart-label {
+  font-weight: 600;
+  color: var(--terra);
+}
+
+.chart-row.alche-row .chart-score {
+  color: var(--terra);
+}
+
+.chart-legend {
+  display: flex;
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(44, 36, 24, 0.08);
+}
+
+.chart-legend-item {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* HOW IT WORKS */
+.how-it-works {
+  min-height: 100vh;
+  background: var(--bg-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+}
+
+.how-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.how-inner h2 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 56px;
+  text-align: center;
+}
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.flow-node {
+  background: var(--bg);
+  border: 1px solid rgba(44, 36, 24, 0.1);
+  border-radius: 6px;
+  padding: 24px 32px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  position: relative;
+}
+
+.flow-node-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.flow-node-desc {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.flow-arrow {
+  width: 2px;
+  height: 40px;
+  background: rgba(44, 36, 24, 0.15);
+  position: relative;
+}
+
+.flow-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(44, 36, 24, 0.15);
+  border-bottom: 2px solid rgba(44, 36, 24, 0.15);
+}
+
+.flow-loop-arrow {
+  width: 100%;
+  max-width: 420px;
+  height: 48px;
+  position: relative;
+  margin-top: 8px;
+}
+
+.flow-loop-arrow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 80%;
+  height: 100%;
+  transform: translateX(-50%);
+  border: 2px dashed rgba(44, 36, 24, 0.1);
+  border-top: none;
+  border-radius: 0 0 200px 200px;
+}
+
+.flow-loop-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* GRAVEYARD */
+.graveyard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px clamp(24px, 4vw, 64px);
+}
+
+.graveyard-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.graveyard h2 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.graveyard-subtitle {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(15px, 1.3vw, 18px);
+  color: var(--text-secondary);
+  margin-bottom: 56px;
+  max-width: 560px;
+}
+
+.graveyard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.graveyard-table thead th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: left;
+  padding: 0 0 16px 0;
+  border-bottom: 2px solid rgba(44, 36, 24, 0.1);
+}
+
+.graveyard-table tbody td {
+  padding: 20px 20px 20px 0;
+  border-bottom: 1px solid rgba(44, 36, 24, 0.06);
+  vertical-align: top;
+}
+
+.graveyard-table .company-name {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.graveyard-table .company-raised {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--terra);
+}
+
+.graveyard-table .company-fate {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.graveyard-lesson {
+  margin-top: 48px;
+  padding: 36px;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  border-left: 3px solid var(--terra);
+}
+
+.graveyard-lesson p {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.graveyard-lesson p em {
+  color: var(--terra);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* FOOTER */
+footer {
+  padding: 80px clamp(24px, 4vw, 64px) 40px;
+  border-top: 1px solid rgba(44, 36, 24, 0.08);
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+.footer-col h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 20px;
+}
+
+.footer-col a {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 200ms;
+}
+
+.footer-col a:hover { color: var(--text); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  border-top: 1px solid rgba(44, 36, 24, 0.06);
+}
+
+.footer-wordmark {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.footer-tagline {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* FADE UP */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    z-index: 999;
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links a { font-size: 14px; }
+
+  .mobile-menu-btn { display: block; }
+
+  .chart-row {
+    grid-template-columns: 120px 1fr 32px;
+    gap: 12px;
+  }
+
+  .chart-label { font-size: 12px; }
+
+  .graveyard-table { font-size: 14px; }
+
+  .graveyard-table thead th:nth-child(3),
+  .graveyard-table tbody td:nth-child(3) {
+    display: none;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-row {
+    grid-template-columns: 1fr 32px;
+  }
+  .chart-label {
+    grid-column: 1 / -1;
+    text-align: left;
+    margin-bottom: -12px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-wordmark">alche</a>
+  <div class="nav-links" id="navLinks">
+    <a href="philosophy.html">Philosophy</a>
+    <a href="index.html#platform">Platform</a>
+    <a href="index.html#pillars">Pillars</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="index.html#waitlist" class="nav-cta">Get Early Access</a>
+  </div>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="philo-hero snap-section">
+  <div class="section-label fade-up">PHILOSOPHY</div>
+  <h1 class="fade-up">Imperfect<br>Longevity</h1>
+  <p class="subline fade-up">We believe the longest life is also the most enjoyable one.</p>
+</section>
+
+<!-- MANIFESTO 1 -->
+<section class="manifesto-section snap-section">
+  <div class="manifesto-inner">
+    <p class="manifesto-quote fade-up">&ldquo;Science without joy<br>is just another diet.&rdquo;</p>
+    <p class="manifesto-body fade-up">The longevity industry is obsessed with optimization. More data, more supplements, more protocols. We believe the evidence points somewhere different: the longest-lived people on Earth don't optimize. They eat with friends, walk to the market, and laugh every day. We built alche to honor that science.</p>
+  </div>
+</section>
+
+<!-- MANIFESTO 2 -->
+<section class="manifesto-section snap-section">
+  <div class="manifesto-inner">
+    <p class="manifesto-quote fade-up">&ldquo;Community is the retention<br>mechanism the industry forgot.&rdquo;</p>
+    <p class="manifesto-body fade-up">Every wellness app loses 80% of users by month three. Not because the science is wrong, but because doing hard things alone is unsustainable. The Blue Zones taught us that belonging is a biological need. Our cafe isn't a nice-to-have. It's the infrastructure that makes everything else stick.</p>
+  </div>
+</section>
+
+<!-- MANIFESTO 3 -->
+<section class="manifesto-section snap-section">
+  <div class="manifesto-inner">
+    <p class="manifesto-quote fade-up">&ldquo;Your body is not a problem<br>to optimize.&rdquo;</p>
+    <p class="manifesto-body fade-up">The biohacking movement treats the human body like broken software. We reject that framing. Your body is an extraordinary system that responds to care, rhythm, and joy. alche meets you where you are — not where a protocol sheet says you should be. Imperfect consistency beats perfect intensity, every time.</p>
+  </div>
+</section>
+
+<!-- MARKET GAP -->
+<section class="market-gap snap-section" id="market-gap">
+  <div class="market-gap-inner">
+    <div class="section-label fade-up">THE MARKET GAP</div>
+    <h2 class="fade-up">No one integrates<br>all six pillars.</h2>
+    <div class="chart-grid fade-up" id="chartGrid">
+      <div class="chart-row">
+        <div class="chart-label">Whoop</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-width="33%"></div></div>
+        <div class="chart-score">2/6</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-label">Noom</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-width="33%"></div></div>
+        <div class="chart-score">2/6</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-label">Eight Sleep</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-width="16.6%"></div></div>
+        <div class="chart-score">1/6</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-label">Headspace</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-width="16.6%"></div></div>
+        <div class="chart-score">1/6</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-label">InsideTracker</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-width="50%"></div></div>
+        <div class="chart-score">3/6</div>
+      </div>
+      <div class="chart-row alche-row">
+        <div class="chart-label">alche</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-width="100%"></div></div>
+        <div class="chart-score">6/6</div>
+      </div>
+    </div>
+    <div class="chart-legend fade-up">
+      <span class="chart-legend-item">Pillar coverage: Nutrition &middot; Movement &middot; Sleep &middot; Stress &middot; Social &middot; Biomarkers</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works snap-section">
+  <div class="how-inner">
+    <div class="section-label fade-up" style="text-align:center;">THE SYSTEM</div>
+    <h2 class="fade-up">How it connects.</h2>
+    <div class="flow fade-up">
+      <div class="flow-node">
+        <div class="flow-node-title">The Cafe</div>
+        <div class="flow-node-desc">Your daily anchor. Curated longevity drinks, guided rituals, community gathering.</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-title">The App</div>
+        <div class="flow-node-desc">AI-powered personalization across six pillars. Tracks, adapts, learns your rhythm.</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-title">Lab Partners</div>
+        <div class="flow-node-desc">Quarterly biomarker snapshots via certified partner labs. No in-house overhead.</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-title">Community</div>
+        <div class="flow-node-desc">Shared challenges, accountability pairs, and real-world events. The glue.</div>
+      </div>
+      <div class="flow-loop-arrow"></div>
+      <div class="flow-loop-label">Continuous loop &mdash; back to the cafe</div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAVEYARD -->
+<section class="graveyard snap-section">
+  <div class="graveyard-inner">
+    <div class="section-label fade-up">THE GRAVEYARD LESSON</div>
+    <h2 class="fade-up">What $1.4 billion in<br>failures taught us.</h2>
+    <p class="graveyard-subtitle fade-up">Every major longevity failure tried to own the entire vertical. We studied each one so we could do the opposite.</p>
+    <table class="graveyard-table fade-up">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Raised</th>
+          <th>What Went Wrong</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="company-name">Forward</td>
+          <td class="company-raised">$657M</td>
+          <td class="company-fate">Built expensive proprietary clinics. Burned cash on hardware and real estate. Couldn't scale unit economics.</td>
+        </tr>
+        <tr>
+          <td class="company-name">DayTwo</td>
+          <td class="company-raised">$85M</td>
+          <td class="company-fate">Microbiome-only approach. Single-pillar thinking couldn't sustain user engagement or justify the price.</td>
+        </tr>
+        <tr>
+          <td class="company-name">Habit</td>
+          <td class="company-raised">$60M</td>
+          <td class="company-fate">At-home blood tests + meal delivery. Tried to own the full stack. Logistics ate the margins alive.</td>
+        </tr>
+        <tr>
+          <td class="company-name">Arivale</td>
+          <td class="company-raised">$50M</td>
+          <td class="company-fate">High-touch coaching model at $3,500/year. Beautiful product, impossible unit economics. Shut down in 2019.</td>
+        </tr>
+        <tr>
+          <td class="company-name">Vessel Health</td>
+          <td class="company-raised">$40M</td>
+          <td class="company-fate">Daily urine test strips + app. Hardware dependency created a fragile business with thin retention.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="graveyard-lesson fade-up">
+      <p>Every failure tried to own everything. We <em>partner</em> instead.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="index.html#platform">The Cafe</a>
+        <a href="index.html#platform">The App</a>
+        <a href="index.html#pillars">Six Pillars</a>
+        <a href="index.html#pricing">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="philosophy.html">Philosophy</a>
+        <a href="#">Team</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="index.html#waitlist">Join Waitlist</a>
+        <a href="#">Newsletter</a>
+        <a href="#">Instagram</a>
+        <a href="#">Events</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Imprint</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        <div class="footer-wordmark">alche</div>
+        <div class="footer-tagline">The Art of Curated Longevity</div>
+      </div>
+      <div class="footer-copy">&copy; 2026 alche GmbH. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Mobile menu
+const mobileBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+mobileBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const spans = mobileBtn.querySelectorAll('span');
+  if (navLinks.classList.contains('open')) {
+    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+});
+
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    const spans = mobileBtn.querySelectorAll('span');
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  });
+});
+
+// Fade ups
+const fadeEls = document.querySelectorAll('.fade-up');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+fadeEls.forEach(el => fadeObserver.observe(el));
+
+// Chart bar animation
+const chartGrid = document.getElementById('chartGrid');
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bars = entry.target.querySelectorAll('.chart-bar-fill');
+      bars.forEach((bar, i) => {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.width;
+        }, i * 100);
+      });
+      chartObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+if (chartGrid) chartObserver.observe(chartGrid);
+</script>
+
+</body>
+</html>

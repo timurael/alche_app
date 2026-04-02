@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | The Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+    .page { width: 210mm; min-height: 297mm; padding: 20mm 22mm; background: #F5F0E8; position: relative; page-break-after: always; box-sizing: border-box; font-family: 'Outfit', sans-serif; color: #2C2418; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(44,36,24,0.08); }
+    .page-header-left { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+    .page-header-right { font-size: 8px; font-weight: 400; color: rgba(44,36,24,0.45); }
+    .section-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: #C4956A; margin-bottom: 6px; }
+    .action-title { font-size: 18px; font-weight: 600; color: #2C2418; margin-bottom: 8px; line-height: 1.3; }
+    .action-subtitle { font-size: 11px; font-weight: 400; color: rgba(44,36,24,0.6); margin-bottom: 20px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: 16px; }
+    th { font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44,36,24,0.6); text-align: left; padding: 8px 10px; border-bottom: 2px solid rgba(44,36,24,0.15); }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(44,36,24,0.08); vertical-align: top; color: rgba(44,36,24,0.85); }
+    tr:nth-child(even) { background: rgba(44,36,24,0.02); }
+    .number { font-family: 'Space Mono', monospace; font-size: 10px; text-align: right; font-variant-numeric: tabular-nums; }
+    .bold { font-weight: 600; }
+    .highlight-row { background: rgba(196,149,106,0.08) !important; }
+    .assumption-row td { color: rgba(44,36,24,0.45); font-size: 9px; font-style: italic; }
+    .callout-box { border-top: 3px solid #C4956A; border-radius: 2px; padding: 12px 14px; margin-bottom: 16px; }
+    .callout-box-title { font-size: 11px; font-weight: 600; color: #2C2418; margin-bottom: 4px; }
+    .callout-box-body { font-size: 10px; color: rgba(44,36,24,0.7); line-height: 1.5; }
+
+    /* KDGB Process Diagram */
+    .kdgb-process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin: 16px 0; }
+    .kdgb-step { border: 1px solid rgba(44,36,24,0.12); border-radius: 2px; padding: 12px 10px; position: relative; }
+    .kdgb-step-num { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(44,36,24,0.35); margin-bottom: 4px; }
+    .kdgb-step-name { font-size: 13px; font-weight: 600; color: #2C2418; margin-bottom: 6px; }
+    .kdgb-step-action { font-size: 9px; color: rgba(44,36,24,0.6); line-height: 1.4; margin-bottom: 6px; }
+    .kdgb-step-revenue { font-size: 9px; font-weight: 500; color: #C4956A; }
+    .kdgb-arrow { display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 14px; color: rgba(44,36,24,0.2); }
+
+    .page-footer { position: absolute; bottom: 20mm; left: 22mm; right: 22mm; display: flex; justify-content: space-between; align-items: flex-end; }
+    .page-footer-source { font-size: 8px; font-weight: 300; color: rgba(44,36,24,0.45); max-width: 75%; }
+    .page-footer-num { font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(44,36,24,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-left">05 &mdash; The Solution</div>
+      <div class="page-header-right">alche | Pre-Seed Investment Memorandum</div>
+    </div>
+
+    <div class="section-label">The Solution</div>
+    <div class="action-title">Four integrated layers, each creating demand for the next -- and each generating revenue.</div>
+    <div class="action-subtitle">The KDGB framework (Know-Do-Get-Belong) is a business process, not a brand concept. Each layer has a user action, a revenue lever, and a retention mechanism.</div>
+
+    <!-- KDGB Process Diagram -->
+    <div class="kdgb-process">
+      <div class="kdgb-step" style="border-top: 3px solid #8B9E7C;">
+        <div class="kdgb-step-num">01</div>
+        <div class="kdgb-step-name">KNOW</div>
+        <div class="kdgb-step-action">User tracks biomarkers, wearable data, biological age. Longitudinal data creates personalization engine.</div>
+        <div class="kdgb-step-revenue">Revenue: Subscription (EUR 19-99/mo)</div>
+      </div>
+      <div class="kdgb-step" style="border-top: 3px solid #B86B4A;">
+        <div class="kdgb-step-num">02</div>
+        <div class="kdgb-step-name">DO</div>
+        <div class="kdgb-step-action">User follows personalized protocols -- nutrition, recovery, movement. AI-guided, physician-informed.</div>
+        <div class="kdgb-step-revenue">Revenue: Service bookings, protocol access</div>
+      </div>
+      <div class="kdgb-step" style="border-top: 3px solid #C4956A;">
+        <div class="kdgb-step-num">03</div>
+        <div class="kdgb-step-name">GET</div>
+        <div class="kdgb-step-action">User buys protocol-linked supplements, functional products. Recommended by data, not generic catalog.</div>
+        <div class="kdgb-step-revenue">Revenue: Product margins (40-65%)</div>
+      </div>
+      <div class="kdgb-step" style="border-top: 3px solid #9E948A;">
+        <div class="kdgb-step-num">04</div>
+        <div class="kdgb-step-name">BELONG</div>
+        <div class="kdgb-step-action">User joins accountability circles, shared challenges, events. Community as longevity intervention.</div>
+        <div class="kdgb-step-revenue">Revenue: Events, premium community access</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(44,36,24,0.35); letter-spacing: 0.2em; margin: 4px 0 16px;">KNOW &rarr; DO &rarr; GET &rarr; BELONG &rarr; KNOW (repeat, each cycle stickier)</div>
+
+    <!-- Layer-to-Business Mapping -->
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>User Action</th>
+          <th>Revenue Lever</th>
+          <th>Retention Mechanism</th>
+          <th style="text-align: right;">Key Metric</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">KNOW</td>
+          <td>Biomarker dashboard, wearable sync</td>
+          <td>Subscription (EUR 19-99/mo)</td>
+          <td>Longitudinal data accumulates; 6 months &gt; snapshot</td>
+          <td class="number">Activation rate</td>
+        </tr>
+        <tr>
+          <td class="bold">DO</td>
+          <td>Follow personalized protocols</td>
+          <td>Service bookings, LED sessions</td>
+          <td>Protocol calibration improves with data</td>
+          <td class="number">Session frequency</td>
+        </tr>
+        <tr>
+          <td class="bold">GET</td>
+          <td>Purchase protocol-linked products</td>
+          <td>Product margins (40-65%)</td>
+          <td>Smart replenishment from usage data</td>
+          <td class="number">AOV, repeat rate</td>
+        </tr>
+        <tr>
+          <td class="bold">BELONG</td>
+          <td>Circles, events, shared challenges</td>
+          <td>Events, premium community</td>
+          <td>Social bonds create switching cost</td>
+          <td class="number">Community NPS</td>
+        </tr>
+        <tr class="assumption-row">
+          <td colspan="5">Each step creates demand for the next. KNOW creates motivation to DO. DO creates need to GET. GET creates belonging through shared rituals. BELONG generates better data.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Why integration matters -->
+    <div class="callout-box">
+      <div class="callout-box-title">Why integration is the structural advantage</div>
+      <div class="callout-box-body">
+        Single-vertical competitors own one layer. Oura owns wearable data. AG1 owns a supplement. Restore owns recovery. Nobody connects all four. Integration is structurally hard to bolt on because it requires different organizational DNA than single-vertical excellence. A competitor would need to rebuild from the ground up -- the same thing alche is doing, but without the greenfield advantage.
+      </div>
+    </div>
+
+    <!-- Data Trust -->
+    <div style="border-top: 1px solid rgba(44,36,24,0.08); border-bottom: 1px solid rgba(44,36,24,0.08); padding: 8px 10px; margin-bottom: 0;">
+      <span style="font-size: 9px; font-weight: 500; color: rgba(44,36,24,0.5);">DATA TRUST:</span>
+      <span style="font-size: 10px; color: rgba(44,36,24,0.7);"> Only 8% of EU consumers share health data (BEUC 2024). GDPR-native architecture, transparent data policies, user-controlled sharing. In a market where trust is the scarcest resource, privacy-first design is a competitive advantage.</span>
+    </div>
+
+    <div class="page-footer">
+      <div class="page-footer-source">BEUC Health Data Survey 2024 / Blue Zones / Fitzgerald et al. 2021, Aging / Competitive analysis, Feb 2026</div>
+      <div class="page-footer-num">13</div>
+    </div>
+  </div>
+
+</body>
+</html>

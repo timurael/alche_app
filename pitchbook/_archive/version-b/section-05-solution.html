@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche - The Solution</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Design System -->
+  <link rel="stylesheet" href="../_design-system.css">
+
+  <style>
+    /* Definition box */
+    .definition-box {
+      background: var(--glass-strong);
+      border: 1.5px solid var(--amber);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .definition-box p {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--deep);
+      margin-bottom: 0;
+    }
+
+    /* Two-column product layout */
+    .product-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+
+    .product-col {
+      padding: var(--space-4) var(--space-5);
+      border-radius: var(--radius-md);
+    }
+
+    .product-col--physical {
+      background: var(--sage-10);
+      border-left: 3px solid var(--sage);
+    }
+
+    .product-col--digital {
+      background: var(--amber-10);
+      border-left: 3px solid var(--amber);
+    }
+
+    .product-col__title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+
+    .product-col--physical .product-col__title { color: var(--sage); }
+    .product-col--digital .product-col__title { color: var(--amber); }
+
+    .product-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    .product-col ul li {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      color: var(--deep-70);
+      line-height: 1.5;
+      padding: 2px 0;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .product-col ul li::before {
+      content: '\2013';
+      position: absolute;
+      left: 0;
+      color: var(--deep-30);
+    }
+
+    .product-col__arrow {
+      font-family: var(--font-sans);
+      font-size: 8.5px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-top: var(--space-2);
+      padding-top: var(--space-2);
+      border-top: 0.5px solid var(--deep-08);
+    }
+
+    /* Flow steps */
+    .flow-steps {
+      counter-reset: flow;
+    }
+
+    .flow-step {
+      counter-increment: flow;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--deep-04);
+    }
+
+    .flow-step:last-child {
+      border-bottom: none;
+    }
+
+    .flow-step__num {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--amber);
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .flow-step__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 1px;
+    }
+
+    .flow-step__desc {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      color: var(--deep-70);
+      line-height: 1.5;
+    }
+
+    /* Screenshot row within flow */
+    .screen-row-inline {
+      margin: var(--space-3) 0;
+      max-width: 100%;
+    }
+
+    .screen-row-inline img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+
+    /* Three-col screen grid */
+    .screen-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-3);
+      max-width: 100%;
+    }
+
+    .screen-grid-3 img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+    }
+
+    /* Product columns: prevent overflow */
+    .product-columns {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE 1: The Product
+       ============================================================ -->
+  <div class="page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-header__number">[05] The Solution</span>
+      <h1 class="section-header__title"><strong>The Product</strong></h1>
+      <p class="section-header__subtitle">A physical-digital wellness company operating a flagship space, a proprietary mobile application, an outcome-based product brand, and a membership programme.</p>
+    </div>
+
+    <!-- Definition Box -->
+    <div class="definition-box">
+      <p>alche is a physical-digital wellness company. It operates a flagship space in Berlin Mitte offering LED red light therapy and functional smoothies, a proprietary mobile application with 10 integrated modules, an outcome-based product brand, and a membership programme. Every interaction generates structured data that feeds a central information system.</p>
+    </div>
+
+    <!-- Two Columns: Physical vs Digital -->
+    <div class="product-columns">
+      <div class="product-col product-col--physical">
+        <div class="product-col__title">Physical (Berlin)</div>
+        <ul>
+          <li>Flagship location in Berlin Mitte</li>
+          <li>6 functional smoothies (Alch&eacute; Potions N&ordm;1-6, EUR 7-11)</li>
+          <li>5 functional boosts (+EUR 2 each)</li>
+          <li>LED red light therapy (Glow 630-660nm, Recovery 810-850nm)</li>
+          <li>Curated product shelf (own blends + third-party)</li>
+          <li>Wellness events and expert sessions</li>
+        </ul>
+        <div class="product-col__arrow">&rarr; Builds trust, generates behavioral data</div>
+      </div>
+      <div class="product-col product-col--digital">
+        <div class="product-col__title">Digital (Global)</div>
+        <ul>
+          <li>Proprietary mobile application (10 modules)</li>
+          <li>Membership tiers (Core EUR 19/mo, Pro EUR 49/mo, Premium EUR 99/mo)</li>
+          <li>Goal-based wellness journeys with adaptive protocols</li>
+          <li>Glow Scan (selfie &rarr; score 0-100)</li>
+          <li>Online shop with smart replenishment</li>
+          <li>Digital Twin (AI-optimized user profile)</li>
+        </ul>
+        <div class="product-col__arrow">&rarr; Recurring revenue, borderless scalability</div>
+      </div>
+    </div>
+
+    <!-- App Screens -->
+    <div class="screen-row-inline">
+      <div class="font-mono" style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: var(--space-2);">Core App Screens</div>
+      <div class="screen-grid-3">
+        <img src="../screens/S03-LED-Booking.png" alt="LED Booking">
+        <img src="../screens/S04-Potion-Menu.png" alt="Potion Menu">
+        <img src="../screens/S05-Session-Active.png" alt="Session Active">
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">10</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 1 -->
+
+
+  <!-- ============================================================
+       PAGE 2: How It Works
+       ============================================================ -->
+  <div class="page">
+
+    <div class="page-header">
+      <div class="page-header__brand">alche</div>
+      <div class="page-header__meta">
+        The Solution<br>
+        February 2026 // Confidential
+      </div>
+    </div>
+
+    <!-- Section Label -->
+    <div class="section-label">The Customer Experience</div>
+    <h2 class="mb-3"><strong>How It Works</strong></h2>
+
+    <!-- Flow Steps -->
+    <div class="flow-steps mb-3">
+
+      <div class="flow-step">
+        <div class="flow-step__num">01</div>
+        <div>
+          <div class="flow-step__title">Choose Your Goal</div>
+          <div class="flow-step__desc">User selects a wellness outcome in the app (Glow, Energy, Calm, Sleep, Recovery). The system generates a personalized protocol based on the selected goal.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step__num">02</div>
+        <div>
+          <div class="flow-step__title">Book a Session</div>
+          <div class="flow-step__desc">Real-time LED chair availability in 20-minute slots. Smoothie and boost pre-ordered during booking. Two session types: Glow (630-660nm) and Recovery (810-850nm).</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step__num">03</div>
+        <div>
+          <div class="flow-step__title">Visit the Space</div>
+          <div class="flow-step__desc">QR check-in on arrival. Smoothie ready, LED mask prepared. Zero wait time. Guided 20-minute session with post-session potion.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step__num">04</div>
+        <div>
+          <div class="flow-step__title">Post-Session Feedback</div>
+          <div class="flow-step__desc">Log energy, mood, and skin condition. The system captures structured behavioral data that improves future recommendations.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step__num">05</div>
+        <div>
+          <div class="flow-step__title">Browse and Buy</div>
+          <div class="flow-step__desc">Product shelf organized by outcome. Own-brand blends available as take-home pouches. The boost in the smoothie becomes the product on the shelf.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step__num">06</div>
+        <div>
+          <div class="flow-step__title">Smart Follow-Up</div>
+          <div class="flow-step__desc">App reminds, recommends products, schedules next visit. The loop repeats with better data each time, improving personalization.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Screenshot Rows -->
+    <div class="two-col mb-3">
+      <div>
+        <div class="font-mono" style="font-size: 7px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sage); font-weight: 600; margin-bottom: var(--space-1);">Core Screens</div>
+        <div class="screen-grid-3">
+          <img src="../screens/S01-Home-Dashboard.png" alt="Home Dashboard">
+          <img src="../screens/S02-Onboarding.png" alt="Onboarding">
+          <img src="../screens/S03-LED-Booking.png" alt="LED Booking">
+        </div>
+      </div>
+      <div>
+        <div class="font-mono" style="font-size: 7px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--amber); font-weight: 600; margin-bottom: var(--space-1);">Extended Screens</div>
+        <div class="screen-grid-3">
+          <img src="../screens/S06-Shop-by-Outcome.png" alt="Shop by Outcome">
+          <img src="../screens/S07-Events.png" alt="Events">
+          <img src="../screens/S08-Membership.png" alt="Membership">
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Callout -->
+    <div class="callout callout--amber">
+      <div class="callout__title">The Data Engine</div>
+      <div class="callout__body">
+        Every smoothie order, every boost selection, every LED session, every product purchase, every event attendance generates structured data that feeds the information system. The physical space is not just a revenue source. It is a data-generating environment that enables the entire ecosystem to learn and improve.
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+      <div class="page-footer__number">11</div>
+      <div class="page-footer__confidential">Confidential</div>
+    </div>
+
+  </div>
+  <!-- END PAGE 2 -->
+
+</body>
+</html>

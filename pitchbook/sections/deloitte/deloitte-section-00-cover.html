@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alche | Pre-Seed Investment Memorandum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4; margin: 0; }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #F5F0E8;
+      position: relative;
+      page-break-after: always;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+      color: #2C2418;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 22mm;
+    }
+
+    .cover-top-rule {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #C4956A;
+    }
+
+    .cover-content { position: relative; z-index: 2; }
+
+    .cover-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #2C2418;
+      line-height: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .cover-subtitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.5);
+      letter-spacing: 0.02em;
+      margin-bottom: 32px;
+    }
+
+    .cover-rule {
+      width: 40px;
+      height: 2px;
+      background: #C4956A;
+      margin-bottom: 28px;
+    }
+
+    .cover-doc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2C2418;
+      margin-bottom: 6px;
+    }
+
+    .cover-doc-sub {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(44, 36, 24, 0.6);
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .cover-pillars {
+      display: flex;
+      gap: 28px;
+    }
+
+    .cover-pillar {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(44, 36, 24, 0.5);
+      padding: 6px 0;
+      border-top: 2px solid #C4956A;
+    }
+
+    .cover-bottom {
+      position: absolute;
+      bottom: 20mm;
+      left: 22mm;
+      right: 22mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 2;
+    }
+
+    .cover-bottom-left {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(44, 36, 24, 0.45);
+      line-height: 1.7;
+    }
+
+    .cover-bottom-right {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(44, 36, 24, 0.35);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="cover-top-rule"></div>
+
+    <div class="cover-content">
+      <div class="cover-wordmark">alche</div>
+      <div class="cover-subtitle">The Art of Curated Longevity</div>
+      <div class="cover-rule"></div>
+      <div class="cover-doc-title">Pre-Seed Investment Memorandum</div>
+      <div class="cover-doc-sub">Berlin, Germany | February 2026</div>
+
+      <div class="cover-pillars">
+        <div class="cover-pillar">EUR 500K Pre-Seed</div>
+        <div class="cover-pillar">EUR 2.5M Valuation Cap</div>
+        <div class="cover-pillar">Longevity Lifestyle Platform</div>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-bottom-left">
+        Wandeldarlehen (Convertible Loan)<br>
+        24-Month Runway | Break-Even at Month 12
+      </div>
+      <div class="cover-bottom-right">Confidential</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>alche Goal Selection</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#000000",
+                    "background-light": "#ffffff",
+                    "background-dark": "#050505",
+                    "editorial-black": "#0d121b",
+                    "editorial-muted": "#8d96a6",
+                    "editorial-accent": "#c4cad6",
+                },
+                fontFamily: {
+                    "display": ["Newsreader", "serif"],
+                    "sans": ["Noto Sans", "sans-serif"],
+                    "mono": ["Space Mono", "monospace"],
+                },
+                borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+<style>::-webkit-scrollbar {
+        width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #e5e5e5;
+        border-radius: 4px;
+    }
+    .fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    @keyframes fadeIn {
+        to { opacity: 1; transform: translateY(0); }
+    }.delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-editorial-black dark:text-white font-display overflow-x-hidden transition-colors duration-300">
+<div class="relative flex min-h-screen flex-col w-full max-w-md mx-auto border-x border-editorial-black/5 dark:border-white/10 shadow-2xl bg-white dark:bg-background-dark">
+<header class="flex items-center justify-between px-6 pt-8 pb-4">
+<div class="text-[10px] tracking-[0.25em] font-mono font-bold uppercase text-editorial-black dark:text-white">alche // 02</div>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-editorial-black dark:bg-white animate-pulse"></div>
+<span class="text-[10px] tracking-widest font-mono uppercase text-editorial-muted">System Active</span>
+</div>
+</header>
+<main class="flex-1 flex flex-col px-8 pt-8 pb-20">
+<div class="mb-14 fade-in">
+<h1 class="text-6xl font-light italic leading-[0.9] tracking-tight mb-6 text-editorial-black dark:text-white">
+                SELECT<br/>YOUR<br/>ALCHEMY
+            </h1>
+<div class="flex gap-2 items-center text-editorial-muted">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+<p class="font-mono text-[9px] uppercase tracking-widest leading-relaxed">
+                    &gt; CONFIGURATION_REQUIRED
+                </p>
+</div>
+</div>
+<div class="flex flex-col space-y-8">
+<button class="group w-full text-left focus:outline-none fade-in delay-1">
+<div class="flex items-baseline justify-between border-b border-editorial-black/10 dark:border-white/20 pb-2 mb-2 group-hover:border-editorial-black dark:group-hover:border-white transition-colors duration-500">
+<span class="text-3xl italic font-light text-editorial-black dark:text-white group-hover:pl-2 transition-all duration-300">Party Detox</span>
+<span class="material-symbols-outlined text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">arrow_right_alt</span>
+</div>
+<div class="flex justify-between items-center pl-0 group-hover:pl-2 transition-all duration-300">
+<span class="font-mono text-[9px] text-editorial-muted uppercase tracking-wider group-hover:text-editorial-black dark:group-hover:text-white transition-colors">
+                        [LIVER_PATHWAY_CLEARANCE_INIT]
+                    </span>
+<span class="font-mono text-[9px] text-editorial-muted">01</span>
+</div>
+</button>
+<button class="group w-full text-left focus:outline-none fade-in delay-2">
+<div class="flex items-baseline justify-between border-b border-editorial-black/10 dark:border-white/20 pb-2 mb-2 group-hover:border-editorial-black dark:group-hover:border-white transition-colors duration-500">
+<span class="text-3xl italic font-light text-editorial-black dark:text-white group-hover:pl-2 transition-all duration-300">Stress Regulation</span>
+<span class="material-symbols-outlined text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">arrow_right_alt</span>
+</div>
+<div class="flex justify-between items-center pl-0 group-hover:pl-2 transition-all duration-300">
+<span class="font-mono text-[9px] text-editorial-muted uppercase tracking-wider group-hover:text-editorial-black dark:group-hover:text-white transition-colors">
+                        [CORTISOL_DAMPENING_SEQ]
+                    </span>
+<span class="font-mono text-[9px] text-editorial-muted">02</span>
+</div>
+</button>
+<button class="group w-full text-left focus:outline-none fade-in delay-3">
+<div class="flex items-baseline justify-between border-b border-editorial-black/10 dark:border-white/20 pb-2 mb-2 group-hover:border-editorial-black dark:group-hover:border-white transition-colors duration-500">
+<span class="text-3xl italic font-light text-editorial-black dark:text-white group-hover:pl-2 transition-all duration-300">Hormonal Cycle Balance</span>
+<span class="material-symbols-outlined text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">arrow_right_alt</span>
+</div>
+<div class="flex justify-between items-center pl-0 group-hover:pl-2 transition-all duration-300">
+<span class="font-mono text-[9px] text-editorial-muted uppercase tracking-wider group-hover:text-editorial-black dark:group-hover:text-white transition-colors">
+                        [ESTROGEN_SYNC_PROTOCOL_V4]
+                    </span>
+<span class="font-mono text-[9px] text-editorial-muted">03</span>
+</div>
+</button>
+<button class="group w-full text-left focus:outline-none fade-in delay-4">
+<div class="flex items-baseline justify-between border-b border-editorial-black/10 dark:border-white/20 pb-2 mb-2 group-hover:border-editorial-black dark:group-hover:border-white transition-colors duration-500">
+<span class="text-3xl italic font-light text-editorial-black dark:text-white group-hover:pl-2 transition-all duration-300">Beauty Glow</span>
+<span class="material-symbols-outlined text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">arrow_right_alt</span>
+</div>
+<div class="flex justify-between items-center pl-0 group-hover:pl-2 transition-all duration-300">
+<span class="font-mono text-[9px] text-editorial-muted uppercase tracking-wider group-hover:text-editorial-black dark:group-hover:text-white transition-colors">
+                        [DERMAL_LUMINOSITY_MATRIX]
+                    </span>
+<span class="font-mono text-[9px] text-editorial-muted">04</span>
+</div>
+</button>
+<button class="group w-full text-left focus:outline-none fade-in delay-5">
+<div class="flex items-baseline justify-between border-b border-editorial-black/10 dark:border-white/20 pb-2 mb-2 group-hover:border-editorial-black dark:group-hover:border-white transition-colors duration-500">
+<span class="text-3xl italic font-light text-editorial-black dark:text-white group-hover:pl-2 transition-all duration-300">Systemic Anti-Inflammation</span>
+<span class="material-symbols-outlined text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">arrow_right_alt</span>
+</div>
+<div class="flex justify-between items-center pl-0 group-hover:pl-2 transition-all duration-300">
+<span class="font-mono text-[9px] text-editorial-muted uppercase tracking-wider group-hover:text-editorial-black dark:group-hover:text-white transition-colors">
+                        [CYTOKINE_MODULATION_ACTIVE]
+                    </span>
+<span class="font-mono text-[9px] text-editorial-muted">05</span>
+</div>
+</button>
+</div>
+</main>
+<nav class="sticky bottom-0 z-10 w-full bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-editorial-black/10 dark:border-white/10 px-8 py-6">
+<div class="flex justify-between items-center">
+<div class="flex flex-col gap-0.5">
+<span class="font-mono text-[9px] uppercase tracking-widest text-editorial-muted">Step</span>
+<span class="font-display italic text-lg leading-none">02<span class="text-editorial-muted text-sm not-italic font-sans">/10</span></span>
+</div>
+<div class="h-px flex-1 mx-8 bg-editorial-black/10 dark:bg-white/10 relative">
+<div class="absolute inset-y-0 left-0 w-[20%] bg-editorial-black dark:bg-white"></div>
+</div>
+<button class="group flex items-center gap-2">
+<span class="font-mono text-[9px] uppercase tracking-widest text-editorial-black dark:text-white group-hover:underline decoration-1 underline-offset-4">Next</span>
+</button>
+</div>
+</nav>
+</div>
+
+</body></html>
