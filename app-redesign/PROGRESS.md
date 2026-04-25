@@ -200,6 +200,44 @@ Home (`e00054e`) · Lix (`d3884f1`) · Profile (`70437f5`) · Discover (`f0b7d01
 
 ---
 
+## Sprint 1 + 2 + 5 walk — 2026-04-25 · SHIPPED · sub-screen Strategy 1 sweep, sprint by sprint
+
+**PM-mode forge:** Sprint-by-sprint walk through every un-audited sub-view. 4 parallel agents (1 per sprint scope), audit-first protocol (GREEN / NUDGE / FULL POLISH per file), fix only what fails the audit.
+
+**7 commits shipped this wave:**
+
+| Commit | Sprint · Scope | Register |
+|--------|----------------|:--------:|
+| `cbe3bec` | 1 · Profile capsule pills (Membership + Paywall) | Dialog (mono micro-cap) |
+| `b1e1aeb` | 1 · EventDetail | Dialog (italic hero, mono cadence, no pastel/sparkles) |
+| `3e2aa04` | 2 · GlowScan 5 sub-views | Dialog (dark-and-quiet) |
+| `d6f7f48` | 2 · Biomarkers 4 sub-views | Dialog |
+| `c8e9471` | 2 · ProtocolDetail | Dialog (active-first italic Day-X-of-Y) |
+| `493ee1c` | 5 · DigitalTwin 2 sub-views | Signal (RegionDetail + FutureProjection; BodyMap GREEN) |
+
+**Audit results across 18 files:**
+- **GREEN (no edit):** 7 files (BodyTracking, DeepProfile, NotificationPreferences, PersonalizationLevel, Referral, Settings, BodyMapVisualization)
+- **NUDGE (1-3 surface fixes):** 7 files (Membership, Paywall, GlowScan ×5)
+- **FULL POLISH (4+ drift / structural):** 6 files (EventDetail, BiologicalAgeCard, BiomarkerCategoryView, BiomarkerDetailView, ProtocolDetail, FutureProjection, RegionDetailSheet)
+
+**Tests:** 21/21 passing.
+
+**Highlights:**
+- **Sprint 1:** EventDetail killed pastel gradient + sparkles emoji; mono LABEL · VALUE rows replaced calendar/mappin/person.2 icon scaffolding; italic Newsreader narrator opener pulled from event description.
+- **Sprint 2 GlowScan:** zero clinical phrases confirmed (no "Health Score", "indicates", "diagnoses"). All 5 sub-views appearance-based ("looks well-hydrated", "looks like it could use a slower week"). Glow Score, never Health Score.
+- **Sprint 2 Biomarkers + Protocols:** retired AlcheTag pills, 36pt category icons, percent-fill RangeBars, hardcoded "Beauty Glow" titles. ProtocolDetail now opens with italic Day-X-of-Y narrator + 2pt hairline progress.
+- **Sprint 5 DigitalTwin:** zero "Digital Twin" in user-facing strings (folder names retained). Italic chapter copy keyed off `(region, status)` pairs reads as soft asks ("asking for a softer week") never clinical. Pin states carry the signal — raw scores no longer surfaced.
+
+**Surfaced for follow-up cleanup** (flagged not fixed, walled off per scope):
+- `BiologicalAgeCard` is currently orphaned (only its #Preview references it, no production callsite). Polished prophylactically.
+- `BiomarkerCategoryView` + `BiomarkerDetailView` flagged as "Legacy state" in BiomarkerViewModel — parent dashboard no longer routes to them. Polished for when re-wired.
+- `Color.alcheBeautyBg/Text/Muted/Divider/FooterBg` tokens are now unused after ProtocolDetail polish (still defined in AlcheColors).
+- `GlowRecommendation` model lacks `Identifiable`/`Hashable` id — `GlowScanResultView` enumerates by `\.offset` as a workaround.
+
+**No version bump.** TestFlight build 4 still processing.
+
+---
+
 ## Notes
 
 ### Lix blend — 2026-04-24
