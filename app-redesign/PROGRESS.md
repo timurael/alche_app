@@ -238,6 +238,27 @@ Home (`e00054e`) · Lix (`d3884f1`) · Profile (`70437f5`) · Discover (`f0b7d01
 
 ---
 
+## Tab bar — 2026-04-25 · SHIPPED · editorial dot indicators per deck spec
+
+Replaces UITabBar (SF Symbols + Title Case + iOS pill on selected) with `AlcheTabBar` matching `app-redesign/shared-tokens.css` `.ios-tab-bar` exactly:
+
+- **6×6 dot indicator** (filled `alcheEditorialBlack` active / `alcheEditorialMuted` muted)
+- **Space Mono 9pt UPPERCASE label**, 1.8pt tracking (≈ 0.2em)
+- **Bold weight on active label**
+- **1px hairline top border** in `alcheEditorialMuted @ 25%`
+- **alcheBackground** adaptive light/dark
+- **No SF Symbols** consumed by the bar (Tab.icon and Tab.selectedIcon dropped)
+
+**Tab order corrected to deck spec:** `HOME · DISCOVER · BOOK · SHOP · PROFILE` (was `Home · Book · Shop · Discover · Profile`).
+
+**Architecture:** `TabView` + `.tabItem` replaced with `Group { switch selectedTab }` + `.safeAreaInset(edge: .bottom) { AlcheTabBar }`. System home-indicator inset preserved automatically. One tab bar instance for the whole app, NavigationStack per tab.
+
+**Commit:** `7b8cf9a` · 4 files · −100 / +91 lines · build SUCCEEDED · 21/21 tests pass.
+
+**Component:** `Alche/Design/Components/AlcheTabBar.swift` (66 lines, single component).
+
+---
+
 ## Notes
 
 ### Lix blend — 2026-04-24
