@@ -306,6 +306,30 @@ Replaces UITabBar (SF Symbols + Title Case + iOS pill on selected) with `AlcheTa
 
 ---
 
+## Final polish wave — 2026-04-25 · SHIPPED · Lane B intel converted
+
+**2 parallel agents** in this thread closed out the last un-audited surfaces flagged by Lane B (the read-only audit terminal).
+
+| Commit | File | Verdict | Register |
+|--------|------|---------|:--------:|
+| `994d92a` | SmoothieMenuView | FULL POLISH | **Ritual** |
+| `18edacb` | MySessionsView | NUDGE | **Dialog** |
+
+**SmoothieMenuView (Ritual):** Killed all 3 capsule clusters + placeholder color tile + SF Symbol overlay. Ritual masthead opener (`THE COUNTER · ALCHE · BERLIN` mono kicker → italic two-line hero "Pair the session / with one drink."). Cards became hairline menu entries. Boost section flipped from rounded chips to text-only mono toggle rows. Confirm button matches BookingDetail primary pattern. Favorite heart removed entirely (ViewModel methods now orphaned — flagged).
+
+**MySessionsView (Dialog):** Count-aware italic Newsreader narrator opener ("Two waiting. Three closed."). Practitioner name italic Newsreader 22pt instead of alcheBodyMedium. Surgical — status-dot + AlcheTag pair left intact (sanctioned, lower-priority).
+
+**Tests:** 21/21 passing.
+
+**Strategy 1 sub-screen sweep status:** all parent + sub-screen surfaces flagged in any audit are now polished or cleared. The set is closed under Strategy 1.
+
+**Surfaced this wave:**
+- `SmoothieMenuViewModel.toggleFavorite` / `isFavorite` / `favoriteSmoothies` may be orphaned (this view stopped consuming them; check other call sites before deletion).
+
+**No version bump.** TestFlight build 4 still processing — next bump will batch all post-build-4 commits including this wave.
+
+---
+
 ## Notes
 
 ### Lix blend — 2026-04-24
