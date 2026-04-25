@@ -259,6 +259,53 @@ Replaces UITabBar (SF Symbols + Title Case + iOS pill on selected) with `AlcheTa
 
 ---
 
+## Cleanup + Discover cards + audit intel — 2026-04-25 · 3-terminal lane
+
+**Process change:** PM mode shifted from in-process Agent tool to **3 user-driven Claude Code terminals** in parallel + 1 inline lane. Terminals operated independently against `redesign/editorial-longevity`, committed locally, did not push. Orchestrator aggregated, gated, pushed.
+
+**4 commits shipped this wave:**
+
+| Commit | Lane | Scope |
+|--------|------|-------|
+| `867f3f7` | A · Cleanup | Drop unused `alcheBeautyBg/Text/Muted/Divider/FooterBg` tokens. Verified `alcheBeautyPrimary` still used by `AlcheProgressBar` — kept that one. |
+| `a891cc6` | A · Cleanup | `ScanRecommendation` (the actual model name; `GlowRecommendation` was the colloquial flag) gets `Identifiable` + `let id = UUID()`. `GlowScanResultView` drops `\.offset` workaround. |
+| `8a05fa2` | A · Cleanup | `BiologicalAgeCard` decision: **kept**, marked with one-line orphan comment at top. The 350-line file is fully Strategy 1 polished — wire from BiomarkerDashboard later, don't discard. |
+| `d3a24db` | C · Discover cards | `ContentCardView` + `EventCardView` Dialog-first polish. Dropped pastel gradient hero, `AlcheTag` pills, icon rows, lock-icon tier row, sage check RSVP. Italic Newsreader 22pt titles, mono `LABEL · VALUE` cadence, `AlcheCard(.flat)` 2px borders. |
+
+**Tests:** 21/21 passing.
+
+### Audit intel (Lane B · read-only sweep, no commits)
+
+4 sub-views audited against Strategy 1 voice family:
+
+| File | Verdict | Suggested next register | Effort |
+|---|---|---|---|
+| `MacroDashboardView` | **GREEN** — already Signal-first canonical reference | Signal | — |
+| `AuthHandoffView` | **GREEN** — single italic line on black, threshold cinematic | Ritual | — |
+| `MySessionsView` | **NUDGE** — needs italic narrator opener + italic Newsreader practitioner name; AlcheCard chrome already on-spec | Dialog | S |
+| `SmoothieMenuView` | **FULL POLISH** — 3 capsule pill clusters, pastel chip backgrounds, SF-Symbol category overlays, generic header, no register voice | **Ritual** (matches Booking parent `3b4074d`) | M |
+
+### Open follow-ups (state of all flags)
+
+**Resolved this wave:**
+- ✅ Flag #1 — BiologicalAgeCard orphan → marked (`8a05fa2`)
+- ✅ Flag #3 — alcheBeauty* tokens unused → deleted (`867f3f7`)
+- ✅ Flag #4 — `ScanRecommendation` missing Identifiable → fixed (`a891cc6`)
+
+**Still open from prior waves:**
+- Flag #2 — `BiomarkerCategoryView` + `BiomarkerDetailView` "Legacy state" (parent dashboard not routing). Polished prophylactically; needs wire-or-delete decision.
+- Flag #5 — `PractitionerDetailView` hard-coded `.longevityPlus` member tier. Wire to `AppState.member.tier` once that exists.
+
+**New from this wave:**
+- `ScanRecommendation` Hashable semantics shift — `let id = UUID()` makes two recs with identical content hash differently. No current consumer relies on cross-instance equality (only ForEach diffing), but flag if Set/Dictionary semantics get added later. Resolvable by overriding `hash(into:)` and `==` to ignore id.
+- Both Discover cards (`ContentCardView`, `EventCardView`) are orphaned — no callers in the codebase. `DiscoverView` (commit `f0b7d01`) ships its own inline `itemRow`. Polished prophylactically. Wire-or-delete decision pending.
+- `SmoothieMenuView` — Lane B FULL POLISH verdict. Biggest single drift in the un-audited surface; should be next-wave priority under Ritual register.
+- `MySessionsView` — Lane B NUDGE verdict. ~30-min agent task to complete the DoctorSessions Dialog cluster.
+
+**No version bump.** TestFlight build 4 still processing.
+
+---
+
 ## Notes
 
 ### Lix blend — 2026-04-24
