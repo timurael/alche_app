@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+# Forge Status — bird's-eye view of the sprint-walk state.
+# Usage:  bin/forge-status              (full report)
+#         bin/forge-status quick        (commits + build only)
+#         bin/forge-status audit FOLDER (run grep audits on a feature folder)
+
+set -e
+
+# Resolve the alche project root regardless of where the script is invoked from.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+APP="$ROOT/app"
+
+# Color codes (only when stdout is a terminal).
+if [[ -t 1 ]]; then
+  BOLD=$'\033[1m'; DIM=$'\033[2m'; GREEN=$'\033[32m'; YELLOW=$'\033[33m'
+  RED=$'\033[31m'; CYAN=$'\033[36m'; RESET=$'\033[0m'
+else
+  BOLD=""; DIM=""; GREEN=""; YELLOW=""; RED=""; CYAN=""; RESET=""
+fi
+
+mode="${1:-full}"
+
+print_header() {
+  echo
+  echo "${BOLD}━━━ $1 ━━━${RESET}"
+}
+
+# Mode: audit FOLDER — run all grep audits on a feature folder
+if [[ "$mode" == "audit" ]]; then
+  folder="${2:-}"
+  if [[ -z "$folder" ]]; then
+    echo "${RED}Usage: bin/forge-status audit <folder>${RESET}"
+    echo "Example: bin/forge-status audit DoctorSessions"
+    exit 1
+  fi
+  target="$APP/Alche/Features/$folder"
+  if [[ ! -d "$target" ]]; then
+    echo "${RED}Folder not found: $target${RESET}"
+    exit 1
+  fi
+
+  print_header "AUDIT · Alche/Features/$folder"
+
+  echo "${DIM}-- Token drift (system fonts) --${RESET}"
+  grep -rnE "\.font\(\.body|\.font\(\.caption|\.font\(\.subheadline|\.font\(\.headline|\.font\(\.title" "$target" || echo "${GREEN}clean${RESET}"
+  echo
+  echo "${DIM}-- Hardcoded colors --${RESET}"
+  grep -rnE "Color\.cream|Color\.linen" "$target" || echo "${GREEN}clean${RESET}"
+  echo
+  echo "${DIM}-- Fake mono metadata --${RESET}"
+  grep -rnE "VER [0-9]|LAT [0-9]|GRID REF|SEQ-[0-9]|VAR\. [0-9]" "$target" || echo "${GREEN}clean${RESET}"
+  echo
+  echo "${DIM}-- Rating chrome --${RESET}"
+  grep -rnE "star\.fill|StarRating|★" "$target" || echo "${GREEN}clean${RESET}"
+  echo
+  echo "${DIM}-- Capsule pills --${RESET}"
+  grep -rn "Capsule()" "$target" || echo "${GREEN}clean${RESET}"
+  echo
+  echo "${DIM}-- Pastel rings / rounded opacity --${RESET}"
+  grep -rnE "RoundedRectangle.*opacity\(0\.[0-9]+\)|Circle\(\).*\.fill\(.*opacity" "$target" || echo "${GREEN}clean${RESET}"
+  echo
+  echo "${DIM}-- Clinical / sci-fi language --${RESET}"
+  grep -rnE "Health Score|hydration levels|indicates|demonstrates|diagnoses|treats|cures|heals|AI[- ]powered" "$target" || echo "${GREEN}clean${RESET}"
+  exit 0
+fi
+
+# --- Default report ---
+
+print_header "BRANCH · App"
+cd "$APP"
+git --no-pager log --oneline -10
+echo
+echo "${DIM}working tree:${RESET}"
+git status --short || true
+
+ahead=$(git log origin/redesign/editorial-longevity..HEAD --oneline 2>/dev/null | wc -l | xargs)
+if [[ "$ahead" != "0" ]]; then
+  echo
+  echo "${YELLOW}⚠ ahead of origin by $ahead commit(s) — push pending${RESET}"
+fi
+
+print_header "BRANCH · Parent (deck + PROGRESS)"
+cd "$ROOT"
+git --no-pager log --oneline -5
+
+print_header "VERSION · TestFlight"
+grep -E "MARKETING_VERSION|CURRENT_PROJECT_VERSION" "$APP/project.yml" | sed 's/^/  /'
+
+if [[ "$mode" == "quick" ]]; then
+  print_header "BUILD"
+  cd "$APP"
+  xcodebuild -scheme Alche -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build 2>&1 | tail -3
+  exit 0
+fi
+
+print_header "BUILD · iPhone 17 Pro simulator"
+cd "$APP"
+build_out=$(xcodebuild -scheme Alche -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build 2>&1 | tail -3)
+echo "$build_out"
+if echo "$build_out" | grep -q "BUILD SUCCEEDED"; then
+  status="${GREEN}✓ BUILD SUCCEEDED${RESET}"
+else
+  status="${RED}✗ BUILD FAILED${RESET}"
+fi
+
+print_header "TESTS"
+test_out=$(xcodebuild -scheme Alche -destination 'platform=iOS Simulator,name=iPhone 17 Pro' test 2>&1 | grep -E "Executed [0-9]+ tests|TEST SUCCEEDED|TEST FAILED" | tail -3)
+echo "$test_out"
+if echo "$test_out" | grep -q "TEST SUCCEEDED"; then
+  test_status="${GREEN}✓ TESTS PASS${RESET}"
+else
+  test_status="${RED}✗ TESTS FAILING${RESET}"
+fi
+
+print_header "SUMMARY"
+echo "  Build:  $status"
+echo "  Tests:  $test_status"
+if [[ "$ahead" != "0" ]]; then
+  echo "  Push:   ${YELLOW}$ahead commit(s) pending on app branch${RESET}"
+else
+  echo "  Push:   ${GREEN}up to date${RESET}"
+fi
+echo
+echo "${CYAN}For an audit on a folder:${RESET} bin/forge-status audit <FeatureFolder>"
+echo "${CYAN}Quick mode:${RESET} bin/forge-status quick"
+echo
