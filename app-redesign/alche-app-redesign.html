@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — The App, in Dialog · Full Redesign Study</title>
+  <link rel="stylesheet" href="shared-tokens.css">
+  <link rel="stylesheet" href="shared-components.css">
+  <style>
+    :root { --max-w: 1280px; }
+    body { background: var(--bg-light); color: var(--editorial-black); }
+    .page { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+
+    /* ============ COVER ============ */
+    .cover {
+      min-height: 96vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 0;
+    }
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--editorial-black);
+      padding-top: 16px;
+    }
+    .masthead .logo {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+    .masthead .meta {
+      display: flex;
+      gap: 32px;
+      color: var(--editorial-muted);
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .cover-title h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 200;
+      font-size: clamp(60px, 10vw, 140px);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      margin: 0 0 32px;
+    }
+    .cover-title h1 em {
+      color: var(--editorial-muted);
+      font-style: italic;
+      font-weight: 200;
+    }
+    .cover-title .lede {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(22px, 2.4vw, 30px);
+      line-height: 1.4;
+      max-width: 760px;
+      margin: 0;
+    }
+    .cover-title .lede em { color: var(--editorial-muted); }
+    .cover-title .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 32px;
+      display: block;
+    }
+    .metabar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      border-top: 1px solid var(--divider-medium);
+      padding-top: 24px;
+    }
+    .metabar .cell .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 6px;
+    }
+    .metabar .cell .value {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 19px;
+    }
+
+    /* ============ SECTION ============ */
+    .section {
+      padding: 120px 0 56px;
+      border-top: 1px solid var(--editorial-black);
+    }
+    .section-lead {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      margin-bottom: 72px;
+      align-items: baseline;
+    }
+    .section-lead .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .section-lead h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(48px, 6vw, 80px);
+      line-height: 0.98;
+      letter-spacing: -0.025em;
+      margin: 0 0 20px;
+    }
+    .section-lead h2 em {
+      color: var(--editorial-muted);
+    }
+    .section-lead .sub {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--editorial-muted);
+      max-width: 720px;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* ============ PREFACE PROSE ============ */
+    .preface {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+    }
+    .preface .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .preface .prose {
+      max-width: 780px;
+    }
+    .preface .prose p {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.55;
+      margin: 0 0 24px;
+      color: var(--editorial-black);
+    }
+    .preface .prose p em {
+      font-style: italic;
+      color: var(--primary);
+    }
+    .preface .prose .callout {
+      border-left: 3px solid var(--editorial-black);
+      padding: 16px 24px;
+      margin: 32px 0;
+      background: var(--bg-warm);
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+    .preface .prose .callout.accent {
+      border-left-color: var(--primary);
+    }
+
+    /* ============ PATTERN CARDS (narrator kit) ============ */
+    .narrator-kit {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .pattern-card {
+      border: 1px solid var(--editorial-black);
+      padding: 28px 24px;
+      background: var(--bg-white);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .pattern-card .p-label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .pattern-card .p-name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 26px;
+      line-height: 1.1;
+      color: var(--editorial-black);
+      margin: 0;
+    }
+    .pattern-card .p-desc {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--editorial-black);
+      margin: 0;
+    }
+    .pattern-card .p-css {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--editorial-muted);
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--divider-medium);
+    }
+
+    /* ============ GROUP INTRO ============ */
+    .group-intro {
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      padding: 64px 56px;
+      margin: 72px 0 48px;
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+    }
+    .group-intro .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--editorial-accent);
+    }
+    .group-intro h3 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(40px, 4.8vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--bg-white);
+      margin: 0 0 20px;
+    }
+    .group-intro h3 em { color: var(--editorial-accent); }
+    .group-intro .voice-direction {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--editorial-accent);
+      margin: 0 0 24px;
+      max-width: 720px;
+    }
+    .group-intro .screens-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .group-intro .screens-list span {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg-white);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 12px;
+    }
+
+    /* ============ SCREEN CARD ============ */
+    .screen-card {
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 48px;
+      margin: 0 0 72px;
+      padding-bottom: 72px;
+      border-bottom: 1px solid var(--divider-medium);
+    }
+    .screen-card:last-of-type { border-bottom: 1px solid var(--editorial-black); }
+    .screen-card .screen-frame {
+      width: 480px;
+      height: 1720px;
+      background: var(--canvas-bg);
+      border: 1px solid var(--divider-medium);
+    }
+    .screen-card iframe {
+      width: 480px;
+      height: 1720px;
+      border: 0;
+      display: block;
+    }
+    .screen-card .screen-text {
+      padding-top: 8px;
+    }
+    .screen-card .screen-num {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 10px;
+    }
+    .screen-card h4 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 48px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+      color: var(--editorial-black);
+    }
+    .screen-card .kicker {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.4;
+      color: var(--editorial-muted);
+      margin: 0 0 32px;
+      max-width: 520px;
+    }
+    .screen-card .swift-line {
+      display: inline-block;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      background: var(--bg-warm);
+      padding: 6px 12px;
+      border: 1px solid var(--divider-medium);
+      margin-bottom: 24px;
+    }
+    .screen-card .decision-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid var(--divider-medium);
+    }
+    .screen-card .decision-list li {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--divider-medium);
+    }
+    .screen-card .decision-list .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .screen-card .decision-list .body {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--editorial-black);
+    }
+    .screen-card .links {
+      display: flex;
+      gap: 20px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .screen-card .links a {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--editorial-black);
+      padding-bottom: 2px;
+    }
+
+    /* ============ HOME SPOTLIGHT ============ */
+    .home-spotlight {
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      padding: 56px;
+      margin: 48px 0 64px;
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 56px;
+      align-items: flex-start;
+    }
+    .home-spotlight iframe {
+      width: 480px;
+      height: 1720px;
+      border: 0;
+      background: var(--canvas-bg);
+    }
+    .home-spotlight .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--editorial-accent);
+    }
+    .home-spotlight h3 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 58px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 12px 0 24px;
+      color: var(--bg-white);
+    }
+    .home-spotlight p {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--editorial-accent);
+      margin: 0 0 24px;
+    }
+    .home-spotlight .status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      margin: 24px 0;
+    }
+    .home-spotlight .status-grid .st .l {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-accent);
+      margin-bottom: 4px;
+    }
+    .home-spotlight .status-grid .st .v {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--bg-white);
+    }
+    .home-spotlight ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .home-spotlight ul li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+      padding: 8px 0;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--editorial-accent);
+    }
+    .home-spotlight ul li::before {
+      content: "—";
+      color: var(--editorial-accent);
+    }
+
+    /* ============ ROADMAP TABLE ============ */
+    .roadmap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 14px;
+      margin-top: 32px;
+    }
+    .roadmap-table thead th {
+      text-align: left;
+      padding: 18px 20px;
+      border-top: 1px solid var(--editorial-black);
+      border-bottom: 1px solid var(--editorial-black);
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .roadmap-table tbody td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--divider-medium);
+      vertical-align: top;
+    }
+    .roadmap-table tbody td.screen {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 17px;
+      width: 22%;
+    }
+    .roadmap-table tbody td.group {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      width: 15%;
+    }
+    .roadmap-table tbody tr.sprint-1 { background: var(--bg-warm); }
+    .roadmap-table .effort {
+      display: inline-block;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--editorial-black);
+    }
+    .roadmap-table .effort.S { color: var(--success); border-color: var(--success); }
+    .roadmap-table .effort.M { color: var(--editorial-black); }
+    .roadmap-table .effort.L { color: var(--warning); border-color: var(--warning); }
+
+    /* ============ SHIPPED TAG ============ */
+    .shipped-tag {
+      display: inline-block;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--success);
+      border: 1px solid var(--success);
+      padding: 3px 8px;
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+    .screen-card .screen-num .shipped-tag { margin-left: 8px; }
+
+    /* ============ COLOPHON ============ */
+    .colophon {
+      padding: 48px 0 80px;
+      border-top: 1px solid var(--divider-medium);
+      display: flex;
+      justify-content: space-between;
+      color: var(--editorial-muted);
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* ============ PRINT ============ */
+    @page { size: A3 portrait; margin: 18mm 14mm; }
+    @media print {
+      body { background: white; }
+      .page { max-width: none; padding: 0; }
+      .cover { min-height: 0; page-break-after: always; break-after: page; }
+      .section { page-break-before: always; break-before: page; }
+      .screen-card { page-break-inside: avoid; break-inside: avoid; }
+      .group-intro { page-break-before: always; break-before: page; }
+      .home-spotlight { page-break-inside: avoid; break-inside: avoid; }
+      .screen-card iframe, .home-spotlight iframe { height: 1100px; }
+      .screen-card { grid-template-columns: 380px 1fr; }
+      .screen-card .screen-frame, .screen-card iframe { width: 380px; height: 1100px; }
+      .home-spotlight { grid-template-columns: 380px 1fr; }
+      .home-spotlight iframe { width: 380px; }
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @media (max-width: 1000px) {
+      .section-lead, .preface, .group-intro, .screen-card, .home-spotlight { grid-template-columns: 1fr; gap: 24px; }
+      .narrator-kit { grid-template-columns: 1fr 1fr; }
+      .metabar { grid-template-columns: repeat(2, 1fr); }
+      .screen-card .screen-frame, .screen-card iframe, .home-spotlight iframe { width: 100%; max-width: 480px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ====================== COVER ====================== -->
+<section class="cover">
+  <div class="masthead">
+    <div class="logo">Alche</div>
+    <div class="meta">
+      <span>Internal · Design Review</span>
+      <span>Rev. 2026-04-24</span>
+    </div>
+  </div>
+
+  <div class="cover-title">
+    <span class="kicker">A Full-App Redesign Study · 25 Screens</span>
+    <h1>The app,<br>in <em>dialog.</em></h1>
+    <p class="lede">
+      The current Alche app is a collection of dashboards that happen to share
+      a font. This study rewrites every screen around a single idea — that
+      Alche is a <em>longevity companion</em>, not a control panel, and should
+      speak to you before it asks anything of you.
+    </p>
+  </div>
+
+  <div class="metabar">
+    <div class="cell"><div class="label">Screens</div><div class="value">25</div></div>
+    <div class="cell"><div class="label">Shipped</div><div class="value">9 · Home → Glow scan</div></div>
+    <div class="cell"><div class="label">Designed</div><div class="value">24 mockups</div></div>
+    <div class="cell"><div class="label">Swift plans</div><div class="value">24 written</div></div>
+    <div class="cell"><div class="label">Parent direction</div><div class="value">Dialog-first</div></div>
+  </div>
+</section>
+
+<!-- ====================== PREFACE ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">I · Preface</div>
+    <div>
+      <h2>We started with a home screen.<br>We ended with <em>a voice.</em></h2>
+      <p class="sub">
+        The home-screen study surfaced three patterns that could not be solved
+        by a better home — they were written into every other screen too.
+        So we wrote them out, in order.
+      </p>
+    </div>
+  </div>
+
+  <div class="preface">
+    <div class="label">The thesis</div>
+    <div class="prose">
+      <p>
+        An editorial design language — Newsreader italic for display, Space
+        Mono for overlines, 2-pixel sharp corners, hard drop shadows — cannot
+        be applied to a screen after the fact. If the <em>rhythm</em> of the
+        screen is still dashboard, no amount of font discipline will rescue
+        it. The font becomes costume on a fundamentally corporate garment.
+      </p>
+      <p>
+        The three patterns the audit surfaced — <em>token drift</em>,
+        <em>voice absent between blocks</em>, and <em>fictional mono metadata
+        as costume</em> — are not independent. They share one root cause:
+        every screen was built assuming the user wants to <em>read a
+        dashboard</em>. Longevity isn't a dashboard. It's a practice.
+        And a practice is conducted with a person, not a UI.
+      </p>
+      <div class="callout accent">
+        Dialog-first means the screen speaks first, asks second, lists last.
+        Every screen in this book has been rewritten under that rule.
+      </div>
+      <p>
+        The rewrite is not a repaint. Many screens lose whole sections;
+        some gain a voice where there was silence; all of them answer, in
+        their first beat, the question the member was about to ask.
+      </p>
+      <p>
+        Between the deck's first draft and today, one more voice joined the
+        app: <em>Lix</em>, a droplet mascot hosting the onboarding in
+        lowercase. The redesign learned to speak in two registers — Lix
+        before the member signs, Alche after. What used to be eight onboarding
+        screens is now one scripted conversation; the baton-pass to Alche is
+        itself a 0.8-second black curtain.
+      </p>
+      <p>
+        Below: the shared narrator kit every screen uses, five groups of
+        screens with a voice direction per group, and an implementation
+        roadmap that sequences the remaining screens for the next sprints.
+        Home, Lix, Profile, and Discover are already live.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== NARRATOR KIT ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">II · Narrator kit</div>
+    <div>
+      <h2>Seven patterns<br>that carry the voice.</h2>
+      <p class="sub">
+        Every mockup in this book is built from the same shared components.
+        The consistency is not visual — it is
+        <em>grammatical.</em>
+      </p>
+    </div>
+  </div>
+
+  <div class="narrator-kit">
+    <div class="pattern-card">
+      <div class="p-label">Pattern 01</div>
+      <h5 class="p-name">Context band</h5>
+      <p class="p-desc">A single Space Mono row at the top of every screen. Date, moment, session count. Never "Good morning." Declarative, oriented.</p>
+      <div class="p-css">.alche-context-band</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 02</div>
+      <h5 class="p-name">Read stamp</h5>
+      <p class="p-desc">Two-by-two black-and-blue mark + "ALCHE · YOUR READ" label. Signals the narrator is about to speak.</p>
+      <div class="p-css">.alche-read-stamp</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 03</div>
+      <h5 class="p-name">The read</h5>
+      <p class="p-desc">Three italic Newsreader lines. Each sentence a breath. One phrase underlined in action-blue — the target of the primary action.</p>
+      <div class="p-css">.alche-read</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 04</div>
+      <h5 class="p-name">Data strip</h5>
+      <p class="p-desc">Space Mono line of real data — sleep, HRV, load, recovery. Never faux-technical. If it doesn't carry a value, it isn't here.</p>
+      <div class="p-css">.alche-data-strip</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 05</div>
+      <h5 class="p-name">Interstitial</h5>
+      <p class="p-desc">Between data blocks, the narrator speaks again. Short italic aside. The cure for silent stacking — used on almost every screen.</p>
+      <div class="p-css">.alche-interstitial</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 06</div>
+      <h5 class="p-name">Previous echo</h5>
+      <p class="p-desc">One tiny italic line carrying forward yesterday — or the previous step. Makes the screen feel like part of an ongoing conversation.</p>
+      <div class="p-css">.alche-prev-echo</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 07</div>
+      <h5 class="p-name">Browse escape</h5>
+      <p class="p-desc">A tiny mono link at the bottom: "Browse instead →". An honest exit for the member who didn't come to be read today.</p>
+      <div class="p-css">.alche-browse-escape</div>
+    </div>
+    <div class="pattern-card">
+      <div class="p-label">Pattern 08</div>
+      <h5 class="p-name">Lix voice</h5>
+      <p class="p-desc">Pre-auth screens carry a separate register: lowercase, 4-14 words, warm-terse. Post-auth is editorial italic Alche. Two voices, one app.</p>
+      <div class="p-css">.lix-line</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== HOME SPOTLIGHT ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">III · Home · Already shipped</div>
+    <div>
+      <h2>The verb, committed.</h2>
+      <p class="sub">
+        Home was the pilot. It ships in <em>redesign/editorial-longevity</em>
+        and built clean on iPhone 17 Pro — 0 errors. The 11 other dashboards
+        have been replaced by a single italic paragraph.
+      </p>
+    </div>
+  </div>
+
+  <div class="home-spotlight">
+    <iframe src="../home-redesign/direction-c-mockup.html" title="Home · Dialog-first (shipped)"></iframe>
+    <div>
+      <div class="kicker">Direction C · Dialog-first · HOME</div>
+      <h3>A letter from your<br>companion.</h3>
+      <p>
+        Three italic lines open the day. One underlined phrase in action-blue
+        is the primary action. A Space Mono data strip holds the evidence.
+        One utility row. One browse escape. Nothing else.
+      </p>
+      <div class="status-grid">
+        <div class="st"><div class="l">Build</div><div class="v">BUILD SUCCEEDED</div></div>
+        <div class="st"><div class="l">Commit</div><div class="v">e00054e</div></div>
+        <div class="st"><div class="l">Branch</div><div class="v">redesign/editorial-longevity</div></div>
+        <div class="st"><div class="l">Scope</div><div class="v">Home · Profile entry</div></div>
+      </div>
+      <ul>
+        <li>New: AlcheRead model, AlcheReadCard + AlcheDataStrip components</li>
+        <li>HomeView fully rewritten — context band, read card, echo, utility, escape</li>
+        <li>HomeViewModel gains todayRead + prevRead with mock generator</li>
+        <li>Cycle band moved to Profile · Body tracking (opt-in, AMAB default off)</li>
+        <li>DailyProtocolCard + QuickActionGrid deleted as orphans</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== LIX SPOTLIGHT ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">IV · Lix · Already shipped</div>
+    <div>
+      <h2>The droplet<br>with a <em>voice.</em></h2>
+      <p class="sub">
+        Eight onboarding cards compress into one scripted conversation.
+        Lix — a tiny iridescent droplet — asks four questions, reacts in
+        lowercase italic, hands off to Alche at signing.
+      </p>
+    </div>
+  </div>
+
+  <div class="home-spotlight">
+    <iframe src="screens/lix-chat/dialog-mockup.html" title="Lix chat · Already shipped"></iframe>
+    <div>
+      <div class="kicker">Dialog-first · ONBOARDING · SHIPPED</div>
+      <h3>Eight cards,<br>one conversation.</h3>
+      <p>
+        Lix greets, asks for a name, reads the age, picks the loudest axis
+        (sleep · energy · focus · sex · mood), asks consent, previews a
+        personal recommendation, hands off. Seven turns. Scripted shell,
+        LLM-reactable between, fallback-guaranteed on every turn.
+      </p>
+      <div class="status-grid">
+        <div class="st"><div class="l">Build</div><div class="v">BUILD SUCCEEDED</div></div>
+        <div class="st"><div class="l">Commit</div><div class="v">d3884f1</div></div>
+        <div class="st"><div class="l">Files</div><div class="v">9 new · 9 deleted</div></div>
+        <div class="st"><div class="l">Mascot</div><div class="v">SwiftUI Shape · 5 moods</div></div>
+      </div>
+      <ul>
+        <li>LixChatView + ChatViewModel + 7-turn state machine</li>
+        <li>LixMascot — SVG-ported iridescent droplet with delighted / pleased / curious / quiet / sleeping moods</li>
+        <li>LixSystemPrompt + LixAPIClient — fallback-only v1; Worker URL TODO from UserDefaults</li>
+        <li>AuthHandoffView — 0.8s black-curtain baton-pass between Lix and Auth</li>
+        <li>Cut views: Welcome · BrandMoment · QuickScan(+VM) · GoalSelection · FocusAreaReveal · OnboardingContainer · OnboardingView(+VM)</li>
+        <li>Relocated: SupplementRecommendation → Shop · GlowScanInvitation → GlowScan first-run banner</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GROUP 01 — ONBOARDING (resolved as Lix) ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">V · Group 01</div>
+    <div>
+      <h2>Onboarding —<br>resolved as <em>Lix.</em></h2>
+      <p class="sub">
+        The eight screens originally planned for Group 01 were rethought
+        when Lix shipped. Six merged into her seven-turn chat; two
+        relocated. Auth stayed as the handoff surface — and is being
+        rewritten right now to match the dialog-first voice.
+      </p>
+    </div>
+  </div>
+
+  <div class="group-intro">
+    <div class="kicker">Voice direction</div>
+    <div>
+      <h3>Onboarding — <em>resolved as Lix.</em></h3>
+      <p class="voice-direction">
+        The eight screens originally planned for Group 01 were rethought when
+        Lix shipped. Six merged into her seven-turn chat (see section IV);
+        two relocated — Supplement recommendation into Shop, Glow scan
+        invitation into the Home first-run banner. Auth stayed as the
+        handoff surface and is being rewritten right now to match the
+        dialog-first voice.
+      </p>
+      <div class="screens-list">
+        <span>Lix chat · SHIPPED</span>
+        <span>Auth · handoff · in progress</span>
+        <span>Supplement rec. · relocated to Shop</span>
+        <span>Glow scan invite · relocated to Home first-run</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 01 · Auth — the handoff surface (being rewritten) -->
+  <div class="screen-card">
+    <iframe src="screens/auth/dialog-mockup.html" title="Auth · handoff"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 01 · Onboarding <span class="shipped-tag">SHIPPED · 6ced987</span></div>
+      <h4>Auth.</h4>
+      <p class="kicker">The one onboarding screen that kept its place. After Lix hands off through a 0.8-second black curtain, Auth is where the member signs the letter. Rewritten to match the dialog-first voice — italic opener, three voiced GDPR statements, Apple primary, no Create Account wall.</p>
+      <span class="swift-line">app/Alche/Features/Auth/ · AuthHandoffView.swift · AuthView.swift · GDPRConsentView deleted</span>
+      <ul class="decision-list">
+        <li><span class="label">Italic opener</span><div class="body">"Hi, here's what I'll remember. / And here's what I won't." Pulls the member's name from LixProfile when present.</div></li>
+        <li><span class="label">Sign the letter</span><div class="body">Not "Sign up." Not "Create account." The metaphor the Lix conversation was already using — mono <code>SIGNING THE LETTER · ALCHE 08/08</code> overline.</div></li>
+        <li><span class="label">GDPR in voice</span><div class="body">Three italic em-dash statements replace the consent modal entirely. Your name, your signals, your data — each gets one sentence.</div></li>
+        <li><span class="label">Email collapsed</span><div class="body">"Use email instead" ghost mono link reveals an inline underline-only form. One form, two states (sign-in / create account).</div></li>
+        <li><span class="label">See also</span><div class="body">Lix spotlight (section IV) for the full pre-auth experience. Six screens merged in there; Supplement moved to Shop; Glow scan invite moved to Home first-run.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/auth/current-audit.md">Audit</a>
+        <a href="screens/auth/swift-plan.md">Swift plan</a>
+        <a href="screens/auth/dialog-mockup.html">Full mockup</a>
+        <a href="LIX-BLEND.md">Lix blend notes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GROUP 02 — CORE TABS ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">VI · Group 02</div>
+    <div>
+      <h2>Core tabs —<br>the <em>daily rhythm.</em></h2>
+      <p class="sub">
+        Home is already live. The other four tabs get a light narrator
+        presence — observational opener, then utility. Dialog-first where it
+        matters; don't interrupt the member trying to shop.
+      </p>
+    </div>
+  </div>
+
+  <div class="group-intro">
+    <div class="kicker">Voice direction</div>
+    <div>
+      <h3>Observational and <em>light.</em></h3>
+      <p class="voice-direction">
+        Core tabs are visited daily. Alche opens with a short read, then steps
+        aside. The read is the opening line — not the whole screen. Between
+        sub-sections, an interstitial reminds the member the narrator is
+        there, but quietly.
+      </p>
+      <div class="screens-list">
+        <span>Home · SHIPPED</span>
+        <span>Discover · SHIPPED</span>
+        <span>Profile · SHIPPED</span>
+        <span>Booking</span>
+        <span>Shop</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/discover/dialog-mockup.html" title="Discover"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 10 · Core tabs<span class="shipped-tag">SHIPPED · f0b7d01</span></div>
+      <h4>Discover.</h4>
+      <p class="kicker">"This week I'm reading —" and then a curated list. Alche as an editor, not an algorithm feed.</p>
+      <span class="swift-line">app/Alche/Features/Discover/</span>
+      <ul class="decision-list">
+        <li><span class="label">Curatorial voice</span><div class="body">Short italic read opens with what Alche is paying attention to this week. The list follows.</div></li>
+        <li><span class="label">No segmented picker</span><div class="body">Inline mono toggles replace the default segmented control the audit flagged.</div></li>
+        <li><span class="label">One CTA per row</span><div class="body">Discover rows have a single arrow — no hearts, saves, shares competing.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/discover/current-audit.md">Audit</a>
+        <a href="screens/discover/swift-plan.md">Swift plan</a>
+        <a href="screens/discover/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/booking/dialog-mockup.html" title="Booking"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 11 · Core tabs<span class="shipped-tag">SHIPPED · Ritual-first · 3b4074d</span></div>
+      <h4>Booking.</h4>
+      <p class="kicker">"Which day?" — direct, instructional. Session-type toggle collapses from giant tiles to eight pixels of typography.</p>
+      <span class="swift-line">app/Alche/Features/Booking/</span>
+      <ul class="decision-list">
+        <li><span class="label">Inline type toggle</span><div class="body">"· Recovery · Glow" mono underline replaces two tall card tiles. Hierarchy matches decision weight.</div></li>
+        <li><span class="label">Session as sentence</span><div class="body">"Suite 2 · 15:00 today" — one line. Booking confirmation is conversational, not a ticket.</div></li>
+        <li><span class="label">Slot scarcity</span><div class="body">Mono tag next to day label when slots are limited. Never a red dot.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/booking/current-audit.md">Audit</a>
+        <a href="screens/booking/swift-plan.md">Swift plan</a>
+        <a href="screens/booking/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/shop/dialog-mockup.html" title="Shop"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 12 · Core tabs<span class="shipped-tag">SHIPPED · Dialog-first · 6b54150</span></div>
+      <h4>Shop.</h4>
+      <p class="kicker">"Three I'd take myself." Retail restrained, women & queer first. The only screen where the narrator stays briefest.</p>
+      <span class="swift-line">app/Alche/Features/Shop/</span>
+      <ul class="decision-list">
+        <li><span class="label">Women & queer first</span><div class="body">Iron bisglycinate row explicitly names menstruating bodies in product copy — not a badge.</div></li>
+        <li><span class="label">One line per product</span><div class="body">Product · mechanism · price. No star ratings, no "bestseller" chips, no pastel accents.</div></li>
+        <li><span class="label">Protocol link-back</span><div class="body">If the member is on a protocol that recommends this, it says so in italic — not a badge.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/shop/current-audit.md">Audit</a>
+        <a href="screens/shop/swift-plan.md">Swift plan</a>
+        <a href="screens/shop/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/profile/dialog-mockup.html" title="Profile"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 13 · Core tabs<span class="shipped-tag">SHIPPED · 70437f5</span></div>
+      <h4>Profile.</h4>
+      <p class="kicker">"What we've done together" — retrospective voice. Home for the new <em>Body tracking</em> preference — Menstrual / Androgen / Off.</p>
+      <span class="swift-line">app/Alche/Features/Profile/</span>
+      <ul class="decision-list">
+        <li><span class="label">Body tracking</span><div class="body">Prominent bordered block with italic sub, radio, default OFF. The AMAB/queer inclusivity fix as a first-class surface.</div></li>
+        <li><span class="label">Retrospective read</span><div class="body">Three italic lines summarize the member's streak, rituals, sessions. Not a KPI grid — a diary entry.</div></li>
+        <li><span class="label">Settings demoted</span><div class="body">Settings live below a mono divider. They shouldn't lead the page.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/profile/current-audit.md">Audit</a>
+        <a href="screens/profile/swift-plan.md">Swift plan</a>
+        <a href="screens/profile/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GROUP 03 — WELLNESS ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">VII · Group 03</div>
+    <div>
+      <h2>Wellness features —<br>the <em>body, narrated.</em></h2>
+      <p class="sub">
+        Numbers without a narrator are a missed moment. Every data block on
+        these screens is prefaced by an observation. Evidence, not dashboard.
+      </p>
+    </div>
+  </div>
+
+  <div class="group-intro">
+    <div class="kicker">Voice direction</div>
+    <div>
+      <h3>Observational, <em>never clinical.</em></h3>
+      <p class="voice-direction">
+        Never "indicates" / "demonstrates" / "diagnoses." Always "looks,"
+        "reads," "we see," "your body is." Glow Scan is a Glow Score, not a
+        Health Score. Mock data is honest and consistently tagged. Sample Data
+        is present but not frantic.
+      </p>
+      <div class="screens-list">
+        <span>Glow scan</span>
+        <span>Biomarkers</span>
+        <span>Protocols</span>
+        <span>Progress</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/glow-scan/dialog-mockup.html" title="Glow scan"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 14 · Wellness <span class="shipped-tag">SHIPPED · 90a26d8</span></div>
+      <h4>Glow scan.</h4>
+      <p class="kicker">Dark and quiet. Two lines from Alche — "Hold it steady. I'll look for 30 seconds." — replace the rotating circle and fake camera metadata.</p>
+      <span class="swift-line">app/Alche/Features/GlowScan/</span>
+      <ul class="decision-list">
+        <li><span class="label">No fake camera</span><div class="body">"S: 1/200 ISO 120" deleted. A camera can't be italic, but it can shut up.</div></li>
+        <li><span class="label">Appearance language</span><div class="body">"Your skin looks well-hydrated." Never "hydration levels indicate." Glow Score, not Health Score.</div></li>
+        <li><span class="label">Sample Data tag</span><div class="body">One mono tag top-right. Consistent with other wellness screens.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/glow-scan/current-audit.md">Audit</a>
+        <a href="screens/glow-scan/swift-plan.md">Swift plan</a>
+        <a href="screens/glow-scan/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/biomarkers/dialog-mockup.html" title="Biomarkers"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 15 · Wellness <span class="shipped-tag">SHIPPED · 5b1866e</span></div>
+      <h4>Biomarkers.</h4>
+      <p class="kicker">"We haven't read your blood yet. This is what your dashboard will look like, once we have." The voice carries the mock status; one tag is enough.</p>
+      <span class="swift-line">app/Alche/Features/Biomarkers/</span>
+      <ul class="decision-list">
+        <li><span class="label">Narrated preview</span><div class="body">When no real panel is connected, the dashboard opens with a read that names the mock state honestly.</div></li>
+        <li><span class="label">Single Sample Data</span><div class="body">One tag, not two. The audit found double-labeling — fixed.</div></li>
+        <li><span class="label">Interstitial per cluster</span><div class="body">Between markers, Alche speaks. "Your fasting glucose is at the low end of optimal. Hold the evening-carb protocol."</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/biomarkers/current-audit.md">Audit</a>
+        <a href="screens/biomarkers/swift-plan.md">Swift plan</a>
+        <a href="screens/biomarkers/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/protocols/dialog-mockup.html" title="Protocols"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 16 · Wellness <span class="shipped-tag">SHIPPED · 4b043db</span></div>
+      <h4>Protocols.</h4>
+      <p class="kicker">"You're midway through Beauty Glow. Skin hydration is rising." Then the list. Alche narrates the transition from active to considered.</p>
+      <span class="swift-line">app/Alche/Features/Protocols/</span>
+      <ul class="decision-list">
+        <li><span class="label">Active first</span><div class="body">One large italic read for the active protocol. Compact rows for the considered. No equal-weight grid.</div></li>
+        <li><span class="label">Progress as sentence</span><div class="body">"Day 12 of 21 · hydration is rising" beats a percentage bar. Narrative over quantitative.</div></li>
+        <li><span class="label">Interstitial before library</span><div class="body">Between active and library: "A few I'd put on your list." Voice, not just a section overline.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/protocols/current-audit.md">Audit</a>
+        <a href="screens/protocols/swift-plan.md">Swift plan</a>
+        <a href="screens/protocols/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/progress/dialog-mockup.html" title="Progress"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 17 · Wellness <span class="shipped-tag">SHIPPED · c261392</span></div>
+      <h4>Progress.</h4>
+      <p class="kicker">One chart Alche picks, with an inline annotation on the inflection. "Deep Recovery · Day 1" — causality, not just shape.</p>
+      <span class="swift-line">app/Alche/Features/Progress/</span>
+      <ul class="decision-list">
+        <li><span class="label">One chart, curated</span><div class="body">Alche chooses what mattered this week. The member can override via mono footer — not a segmented picker.</div></li>
+        <li><span class="label">Inline annotation</span><div class="body">A tag pinned to the inflection point on the curve. Explains the why of the shape, not just the shape.</div></li>
+        <li><span class="label">Weekly read</span><div class="body">Three italic lines summarize the week before the chart shows it. Recognition before evidence.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/progress/current-audit.md">Audit</a>
+        <a href="screens/progress/swift-plan.md">Swift plan</a>
+        <a href="screens/progress/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GROUP 04 — VISION ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">VIII · Group 04</div>
+    <div>
+      <h2>Vision features —<br><em>chapters not yet written.</em></h2>
+      <p class="sub">
+        Speculative, generous, honest about the mock-state. These are the
+        screens that sell the future — written like chapters from a book
+        still being composed.
+      </p>
+    </div>
+  </div>
+
+  <div class="group-intro">
+    <div class="kicker">Voice direction</div>
+    <div>
+      <h3>Speculative, <em>literary.</em></h3>
+      <p class="voice-direction">
+        No corporate AI hype. "Digital Twin" the phrase is retired (the
+        feature survives as "The Map"). Hormonal Balance has two first-class
+        modes — Menstrual and Androgen — each with its own rhythm. Roadmap is
+        a story, not a Kanban board.
+      </p>
+      <div class="screens-list">
+        <span>The map (née Digital Twin)</span>
+        <span>Hormonal balance</span>
+        <span>Roadmap</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/digital-twin/dialog-mockup.html" title="The map (Digital Twin)"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 18 · Vision<span class="shipped-tag">SHIPPED · Signal-first · 3ed579e</span></div>
+      <h4>The map.</h4>
+      <p class="kicker">"This is you, rendered as we see you now. In six weeks, we'll re-render." Tech-bro cosplay was the problem; the silhouette survives.</p>
+      <span class="swift-line">app/Alche/Features/DigitalTwin/</span>
+      <ul class="decision-list">
+        <li><span class="label">Name change</span><div class="body">"Digital Twin" retired. "The Map" — a cartographic, editorial metaphor. The feature is unchanged.</div></li>
+        <li><span class="label">Six-week cadence</span><div class="body">The timeline is part of the voice — re-renders are a scheduled editorial moment, not a push notification.</div></li>
+        <li><span class="label">Sample Data visible</span><div class="body">Mock-state declared up front. Honesty as feature.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/digital-twin/current-audit.md">Audit</a>
+        <a href="screens/digital-twin/swift-plan.md">Swift plan</a>
+        <a href="screens/digital-twin/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/hormonal-balance/dialog-mockup.html" title="Hormonal balance"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 19 · Vision<span class="shipped-tag">SHIPPED · Signal-first · f9d6372</span></div>
+      <h4>Hormonal balance.</h4>
+      <p class="kicker">Two first-class modes — Menstrual with cycle curve and "you are here"; Androgen with diurnal cortisol and AM peak. Inclusion as architecture, not a toggle bolt-on.</p>
+      <span class="swift-line">app/Alche/Features/HormonalBalance/</span>
+      <ul class="decision-list">
+        <li><span class="label">Two modes, equal weight</span><div class="body">Menstrual and Androgen views are both fully designed — not one + one afterthought.</div></li>
+        <li><span class="label">Sample Data present</span><div class="body">Audit flagged zero indicator despite hard-coded data. Fixed.</div></li>
+        <li><span class="label">Gated by Profile pref</span><div class="body">Body-tracking preference governs which mode renders. Default is None; members opt in.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/hormonal-balance/current-audit.md">Audit</a>
+        <a href="screens/hormonal-balance/swift-plan.md">Swift plan</a>
+        <a href="screens/hormonal-balance/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/roadmap/dialog-mockup.html" title="Roadmap"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 20 · Vision<span class="shipped-tag">SHIPPED · Dialog-first · e35e297</span></div>
+      <h4>Roadmap.</h4>
+      <p class="kicker">Real chapter titles, real dates, real summaries. "VER 5.0 · LAT 34.05 · GRID REF A-142" — all gone. Editorial typography reclaimed as editorial meaning.</p>
+      <span class="swift-line">app/Alche/Features/Roadmap/</span>
+      <ul class="decision-list">
+        <li><span class="label">Metadata detox</span><div class="body">Every fake coordinate and technical ID deleted. Chapter titles like "The quiet work," "A year in, I read you again."</div></li>
+        <li><span class="label">Phases as chapters</span><div class="body">Each phase gets a real summary — not a Kanban card. Duration in weeks, not sprint numbers.</div></li>
+        <li><span class="label">Current chapter emphasized</span><div class="body">Active phase is italic hero; past and future phases are compact, muted.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/roadmap/current-audit.md">Audit</a>
+        <a href="screens/roadmap/swift-plan.md">Swift plan</a>
+        <a href="screens/roadmap/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GROUP 05 — SERVICES ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">IX · Group 05</div>
+    <div>
+      <h2>Services & rituals —<br>the <em>transactional moments.</em></h2>
+      <p class="sub">
+        Where most apps lose their voice. Alche frames the transaction — one
+        observational read, then the utility. The narrator is brief but
+        present, even at check-in.
+      </p>
+    </div>
+  </div>
+
+  <div class="group-intro">
+    <div class="kicker">Voice direction</div>
+    <div>
+      <h3>Framed, <em>not narrated.</em></h3>
+      <p class="voice-direction">
+        Transactional screens get the narrator's opening line and not much
+        else. One primary action per section. No capsule pills, no fake
+        metadata, no pastel rings. Health-safe language per app conventions.
+      </p>
+      <div class="screens-list">
+        <span>In-store</span>
+        <span>Nutrition</span>
+        <span>Restaurants</span>
+        <span>Doctor sessions</span>
+        <span>Rituals</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/in-store/dialog-mockup.html" title="In-store"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 21 · Services<span class="shipped-tag">SHIPPED · Ritual-first · 5033b3f</span></div>
+      <h4>In-store.</h4>
+      <p class="kicker">"You're in the Berlin space. Check in, and the next ritual is yours." Check-in as a moment, not a tile.</p>
+      <span class="swift-line">app/Alche/Features/InStore/</span>
+      <ul class="decision-list">
+        <li><span class="label">Location opener</span><div class="body">Read acknowledges presence — geofence-driven, not a modal.</div></li>
+        <li><span class="label">QR as letter-closer</span><div class="body">QR code sits below the read, not as the hero. "Show this at the door" feels like instruction, not UI.</div></li>
+        <li><span class="label">Ritual handoff</span><div class="body">Check-in complete leads directly into the next ritual — continuous moment.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/in-store/current-audit.md">Audit</a>
+        <a href="screens/in-store/swift-plan.md">Swift plan</a>
+        <a href="screens/in-store/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/nutrition/dialog-mockup.html" title="Nutrition"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 22 · Services<span class="shipped-tag">SHIPPED · Signal-first · 3fe87fa</span></div>
+      <h4>Nutrition.</h4>
+      <p class="kicker">44-point italic masthead, 2×2 editorial cell grid. One macro wears "· WATCH" — only the one Alche flagged. No pastel rings competing with bars.</p>
+      <span class="swift-line">app/Alche/Features/Nutrition/</span>
+      <ul class="decision-list">
+        <li><span class="label">Ring killed</span><div class="body">Pastel circular progress retired. Editorial 2-point hairline progress inside a 2×2 macro grid.</div></li>
+        <li><span class="label">Selective attention</span><div class="body">Alche calls out ONE macro worth watching this meal — not a green-yellow-red gauntlet across all three.</div></li>
+        <li><span class="label">Lunch-window read</span><div class="body">"You're pacing well into the afternoon. Your lunch window opens soon." — time-aware narrator.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/nutrition/current-audit.md">Audit</a>
+        <a href="screens/nutrition/swift-plan.md">Swift plan</a>
+        <a href="screens/nutrition/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/restaurants/dialog-mockup.html" title="Restaurants"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 23 · Services<span class="shipped-tag">SHIPPED · Dialog-first · 2ef9831</span></div>
+      <h4>Restaurants.</h4>
+      <p class="kicker">"The restaurants we trust, curated by distance from you." Editorial segmented filter replaces capsule pills — one pattern reusable across the app.</p>
+      <span class="swift-line">app/Alche/Features/Restaurants/</span>
+      <ul class="decision-list">
+        <li><span class="label">No pills</span><div class="body">Capsule filters for cuisine/distance retired. Mono underline on the active filter; quiet text for others.</div></li>
+        <li><span class="label">Curation voice</span><div class="body">Alche speaks for its choices. Not "Recommended for you" — "We trust these kitchens."</div></li>
+        <li><span class="label">Disclaimer honest</span><div class="body">"Independently estimated nutrition" sits as a quiet mono tag on detail — not hidden in settings.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/restaurants/current-audit.md">Audit</a>
+        <a href="screens/restaurants/swift-plan.md">Swift plan</a>
+        <a href="screens/restaurants/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/doctor-sessions/dialog-mockup.html" title="Doctor sessions"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 24 · Services<span class="shipped-tag">SHIPPED · Dialog-first · 6648cb0</span></div>
+      <h4>Doctor sessions.</h4>
+      <p class="kicker">Wellness conversations, not medical consultations. Disclaimer staged twice — as voice at top, full legal at bottom. Present, never frantic.</p>
+      <span class="swift-line">app/Alche/Features/DoctorSessions/</span>
+      <ul class="decision-list">
+        <li><span class="label">Disclaimer as voice</span><div class="body">Top of screen: italic sentence framing the boundary. Bottom: full compliance text in a warm-cream bordered box.</div></li>
+        <li><span class="label">No star ratings</span><div class="body">Practitioners get italic pull-quotes from real past-member notes. Not five yellow stars.</div></li>
+        <li><span class="label">Complimentary session visible</span><div class="body">Longevity+ members see the complimentary session clearly — it's a benefit, not an upsell.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/doctor-sessions/current-audit.md">Audit</a>
+        <a href="screens/doctor-sessions/swift-plan.md">Swift plan</a>
+        <a href="screens/doctor-sessions/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <iframe src="screens/rituals/dialog-mockup.html" title="Rituals"></iframe>
+    <div class="screen-text">
+      <div class="screen-num">Screen 25 · Services<span class="shipped-tag">SHIPPED · Ritual-first · 6c9f7b7</span></div>
+      <h4>Rituals.</h4>
+      <p class="kicker">"VAR. 7 · H20-SEQ · [ ALCHE ]" all gone. Real data only — DURATION · STREAK · LAST. Three numbered steps visible before committing. Begin tappable in 500ms.</p>
+      <span class="swift-line">app/Alche/Features/Rituals/</span>
+      <ul class="decision-list">
+        <li><span class="label">Costume metadata cut</span><div class="body">Every fake mono tag deleted. The ritual has a name ("Cellular Hydration"), a duration, and steps.</div></li>
+        <li><span class="label">Steps visible early</span><div class="body">Three numbered steps shown before the Begin CTA. Consent is informed, not performative.</div></li>
+        <li><span class="label">Respect reduceMotion</span><div class="body">400ms single-fade entrance. No 2.4s cinematic sequence blocking the tap.</div></li>
+      </ul>
+      <div class="links">
+        <a href="screens/rituals/current-audit.md">Audit</a>
+        <a href="screens/rituals/swift-plan.md">Swift plan</a>
+        <a href="screens/rituals/dialog-mockup.html">Full mockup</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== IMPLEMENTATION ROADMAP ====================== -->
+<section class="section">
+  <div class="section-lead">
+    <div class="kicker">X · Roadmap</div>
+    <div>
+      <h2>What ships,<br>and <em>when.</em></h2>
+      <p class="sub">
+        Four sprints. Home, Lix, Profile, and Discover are done. The rest
+        ordered by brand impact first, complexity second. Each row links to
+        its Swift plan with effort estimate; read the plan before estimating
+        your week.
+      </p>
+    </div>
+  </div>
+
+  <table class="roadmap-table">
+    <thead>
+      <tr>
+        <th>Sprint</th>
+        <th>Screen</th>
+        <th>Group</th>
+        <th>Effort</th>
+        <th>Why this sprint</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="sprint-1"><td>Sprint 0 (done)</td><td class="screen">Home</td><td class="group">Core</td><td><span class="effort S">Shipped</span></td><td>Pilot · narrator kit scaffolded</td></tr>
+
+      <tr class="sprint-1"><td>Sprint 1 · Voice</td><td class="screen">Lix chat</td><td class="group">Onboarding</td><td><span class="effort S">Shipped</span></td><td>d3884f1 · see section IV · eight screens resolved as one conversation</td></tr>
+      <tr class="sprint-1"><td>Sprint 1 · Voice</td><td class="screen">Profile</td><td class="group">Core</td><td><span class="effort S">Shipped</span></td><td>70437f5 · LixProfile inherited · ExtendedProfile deferred</td></tr>
+      <tr class="sprint-1"><td>Sprint 1 · Voice</td><td class="screen">Discover</td><td class="group">Core</td><td><span class="effort S">Shipped</span></td><td>f0b7d01 · inline mono filters · narrator interstitials</td></tr>
+
+      <tr class="sprint-1"><td>Sprint 2 · Body</td><td class="screen">Biomarkers</td><td class="group">Wellness</td><td><span class="effort S">Shipped</span></td><td><code>5b1866e</code> · narrated preview + 4 marker groups + interstitials</td></tr>
+      <tr class="sprint-1"><td>Sprint 2 · Body</td><td class="screen">Protocols</td><td class="group">Wellness</td><td><span class="effort S">Shipped</span></td><td><code>4b043db</code> · active-first read · 5 sample protocols · no progress bars</td></tr>
+      <tr class="sprint-1"><td>Sprint 2 · Body</td><td class="screen">Progress</td><td class="group">Wellness</td><td><span class="effort S">Shipped</span></td><td><code>c261392</code> · curated chart + inline annotation · mono row replaces picker</td></tr>
+      <tr class="sprint-1"><td>Sprint 2 · Body</td><td class="screen">Glow scan</td><td class="group">Wellness</td><td><span class="effort S">Shipped</span></td><td><code>90a26d8</code> · dark-and-quiet · appearance language only · no fake camera</td></tr>
+
+      <tr class="sprint-1"><td>Sprint 3 · Flow</td><td class="screen">Auth (rewrite)</td><td class="group">Onboarding</td><td><span class="effort S">Shipped</span></td><td><code>6ced987</code> · signing the letter · italic GDPR woven inline · Apple chrome-wrapped</td></tr>
+      <tr><td>Sprint 3 · Flow</td><td class="screen">Supplement rec. (in Shop)</td><td class="group">Core</td><td><span class="effort M">M</span></td><td>Relocated from Onboarding · evidence-dots surface inside Shop</td></tr>
+      <tr><td>Sprint 3 · Flow</td><td class="screen">Glow scan invite (first-run)</td><td class="group">Wellness</td><td><span class="effort S">S</span></td><td>Relocated from Onboarding · banner on Home/GlowScan first-run</td></tr>
+
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">Booking</td><td class="group">Core</td><td><span class="effort S">Shipped</span></td><td><code>3b4074d</code> · <strong>Ritual-first redo</strong> — italic next-slot hero replaces dialog opener · BOOK NOW → mono CTA</td></tr>
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">Shop</td><td class="group">Core</td><td><span class="effort S">Shipped</span></td><td><code>6b54150</code> · Dialog-first hybrid · women & queer first copy · no stars/badges</td></tr>
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">In-store</td><td class="group">Services</td><td><span class="effort S">Shipped</span></td><td><code>5033b3f</code> · Ritual-first (GREEN audit, no nudge needed) · location-aware read · QR as letter-closer</td></tr>
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">Rituals</td><td class="group">Services</td><td><span class="effort S">Shipped</span></td><td><code>6c9f7b7</code> · Ritual-first (GREEN audit) · costume-metadata detox · steps before Begin</td></tr>
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">Nutrition</td><td class="group">Services</td><td><span class="effort S">Shipped</span></td><td><code>3fe87fa</code> · Signal-first hybrid · 2×2 macro grid · selective-attention "· WATCH"</td></tr>
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">Restaurants</td><td class="group">Services</td><td><span class="effort S">Shipped</span></td><td><code>2ef9831</code> · Dialog-first hybrid · editorial segmented filter retires pills</td></tr>
+      <tr class="sprint-1"><td>Sprint 4 · Utility</td><td class="screen">Doctor sessions</td><td class="group">Services</td><td><span class="effort S">Shipped</span></td><td><code>6648cb0</code> · Dialog-first · disclaimer staged twice · italic pull-quotes replace stars</td></tr>
+
+      <tr class="sprint-1"><td>Sprint 5 · Vision</td><td class="screen">The map</td><td class="group">Vision</td><td><span class="effort S">Shipped</span></td><td><code>3ed579e</code> · Signal-first · "Digital Twin" → "The map" · 1px silhouette · 2-state pins · 6-week cadence</td></tr>
+      <tr class="sprint-1"><td>Sprint 5 · Vision</td><td class="screen">Hormonal balance</td><td class="group">Vision</td><td><span class="effort S">Shipped</span></td><td><code>f9d6372</code> · Signal-first · Menstrual + Androgen + None modes · AMAB-default-off · cycle/cortisol curves</td></tr>
+      <tr class="sprint-1"><td>Sprint 5 · Vision</td><td class="screen">Roadmap</td><td class="group">Vision</td><td><span class="effort S">Shipped</span></td><td><code>e35e297</code> · Dialog-first chapters · metadata detox (no VER 5.0/LAT/GRID) · 6 authored chapters · grep guard test</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====================== COLOPHON ====================== -->
+<footer class="colophon">
+  <div>Alche · The App, in Dialog</div>
+  <div>25 screens · 5 groups · 20 shipped (Sprint 0–5 complete on <code>redesign/editorial-longevity</code> · TestFlight build 4)</div>
+  <div>Rev. 2026-04-25</div>
+  <div>Editorial Longevity · Strategy 1 — per-screen direction (Dialog · Signal · Ritual)</div>
+</footer>
+
+</div>
+
+</body>
+</html>
