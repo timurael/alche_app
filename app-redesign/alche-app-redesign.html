@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alche — The App, in Dialog · Full Redesign Study</title>
+  <title>Alche — The App, in Voice · Strategy 1 Per-Screen Direction · Full Redesign Study</title>
   <link rel="stylesheet" href="shared-tokens.css">
   <link rel="stylesheet" href="shared-components.css">
   <style>
@@ -601,27 +601,29 @@
     <div class="logo">Alche</div>
     <div class="meta">
       <span>Internal · Design Review</span>
-      <span>Rev. 2026-04-24</span>
+      <span>Rev. 2026-04-25</span>
     </div>
   </div>
 
   <div class="cover-title">
-    <span class="kicker">A Full-App Redesign Study · 25 Screens</span>
-    <h1>The app,<br>in <em>dialog.</em></h1>
+    <span class="kicker">A Full-App Redesign Study · 25 Screens · 3 Registers</span>
+    <h1>The app,<br>in <em>voice.</em></h1>
     <p class="lede">
       The current Alche app is a collection of dashboards that happen to share
       a font. This study rewrites every screen around a single idea — that
-      Alche is a <em>longevity companion</em>, not a control panel, and should
-      speak to you before it asks anything of you.
+      Alche is a <em>longevity companion</em>, not a control panel — and lets
+      each screen pick its register: <em>Dialog</em> where Alche should speak
+      first, <em>Signal</em> where a pattern is the page, <em>Ritual</em>
+      where the next moment is the page.
     </p>
   </div>
 
   <div class="metabar">
     <div class="cell"><div class="label">Screens</div><div class="value">25</div></div>
-    <div class="cell"><div class="label">Shipped</div><div class="value">9 · Home → Glow scan</div></div>
-    <div class="cell"><div class="label">Designed</div><div class="value">24 mockups</div></div>
-    <div class="cell"><div class="label">Swift plans</div><div class="value">24 written</div></div>
-    <div class="cell"><div class="label">Parent direction</div><div class="value">Dialog-first</div></div>
+    <div class="cell"><div class="label">Shipped</div><div class="value">20 · Sprint 0–5</div></div>
+    <div class="cell"><div class="label">Direction</div><div class="value">Strategy 1 · per-screen</div></div>
+    <div class="cell"><div class="label">Registers</div><div class="value">Dialog · Signal · Ritual</div></div>
+    <div class="cell"><div class="label">TestFlight</div><div class="value">v1.2.0 build 4</div></div>
   </div>
 </section>
 
@@ -658,13 +660,13 @@
         And a practice is conducted with a person, not a UI.
       </p>
       <div class="callout accent">
-        Dialog-first means the screen speaks first, asks second, lists last.
-        Every screen in this book has been rewritten under that rule.
+        <strong>Strategy 1 — per-screen direction.</strong> Each screen picks the register that fits its primary intent. Three peers: <em>Dialog-first</em> (the screen speaks first, asks second, lists last), <em>Signal-first</em> (a single pattern carries the screen — a curve, a silhouette, a chart), <em>Ritual-first</em> (the next moment is the page — slot, step, threshold). Voice family stays shared via the narrator kit; the rule is per-screen fit, not one universal frame.
       </div>
       <p>
         The rewrite is not a repaint. Many screens lose whole sections;
         some gain a voice where there was silence; all of them answer, in
-        their first beat, the question the member was about to ask.
+        their first beat, the question the member was about to ask — and
+        each in the register that question deserves.
       </p>
       <p>
         Between the deck's first draft and today, one more voice joined the
@@ -843,8 +845,8 @@
       <p class="sub">
         The eight screens originally planned for Group 01 were rethought
         when Lix shipped. Six merged into her seven-turn chat; two
-        relocated. Auth stayed as the handoff surface — and is being
-        rewritten right now to match the dialog-first voice.
+        relocated. Auth stayed as the handoff surface — <em>Dialog-first</em>,
+        shipped.
       </p>
     </div>
   </div>
@@ -858,12 +860,11 @@
         Lix shipped. Six merged into her seven-turn chat (see section IV);
         two relocated — Supplement recommendation into Shop, Glow scan
         invitation into the Home first-run banner. Auth stayed as the
-        handoff surface and is being rewritten right now to match the
-        dialog-first voice.
+        handoff surface — Dialog-first, italic opener, GDPR woven in voice.
       </p>
       <div class="screens-list">
-        <span>Lix chat · SHIPPED</span>
-        <span>Auth · handoff · in progress</span>
+        <span>Lix chat · Dialog · SHIPPED</span>
+        <span>Auth · Dialog · SHIPPED</span>
         <span>Supplement rec. · relocated to Shop</span>
         <span>Glow scan invite · relocated to Home first-run</span>
       </div>
@@ -902,9 +903,10 @@
     <div>
       <h2>Core tabs —<br>the <em>daily rhythm.</em></h2>
       <p class="sub">
-        Home is already live. The other four tabs get a light narrator
-        presence — observational opener, then utility. Dialog-first where it
-        matters; don't interrupt the member trying to shop.
+        Home, Profile, Discover, Shop are <em>Dialog-first</em> — observational
+        opener, then utility. Booking is <em>Ritual-first</em> — the next slot
+        is the page; the screen doesn't open with a paragraph, it opens with
+        the moment. Per-screen fit, not one universal frame.
       </p>
     </div>
   </div>
@@ -920,11 +922,11 @@
         there, but quietly.
       </p>
       <div class="screens-list">
-        <span>Home · SHIPPED</span>
-        <span>Discover · SHIPPED</span>
-        <span>Profile · SHIPPED</span>
-        <span>Booking</span>
-        <span>Shop</span>
+        <span>Home · Dialog · SHIPPED</span>
+        <span>Discover · Dialog · SHIPPED</span>
+        <span>Profile · Dialog · SHIPPED</span>
+        <span>Booking · Ritual · SHIPPED</span>
+        <span>Shop · Dialog · SHIPPED</span>
       </div>
     </div>
   </div>
@@ -1034,10 +1036,10 @@
         is present but not frantic.
       </p>
       <div class="screens-list">
-        <span>Glow scan</span>
-        <span>Biomarkers</span>
-        <span>Protocols</span>
-        <span>Progress</span>
+        <span>Glow scan · Dialog · SHIPPED</span>
+        <span>Biomarkers · Dialog · SHIPPED</span>
+        <span>Protocols · Dialog · SHIPPED</span>
+        <span>Progress · Dialog · SHIPPED</span>
       </div>
     </div>
   </div>
@@ -1148,9 +1150,9 @@
         a story, not a Kanban board.
       </p>
       <div class="screens-list">
-        <span>The map (née Digital Twin)</span>
-        <span>Hormonal balance</span>
-        <span>Roadmap</span>
+        <span>The map · Signal · SHIPPED</span>
+        <span>Hormonal balance · Signal · SHIPPED</span>
+        <span>Roadmap · Dialog · SHIPPED</span>
       </div>
     </div>
   </div>
@@ -1240,11 +1242,11 @@
         metadata, no pastel rings. Health-safe language per app conventions.
       </p>
       <div class="screens-list">
-        <span>In-store</span>
-        <span>Nutrition</span>
-        <span>Restaurants</span>
-        <span>Doctor sessions</span>
-        <span>Rituals</span>
+        <span>In-store · Ritual · SHIPPED</span>
+        <span>Nutrition · Signal · SHIPPED</span>
+        <span>Restaurants · Dialog · SHIPPED</span>
+        <span>Doctor sessions · Dialog · SHIPPED</span>
+        <span>Rituals · Ritual · SHIPPED</span>
       </div>
     </div>
   </div>
@@ -1408,7 +1410,7 @@
 
 <!-- ====================== COLOPHON ====================== -->
 <footer class="colophon">
-  <div>Alche · The App, in Dialog</div>
+  <div>Alche · The App, in Voice — Dialog · Signal · Ritual</div>
   <div>25 screens · 5 groups · 20 shipped (Sprint 0–5 complete on <code>redesign/editorial-longevity</code> · TestFlight build 4)</div>
   <div>Rev. 2026-04-25</div>
   <div>Editorial Longevity · Strategy 1 — per-screen direction (Dialog · Signal · Ritual)</div>
