@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Protocols · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .pr-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 24px 4px;
+    }
+    .pr-topbar .back {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      text-decoration: none;
+    }
+    .pr-topbar .back .arr { display: inline-block; margin-right: 6px; }
+
+    /* Active protocol hero block */
+    .pr-active {
+      padding: 12px 24px 20px;
+      border-bottom: 1px solid var(--divider-medium);
+    }
+    .pr-active .kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 10px;
+    }
+    .pr-active .name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 400;
+      font-size: 34px; line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--editorial-black);
+      margin-bottom: 12px;
+    }
+    .pr-progress {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .pr-progress .bar {
+      flex: 1;
+      height: 3px;
+      background: var(--divider-medium);
+      position: relative;
+    }
+    .pr-progress .bar .fill {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      background: var(--editorial-black);
+      width: 50%;
+    }
+    .pr-progress .count {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em;
+      color: var(--editorial-black);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pr-progress .count .k {
+      color: var(--editorial-muted);
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    /* Interstitial already in shared-components */
+
+    /* Considered list — italic line items */
+    .pr-considered-head {
+      padding: 22px 24px 6px;
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .pr-considered-head .label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .pr-considered-row {
+      padding: 14px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px; align-items: baseline;
+      border-bottom: 1px solid var(--divider-light);
+    }
+    .pr-considered-row .body .n {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 400;
+      font-size: 18px;
+      color: var(--editorial-black);
+      display: block;
+      line-height: 1.25;
+    }
+    .pr-considered-row .body .r {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 400;
+      font-size: 13px; line-height: 1.4;
+      color: var(--editorial-muted);
+      display: block;
+      margin-top: 4px;
+    }
+    .pr-considered-row .meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .pr-considered-row .meta .chev {
+      display: block;
+      font-size: 13px;
+      color: var(--editorial-black);
+      margin-top: 4px;
+    }
+
+    .pr-browse-escape {
+      display: block; text-align: center;
+      padding: 22px 0 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      text-decoration: none;
+    }
+    .pr-browse-escape .u {
+      border-bottom: 1px solid var(--editorial-muted);
+      padding-bottom: 2px;
+    }
+
+    /* Previous echo footer */
+    .pr-prev {
+      margin: 0 24px;
+      border-top: 1px solid var(--divider-light);
+      padding: 14px 0 8px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .pr-prev .tag {
+      flex-shrink: 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      padding-top: 2px;
+    }
+    .pr-prev .echo {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 13px; line-height: 1.4;
+      color: var(--editorial-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <div class="right">
+          <span>●●●●●</span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;">5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <div class="frame-content">
+
+        <div class="pr-topbar">
+          <a class="back"><span class="arr">←</span>DISCOVER</a>
+          <span class="alche-tag">Sample Data</span>
+        </div>
+
+        <!-- Stamp -->
+        <div class="alche-read-stamp" style="margin-top: 10px;">
+          <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span class="alche-read-stamp-label">ALCHE · YOUR PROTOCOL TODAY</span>
+        </div>
+
+        <!-- The Read -->
+        <div class="alche-read">
+          <span class="line">You're <em>3 weeks into</em> Deep Recovery.</span>
+          <span class="line dim">Sleep is 14% deeper. Hold the line.</span>
+        </div>
+
+        <!-- Active protocol block -->
+        <div class="pr-active">
+          <div class="kicker">ACTIVE · DAY 21 OF 42</div>
+          <div class="name">Deep Recovery</div>
+          <div class="pr-progress">
+            <div class="bar"><div class="fill"></div></div>
+            <div class="count">2<span class="k">OF 4 TODAY</span></div>
+          </div>
+        </div>
+
+        <!-- Primary action: today's steps -->
+        <button class="alche-primary-action" style="margin-top: 18px;">
+          <span>Open Today's Steps · 2 left</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <a class="alche-secondary-action">
+          <span class="u">Pause protocol &nbsp;→</span>
+        </a>
+
+        <!-- Interstitial: transition to recommendations -->
+        <div class="alche-interstitial">
+          <p class="i-voice">When you finish this one, <em>here's what I'd consider next</em> — tuned to the goals you chose.</p>
+        </div>
+
+        <!-- Considered list -->
+        <div class="pr-considered-head">
+          <span class="label">CONSIDERED FOR YOU · 3</span>
+        </div>
+
+        <div class="pr-considered-row">
+          <div class="body">
+            <span class="n">Beauty Glow</span>
+            <span class="r">Skin hydration and collagen support across six weeks.</span>
+          </div>
+          <div class="meta">
+            6 WEEKS
+            <span class="chev">→</span>
+          </div>
+        </div>
+
+        <div class="pr-considered-row">
+          <div class="body">
+            <span class="n">Cellular Vitality</span>
+            <span class="r">Mitochondrial support — builds on where Deep Recovery leaves you.</span>
+          </div>
+          <div class="meta">
+            8 WEEKS
+            <span class="chev">→</span>
+          </div>
+        </div>
+
+        <div class="pr-considered-row">
+          <div class="body">
+            <span class="n">Hormone Balance</span>
+            <span class="r">Evening routines and micronutrient cycling for steadier mood.</span>
+          </div>
+          <div class="meta">
+            4 WEEKS
+            <span class="chev">→</span>
+          </div>
+        </div>
+
+        <!-- Browse-all escape hatch -->
+        <a class="pr-browse-escape">
+          <span class="u">Browse all protocols &nbsp;→</span>
+        </a>
+
+        <!-- Previous echo -->
+        <div class="pr-prev">
+          <span class="tag">PREV · WEEK 2</span>
+          <span class="echo">You skipped the breathwork step twice. We adjusted around it.</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · PROTOCOLS</p>
+      <h1 class="alche-display-l title">The one you're in is the whole screen. Everything else is considered, not listed.</h1>
+      <p class="alche-body philosophy">
+        The active protocol was sharing visual weight with 8–12 browse rows it didn't need to compete with. Dialog-first inverts the hierarchy: the active protocol IS the read, today's steps are the primary action, and everything else drops below a narrator's interstitial as three considered options — not a full library.
+      </p>
+
+      <ul class="decisions">
+        <li>
+          <span class="label">CUT</span>
+          <div class="alche-body">
+            The horizontal goal-filter row (taxonomy-echo of onboarding). The duplicated "ACTIVE" pill on cards (the one active protocol is already the hero). The locked tier-gated cards entirely — they belong in the full library, not the main flow. "N steps" bullet-list framing that reduced multi-week regimens to to-do counts.
+          </div>
+        </li>
+        <li>
+          <span class="label">KEPT</span>
+          <div class="alche-body">
+            The progress indicator — but slimmed to a 3px hairline with a mono "2 OF 4 TODAY" count. The concept of goal-matched recommendations — but surfaced as three italic considered options rather than a filter grid.
+          </div>
+        </li>
+        <li>
+          <span class="label">ADDED</span>
+          <div class="alche-body">
+            An opening two-line italic read that states the stakes ("You're 3 weeks into Deep Recovery. Sleep is 14% deeper. Hold the line."). A "DAY 21 OF 42" kicker that makes commitment legible. An interstitial voice between active + considered sections. Duration ("6 WEEKS", "8 WEEKS") replacing "N steps" — honest about commitment. A previous-echo line showing the protocol adapts ("You skipped the breathwork step twice. We adjusted around it.").
+          </div>
+        </li>
+      </ul>
+
+      <blockquote class="tradeoff">
+        Trade-off: members lose instant access to the full protocol library from this screen. They gain a view that treats adherence as the single thing that matters today — and three considered next-moves instead of twelve options to choose from.
+      </blockquote>
+    </div>
+  </div>
+</body>
+</html>

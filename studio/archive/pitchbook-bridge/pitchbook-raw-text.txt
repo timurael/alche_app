@@ -1,0 +1,2192 @@
+# alche
+
+
+# The Art of Curated Longevity
+
+
+## Pre-Seed Investment Memorandum
+
+TASTETRUSTCULTURAL AUTHORITY
+
+PRE-SEED // BERLIN, GERMANY
+
+
+## Your longevity, daily.
+
+FEBRUARY 2026
+
+CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+CONTENTSFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **P R E - S E E D I N V E S T M E N T M E M O R A N D U M**Contents
+
+
+## **01**The Insight02
+
+
+## **02**Who We Serve04
+
+
+## **03**The Market06
+
+
+## **04**Competitive Landscape08
+
+
+## **05**The Solution10
+
+
+## **06**The Product14
+
+
+## **07**Business Model16
+
+
+## **08**Go-to-Market18
+
+
+## **09**Traction20
+
+
+## **10**The Moat22
+
+
+## **11**The Team24
+
+
+## **12**The Ask25
+
+
+## **13**Closing26
+
+01CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alcheTHE INSIGHT / FEBRUARY 2026 // CONFIDENTIAL
+
+
+# &quot;People who want to age well are forcedto become full-time project managers oftheir own health.&quot;
+
+
+### In an environment of infinite wellness options, trusted curation becomes more valuable than
+
+
+### product proliferation. Longevity is no longer inaccessible. It is overwhelming. Consumers are not
+
+
+### struggling to find options. They are struggling to decide what is worth trusting, combining, and
+
+
+### repeating.
+
+
+## The problem is not lack of supply.
+
+
+## It is lack of intelligent, taste-driven curation developed in consultation with medical professionals.
+
+
+#### **[01] THE INS I G H T**
+
+02CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alcheTHE INSIGHT / FEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[01] THE INS I G H T**What is broken about how peopleengage with longevity?
+
+
+# **01**Discovery
+
+Hears about longevity from a podcast, book, or friend. Excitement peaks.
+
+
+# **02**Research
+
+Finds 300,000+ supplement SKUs, contradictory protocols, influencer advice. Overwhelm begins.
+
+
+# Buys from 4 to 6 different brands. Downloads 2 to 3 apps. No connection between them.**03**
+
+
+## Scattered Purchases
+
+
+# **04**Self-Curation
+
+Attempts to build their own stack. Spends EUR 150 to 400/mo across fragmented services.
+
+
+# **05**Decision Fatigue
+
+Cannot evaluate quality, dosage, interactions, or timing. Guilt replaces excitement.
+
+
+# **06**Abandonment
+
+Gives up within 60 days. Returns to old habits. 96% digital health app churn rate.
+
+
+# **66**
+
+
+### 66 days to form a health habit. 96% of users churn before they get there. The window betweeninitial motivation and lasting behavior change is where nearly every wellness product fails.
+
+DAYS
+
+Lally et al. (2010), European Journal of Social Psychology; Baumel et al. (2019), Journal of Medical Internet Research; RevenueCat State ofSubscription Apps (2025).
+
+03CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alcheTHE INSIGHT / FEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[ 0 1 ] T H E I N S I G H T**Why now?
+
+
+## Three forces have converged to create a once-in-a-decade entry point.
+
+
+## Force 1: Demand exploded. Infrastructure did not.
+
+Peter Attia&#x27;s Outlive: #1 NYT bestseller, sold 3M+ copies globally
+
+Andrew Huberman: 10M+ followers across platforms
+
+Bryan Johnson: made anti-aging cultural, mainstream media coverage worldwide
+
+Euromonitor 2025: healthspan ranked #1 global consumer trend
+
+84% of consumers now rank wellness as a top priority (GWI 2024)
+
+
+### &quot;Consumer awareness has outpaced every product category built to serve it.&quot;
+
+
+## Force 2: Germany&#x27;s prevention gap is an open market.
+
+EUR 474B spent on healthcare annually (12.3% of GDP)
+
+Only 3.1% allocated to prevention
+
+7.8 hospital beds per 1,000 population (OECD average: 4.2)
+
+62% of Germans say the system focuses too much on treatment
+
+
+### &quot;The gap is not a policy debate. It is an open market.&quot;
+
+
+## Force 3: Technology is ready. No company has integrated it.
+
+CGM sensors: real-time metabolic tracking, consumer-grade
+
+AI: personalized protocol generation at scale
+
+Wearables: sleep, HRV, stress monitoring (validated accuracy)
+
+Red light therapy: clinically validated, growing adoption
+
+Functional nutrition: proven category, fragmented delivery
+
+
+### &quot;No company has integrated a physical space, a proprietary app, a scalable product brand, curated retail, and cultural event programminginto one data-enabled business model.&quot;
+
+04CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alcheTHE INSIGHT / FEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[ 0 1 ] T H E I N S I G H T**Who is left out?
+
+**UNSERVED**
+
+
+## The Missing Consumer
+
+Fewer options, better selected
+
+Integrated rituals, not scattered products
+
+Authority without medical intimidation
+
+Taste without pseudoscience
+
+Has purchasing power, aesthetic sensitivity,high LTV
+
+&quot;No ecosystem built for them.&quot;
+
+
+#### **SHARED CHARACTERISTICS ACROSS ALL SEGMENTS**
+
+Value experience over products. Willing to pay premium for quality. Already spend on fragmented wellness. Digital-native,expect app integration. Respond to community and culture.
+
+
+## Is this a vitamin or a painkiller?
+
+
+# This is a painkiller.
+
+alche is a painkiller for a population hemorrhaging time, money, and motivation on wellness fragmentation. The
+
+pain is measurable. The market is quantifiable. The timing window is 18 to 24 months before US players localize
+
+to DACH.
+
+Sources: Euromonitor International (2025); OECD Health at a Glance (2023); Destatis (2023); RevenueCat (2025); Lally et al. (2010); Baumel et
+
+al. (2019); Global Wellness Institute (2024).
+
+05CONFIDENTIAL
+
+
+ 
+ | 
+ SERVED (NICHE)
+Clinical Biohackers
+Build their own complex stacks
+Technical, intimidating
+Requires extensive self-
+education | 
+ | 
+ |
+ 
+
+
+ 
+ | 
+ | 
+ SERVED (MASS)
+Mass-Market Consumers
+Buy trend-driven products
+No structure or integration
+Short-lived experimentation | 
+ |
+ 
+
+
+ | 
+ 41%
+18 TO 45 AGE GROUP SHARE OF TOTAL WELLNESS SPEND | 
+ 68%
+18 TO 35 PKV HOLDERS WILLING TO PAY OOP FOR PREVENTIVE HEALTH | 
+ |
+ 
+ 
+ | 
+ M Ki 2025 | 
+ D l itt 2023 | 
+ |
+ 
+
+
+ | 
+ EUR 8.9-21.1K
+SPENT PER USER/YEAR ON
+FRAGMENTED ALTERNATIVES | 
+ 96%
+DIGITAL HEALTH APP CHURN RATE
+BEFORE 66-DAY HABIT THRESHOLD | 
+ 62%
+OF GERMANS SAY HEALTHCARE
+SYSTEM FAILS AT PREVENTION | 
+ |
+ 
+ 
+ | 
+ | 
+ | 
+ | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+WHO WE SERVEFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[02] WHO WE S E R V E**Longevity for people who actually live.
+
+
+## Not the 1% who cold-plunge at 5 AM. The millions who care about aging well but havebeen given fragmented tools that deliver data without direction.
+
+
+#### **PRIMARY PERSONA**
+
+
+# Mira
+
+34 / Berlin / Product Designer / EUR 72,000
+
+Runs three times a week. Takes magnesium and vitamin D but is not confident about dosing. Wore an Oura ring for five
+
+months, checked her sleep score every morning until it started giving her anxiety about not sleeping well enough. The ring
+
+is on her nightstand.
+
+Tried Levels for two months. Learned bananas spike her glucose. Thought &quot;...now what?&quot; and cancelled. Has a supplement
+
+shelf with six half-empty bottles. She does not want to optimize. She wants to live fully and age well without it becoming
+
+her second job.
+
+
+## **€130**
+
+
+## **6+**
+
+**0**
+
+MONTHLY SPEND
+
+DISCONNECTED
+
+INTEGRATED
+
+(FRAGMENTED)
+
+PROVIDERS
+
+VIEW
+
+
+#### **THE REBUNDLI N G O P P O R T U N I T Y**
+
+
+# **€126-295**
+
+
+# ACROSS 6-8 PROVIDERS→**€49-99**
+
+PER MONTH, FRAGMENTED
+
+PER MONTH, INTEGRATED
+
+ONE PLATFORM
+
+
+### We are not creating new health spending. We are consolidating fragmented budgets into a single
+
+
+### integrated relationship, at a lower price point with better outcomes.
+
+04CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+WHO WE SERVEFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **WHY BERLIN**
+
+
+# The ecosystem is forming here.
+
+
+### Berlin has the highest concentration of health-conscious expats in DACH, a 15-20% English-speaking
+
+
+### population matching alche&#x27;s content language, and lower operational costs that extend runway. The
+
+
+### Biohackers Berlin Meetup alone has 2,213 members.
+
+
+## **800K**
+
+
+## **15-20%**
+
+
+## **2,213**
+
+RESIDENTS AGED 25-45
+
+ENGLISH-SPEAKING
+
+BIOHACKERS BERLIN
+
+POPULATION
+
+MEETUP MEMBERS
+
+
+#### **MARKET VALIDATION**
+
+27% of Germans are willing to pay out-of-pocket for health apps (SpringerMedizin). Berlin tech worker median salary: EUR
+
+75,000 gross (GfK). The purchasing power and willingness to pay for curated health experiences are already proven in this
+
+market.
+
+SpringerMedizin 2024 / GfK Purchasing Power Study 2024 / Biohackers Berlin Meetup / Berlin Partner / DSSV 2024
+
+05CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE MARKETFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[03] THE MAR K E T**The European longevity market isforming now.
+
+
+## No integrated player exists. That changes within 12-18 months.
+
+
+#### **THE GERMAN HEALTH PARADOX**
+
+Germany spends nearly EUR 495 billion on healthcare annually (12.3% of GDP), the highest in the EU. Only 4.8% goes to
+
+prevention. With 7.7 hospital beds per 1,000 people (OECD average: 4.2), the system was architecturally built to treat illness, not
+
+prevent it. Consumers are filling the gap themselves.
+
+**COUNTRY****HEALTH SPEND (% GDP)****LIFE EXPECTANCY****GAP**
+
+Switzerland11.3%83.4 yrs+2.3 yrs, spends less
+
+France12.1%82.2 yrs+1.1 yrs, spends less
+
++3.4 yrs, spends less
+
+Japan11.5%84.5yrs
+
+OECD avg9.3%80.3 yrs
+
+OECD Health at a Glance 2025 / Destatis 2023 / GWI 2024 Global Wellness Economy Monitor
+
+06CONFIDENTIAL
+
+
+ 
+ | 
+ Germany | 
+ 12.3% | 
+ 81.1 yrs | 
+ #1 spend, below 5 cheaper
+systems | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE MARKETFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **MARKET SIZIN G**
+
+
+# TAM / SAM / SOM
+
+
+# **TAM** **$6.3T**Global wellness economy (GWI 2024). Context marker, not a revenue claim.
+
+
+# **SAM** **€3.2-4.1B**
+
+Germany. Supplements (€2.67B), functional beverages (€2.8-3.2B), digital health apps (€263M), premium wellness (€300-500M).
+
+
+# **SOM** **145 subscribers to break even**
+
+From 108K Mitte residents aged 30-44. Conservative: 300 members Y1. Base case: 600. alche consolidates existing spend.
+
+
+#### **EUROPEAN ADV A N T A G E**
+
+
+# Not behind, structurally different.
+
+Insurance covers prevention
+
+Centuries of Kur culture
+
+PKV (8.73M holders) reimburses €200-500/yr in wellness. US
+
+European wellness built on apothecary traditions. alche speaks to
+
+consumers pay 100% out-of-pocket.
+
+that lineage, not Silicon Valley imports.
+
+GDPR as trust differentiator
+
+Lower pricing works here
+
+Only 8% of EU consumers share health data. A GDPR-native
+
+€19-99/mo matches European norms. US players at $199/mo will
+
+platform is a feature, not a compliance cost.
+
+feel overpriced.
+
+GWI 2024 / Statista 2024 / Euromonitor 2024 / PKV-Verband 2024 / BEUC 2024 / DSSV 2024 / Berlin Partner
+
+07CONFIDENTIAL
+
+
+ 
+ | 
+ ~108K
+MITTE 30-44 YR OLDS | 
+ 250-280K
+HIGH-INCOME HOUSEHOLDS
+(&gt;€4,500 NET/MO) | 
+ ~400K
+PKV HOLDERS IN BERLIN
+(PREVENTION COVERAGE) | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+COMPETITIVE LANDSCAPEFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[ 0 4 ] C O M P E T I T I V E L A N D S C A P E**We mapped the terrain.
+
+
+### 30+ companies analyzed. The integrated European longevity platform does not existyet.
+
+HUMAN / REAL-LIFE
+
+SINGLE FOCUS
+
+**PERFORMANCE TOOLS / POINT SOLUTIONS****CLINICAL PLATFORMS / COMPLEX + EXPENSIVE**
+
+WHOOPPeloton
+
+Levels
+
+Oura$11B val
+
+InsideTracker
+
+Restore
+
+Function Health
+
+220+ locs
+
+$2.5B val
+
+OPTIMIZATION / CLINICAL
+
+**COMPANY****POSITION****SCALE****GAP**
+
+$11BNo lifestyle layer
+
+OuraWearable ring. 5.5M sold,2M subscribers. AcquiredVeri (CGM).
+
+$2.3B revNo integration of a physical
+
+HimsTelehealth + DTC.Distribution-first, notcommunity-led.
+
+space, a proprietary app, aproduct brand, curated retail,
+
+and cultural events into onedata-enabled business model
+
+~$100M revSingle vertical
+
+ZOENutrition AI. Science +warmth. UK-based,nutrition-only.
+
+AG1Content-first supplements.$600M revenue, profitable.
+
+$600M revNo data layer
+
+
+### Oura tells you your sleep score. It does not help you fix it. Each competitor does a piece. No integration
+
+
+### of a physical space, a proprietary app, a product brand, curated retail, and cultural events into one
+
+
+### data-enabled business model, especially in Europe.
+
+08CONFIDENTIAL
+
+
+ 
+ | 
+ LIFESTYLE BRANDS / SINGLE VERTICAL
+AG1
+$600M rev
+Goop | 
+ THE OPEN POSITION / INTEGRATED + HUMAN
+alche
+A
+Integrated / Human / European
+ZOE INTEGRATED
+~$100M rev | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+COMPETITIVE LANDSCAPEFEBRUARY 2026 // CONFIDENTIAL
+
+
+## &quot;We studied $1.4B in failures so we could build differently.&quot;
+
+**WHAT $1.4B TAUGHT US**
+
+Seven companies with better funding than us made specific, identifiable, avoidable mistakes. Three survivor patterns
+
+emerged:
+
+
+#### **01, ASSET - L I G H T**
+
+
+#### **0 2 , C O N T E N T - L E D**
+
+
+#### **0 3 , C O M M U N I T Y - F I R S T**
+
+ZOE, AG1, and Levels survived by
+
+AG1 built a $600M business on
+
+When GLP-1 drugs arrived,
+
+curating and connecting, not owning
+
+content and community, not
+
+companies without community had
+
+the value chain. Forward built $1M
+
+clinical infrastructure. ZOE grew
+
+no reason for users to stay. Social
+
+hardware pods and collapsed after
+
+on Tim Spector&#x27;s authority.
+
+fabric is the only retention moat
+
+burning $657M.
+
+Science is necessary but not
+
+that survives technology disruption.
+
+sufficient, distribution wins.
+
+
+#### **THE WINDOW**
+
+
+# 12-18 months before well-funded incumbents integrate Europeanlongevity protocols.
+
+
+### Oura has not localized beyond hardware retail. Hims EU expansion is nascent. Levels and Function
+
+
+### Health are US-only. Neko Health (Spotify founder) focuses on scanning, not integrated wellness. The
+
+
+### full-stack European longevity platform is wide open.
+
+Longevity.Technology 2024 Funding Report / Oura investor data / Hims &amp; Hers 2024 10-K / ZOE public metrics / AG1 public revenue data / Restore
+
+Hyper Wellness franchise data / Competitive analysis: 30+ companies, Feb 2026
+
+09CONFIDENTIAL
+
+
+ 
+ | 
+ $8.49B
+INTO LONGEVITY
+IN 2024 (2X YOY) | 
+ 30+
+COMPANIES
+ANALYZED | 
+ 0
+INTEGRATED EU
+PLATFORMS | 
+ 12-18
+MONTH WINDOW
+TO ESTABLISH | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE SOLUTIONFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[05] THE SOL U T I O N**One ecosystem. Four pillars.
+
+
+### Physical Space
+
+
+### Product Brand
+
+LED red light therapy
+
+Own-brand blends and capsules
+
+Functional smoothie bar (six signature potions)
+
+Curated third-party supplements
+
+Own-brand blends and capsule products
+
+Outcome-organized catalog
+
+Curated third-party supplements
+
+Walk-in to member conversion engine
+
+
+### App and Membership Platform
+
+
+### Events and Culture
+
+Booking, tracking, commerce, community
+
+Wellness events and science talks
+
+AI concierge and personalized protocols
+
+Community circles and challenges
+
+Biomarker dashboard and digital twin
+
+Cultural authority through curation
+
+
+## Every pillar generates data. Every data point feeds the system. Every cycle makes the next one smarter.
+
+10CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE SOLUTIONFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **THE PHYSICAL J O U R N E Y**
+
+
+# Book. Arrive. Experience.
+
+
+## Book
+
+
+## Customize
+
+
+## Experience
+
+LED session and smoothie, pre-ordered
+
+Six potions (EUR 7 to 11), five boosts
+
+20 minutes of LED therapy with a
+
+in the app
+
+(+EUR 2)
+
+functional smoothie
+
+**SMOOTHIE BAR**
+
+**FUNCTIONAL BOOSTS**
+
+**LED THERAPY**
+
+Collagen peptides
+
+N°1 The Radiance Potion: Mango, passion fruit,banana, coconut milk, vanilla
+
+Lion&#x27;s mane extract
+
+Glow (630-660nm): skin health, collagensynthesis, circulation
+
+N°2 The Clarity Potion: Ceremonial matcha,banana, oat milk, honey, spinach
+
+Ashwagandha KSM-66
+
+Recovery (810-850nm): deep tissue repair,inflammation, muscle recovery
+
+MCT oil powder
+
+N°3 The Stillness Potion: Raw cacao, banana,almond butter, oat milk, cinnamon, date
+
+Vitamin D3 + K2
+
+N°4 The Repair Potion: Pineapple, fresh turmeric,fresh ginger, coconut water, banana, black pepper
+
+N°5 The Balance Potion: Acai, blueberry, banana,coconut yogurt, apple
+
+N°6 The Clean Potion: Young coconut, coconutwater, banana, lime, vanilla, sea salt
+
+11CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE SOLUTIONFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **THE DIGITAL L O O P**
+
+
+# Browse. Track. Return.
+
+
+## Browse
+
+
+## Track
+
+
+## Return
+
+Products organized by outcome, not
+
+Dashboard shows journey progress and
+
+Smart replenishment reminds and
+
+ingredient
+
+wellness scores
+
+reorders automatically
+
+
+#### **THE DATA FEE D B A C K L O O P**
+
+The entire system is built around a feedback loop that connects physical and digital layers. This is the core
+
+contribution: a continuous data-driven feedback loop.
+
+
+ - AI Glow Scan + Goal
+ - Personalised Protocol
+
+**2A. Doctor validates and**
+
+**Selection**
+
+→→→→
+
+**Created**
+
+**enhances protocol (CGM**
+
+**users)**
+
+
+ - Booking (LED +smoothie pre-order)
+ - Experience (physical
+
+**visit)**
+
+
+ - Data Captured (mood,energy, skin, purchases)
+
+→→→→
+
+**5A. CGM Glucose Stream**
+
+
+ - Insights Generated
+ - Recommendations(replenishment, events,
+
+**(continuous biometric**
+
+**data)**
+
+**(patterns + glucose**
+
+**correlations)**
+
+**protocol adjust)**
+
+**7A. Doctor Review**
+
+**(medical-grade****adjustment based on CGM**
+
+→
+
+
+ - User Re-Entry(smarter protocol,continuous learning)
+
+**+ all data)**
+
+The doctor does not slow down the loop. Steps 2A and 7A operate asynchronously. The user continues through the loop without interruption while the
+
+doctor reviews data and refines the protocol in the background. When an update is ready, the user receives a notification: &quot;Dr. Jarmoukli has updated
+
+your protocol. View your new wellness plan.&quot; This architecture transforms alche from a simple wellness app into a medical-grade wellness intelligence
+
+platform.
+
+12CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE SOLUTIONFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **WHAT YOU CAN B U Y**
+
+
+# The Product Shelf
+
+Own-brand blends
+
+300g pouches, 5 varieties. Matched to outcome categories.
+
+Single ingredients
+
+Collagen, matcha, spirulina, lion&#x27;s mane, ashwagandha.
+
+Capsules
+
+Omega-3, NAC, CoQ10, NR, probiotics, glutathione.
+
+Curated third-party products
+
+Vetted supplements and functional tools from partner brands.
+
+
+#### **OUTCOME CATE G O R I E S**
+
+**GLOW****ENERGY****CALM****SLEEP**
+
+**RECOVERY****ANTI-INFLAMMATORY**
+
+Products are organized by what you want to achieve, not by ingredient
+
+name. Every item maps to at least one outcome. The app recommends
+
+products based on user goals, session history, and biomarker data.
+
+13CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE PRODUCTFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[06] THE PRO D U C T**The App. 10 Modules.
+
+ONBOARDINGDIGITAL TWIN
+
+EVENTSAI CONCIERGE
+
+**01**OnboardingGoal selection, profile setup**02**LED BookingReal-time slots, smoothie pairing
+
+**03**Potion MenuSix potions, five boosts**04**ShopOutcome-based product catalog
+
+**05**DashboardWellness scores, journey tracking**06**EventsCalendar, RSVP, ticketing
+
+**07**ProfileMembership, settings, history**08**BiomarkersCGM, blood panels, wearable sync
+
+**09**AI ConciergePersonalized recommendations**10**Digital TwinBio age score, predictive model
+
+
+#### **FREE**
+
+
+# €0
+
+
+# **CORE**€19/mo
+
+
+# **PRO**€49/mo
+
+
+# **PREMIUM**€99/mo
+
+Content, community browsing,
+
+Dashboard, wearable sync, basic
+
+AI insights, advanced tracking, early
+
+Blood panels, 1:1 reviews, CGM
+
+product discovery
+
+protocols
+
+access
+
+integration
+
+14CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE PRODUCTFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **PRODUCT ROAD M A P**
+
+
+# From commerce loop to full platform.
+
+MVP ships the transaction engine. Intelligence layers arrive when we have enough behavioral data to
+
+make personalization meaningful.
+
+**MVP: MONTHS 1 TO 4**
+
+**V1: MONTHS 5 TO 9**
+
+**V2: MONTHS 10+**
+
+
+## Commerce Loop
+
+
+## Intelligence Layer
+
+
+## Full Platform
+
+LED session booking
+
+AI concierge
+
+Biomarker dashboard
+
+Smoothie menu and ordering
+
+Smart replenishment
+
+Biological age score
+
+Outcome-based product shop
+
+CGM integration (basic)
+
+Digital twin model
+
+Membership tiers
+
+Glucose-smoothie correlation
+
+Personalized AI protocols
+
+Event calendar and RSVP
+
+Curated protocol engine
+
+Doctor integration
+
+Basic wellness dashboard
+
+Wearable data sync
+
+Advanced CGM analytics
+
+User profiles and history
+
+
+#### **INTELLIGENCE L A Y E R P R E V I E W**
+
+
+#### **PHYSICAL SPACE = PHASE 2**
+
+The Berlin flagship in Mitte is where digital meets physical: LED sessions, functional smoothies, curated products, community
+
+events. It operates near breakeven standalone, generates EUR 8,800 to 11,700/month in subscriber LTV through walk-in
+
+conversions, and creates the environmental cues that bridge the 66-day habit formation gap.
+
+15CONFIDENTIAL
+
+
+ 
+ | 
+ ADVANCED CGM ANALYTICS | 
+ | 
+ BIOMARKER DASHBOARD | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+BUSINESS MODELFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[07] BUSINES S M O D E L**Business Model
+
+
+## Subscription-first digital platform. Physical space drives acquisition. Path to break-evenat Month 12.
+
+
+#### **PRICING**
+
+**TIER****MONTHLY****VALUE PROPOSITION****GROSS MARGIN**
+
+Free€0Content, community access,product browsing
+
+,
+
+85-90%
+
+Core**€19**Biomarker dashboard,wearable sync, basicprotocols
+
+Pro**€49**Personalized protocols, AIinsights, advanced tracking
+
+85-90%
+
+
+#### **REVENUE COMP O S I T I O N**
+
+
+### Subscription share grows from ~52% to ~68%, shifting valuation toward SaaS-adjacent multiples (8-15x
+
+
+### ARR) vs. premium retail (2-4x revenue).
+
+14CONFIDENTIAL
+
+
+ 
+ | 
+ €49
+WEIGHTED ARPU | 
+ 5.1x
+LTV : CAC
+(CONSERVATIVE)
+UP TO 15X REALISTIC | 
+ M12
+BREAK-EVEN
+145 PAYING USERS | 
+ 72%
+BLENDED MARGIN Y1
+→ 80% BY Y3 | 
+ €500K
+RAISE TARGET | 
+ |
+ 
+
+
+ 
+ | 
+ Premium | 
+ €99 | 
+ Blood panel credits, 1:1
+reviews, exclusive events,
+CGM (Phase 2) | 
+ 70-85% | 
+ |
+ 
+
+
+ 
+ | 
+ 52% | 
+ 18% | 
+ 17% | 
+ 13% | 
+ |
+ 
+
+
+ 
+ | 
+ 68% | 
+ 15% | 
+ 10% | 
+ 7% | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+BUSINESS MODELFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **CONVERSION**
+
+
+# Subscriber funnel at Month 12
+
+Free
+
+
+#### **2,000****100%**
+
+€0/mo
+
+↓ 4.5% convert to paid (modeled target)
+
+Core
+
+
+#### **~90****4-5%**
+
+€19/mo
+
+↓ 20% upgrade to Pro
+
+Pro
+
+
+#### **~18****20%**
+
+€49/mo
+
+↓ ~8% of paid upgrade to Premium
+
+Premium
+
+
+#### **~7****~8%**
+
+€99/mo
+
+
+### + Direct-to-paid from physical space: est. 30-40 subscribers (modeled target)**Total M12: ~145 paying**
+
+
+#### **UNIT ECONOMI C S**
+
+
+#### **C O N S E R V A T I V E**
+
+
+# **5.1x**
+
+
+# **R E A L I S T I C****14.7x**
+
+€35 ARPU x 8-month lifetime
+
+€49 ARPU x 12-month lifetime
+
+LTV €280 / CAC €55
+
+LTV €588 / CAC €40
+
+15CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+BUSINESS MODELFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **MARGINS**
+
+
+# Gross margin by revenue stream
+
+
+#### **PATH TO BREA K - E V E N**
+
+
+#### **LAUNCH**
+
+
+#### **BREAK-EVEN**
+
+
+#### **BUFFER AT BREAK-EVEN**
+
+
+# **M4**
+
+
+# **M12**
+
+
+# **€142K**
+
+145 paying + €10K/mo space
+
+
+### 24-month runway with €500K raise. Pre-launch burn: €7,600/month. Break-even achieved through a
+
+
+### combination of ~145 paying digital subscribers and ~€10,000/month in physical space revenue
+
+
+### (products, services, events). Even at €400K raise, the model reaches break-even with a €42K buffer.
+
+RevenueCat 2025 State of Subscription Apps / Industry churn benchmarks (Recurly, Baremetrics) / DSSV 2024 / Stripe Payment Infrastructure
+
+16CONFIDENTIAL
+
+
+ 
+ | 
+ 85-90% | 
+ | 
+ |
+ 
+
+
+ 
+ | 
+ 65-75% | 
+ | 
+ |
+ 
+
+
+ 
+ | 
+ 50-70% | 
+ | 
+ |
+ 
+
+
+ 
+ | 
+ 55-65% | 
+ | 
+ |
+ 
+
+
+ 
+ | 
+ 40-50% | 
+ | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+GO-TO-MARKETFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[08] GO-TO-M A R K E T**Build the audience before the product.
+
+
+## Content-first. Community-first. The product comes to people who already trust thevoice.
+
+
+### Most startups spend money to find customers. We find customers for free, then spend money to build
+
+
+### what they already want. Our content-first strategy trades founder labor for capital: every video,
+
+
+### newsletter, and community event builds an audience that converts directly into our waitlist, then our
+
+
+### founding members, then our recurring revenue.
+
+
+#### **TWO FLYWHEEL S , S E Q U E N C E D**
+
+
+#### **FLYWHEEL 1 , R U N N I N G N O W**
+
+
+#### **F L Y W H E E L 2 , A C T I V A T E D B Y F U N D I N G**
+
+
+## The Content Engine
+
+
+## The Product Engine
+
+Create radical-honesty science content → attract health-
+
+Know your body (data) → Do the protocols (action) → Get what
+
+curious audience → they engage and share → we learn what
+
+you need (products) → Belong with others (community).
+
+they need → create sharper content. No product needed. No
+
+Funding builds the product for an audience that already exists
+
+funding needed.
+
+and trusts us.
+
+
+#### **CHANNEL STRA T E G Y**
+
+PRIMARY: SHORT-FORM VIDEO
+
+AMPLIFIER: YOUTUBE
+
+TikTok + Instagram Reels, @alche.space
+
+Monthly &quot;Alche Reviewed&quot; long-form
+
+Radical honesty science content. 3-5 posts per week. Pattern-
+
+10-20 minute deep research episodes. Evergreen SEO pillars that
+
+breaking format: first piece is a collagen deep dive across 23 studies
+
+rank in search for years, the moat no short-form competitor builds.
+
+showing only industry-funded research is positive. This IS the brand
+
+voice.
+
+AMPLIFIER: BERLIN EVENTS
+
+Quarterly &quot;Alche Salon&quot;, EUR 200-500/event
+
+SECONDARY: NEWSLETTER
+
+Weekly email, Substack or Beehiiv
+
+Science talks over wine at existing Berlin venues. One evening
+
+generates a month of content. Doubles as customer discovery.
+
+One deep dive per week. Captures emails, the only owned asset.
+
+Biohackers Berlin meetup (2,213 members) is the warm audience.
+
+Social algorithms change; email lists compound. Where the most
+
+engaged followers live and conversion happens.
+
+17CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+GO-TO-MARKETFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **E X E C U T I O N R O A D M A P**12 months to product-market fit.
+
+
+### Foundation
+
+PRE-FUNDING // EUR 0 BUDGET // CONTENT ENGINE IGNITION
+
+**Q1****M1-3**
+
+Launch @alche.space. 3-5 short-form videos per week, honest science format.
+
+Launch newsletter (Week 2). Goal: 300 subscribers by end of Q1.
+
+10 informal customer discovery conversations from social DMs and meetup contacts.
+
+
+### Traction Proof
+
+**Q2**
+
+PRE-FUNDING // EUR 200-500 EVENTS // WAITLIST OPENS
+
+**M4-6**
+
+First Alche Salon event. 30-40 people. Film everything, one event produces 3-4 weeks of content.
+
+Open waitlist landing page. Goal: 500 signups from newsletter + social + events.
+
+Begin GmbH formation. Apply to GruendungsBONUS Plus (EUR 50K non-dilutive Berlin grant).
+
+
+### Fundraise + Build
+
+FUNDING CLOSES // EUR 500K RAISE // MVP DEVELOPMENT BEGINS
+
+**Q3**
+
+**M7-9**
+
+Pitch with real numbers: followers, newsletter subs, waitlist, event attendees.
+
+Post-funding: hire technical co-founder / dev lead. Begin MVP development.
+
+Events scale to monthly with 60-80 attendees.
+
+
+### Beta Launch
+
+POST-FUNDING // PRODUCT IN HANDS // FOUNDING MEMBERS
+
+**Q4**
+
+**M10-12**
+
+MVP beta to first 50-100 users from waitlist. Founding member pricing: EUR 19/month, locked for life.
+
+Content evolves to include product teasers, beta user stories, &quot;building in public&quot; updates.
+
+Physical space search begins. Berlin location planning for hybrid model proof.
+
+
+#### **T A R G E T M E T R I C S B Y Q U A R T E R**
+
+**Q1****Q2****Q3****Q4**
+
+Social followers1-2K3-5K8-12K15-20K
+
+Newsletter subs3001,0002,5005,000
+
+Waitlist signups--5001,500(converts)
+
+Event attendees--35250500+
+
+Content CAC€0*€0*€0*€0*
+
+*EUR 0 paid acquisition. Content cost is founder labor, not capital.
+
+18CONFIDENTIAL
+
+
+ 
+ | 
+ Paying users | 
+ -- | 
+ -- | 
+ -- | 
+ 50-100 | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+TRACTIONFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[09] TRACTIO N**9 conversations that changed ourproduct.3 hypotheses we killed.
+
+
+## No product yet. What we bring: proof of market understanding, intellectual honesty,and a 90-day plan to generate the data that matters.
+
+
+#### **CUSTOMER DIS C O V E R Y , 9 I N T E R V I E W S**
+
+Health-conscious professionals in Berlin, 28-45, 60-min open-ended sessions.
+
+
+#### **01**
+
+&quot;Longevity with intention&quot; tested strongest. Interviewees rejected both &quot;biohacker&quot; and &quot;anti-perfectionist&quot; labels.
+
+
+#### **02**
+
+Fragmentation creates guilt, not just inconvenience. People feel like they&#x27;re failing at wellness because the ecosystem is impossible to navigate.
+
+
+#### **03**
+
+Accountability without judgment. Small consistent groups over leaderboards. Gamification does not work for longevity.
+
+
+#### **04**
+
+Already spending EUR 50-200/mo on fragmented services , willing to consolidate. Non-spenders need a trigger event (content-first GTM).
+
+
+#### **05**
+
+Local community events as entry point got the strongest positive signal of anything tested.
+
+
+#### **WHAT CHANGED BASED ON INTERVIEWS**
+
+Positioning: &quot;longevity with intention&quot; replaced &quot;anti-perfectionist.&quot; Community: small accountability circles, not open forums.
+
+Entry point: content + local events first, app second.
+
+1 Alche competitive spend analysis, Feb 2026 / 2 Reddit subscriber counts, Feb 2026 / 3 Competitive intelligence; no US player has announced
+
+DACH expansion
+
+19CONFIDENTIAL
+
+
+ 
+ | 
+ $8.9-21.1K
+SPENT PER USER/YR ON
+FRAGMENTED ALTERNATIVES1 | 
+ 711K+
+SUBSCRIBERS ACROSS R/BIOHACKERS,
+R/LONGEVITY, R/SUPPLEMENTS2 | 
+ 18-24 mo
+WINDOW BEFORE US PLAYERS
+LOCALIZE TO DACH3 | 
+ |
+ 
+
+
+===PAGE BREAK===
+
+
+## alche
+
+TRACTIONFEBRUARY 2026 // CONFIDENTIAL
+
+
+#### **VALIDATED**
+
+
+#### **W H A T F U N D I N G S O L V E S**
+
+Market demand (711K+ community, $8.9-21K/yrfragmented spend)
+
+Product-market fit (build MVP, test with real users)
+
+Conversion data (waitlist → signup → paid)
+
+Positioning thesis (3 research cycles + 9 interviews)
+
+Retention and engagement metrics
+
+&quot;Longevity with intention&quot; language (emerged frominterviews)
+
+Unit economics in practice
+
+Technical build (CTO hire, dev team)
+
+Competitive white space (10+ competitors, noneintegrated)
+
+Physical space proof-of-concept
+
+Berlin as launch market (ecosystem + timing window)
+
+GTM sequence: content, events, app
+
+Medical advisor secured
+
+
+#### **HYPOTHESES I N V A L I D A T E D**
+
+&quot;Anti-perfectionist&quot; is the right language
+
+Killed by interviews. Reactive, confusing. &quot;Longevity with intention&quot; emerged from users&#x27; own words.
+
+Physical space first, digital second
+
+Killed by Berlin failure patterns. Capital-intensive physical retail fails. Model flipped: digital-first.
+
+Bootstrap as a lifestyle business
+
+Killed by competitive timing. 18-24 month window. Speed to market matters more than capital efficiency.
+
+
+#### **90-DAY TRACT I O N R O A D M A P**
+
+
+#### **DAY 1-30**
+
+
+## Foundation
+
+GmbH formed. 20 interviews complete. Waitlist live. CTO search launched.
+
+
+#### **DAY 30-60**
+
+
+## Traction
+
+Content channel at 1,000+ followers. First Berlin event (50+ attendees). Medical advisor formalized.
+
+
+#### **DAY 60-90**
+
+
+## Momentum
+
+MVP spec finalized, development underway. Community pilot with founding members. Measurable KPIs: waitlist conversion,
+
+event attendance, content engagement.
+
+20CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE MOATFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[10] THE MOA T**We do not claim a moat. We have athesis about what compounds.
+
+
+## At pre-seed, no moat exists yet. What investors evaluate is whether the model has thestructural potential to build one.
+
+**PHASE 1 // MONTH 0-12**
+
+**PHASE 2 // MONTH 6-18**
+
+**PHASE 3 // MONTH 12+**
+
+
+### Social Identity
+
+
+### Network Effects
+
+
+### Switching Costs
+
+&quot;Being in my Alche era&quot; becomes part of
+
+As community grows, each new member
+
+12 months of biomarker data,
+
+how people talk about themselves.
+
+increases value for existing members.
+
+personalized protocols, supplement
+
+Brand, content, and the physical Berlin
+
+Accountability groups, shared
+
+subscriptions, and community
+
+space build identity. People do not leave
+
+challenges, event networks, protocol
+
+connections create real friction to leave.
+
+brands they identify with, this is
+
+sharing. The value of being in the
+
+GDPR means data is portable, but
+
+structural, not aspirational.
+
+community increases with its size.
+
+insights, calibrated protocols, and social
+
+graphs are not.
+
+Taste-dependent. Hardest to copy.
+
+Time-dependent. Impossible to fast-
+
+Volume-dependent. Gets more
+
+track.
+
+valuable.
+
+
+#### **WHAT AI CANN O T R E P L A C E**
+
+
+### If Apple Health + ChatGPT gives personalized longevity advice for free, the pure data-and-insights
+
+
+### layer is commoditized. What survives: physical experiences (AI cannot give you a smoothie or a
+
+
+### community event), social identity and belonging (people join for community, not because the
+
+
+### algorithm is optimal), accountability and motivation (knowing what to do is not the hard part, doing it
+
+
+### consistently is).
+
+
+#### **INTEGRATION IS THE THESIS**
+
+None of alche&#x27;s competitors combine biomarker data + personalized protocols + curated products + physical experiences +
+
+community in one platform. They each do one or two layers. Integration is structurally hard to bolt on because it requires
+
+different organizational DNA than single-vertical excellence. GDPR-native data trust gives a European entrant a structural
+
+advantage US platforms cannot retrofit. When the data layer gets cheaper and AI interpretation improves, the companies that
+
+built genuine community, cultural identity, and regulatory trust are the ones still standing.
+
+Competitive analysis: 30+ companies, Feb 2026 / Blue Zones / WHOOP 2025 Retention Data / Fortune Business Insights 2025
+
+21CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE TEAMFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[11] THE TEA M**The Team
+
+
+## Timur Tasdogan
+
+
+## Daria Dijan Roth
+
+**CO-FOUNDER AND CMO, 49% EQUITY**
+
+**CO-FOUNDER AND COO, 51% EQUITY**
+
+MSc Data Science (GISMA Berlin), BA Economics (Koc University)
+
+BSc Computer Engineering + BA International Business
+
+Concentrix / Meta: EUR 1.8M ad spend, ROAS 1.5x to 2.7x
+
+Backend development (Jan Iletisim Teknolojileri)
+
+Hepsiburada (NASDAQ: HEPS): EUR 300K budget, 4x ROAS
+
+Brand positioning (MUTA-1 Reklamcilik)
+
+Quantpaper founding team, 27% activation lift
+
+Domain expert: 4-year autoimmune journey
+
+**MEDICAL ADVISOR**
+
+
+## AmirFarzam Kamalpour
+
+**TECHNICAL LEAD**
+
+
+## Shukri Jarmoukli
+
+**PHYSICIAN, FUNCTIONAL MEDICINE**
+
+Self-taught developer since age 12
+
+Runs Star Digital (stardigital.ir): IT infrastructure, hosting, weband app development
+
+Medicine, Universitat zu Koln. Runs Lifestyledoctor, a self-paylongevity practice in Berlin. Functional medicine,psychoneuroimmunology (KPNI), and CGM biofeedback. His patientsare alche&#x27;s exact target demographic.
+
+Previously at Jung von Matt HAVEL (Berlin): IT and webdevelopment
+
+Role: protocol validation, medical content review, biomarkerinterpretation, regulatory compliance.
+
+Brings existing server infrastructure to the alche build
+
+**GOVERNANCE**
+
+**ENTITY**
+
+**EQUITY**
+
+**HISTORY**
+
+**FIRST HIRE**
+
+Alche GmbH (Berlin)
+
+Daria 51% / Timur 49%
+
+10-year partnership
+
+Technical lead
+
+24CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+THE ASKFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[ 1 2 ] T H E A S K**EUR 500,000 to build the category.
+
+
+### Convertible loan (Wandeldarlehen). 24-month runway. Break-even at Month 12.
+
+
+# **€500K**
+
+
+# **€2.5M**
+
+
+# VALUATION CAP**20%**
+
+PRE-SEED RAISEWANDELDARLEHEN
+
+DISCOUNT TO
+
+NEXT ROUND
+
+
+#### **D E A L T E R M S**
+
+INSTRUMENTWandeldarlehen (convertible loan), standard German pre-seed structure
+
+AMOUNTEUR 500,000
+
+VALUATION CAPEUR 2,500,000
+
+DISCOUNT20% to next qualified round
+
+RUNWAY24 months (pre-launch burn: EUR 7,600/month)
+
+BREAK-EVENMonth 12, 145 paying subscribers + EUR 10K/month space revenue
+
+BUFFER AT M12EUR 142,000 (at EUR 500K raise) // EUR 42,000 (at EUR 400K)
+
+USE OF FUNDS[Detailed allocation shared separately upon request]
+
+
+#### **W H A T E U R 5 0 0 K U N L O C K S**
+
+
+### Build
+
+
+### Launch
+
+
+### Prove
+
+Content production scaling. FirstAlche Salon events. Beta to 50-100founding members. Communityinfrastructure.
+
+Unit economics validation. Churndata vs. industry averages.Conversion funnel metrics. Physicalspace as acquisition channel proof.
+
+Technical co-founder hire. 16-weekMVP development sprint. Apparchitecture and biomarkerintegration. GmbH formation andlegal structure.
+
+**THE INVESTOR EQUATION**
+
+Zero European competitors in integrated longevity lifestyle. A 12-18 month window before US players localize. EUR 500K buys 24months of runway, break-even at Month 12 with a EUR 142K buffer, and a founding team that has already done the research
+
+24CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+CLOSINGFEBRUARY 2026 // CONFIDENTIAL
+
+
+# **[13] CLOSING**The ambition.
+
+
+## Berlin is the proof. Europe is the unlock.
+
+
+# **T H E E N D G A M E**The longevity lifestyle platform
+
+
+# for all of Europe.
+
+
+### What Aesop did for skincare, took something technical and made it beautiful, accessible,
+
+
+### and identity-forming. That is what alche does for longevity.
+
+
+#### **FROM HERE TO T H E R E**
+
+
+## **PHASE 1 // M0-12**Berlin proof of concept
+
+App launch. One physical space in Mitte. 145 paying subscribers. Break-even on unit economics. Content flywheel spinning.
+
+Community density forming.
+
+
+## **PHASE 2 // M6-18**Digital expansion across EU
+
+Open app beyond Berlin. Ship products across the EU. Partner with existing wellness spaces. Prove digital-only members
+
+retain without a physical node.
+
+
+#### **PHASE 3 // M12-**
+
+
+## Second location + seed round
+
+
+#### **24**
+
+Second Berlin location where digital density is highest. Pop-ups before permanent. Seed round at EUR 2M+ MRR trajectory.
+
+
+#### **PHASE 4 // M18-**
+
+
+## Platform maturity
+
+
+#### **36**
+
+Open API for partner integrations. Corporate wellness tier. Expand category presence across EU.
+
+
+## What alche is not
+
+
+## What alche is
+
+Not a wellness brand that happens to have an app. Not a
+
+The digital platform is the business. The physical space is one
+
+longevity clinic for the already-converted. Not another
+
+revenue module. Built in Berlin for European culture, regulation,
+
+personalized nutrition play. Not a Silicon Valley export.
+
+and sensibility. GDPR-native from day one. An identity brand,
+
+not a feature set.
+
+25CONFIDENTIAL
+
+
+===PAGE BREAK===
+
+
+## alche
+
+CLOSINGFEBRUARY 2026 // CONFIDENTIAL
+
+
+# &quot;Longevity should not be solely for tech bros of Silicon Valley. It should befor everyone who wants to live better, not just longer.&quot;
+
+Community sentiment, r/Biohackers, r/Longevity, r/Supplements // 711K+ members
+
+
+# alche
+
+
+# Your longevity, daily.
+
+Pre-Seed // Berlin, Germany
+
+February 2026
+
+Confidential
+
+Daria Dijan Roth, daria@alche.space
+
+Timur Tasdogan, timur@alche.space
+
+26CONFIDENTIAL

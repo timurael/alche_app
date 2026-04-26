@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Booking · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* Booking — ritual reservation */
+
+    /* Session type — mono toggle, not tiles */
+    .b-type-row {
+      padding: 8px 24px 14px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .b-type-row .t-opt {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid transparent;
+      cursor: pointer;
+    }
+    .b-type-row .t-opt.active {
+      color: var(--editorial-black);
+      border-bottom-color: var(--editorial-black);
+      font-weight: 700;
+    }
+    .b-type-row .t-sep {
+      width: 3px; height: 3px;
+      background: var(--editorial-muted);
+      border-radius: 999px;
+      opacity: 0.5;
+    }
+
+    /* Day strip */
+    .b-days {
+      padding: 4px 24px 16px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .b-days .day {
+      min-width: 44px;
+      flex: 0 0 auto;
+      padding: 10px 6px 9px;
+      border: 1px solid var(--divider-medium);
+      background: var(--bg-white);
+      border-radius: var(--radius-sharp);
+      text-align: center;
+      cursor: pointer;
+    }
+    .b-days .day .dow {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      display: block;
+    }
+    .b-days .day .num {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--editorial-black);
+      margin-top: 2px;
+      display: block;
+      line-height: 1;
+    }
+    .b-days .day.active {
+      background: var(--editorial-black);
+      border-color: var(--editorial-black);
+    }
+    .b-days .day.active .dow,
+    .b-days .day.active .num { color: var(--bg-white); }
+    .b-days .day.sparse .num { opacity: 0.35; }
+
+    /* Time list */
+    .b-times {
+      padding: 0 24px 12px;
+    }
+    .b-times .slot {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--divider-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      cursor: pointer;
+    }
+    .b-times .slot:last-child { border-bottom: none; }
+    .b-times .slot .t-time {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--editorial-black);
+      letter-spacing: -0.005em;
+    }
+    .b-times .slot .t-suite {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .b-times .slot.full {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .b-times .slot.selected {
+      border-left: 2px solid var(--editorial-black);
+      padding-left: 8px;
+      margin-left: -8px;
+    }
+
+    /* Confirm block */
+    .b-confirm {
+      margin: 10px 24px 6px;
+    }
+    .b-confirm-meta {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    /* Previously — upcoming demoted */
+    .b-prev-head {
+      padding: 14px 24px 6px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Status bar glyphs */
+    .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+    .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+    .signal-bars span:nth-child(1) { height: 3px; }
+    .signal-bars span:nth-child(2) { height: 5px; }
+    .signal-bars span:nth-child(3) { height: 7px; }
+    .signal-bars span:nth-child(4) { height: 9px; }
+    .battery { width: 24px; height: 11px; border: 1.2px solid var(--editorial-black); border-radius: 2.5px; position: relative; padding: 1px; }
+    .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; background: var(--editorial-black); }
+    .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Context -->
+        <div class="alche-context-band">
+          <div class="ctx-left">
+            <span class="ctx-dot"></span>
+            <span>BERLIN · MITTE · 3 CREDITS</span>
+          </div>
+          <div class="ctx-right"><span>NEXT · FRI 15:00</span></div>
+        </div>
+
+        <!-- Read stamp -->
+        <div class="alche-read-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">ALCHE · YOUR NEXT RITUAL</span>
+        </div>
+
+        <!-- The read -->
+        <div class="alche-read">
+          <span class="line">You chose <em>Recovery</em>.</span>
+          <span class="line">Red Light is your longest-</span>
+          <span class="line dim">standing ritual — which day?</span>
+        </div>
+
+        <!-- Session type — inline mono toggle -->
+        <div class="b-type-row">
+          <span class="t-opt active">· Recovery</span>
+          <span class="t-sep"></span>
+          <span class="t-opt">· Glow</span>
+        </div>
+
+        <!-- Day strip -->
+        <div class="b-days">
+          <div class="day sparse"><span class="dow">THU</span><span class="num">24</span></div>
+          <div class="day active"><span class="dow">FRI</span><span class="num">25</span></div>
+          <div class="day"><span class="dow">SAT</span><span class="num">26</span></div>
+          <div class="day"><span class="dow">SUN</span><span class="num">27</span></div>
+          <div class="day"><span class="dow">MON</span><span class="num">28</span></div>
+          <div class="day sparse"><span class="dow">TUE</span><span class="num">29</span></div>
+          <div class="day"><span class="dow">WED</span><span class="num">30</span></div>
+        </div>
+
+        <!-- Narrator interstitial between day + time -->
+        <div class="alche-interstitial" style="padding: 14px 24px;">
+          <p class="i-voice" style="font-size: 15px;">Friday is quiet after 2pm — <em>suite two</em> opens up.</p>
+        </div>
+
+        <!-- Time slots -->
+        <div class="b-times">
+          <div class="slot full"><span class="t-time">13:00</span><span class="t-suite">FULL</span></div>
+          <div class="slot"><span class="t-time">14:00</span><span class="t-suite">SUITE 1</span></div>
+          <div class="slot selected"><span class="t-time">15:00</span><span class="t-suite">SUITE 2 · SELECTED</span></div>
+          <div class="slot"><span class="t-time">16:00</span><span class="t-suite">SUITE 2</span></div>
+          <div class="slot"><span class="t-time">17:00</span><span class="t-suite">SUITE 1</span></div>
+        </div>
+
+        <!-- Narrator interstitial before confirm -->
+        <div class="alche-interstitial" style="padding: 14px 24px;">
+          <p class="i-voice" style="font-size: 15px;">And something for after? <em>A cacao-protein blend</em> is on your protocol.</p>
+        </div>
+
+        <!-- Confirm -->
+        <div class="b-confirm">
+          <button class="alche-primary-action" style="margin: 0;">
+            <span>Reserve · Fri 15:00 · Suite 2</span>
+            <span class="arrow">→</span>
+          </button>
+          <div class="b-confirm-meta">1 CREDIT · €0 · CANCEL ≤ 2H FREE</div>
+        </div>
+
+        <a class="alche-secondary-action"><span class="u">Add smoothie &nbsp;→</span></a>
+
+        <!-- Previously booked — demoted -->
+        <div class="alche-inner-divider"></div>
+        <div class="b-prev-head">PREVIOUSLY · 2 UPCOMING</div>
+        <div class="alche-utility-row">
+          <div class="u-left">
+            <span class="u-kicker">LED · RECOVERY</span>
+            <span class="u-title">Suite 1 · Sat 27 · 11:00</span>
+          </div>
+          <span class="u-arrow">→</span>
+        </div>
+        <div class="alche-utility-row" style="margin-top: 6px;">
+          <div class="u-left">
+            <span class="u-kicker">WELLNESS SESSION</span>
+            <span class="u-title">Dr. Lena K. · Mon 28 · 09:30</span>
+          </div>
+          <span class="u-arrow">→</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · BOOKING</p>
+      <h1 class="alche-display-l title">A reservation written as a sentence.</h1>
+      <p class="alche-body philosophy">
+        Booking stops announcing six overlined sections. It opens with a three-line read that names your goal, recalls your longest-standing ritual, and asks one question: which day? Day strip, time list, confirm — the voice returns between each. Upcoming bookings demote to a "previously" block at the foot.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>The SESSION TYPE tile pair, the circle-avatar Wellness Sessions graft, the filled-blue rounded Confirm button, the duplicate UPCOMING header at the top.</div></li>
+        <li><span class="label">KEPT</span><div>Day strip (horizontal, 7 days), time list, credit/price meta, cancellation policy line, smoothie upsell, and wellness-session bookings (now alongside LED in the Previously block).</div></li>
+        <li><span class="label">ADDED</span><div>Inline mono session-type toggle (· Recovery · Glow), two narrator interstitials that connect day → time and time → upsell, a sharp-corner mono Reserve CTA with price as a suffix line, not a concatenation.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: discovering Wellness Sessions for the first time now requires one scroll — the LED ritual reads as the default because for most members it is.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

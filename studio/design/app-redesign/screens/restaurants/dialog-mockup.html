@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche · Restaurants — Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- Restaurants specifics ---------- */
+
+  /* Recommended list — 3 featured. No gradients, no thumbnails. */
+  .rs-recs {
+    margin: 0;
+  }
+  .rs-rec {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--divider-medium);
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .rs-rec .num {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--editorial-muted);
+    padding-top: 4px;
+  }
+  .rs-rec .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .rs-rec .name {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--editorial-black);
+    letter-spacing: -0.01em;
+  }
+  .rs-rec .why {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--editorial-muted);
+  }
+  .rs-rec .meta {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 4px;
+  }
+  .rs-rec .meta .sep {
+    width: 3px; height: 3px; background: var(--editorial-muted);
+    border-radius: 999px; opacity: 0.6;
+  }
+  .rs-rec .chev {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 13px;
+    color: var(--editorial-black);
+    padding-top: 6px;
+  }
+
+  /* Editorial text filters — segmented, underline active */
+  .rs-filter {
+    padding: 10px 24px 14px;
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--divider-medium);
+  }
+  .rs-filter a {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .rs-filter a.active {
+    color: var(--editorial-black);
+    font-weight: 700;
+    border-bottom: 1.5px solid var(--editorial-black);
+  }
+
+  .rs-filter-sub {
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .rs-filter-sub .active-sort { color: var(--editorial-black); font-weight: 700; }
+
+  /* Compressed full list — typography only */
+  .rs-all {
+    margin: 0;
+  }
+  .rs-all .row {
+    padding: 13px 24px;
+    border-bottom: 1px solid var(--divider-light);
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .rs-all .row .name {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--editorial-black);
+  }
+  .rs-all .row .name .sub {
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--editorial-muted);
+    margin-left: 6px;
+  }
+  .rs-all .row .dist {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--editorial-muted);
+  }
+  .rs-all .row .price {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--editorial-black);
+  }
+
+  /* Disclaimer */
+  .rs-disclaimer {
+    margin: 16px 24px;
+    padding: 10px 14px;
+    border: 1px dashed var(--editorial-muted);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    line-height: 1.5;
+  }
+
+  /* Signal bars */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery {
+    width: 24px; height: 11px; border: 1.2px solid var(--editorial-black);
+    border-radius: 2.5px; position: relative; padding: 1px;
+  }
+  .battery::after {
+    content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px;
+    background: var(--editorial-black); border-radius: 0 1px 1px 0;
+  }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <div class="frame-content">
+
+      <!-- Context band -->
+      <div class="alche-context-band">
+        <div class="ctx-left">
+          <span>18:42 · MONDAY · BERLIN</span>
+        </div>
+        <div class="ctx-right">
+          <span>YOU'RE IN MITTE</span>
+        </div>
+      </div>
+
+      <!-- Read stamp -->
+      <div class="alche-read-stamp">
+        <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="alche-read-stamp-label">ALCHE · THREE I'D EAT TONIGHT</span>
+      </div>
+
+      <!-- The read — concierge-at-the-bar -->
+      <div class="alche-read">
+        <span class="line">Three places I'd eat tonight,</span>
+        <span class="line">given what you're <em>asking of your body</em>.</span>
+      </div>
+
+      <!-- Recommended — 3 featured -->
+      <div class="rs-recs">
+        <div class="rs-rec">
+          <span class="num">01</span>
+          <div class="body">
+            <span class="name">Oukan</span>
+            <span class="why">High-protein, low-processed. Fits your recovery goal.</span>
+            <div class="meta">
+              <span>MITTE</span><span class="sep"></span>
+              <span>4 MIN WALK</span><span class="sep"></span>
+              <span>€€</span>
+            </div>
+          </div>
+          <span class="chev">→</span>
+        </div>
+        <div class="rs-rec">
+          <span class="num">02</span>
+          <div class="body">
+            <span class="name">Frea</span>
+            <span class="why">Plant-based, fiber-dense — closes your day cleanly.</span>
+            <div class="meta">
+              <span>MITTE</span><span class="sep"></span>
+              <span>7 MIN WALK</span><span class="sep"></span>
+              <span>€€</span>
+            </div>
+          </div>
+          <span class="chev">→</span>
+        </div>
+        <div class="rs-rec">
+          <span class="num">03</span>
+          <div class="body">
+            <span class="name">Nobelhart &amp; Schmutzig</span>
+            <span class="why">Slow-paced tasting. For tonight's longer conversation.</span>
+            <div class="meta">
+              <span>KREUZBERG</span><span class="sep"></span>
+              <span>14 MIN</span><span class="sep"></span>
+              <span>€€€€</span>
+            </div>
+          </div>
+          <span class="chev">→</span>
+        </div>
+      </div>
+
+      <!-- Interstitial — voice between blocks -->
+      <div class="alche-interstitial">
+        <p class="i-voice">Or browse the <em>full 24</em> — all independently vetted for nutritional honesty.</p>
+      </div>
+
+      <!-- Editorial text filters — no pills -->
+      <div class="rs-filter">
+        <a class="active">ALL</a>
+        <a>MEDITERRANEAN</a>
+        <a>ASIAN</a>
+        <a>GERMAN</a>
+        <a>PLANT-BASED</a>
+        <a>CAFÉ</a>
+      </div>
+      <div class="rs-filter-sub">
+        <span>SORTED BY <span class="active-sort">DISTANCE</span></span>
+        <span>24 RESULTS</span>
+      </div>
+
+      <!-- Compressed list — typography only -->
+      <div class="rs-all">
+        <div class="row">
+          <span class="name">Oukan <span class="sub">· Japanese-Nordic</span></span>
+          <span class="dist">0.4 KM</span>
+          <span class="price">€€</span>
+        </div>
+        <div class="row">
+          <span class="name">Frea <span class="sub">· Plant-based</span></span>
+          <span class="dist">0.6 KM</span>
+          <span class="price">€€</span>
+        </div>
+        <div class="row">
+          <span class="name">Cecconi's <span class="sub">· Italian</span></span>
+          <span class="dist">1.1 KM</span>
+          <span class="price">€€€</span>
+        </div>
+        <div class="row">
+          <span class="name">Bonvivant <span class="sub">· Cocktail bistro</span></span>
+          <span class="dist">1.4 KM</span>
+          <span class="price">€€€</span>
+        </div>
+      </div>
+
+      <!-- Disclaimer — REQ-025 -->
+      <div class="rs-disclaimer">
+        All nutritional data is independently estimated — approximate, not clinical.
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- Originating from Discover -->
+    <div class="ios-tab-bar">
+      <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+      <div class="tab active"><div class="tab-dot"></div><span>DISCOVER</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

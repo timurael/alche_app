@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche — HormonalBalance · Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- HormonalBalance specifics ---------- */
+
+  /* Two frames side by side for the two modes */
+  .dual-frames {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .frame-caption {
+    text-align: center;
+    margin-top: 16px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .frame-caption strong {
+    color: var(--editorial-black);
+    font-weight: 700;
+  }
+
+  /* Signal glyphs */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery { width: 24px; height: 11px; border: 1.2px solid var(--editorial-black); border-radius: 2.5px; position: relative; padding: 1px; }
+  .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; background: var(--editorial-black); border-radius: 0 1px 1px 0; }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); border-radius: 1px; }
+
+  /* Back + sample tag */
+  .hb-back {
+    padding: 4px 24px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hb-back .back {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--editorial-black);
+    text-decoration: none;
+  }
+  .hb-back .sample {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border: 1px solid var(--divider-medium);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .hb-back .sample .dot {
+    width: 5px; height: 5px; border-radius: 999px;
+    background: var(--warning);
+    opacity: 0.8;
+  }
+
+  /* Title */
+  .hb-title {
+    padding: 8px 24px 2px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+  }
+  .hb-title em { color: var(--editorial-muted); font-style: italic; }
+
+  .hb-subline {
+    padding: 0 24px 16px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+
+  /* The read — 3 italic lines */
+  .hb-read {
+    padding: 4px 24px 14px;
+  }
+  .hb-read .line {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.22;
+    color: var(--editorial-black);
+    display: block;
+    letter-spacing: -0.01em;
+  }
+  .hb-read .line + .line { margin-top: 2px; }
+  .hb-read em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 1px;
+  }
+
+  /* Mono data strip (dense, honest) */
+  .hb-strip {
+    padding: 0 24px 16px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    flex-wrap: wrap;
+  }
+  .hb-strip .sep {
+    width: 3px; height: 3px;
+    background: var(--editorial-muted);
+    border-radius: 999px; opacity: 0.6; flex-shrink: 0;
+  }
+  .hb-strip .k { color: var(--editorial-muted); }
+  .hb-strip .v { color: var(--editorial-black); font-weight: 700; margin-left: 4px; }
+
+  /* Single chart card */
+  .hb-chart {
+    margin: 4px 24px 16px;
+    padding: 14px 14px 12px;
+    border: 1px solid var(--divider-medium);
+    background: var(--bg-white);
+    border-radius: var(--radius-sharp);
+    position: relative;
+  }
+  .hb-chart .c-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .hb-chart .c-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--editorial-black);
+  }
+  .hb-chart .c-meta {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+
+  .hb-chart svg {
+    display: block;
+    width: 100%;
+    height: 120px;
+  }
+
+  .hb-chart .c-axis {
+    display: flex; justify-content: space-between;
+    margin-top: 6px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+
+  /* The week's read (secondary block — rhythm-aware) */
+  .hb-week {
+    padding: 2px 24px 16px;
+  }
+  .hb-week .label {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    margin-bottom: 8px;
+  }
+  .hb-week p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.42;
+    color: var(--editorial-black);
+    margin: 0;
+  }
+  .hb-week p em {
+    color: var(--primary);
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 1px;
+  }
+
+  /* Sync footer */
+  .hb-sync {
+    margin: 4px 24px 0;
+    padding: 12px 14px;
+    border-top: 1px solid var(--divider-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .hb-sync .ok {
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .hb-sync .ok .dot {
+    width: 6px; height: 6px; background: var(--editorial-black);
+    border-radius: 999px;
+  }
+
+  /* Signature */
+  .hb-sig {
+    padding: 14px 24px 6px;
+    text-align: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .hb-sig .dot {
+    display: inline-block; width: 4px; height: 4px;
+    background: var(--editorial-muted); border-radius: 999px;
+    margin: 0 8px; vertical-align: middle; opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="dual-frames">
+
+    <!-- ========================================================= -->
+    <!--  FRAME 1 — MENSTRUAL MODE                                   -->
+    <!-- ========================================================= -->
+    <div>
+    <div class="figma-frame">
+
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content" style="overflow-y:auto;">
+
+        <div class="alche-context-band">
+          <div class="ctx-left">
+            <span class="ctx-dot"></span>
+            <span>THE MONTH'S READING</span>
+          </div>
+          <div class="ctx-right">
+            <span>DAY 12 OF 28</span>
+          </div>
+        </div>
+
+        <div class="hb-back">
+          <a class="back">←&nbsp; PROFILE</a>
+          <span class="sample"><span class="dot"></span>SAMPLE DATA</span>
+        </div>
+
+        <h1 class="hb-title">The month's <em>reading.</em></h1>
+        <div class="hb-subline">LATE FOLLICULAR · ESTROGEN CLIMBING</div>
+
+        <div class="hb-read">
+          <span class="line">Day 12.</span>
+          <span class="line"><em>Estrogen climbing</em>.</span>
+          <span class="line">This is the week your body gives you back.</span>
+        </div>
+
+        <div class="hb-strip">
+          <span><span class="k">PHASE</span><span class="v">FOLLICULAR</span></span>
+          <span class="sep"></span>
+          <span><span class="k">BBT</span><span class="v">36.4°C</span></span>
+          <span class="sep"></span>
+          <span><span class="k">READINESS</span><span class="v">HIGH</span></span>
+        </div>
+
+        <!-- Chart card — single curve (estrogen) -->
+        <div class="hb-chart">
+          <div class="c-head">
+            <span class="c-title">Estrogen, this cycle</span>
+            <span class="c-meta">EST · DAY 1–28</span>
+          </div>
+
+          <svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Baseline -->
+            <line x1="0" y1="90" x2="300" y2="90" stroke="#0d121b" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.3"/>
+            <!-- Ovulation guide -->
+            <line x1="160" y1="0" x2="160" y2="120" stroke="#0d121b" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.4"/>
+            <!-- Estrogen curve — rises through follicular, peak pre-ovulation, dip, second rise luteal -->
+            <path d="M 0 100 C 30 90, 60 75, 100 55 C 130 42, 150 30, 160 28 C 175 40, 190 72, 210 80 C 230 72, 245 55, 260 58 C 275 65, 290 85, 300 100"
+                  fill="none" stroke="#0d121b" stroke-width="1.6"/>
+            <!-- Current day marker (day 12 ≈ x=128) -->
+            <circle cx="128" cy="44" r="4" fill="#1152d4" stroke="#fcfcfd" stroke-width="1.5"/>
+            <line x1="128" y1="48" x2="128" y2="120" stroke="#1152d4" stroke-width="0.6" stroke-dasharray="2 2" opacity="0.6"/>
+            <!-- "You are here" label -->
+            <text x="132" y="38" font-family="Space Mono, monospace" font-size="8" letter-spacing="1" fill="#1152d4">YOU ARE HERE</text>
+          </svg>
+
+          <div class="c-axis">
+            <span>DAY 1</span>
+            <span>OVULATION</span>
+            <span>DAY 28</span>
+          </div>
+        </div>
+
+        <!-- The week's read -->
+        <div class="hb-week">
+          <div class="label">THIS WEEK</div>
+          <p>Strength tolerates you best now. If you lift, <em>this is the week</em>. Sleep will still feel short — that softens next.</p>
+        </div>
+
+        <div class="alche-interstitial">
+          <p class="i-voice">The body speaks in <em>phases</em>, not days. I listen to the phase.</p>
+        </div>
+
+        <!-- Sync footer -->
+        <div class="hb-sync">
+          <span class="ok"><span class="dot"></span>OURA · SYNCED 14:02</span>
+          <span>CYCLE 7 OF 2026</span>
+        </div>
+
+        <div class="hb-sig">
+          ALCHE <span class="dot"></span> RHYTHM
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+    <div class="frame-caption"><strong>MENSTRUAL MODE</strong> · PROFILE PREF "TRACK CYCLE" ON</div>
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!--  FRAME 2 — ANDROGEN MODE                                    -->
+    <!-- ========================================================= -->
+    <div>
+    <div class="figma-frame">
+
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content" style="overflow-y:auto;">
+
+        <div class="alche-context-band">
+          <div class="ctx-left">
+            <span class="ctx-dot"></span>
+            <span>THE WEEK'S READING</span>
+          </div>
+          <div class="ctx-right">
+            <span>WED · 08:41</span>
+          </div>
+        </div>
+
+        <div class="hb-back">
+          <a class="back">←&nbsp; PROFILE</a>
+          <span class="sample"><span class="dot"></span>SAMPLE DATA</span>
+        </div>
+
+        <h1 class="hb-title">The week's <em>reading.</em></h1>
+        <div class="hb-subline">TESTOSTERONE STEADY · CORTISOL ELEVATED AM</div>
+
+        <div class="hb-read">
+          <span class="line">Testosterone holds steady.</span>
+          <span class="line">Cortisol rose at dawn.</span>
+          <span class="line"><em>Push days</em> are yours — mornings are not.</span>
+        </div>
+
+        <div class="hb-strip">
+          <span><span class="k">T · AM</span><span class="v">STEADY</span></span>
+          <span class="sep"></span>
+          <span><span class="k">CORTISOL</span><span class="v">HIGH AM</span></span>
+          <span class="sep"></span>
+          <span><span class="k">READINESS</span><span class="v">78</span></span>
+        </div>
+
+        <!-- Chart card — cortisol diurnal curve -->
+        <div class="hb-chart">
+          <div class="c-head">
+            <span class="c-title">Cortisol, last 7 days</span>
+            <span class="c-meta">COR · AVG 24H</span>
+          </div>
+
+          <svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Baseline -->
+            <line x1="0" y1="90" x2="300" y2="90" stroke="#0d121b" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.3"/>
+            <!-- Noon guide -->
+            <line x1="150" y1="0" x2="150" y2="120" stroke="#0d121b" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.4"/>
+            <!-- Diurnal cortisol — high AM, drops midday, mild recovery evening -->
+            <path d="M 0 95 C 15 70, 30 22, 50 18 C 70 20, 90 30, 110 48 C 130 62, 150 72, 170 78 C 190 82, 210 80, 230 78 C 250 76, 275 82, 300 92"
+                  fill="none" stroke="#0d121b" stroke-width="1.6"/>
+            <!-- AM peak highlight -->
+            <circle cx="50" cy="18" r="4" fill="#1152d4" stroke="#fcfcfd" stroke-width="1.5"/>
+            <text x="56" y="14" font-family="Space Mono, monospace" font-size="8" letter-spacing="1" fill="#1152d4">AM PEAK</text>
+            <!-- Now marker (≈ 08:41) -->
+            <circle cx="108" cy="46" r="3" fill="#0d121b"/>
+            <line x1="108" y1="50" x2="108" y2="120" stroke="#0d121b" stroke-width="0.6" stroke-dasharray="2 2" opacity="0.5"/>
+          </svg>
+
+          <div class="c-axis">
+            <span>06:00</span>
+            <span>12:00</span>
+            <span>22:00</span>
+          </div>
+        </div>
+
+        <!-- The week's read -->
+        <div class="hb-week">
+          <div class="label">THIS WEEK</div>
+          <p>Train late morning, not at sunrise. Save hard sets for <em>Wed, Fri</em>. Evenings are when your body recovers best — protect them.</p>
+        </div>
+
+        <div class="alche-interstitial">
+          <p class="i-voice">Your hormones aren't a curve to fix. They're a <em>rhythm</em> to know.</p>
+        </div>
+
+        <!-- Sync footer -->
+        <div class="hb-sync">
+          <span class="ok"><span class="dot"></span>OURA · SYNCED 08:38</span>
+          <span>WEEK 17 OF 2026</span>
+        </div>
+
+        <div class="hb-sig">
+          ALCHE <span class="dot"></span> RHYTHM
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+    <div class="frame-caption"><strong>ANDROGEN MODE</strong> · PROFILE PREF "TRACK CYCLE" OFF</div>
+    </div>
+
+  </div>
+
+  <!-- Direction caption -->
+  <div class="direction-caption">
+    <p class="alche-overline overline">SCREEN 19 — HORMONAL BALANCE · THE RHYTHM READING</p>
+    <h1 class="alche-display-l title">A body's hormones are a rhythm, not a leaderboard.</h1>
+    <p class="alche-body philosophy">
+      The current screen ships a menstrual-only dashboard and calls every body the same body. The dialog-first cut builds <em>two first-class presentations</em> from one architecture — <strong>Menstrual</strong> and <strong>Androgen</strong> — gated by a Profile preference ("How would you like me to read your hormones?"). Each mode opens with a three-line read, resolves into one chart (the curve that matters now), collapses the 2×2 grid into a mono data strip, and closes with a week's observation. The feature renames from <em>Hormonal Balance</em> to <em>The Rhythm Reading</em> — balance implies a target, rhythm implies listening.
+    </p>
+
+    <ul class="decisions">
+      <li>
+        <span class="label">ADDED</span>
+        <span class="alche-body">A mandatory "Sample Data" tag (the audit flagged this as missing), a Profile preference gate for body-mode, a "you are here" day marker on the cycle curve, and a mirror androgen-mode chart showing diurnal cortisol with AM peak callout. Two modes, equal care.</span>
+      </li>
+      <li>
+        <span class="label">REMOVED</span>
+        <span class="alche-body">The six-variant metrics grid (one Newsreader italic, one mono, one with a progress bar — the audit called this rhythmless). The "Daily Insight" pull-quote (the read itself is the insight). The second curve on the chart (cortisol-faded behind estrogen-prominent) — one curve, one story.</span>
+      </li>
+      <li>
+        <span class="label">REPRIORITIZED</span>
+        <span class="alche-body">Voice leads both modes: "This is the week your body gives you back" / "Push days are yours — mornings are not." The chart is the witness, not the headline. Oura sync moves to a hairline footer because it's provenance, not product.</span>
+      </li>
+    </ul>
+
+    <blockquote class="tradeoff">
+      Trade-off: members who wanted a cycle tracker now get an interpretive layer. The numbers are still there — in the mono strip, in the chart markers — but Alche reads them first.
+    </blockquote>
+  </div>
+
+</div>
+
+</body>
+</html>

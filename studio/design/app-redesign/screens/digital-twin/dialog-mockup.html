@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche — DigitalTwin · Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- DigitalTwin specifics ---------- */
+
+  /* Signal glyphs (status bar) */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery { width: 24px; height: 11px; border: 1.2px solid var(--editorial-black); border-radius: 2.5px; position: relative; padding: 1px; }
+  .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; background: var(--editorial-black); border-radius: 0 1px 1px 0; }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); border-radius: 1px; }
+
+  /* Back chrome */
+  .dt-back {
+    padding: 4px 24px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dt-back .back {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--editorial-black);
+    text-decoration: none;
+  }
+  .dt-back .sample {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border: 1px solid var(--divider-medium);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .dt-back .sample .dot {
+    width: 5px; height: 5px; border-radius: 999px;
+    background: var(--warning);
+    opacity: 0.8;
+  }
+
+  /* Screen title — "The Map" */
+  .dt-title {
+    padding: 8px 24px 4px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1.12;
+    color: var(--editorial-black);
+    letter-spacing: -0.015em;
+  }
+  .dt-title em {
+    color: var(--editorial-muted);
+    font-style: italic;
+  }
+  .dt-subline {
+    padding: 0 24px 18px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+
+  /* The read */
+  .dt-read {
+    padding: 4px 24px 14px;
+  }
+  .dt-read .line {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.22;
+    color: var(--editorial-black);
+    display: block;
+    letter-spacing: -0.01em;
+  }
+  .dt-read .line + .line { margin-top: 2px; }
+  .dt-read .line em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 1px;
+  }
+
+  /* Body map — anatomical silhouette */
+  .dt-map-wrap {
+    margin: 6px 24px 18px;
+    padding: 18px 16px 14px;
+    border: 1px solid var(--divider-medium);
+    background: var(--bg-white);
+    position: relative;
+    border-radius: var(--radius-sharp);
+  }
+  .dt-map-wrap .corner {
+    position: absolute; width: 8px; height: 8px;
+    border: 1px solid var(--editorial-black);
+  }
+  .dt-map-wrap .corner.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+  .dt-map-wrap .corner.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+  .dt-map-wrap .corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+  .dt-map-wrap .corner.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+  .dt-map-label {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .dt-map-svg {
+    display: block;
+    margin: 0 auto;
+    width: 170px;
+    height: 240px;
+  }
+
+  /* Region legend under map — minimal, honest */
+  .dt-map-legend {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .dt-map-legend .swatch {
+    display: inline-block;
+    width: 7px; height: 7px;
+    margin-right: 5px;
+    vertical-align: middle;
+    border: 1px solid var(--editorial-black);
+  }
+  .dt-map-legend .swatch.thriving { background: var(--editorial-black); }
+  .dt-map-legend .swatch.attention { background: var(--bg-white); }
+
+  /* Observed lines block — picks the attention regions by name */
+  .dt-obs {
+    padding: 2px 24px 16px;
+  }
+  .dt-obs .label {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    margin-bottom: 8px;
+  }
+  .dt-obs .line {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--editorial-black);
+    display: block;
+  }
+  .dt-obs .line + .line { margin-top: 6px; }
+  .dt-obs .line .what {
+    color: var(--editorial-muted);
+  }
+
+  /* Projection escape hatch */
+  .dt-projection {
+    margin: 4px 24px 0;
+    padding: 14px 16px;
+    border: 1px solid var(--divider-medium);
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: var(--radius-sharp);
+  }
+  .dt-projection .p-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .dt-projection .p-kicker {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .dt-projection .p-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--editorial-black);
+  }
+  .dt-projection .p-arrow {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 13px;
+    color: var(--editorial-black);
+    flex-shrink: 0;
+  }
+
+  /* Signature */
+  .dt-sig {
+    padding: 18px 24px 10px;
+    text-align: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .dt-sig .dot {
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: var(--editorial-muted);
+    border-radius: 999px;
+    margin: 0 8px;
+    vertical-align: middle;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <!-- Status bar -->
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <!-- Frame content -->
+    <div class="frame-content" style="overflow-y:auto;">
+
+      <!-- Context band -->
+      <div class="alche-context-band">
+        <div class="ctx-left">
+          <span class="ctx-dot"></span>
+          <span>THE MAP · READ 03</span>
+        </div>
+        <div class="ctx-right">
+          <span>REFRESHED 6 DAYS AGO</span>
+        </div>
+      </div>
+
+      <!-- Back + sample data -->
+      <div class="dt-back">
+        <a class="back">←&nbsp; PROFILE</a>
+        <span class="sample"><span class="dot"></span>SAMPLE DATA</span>
+      </div>
+
+      <!-- Screen title -->
+      <h1 class="dt-title">The Map <em>— as I read you now.</em></h1>
+      <div class="dt-subline">RENDERED 18 APR · NEXT RE-READ IN 6 WEEKS</div>
+
+      <!-- The read -->
+      <div class="dt-read">
+        <span class="line">Across your body,</span>
+        <span class="line"><em>three regions thriving</em>,</span>
+        <span class="line">two asking for attention.</span>
+      </div>
+
+      <!-- Body map -->
+      <div class="dt-map-wrap">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+
+        <div class="dt-map-label">ANTERIOR · POSTERIOR AVAILABLE</div>
+
+        <!-- Minimal anatomical silhouette SVG.
+             Filled dots = thriving regions. Open dots = attention. -->
+        <svg class="dt-map-svg" viewBox="0 0 170 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body silhouette — simple, editorial -->
+          <g fill="none" stroke="#0d121b" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+            <!-- Head -->
+            <circle cx="85" cy="24" r="14"/>
+            <!-- Neck -->
+            <path d="M79 38 L79 46 L91 46 L91 38"/>
+            <!-- Torso -->
+            <path d="M58 48 L112 48 L118 78 L118 130 L112 156 L58 156 L52 130 L52 78 Z"/>
+            <!-- Arms -->
+            <path d="M52 54 L38 74 L32 112 L36 148 L42 156"/>
+            <path d="M118 54 L132 74 L138 112 L134 148 L128 156"/>
+            <!-- Hips/legs -->
+            <path d="M58 156 L54 200 L56 232 L70 232 L76 190 L85 156"/>
+            <path d="M112 156 L116 200 L114 232 L100 232 L94 190 L85 156"/>
+          </g>
+
+          <!-- Region dots -->
+          <!-- Thriving: filled black -->
+          <!-- Head / cognition -->
+          <circle cx="85" cy="24" r="4" fill="#0d121b" stroke="#0d121b" stroke-width="1"/>
+          <!-- Heart / cardio -->
+          <circle cx="76" cy="82" r="4" fill="#0d121b" stroke="#0d121b" stroke-width="1"/>
+          <!-- Lower back / posterior -->
+          <circle cx="95" cy="118" r="4" fill="#0d121b" stroke="#0d121b" stroke-width="1"/>
+
+          <!-- Attention: open, with hairline ring -->
+          <!-- Gut / midsection -->
+          <circle cx="85" cy="100" r="5" fill="#fcfcfd" stroke="#0d121b" stroke-width="1.3"/>
+          <circle cx="85" cy="100" r="1.5" fill="#0d121b"/>
+          <!-- Sleep / rest pattern — right temple -->
+          <circle cx="96" cy="20" r="5" fill="#fcfcfd" stroke="#0d121b" stroke-width="1.3"/>
+          <circle cx="96" cy="20" r="1.5" fill="#0d121b"/>
+        </svg>
+
+        <div class="dt-map-legend">
+          <span><span class="swatch thriving"></span>THRIVING · 3</span>
+          <span><span class="swatch attention"></span>ATTENTION · 2</span>
+        </div>
+      </div>
+
+      <!-- Observed lines (no stacked list — voice) -->
+      <div class="dt-obs">
+        <div class="label">WHAT I'M HEARING</div>
+        <span class="line">Your <span class="what">gut</span> is restless — the smoothie week showed in your signals.</span>
+        <span class="line">Your <span class="what">sleep</span> pattern has softened. Tuesdays in particular.</span>
+      </div>
+
+      <!-- Interstitial -->
+      <div class="alche-interstitial">
+        <p class="i-voice">In six weeks, I'll read you again. The map will have <em>moved</em>.</p>
+      </div>
+
+      <!-- Projection escape -->
+      <div class="dt-projection">
+        <div class="p-left">
+          <span class="p-kicker">IF YOU HOLD THIS PATH</span>
+          <span class="p-title">See the projection at 12 weeks</span>
+        </div>
+        <span class="p-arrow">→</span>
+      </div>
+
+      <!-- Signature strip -->
+      <div class="dt-sig">
+        ALCHE <span class="dot"></span> CARTOGRAPHER
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- iOS tab bar — entry from Profile -->
+    <div class="ios-tab-bar">
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>HOME</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>DISCOVER</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>BOOK</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>SHOP</span>
+      </div>
+      <div class="tab active">
+        <div class="tab-dot"></div>
+        <span>PROFILE</span>
+      </div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+  <!-- Direction caption -->
+  <div class="direction-caption">
+    <p class="alche-overline overline">SCREEN 18 — DIGITAL TWIN · THE MAP</p>
+    <h1 class="alche-display-l title">The body, drawn the way a reader draws a character — from what they've heard so far.</h1>
+    <p class="alche-body philosophy">
+      We kill the phrase "Digital Twin" — tech-bro cosplay on a wellness app. What remains is a single cartographic artifact: a simple anatomical silhouette, dots for what I hear, nothing else. The old screen stacked the same data three ways (map, thriving list, attention list). The dialog-first cut keeps the map, dissolves the lists into two italic sentences that name the attention regions by name, and admits the honest timeline: I read you every six weeks, not every second.
+    </p>
+
+    <ul class="decisions">
+      <li>
+        <span class="label">ADDED</span>
+        <span class="alche-body">A literary title ("The Map — as I read you now"), a sample-data tag with warning dot as mandatory honesty, a refresh cadence line ("NEXT RE-READ IN 6 WEEKS"), and a single editorial body silhouette with filled/open region dots — <em>the</em> artifact, not one of three.</span>
+      </li>
+      <li>
+        <span class="label">REMOVED</span>
+        <span class="alche-body">The phrase "Digital Twin" everywhere. The duplicate "THRIVING" and "NEEDS ATTENTION" stacked lists. The future-projection toggle (downgraded to an escape-hatch row). The double DataSourceIndicator — replaced with one honest tag at the top.</span>
+      </li>
+      <li>
+        <span class="label">REPRIORITIZED</span>
+        <span class="alche-body">Voice leads, map supports, observations close. "Your gut is restless — the smoothie week showed in your signals" does the work a scored list tried to do. Projection becomes optional browsing, not a toggle competing with the read.</span>
+      </li>
+    </ul>
+
+    <blockquote class="tradeoff">
+      Trade-off: members who came expecting a scannable dashboard of body scores now get an editorial page. The score is there — but it arrives as a sentence, not a number.
+    </blockquote>
+  </div>
+
+</div>
+
+</body>
+</html>

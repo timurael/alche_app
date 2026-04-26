@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Direction A · Ritual-first</title>
+  <link rel="stylesheet" href="alche-figma-tokens.css">
+  <style>
+    /* ---------- Direction A — Ritual-first ---------- */
+
+    /* Context strip directly under status bar */
+    .ritual-context {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 24px 12px;
+    }
+    .ritual-context .left,
+    .ritual-context .right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--editorial-muted);
+    }
+    .ritual-context .dot {
+      width: 4px;
+      height: 4px;
+      background: var(--editorial-muted);
+      display: inline-block;
+    }
+
+    /* The room: the hero IS the screen */
+    .ritual-hero {
+      position: relative;
+      margin: 0 16px;
+      height: 560px;
+      background: linear-gradient(
+        155deg,
+        rgba(140, 168, 210, 0.55) 0%,
+        rgba(45, 58, 85, 1) 45%,
+        var(--editorial-black) 100%
+      );
+      color: var(--bg-white);
+      padding: 28px 24px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    /* Subtle grain/texture via layered gradients */
+    .ritual-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(196, 202, 214, 0.18), transparent 55%),
+        radial-gradient(ellipse at 10% 85%, rgba(17, 82, 212, 0.12), transparent 60%);
+      pointer-events: none;
+    }
+    .ritual-hero > * { position: relative; z-index: 1; }
+
+    .ritual-hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .ritual-hero-top .code {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .ritual-hero-top .duration {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 4px 8px;
+    }
+
+    .ritual-hero-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 200;
+      font-size: 56px;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      color: var(--bg-white);
+      margin: 0;
+    }
+
+    .ritual-hero-sub {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.72);
+      max-width: 260px;
+      margin-top: 16px;
+    }
+
+    .ritual-hero-middle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      flex: 1;
+      padding: 24px 0;
+    }
+
+    /* WHY NOW signals */
+    .why-now {
+      border-top: 1px solid rgba(255,255,255,0.18);
+      padding-top: 14px;
+      margin-bottom: 18px;
+    }
+    .why-now-label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 10px;
+    }
+    .why-now-signals {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .why-now-signals .signal {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+    }
+    .why-now-signals .signal .val {
+      color: var(--bg-white);
+      font-weight: 700;
+    }
+
+    /* BEGIN button — large, underlined, singular */
+    .ritual-begin {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      padding-top: 20px;
+    }
+    .begin-button {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--bg-white);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--bg-white);
+      padding: 0 0 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .begin-button .arrow {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 300;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    .swap-link {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Secondary rows — understated */
+    .secondary-band {
+      padding: 0 24px;
+      margin-top: 20px;
+    }
+    .secondary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--divider-light);
+    }
+    .secondary-row:first-child { border-top: 1px solid var(--divider-light); }
+
+    .secondary-row .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      width: 60px;
+    }
+    .secondary-row .content {
+      flex: 1;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 13px;
+      color: var(--editorial-black);
+    }
+    .secondary-row .content .meta {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-left: 6px;
+    }
+    .secondary-row .arrow {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--editorial-black);
+    }
+
+    .caution-line {
+      margin-top: 14px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warning);
+    }
+
+    .more-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Status bar icons (light, minimal) */
+    .status-right-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .signal-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 10px;
+    }
+    .signal-bars span {
+      width: 3px;
+      background: var(--editorial-black);
+      border-radius: 0.5px;
+    }
+    .signal-bars span:nth-child(1) { height: 3px; }
+    .signal-bars span:nth-child(2) { height: 5px; }
+    .signal-bars span:nth-child(3) { height: 7px; }
+    .signal-bars span:nth-child(4) { height: 9px; }
+    .battery {
+      width: 24px;
+      height: 11px;
+      border: 1px solid var(--editorial-black);
+      border-radius: 2px;
+      position: relative;
+      padding: 1px;
+      display: flex;
+      align-items: center;
+    }
+    .battery::after {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: 3px;
+      width: 2px;
+      height: 5px;
+      background: var(--editorial-black);
+      border-radius: 0 1px 1px 0;
+    }
+    .battery .fill {
+      width: 75%;
+      height: 100%;
+      background: var(--editorial-black);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="figma-canvas">
+
+    <div class="figma-frame">
+
+      <!-- iOS status bar -->
+      <div class="ios-status-bar">
+        <div class="left">9:41</div>
+        <div class="right">
+          <div class="status-right-icons">
+            <span class="signal-bars"><span></span><span></span><span></span><span></span></span>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 2.5C9.5 2.5 11.3 3.2 12.7 4.3L14 3C12.2 1.5 9.9 0.5 7.5 0.5C5.1 0.5 2.8 1.5 1 3L2.3 4.3C3.7 3.2 5.5 2.5 7.5 2.5Z" fill="#0d121b"/>
+              <path d="M7.5 5.5C8.7 5.5 9.8 5.9 10.7 6.6L12 5.3C10.8 4.2 9.2 3.5 7.5 3.5C5.8 3.5 4.2 4.2 3 5.3L4.3 6.6C5.2 5.9 6.3 5.5 7.5 5.5Z" fill="#0d121b"/>
+              <path d="M7.5 8.5C8 8.5 8.5 8.7 8.9 9L7.5 10.5L6.1 9C6.5 8.7 7 8.5 7.5 8.5Z" fill="#0d121b"/>
+            </svg>
+            <div class="battery"><div class="fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frame content -->
+      <div class="frame-content">
+
+        <!-- Context strip: time-of-day + ritual code -->
+        <div class="ritual-context">
+          <div class="left">
+            <span class="alche-overline-tiny">08:42</span>
+            <span class="dot"></span>
+            <span class="alche-overline-tiny">MORNING WINDOW</span>
+          </div>
+          <div class="right">
+            <span class="alche-overline-tiny">DAY 142</span>
+          </div>
+        </div>
+
+        <!-- THE ROOM: ritual hero -->
+        <div class="ritual-hero">
+
+          <!-- Top meta row: ritual code + duration -->
+          <div class="ritual-hero-top">
+            <div class="code">H20-SEQ · VAR. 7</div>
+            <div class="duration">3 MIN</div>
+          </div>
+
+          <!-- The title: Cellular Hydration -->
+          <div class="ritual-hero-middle">
+            <h1 class="ritual-hero-title">Cellular<br>Hydration.</h1>
+            <p class="ritual-hero-sub">A 3-minute flush. Open cellular pathways before the day's first caffeine.</p>
+          </div>
+
+          <!-- Why now: diagnostic signals -->
+          <div class="why-now">
+            <div class="why-now-label">Why now</div>
+            <div class="why-now-signals">
+              <div class="signal"><span class="val">8H</span> IDLE</div>
+              <div class="signal"><span class="val">−230 ML</span> BELOW BASELINE</div>
+            </div>
+          </div>
+
+          <!-- BEGIN -->
+          <div class="ritual-begin">
+            <button class="begin-button">
+              Begin
+              <span class="arrow">→</span>
+            </button>
+            <span class="swap-link">Swap ritual</span>
+          </div>
+
+        </div>
+
+        <!-- Secondary: next booking + credits. Almost invisible. -->
+        <div class="secondary-band">
+
+          <div class="secondary-row">
+            <div class="label">Next</div>
+            <div class="content">LED session <span class="meta">15:00 · SUITE 2</span></div>
+            <div class="arrow">›</div>
+          </div>
+
+          <div class="secondary-row">
+            <div class="label">Credits</div>
+            <div class="content">4 remaining <span class="meta">RENEW 01 MAY</span></div>
+            <div class="arrow">›</div>
+          </div>
+
+          <div class="caution-line">● 2 LED SLOTS LEFT TODAY</div>
+
+          <a class="more-link">+ MORE</a>
+
+        </div>
+
+        <div class="scroll-fade"></div>
+
+      </div><!-- /frame-content -->
+
+      <!-- iOS tab bar -->
+      <div class="ios-tab-bar">
+        <div class="tab active">
+          <div class="tab-dot"></div>
+          Home
+        </div>
+        <div class="tab">
+          <div class="tab-dot"></div>
+          Discover
+        </div>
+        <div class="tab">
+          <div class="tab-dot"></div>
+          Book
+        </div>
+        <div class="tab">
+          <div class="tab-dot"></div>
+          Shop
+        </div>
+        <div class="tab">
+          <div class="tab-dot"></div>
+          Profile
+        </div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+
+    </div><!-- /figma-frame -->
+
+    <!-- Direction caption -->
+    <div class="direction-caption">
+      <p class="alche-overline overline">DIRECTION A — RITUAL-FIRST</p>
+      <h1 class="alche-display-l title">The ritual is the room.</h1>
+      <p class="alche-body philosophy">
+        On waking, the member has one question: <em>what should I do right now?</em> The home answers it in the first fold, without apology. The smoke-gradient ritual card becomes the whole interior — not a tile on a shelf, but the shelf itself. Everything else steps back until it's asked for.
+      </p>
+
+      <ul class="decisions">
+        <li>
+          <span class="label">REPRIORITIZED</span>
+          <div>The next ritual occupies 60% of screen height. Two Space Mono signals ("8H idle", "−230 ml below baseline") explain <em>why this, now</em>. One verb: Begin.</div>
+        </li>
+        <li>
+          <span class="label">REMOVED</span>
+          <div>The 2×2 quick grid, the bio-age card, the default estrogen cycle band, and the "Approaching Luminous." poetry. Choices dilute a ritual moment; they belong in the tab bar, not the hero.</div>
+        </li>
+        <li>
+          <span class="label">ADDED</span>
+          <div>Time-of-day awareness ("08:42 · Morning window") and a body-inclusive <em>why-now</em> diagnostic that works for any user, any physiology — not just menstruating bodies.</div>
+        </li>
+      </ul>
+
+      <blockquote class="tradeoff">
+        You lose the at-a-glance dashboard — credits, upcoming bookings, protocol status are one tap deeper, not on the page.
+      </blockquote>
+    </div>
+
+  </div><!-- /figma-canvas -->
+
+</body>
+</html>

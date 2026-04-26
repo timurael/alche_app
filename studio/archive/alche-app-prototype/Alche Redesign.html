@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>alche — Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,200..800;1,200..800&family=Noto+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #e8e6e0; font-family: "Noto Sans", -apple-system, system-ui, sans-serif; color: #0d121b; }
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  button { font-family: inherit; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="screens.jsx"></script>
+<script type="text/babel" src="home.jsx"></script>
+<script type="text/babel" src="alchemy.jsx"></script>
+<script type="text/babel" src="glowscan.jsx"></script>
+<script type="text/babel" src="protocol.jsx"></script>
+<script type="text/babel" src="hormonal.jsx"></script>
+<script type="text/babel" src="biosync_ritual.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "startScreen": "home",
+  "accent": "#1152d4",
+  "showTabBar": true,
+  "showAll": false
+}/*EDITMODE-END*/;
+
+const SCREEN_ORDER = ['home', 'alchemy', 'scan', 'protocol', 'cycle', 'biosync', 'ritual'];
+const SCREEN_LABELS = {
+  home: '01 Home',
+  alchemy: '02 Select Alchemy',
+  scan: '03 Glow Scan',
+  protocol: '04 Beauty Glow Protocol',
+  cycle: '05 Hormonal Balance',
+  biosync: '06 Bio-Sync Scan',
+  ritual: '07 Ritual Notification',
+};
+
+function Phone({ screen, setScreen, dark }) {
+  const DarkScreens = new Set(['scan', 'ritual']);
+  const HideTabs = new Set(['ritual', 'scan']);
+  const isDark = DarkScreens.has(screen);
+
+  const content = (() => {
+    switch (screen) {
+      case 'home': return <HomeScreen goto={setScreen}/>;
+      case 'alchemy': return <AlchemyScreen goto={setScreen}/>;
+      case 'scan': return <GlowScanScreen goto={setScreen}/>;
+      case 'protocol': return <ProtocolScreen goto={setScreen}/>;
+      case 'cycle': return <HormonalScreen goto={setScreen}/>;
+      case 'biosync': return <BioSyncScreen goto={setScreen}/>;
+      case 'ritual': return <RitualScreen goto={setScreen}/>;
+      default: return <HomeScreen goto={setScreen}/>;
+    }
+  })();
+
+  // Map screens to tab keys
+  const tabKey = {
+    home: 'home', alchemy: 'alchemy', protocol: 'alchemy',
+    scan: 'scan', biosync: 'scan', cycle: 'cycle',
+  }[screen] || 'home';
+
+  return (
+    <div data-screen-label={SCREEN_LABELS[screen]} style={{ position: 'relative' }}>
+      <IOSDevice dark={isDark}>
+        {content}
+        {!HideTabs.has(screen) && TWEAKS.showTabBar && (
+          <TabBar
+            value={tabKey}
+            onChange={(k) => {
+              const map = { home: 'home', alchemy: 'alchemy', scan: 'scan', cycle: 'cycle', me: 'home' };
+              setScreen(map[k]);
+            }}
+            items={TAB_ITEMS}
+          />
+        )}
+      </IOSDevice>
+    </div>
+  );
+}
+
+// ───────── App: single phone with bottom scroller OR grid for showAll
+function App() {
+  const [screen, setScreen] = useState(() => localStorage.getItem('alche_screen') || TWEAKS.startScreen);
+  const [tweaksOpen, setTweaksOpen] = useState(false);
+  const [showAll, setShowAll] = useState(TWEAKS.showAll);
+
+  useEffect(() => { localStorage.setItem('alche_screen', screen); }, [screen]);
+
+  useEffect(() => {
+    const onMsg = (e) => {
+      const d = e.data || {};
+      if (d.type === '__activate_edit_mode') setTweaksOpen(true);
+      else if (d.type === '__deactivate_edit_mode') setTweaksOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const setTweak = (k, v) => {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
+  };
+
+  if (showAll) {
+    return (
+      <div style={{ padding: 40, background: '#e8e6e0', minHeight: '100vh' }}>
+        <div style={{ fontFamily: 'Newsreader, serif', fontStyle: 'italic', fontSize: 40, marginBottom: 8 }}>
+          alche — redesign
+        </div>
+        <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#8d96a6', marginBottom: 32 }}>
+          EDITORIAL LONGEVITY · 7 SCREENS
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 32, justifyItems: 'center' }}>
+          {SCREEN_ORDER.map(s => (
+            <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+              <Phone screen={s} setScreen={setScreen}/>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#0d121b' }}>
+                {SCREEN_LABELS[s]}
+              </div>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => setShowAll(false)} style={{
+          position: 'fixed', top: 20, right: 20, background: '#0d121b', color: '#fff',
+          border: 'none', padding: '10px 16px', cursor: 'pointer', fontFamily: 'Space Mono, monospace',
+          fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase',
+        }}>Single View</button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '32px 20px 140px' }}>
+      <div style={{ textAlign: 'center', marginBottom: 20 }}>
+        <div style={{ fontFamily: 'Newsreader, serif', fontStyle: 'italic', fontSize: 28, fontWeight: 300 }}>alche</div>
+        <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#8d96a6', marginTop: 4 }}>
+          REDESIGN · EDITORIAL LONGEVITY
+        </div>
+      </div>
+
+      <Phone screen={screen} setScreen={setScreen}/>
+
+      {/* Screen selector */}
+      <div style={{
+        position: 'fixed', bottom: 20, left: '50%', transform: 'translateX(-50%)',
+        background: '#fff', border: '1px solid rgba(13,18,27,0.12)',
+        display: 'flex', alignItems: 'center', gap: 4, padding: 4,
+        boxShadow: '0 10px 40px rgba(0,0,0,0.1)', zIndex: 100, maxWidth: '95vw', overflowX: 'auto',
+      }}>
+        {SCREEN_ORDER.map(s => (
+          <button key={s} onClick={() => setScreen(s)} style={{
+            background: screen === s ? '#0d121b' : 'transparent',
+            color: screen === s ? '#fff' : '#0d121b',
+            border: 'none', padding: '8px 12px', cursor: 'pointer', whiteSpace: 'nowrap',
+            fontFamily: 'Space Mono, monospace', fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase',
+          }}>{SCREEN_LABELS[s]}</button>
+        ))}
+        <div style={{ width: 1, height: 24, background: 'rgba(13,18,27,0.1)', margin: '0 4px' }}/>
+        <button onClick={() => setShowAll(true)} style={{
+          background: 'transparent', color: '#1152d4', border: '1px solid #1152d4',
+          padding: '8px 12px', cursor: 'pointer', whiteSpace: 'nowrap',
+          fontFamily: 'Space Mono, monospace', fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase',
+        }}>All Screens</button>
+      </div>
+
+      {/* Tweaks panel */}
+      {tweaksOpen && (
+        <div style={{
+          position: 'fixed', top: 20, right: 20, width: 260,
+          background: '#fff', border: '1px solid rgba(13,18,27,0.12)',
+          padding: 20, zIndex: 200, boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
+        }}>
+          <div style={{
+            fontFamily: 'Space Mono, monospace', fontSize: 10, letterSpacing: '0.2em',
+            textTransform: 'uppercase', fontWeight: 700, marginBottom: 14,
+          }}>Tweaks</div>
+
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ fontFamily: 'Space Mono, monospace', fontSize: 9, color: '#8d96a6', marginBottom: 6, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Start Screen</div>
+            <select
+              defaultValue={TWEAKS.startScreen}
+              onChange={(e) => { TWEAKS.startScreen = e.target.value; setTweak('startScreen', e.target.value); }}
+              style={{ width: '100%', padding: 6, fontFamily: 'Noto Sans' }}
+            >
+              {SCREEN_ORDER.map(s => <option key={s} value={s}>{SCREEN_LABELS[s]}</option>)}
+            </select>
+          </div>
+
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+              <input type="checkbox" defaultChecked={TWEAKS.showTabBar}
+                onChange={(e) => { TWEAKS.showTabBar = e.target.checked; setTweak('showTabBar', e.target.checked); window.location.reload(); }}/>
+              <span style={{ fontFamily: 'Noto Sans', fontSize: 13 }}>Show Tab Bar</span>
+            </label>
+          </div>
+
+          <div>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+              <input type="checkbox" defaultChecked={showAll}
+                onChange={(e) => { setShowAll(e.target.checked); setTweak('showAll', e.target.checked); }}/>
+              <span style={{ fontFamily: 'Noto Sans', fontSize: 13 }}>Show All Screens</span>
+            </label>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

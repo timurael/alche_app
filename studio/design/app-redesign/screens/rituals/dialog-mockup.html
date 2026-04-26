@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche · Rituals — Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- Rituals (cinematic but editorial) ---------- */
+
+  /* Full dark surface */
+  .r-frame {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      #0d121b 0%,
+      #1a2538 55%,
+      #0d121b 100%
+    );
+    color: var(--bg-white);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .r-status {
+    padding: 16px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    height: 47px;
+    color: var(--bg-white);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .r-status .signal-bars span { background: var(--bg-white); }
+  .r-status .battery { border-color: var(--bg-white); }
+  .r-status .battery::after { background: var(--bg-white); }
+  .r-status .battery .fill { background: var(--bg-white); }
+
+  /* Top row: dismiss + wordmark */
+  .r-header {
+    padding: 24px 24px 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+  .r-dismiss {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent;
+    color: var(--bg-white);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--radius-sharp);
+  }
+  .r-wordmark {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    text-align: center;
+    color: var(--bg-white);
+    letter-spacing: -0.01em;
+  }
+  .r-header .spacer { width: 32px; height: 32px; justify-self: end; }
+
+  /* Read-stamp variant on dark */
+  .r-stamp {
+    padding: 28px 24px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .r-stamp .mark {
+    display: inline-grid;
+    grid-template-columns: 3px 3px;
+    grid-template-rows: 3px 3px;
+    gap: 1px;
+  }
+  .r-stamp .mark span {
+    width: 3px; height: 3px; background: var(--bg-white); display: block;
+  }
+  .r-stamp .mark span:nth-child(3) { background: var(--primary); }
+  .r-stamp .label {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--bg-white);
+  }
+
+  /* Center read — title + whispered rationale */
+  .r-read {
+    padding: 0 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .r-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 46px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--bg-white);
+  }
+  .r-rationale {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.7);
+  }
+  .r-rationale em {
+    color: var(--bg-white);
+    font-style: italic;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 1px;
+  }
+
+  /* Real data strip — no fake "VAR. 7" */
+  .r-data {
+    padding: 0 24px 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .r-data .sep { width: 3px; height: 3px; background: rgba(255,255,255,0.4); border-radius: 999px; }
+  .r-data .v { color: var(--bg-white); font-weight: 700; margin-left: 4px; }
+
+  /* The steps — editorial, numbered */
+  .r-steps {
+    margin: 0 24px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+  }
+  .r-step {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .r-step .n {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+  }
+  .r-step .t {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--bg-white);
+    line-height: 1.4;
+  }
+  .r-step .t .sub {
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+  }
+  .r-step .dur {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.6);
+    font-weight: 700;
+  }
+
+  /* Footer — Begin + Dismiss */
+  .r-footer {
+    margin-top: auto;
+    padding: 24px 24px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .r-begin {
+    width: 100%;
+    background: var(--bg-white);
+    color: var(--editorial-black);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 16px 18px;
+    border: 1px solid var(--bg-white);
+    border-radius: var(--radius-sharp);
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .r-later {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+  .r-later .u {
+    border-bottom: 1px solid rgba(255,255,255,0.45);
+    padding-bottom: 2px;
+  }
+
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery {
+    width: 24px; height: 11px; border-width: 1.2px; border-style: solid;
+    border-radius: 2.5px; position: relative; padding: 1px;
+  }
+  .battery::after {
+    content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px;
+    border-radius: 0 1px 1px 0;
+  }
+  .battery .fill { display: block; height: 100%; width: 80%; }
+
+  /* Hide tab bar since this is a modal */
+  .figma-frame { background: var(--editorial-black); }
+  .ios-tab-bar { display: none; }
+  .ios-home-indicator { background: var(--bg-white); opacity: 0.7; }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <div class="r-frame">
+
+      <!-- Status bar (inverted) -->
+      <div class="ios-status-bar r-status">
+        <span>9:41</span>
+        <span class="right" style="display:flex; gap:6px; align-items:center;">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <!-- Header: dismiss + wordmark -->
+      <div class="r-header">
+        <button class="r-dismiss" aria-label="Dismiss">←</button>
+        <span class="r-wordmark">alche</span>
+        <span class="spacer"></span>
+      </div>
+
+      <!-- Read stamp on dark -->
+      <div class="r-stamp">
+        <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="label">A RITUAL FOR NOW</span>
+      </div>
+
+      <!-- The read — single italic title + one whispered line -->
+      <div class="r-read">
+        <span class="r-title">Hydration ritual.</span>
+        <span class="r-rationale">It's been <em>3 hours</em> since your last glass. Twelve minutes will set you right.</span>
+      </div>
+
+      <!-- Real data strip — no fake codes -->
+      <div class="r-data">
+        <span>DURATION<span class="v">12 MIN</span></span>
+        <span class="sep"></span>
+        <span>STREAK<span class="v">6 DAYS</span></span>
+        <span class="sep"></span>
+        <span>LAST<span class="v">11:40</span></span>
+      </div>
+
+      <!-- Steps (the ritual itself) -->
+      <div class="r-steps">
+        <div class="r-step">
+          <span class="n">01</span>
+          <span class="t">Pour 500 ml, room temperature
+            <span class="sub">Add a pinch of sea salt if you have it</span>
+          </span>
+          <span class="dur">2 MIN</span>
+        </div>
+        <div class="r-step">
+          <span class="n">02</span>
+          <span class="t">Sit. Breathe in through the nose, out through the mouth
+            <span class="sub">Four rounds, unhurried</span>
+          </span>
+          <span class="dur">3 MIN</span>
+        </div>
+        <div class="r-step">
+          <span class="n">03</span>
+          <span class="t">Drink slowly, in four passes
+            <span class="sub">No scrolling, no screen</span>
+          </span>
+          <span class="dur">7 MIN</span>
+        </div>
+      </div>
+
+      <!-- Footer: Begin + Later -->
+      <div class="r-footer">
+        <button class="r-begin">
+          <span>Begin · 12 min</span>
+          <span>→</span>
+        </button>
+        <button class="r-later"><span class="u">Remind me in an hour</span></button>
+      </div>
+
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

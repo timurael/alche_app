@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche · InStore — Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- InStore specifics ---------- */
+
+  /* Top context band — note the active venue signal */
+  .is-venue {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .is-venue .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 999px;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+
+  /* Full-bleed QR surface — editorial, no card chrome */
+  .is-qr-surface {
+    padding: 8px 24px 0;
+    margin-top: 4px;
+  }
+  .is-qr-frame {
+    position: relative;
+    padding: 28px 20px 20px;
+    border: 1.5px solid var(--editorial-black);
+    background: var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-sharp);
+  }
+  .is-qr-frame::before,
+  .is-qr-frame::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--editorial-black);
+  }
+  .is-qr-frame::before { top: -1.5px; left: -1.5px; }
+  .is-qr-frame::after  { top: -1.5px; right: -1.5px; }
+
+  .is-qr-kicker {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .is-qr-canvas {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 12px;
+    display: block;
+    background: var(--editorial-black);
+    position: relative;
+    /* simulated QR via layered gradients so the mockup reads as a QR */
+    background-image:
+      linear-gradient(to right,
+        #0d121b 0, #0d121b 6%, #fff 6%, #fff 10%, #0d121b 10%, #0d121b 14%,
+        #fff 14%, #fff 22%, #0d121b 22%, #0d121b 28%, #fff 28%, #fff 36%,
+        #0d121b 36%, #0d121b 44%, #fff 44%, #fff 48%, #0d121b 48%, #0d121b 54%,
+        #fff 54%, #fff 62%, #0d121b 62%, #0d121b 70%, #fff 70%, #fff 76%,
+        #0d121b 76%, #0d121b 84%, #fff 84%, #fff 92%, #0d121b 92%, #0d121b 100%),
+      linear-gradient(to bottom,
+        #0d121b 0, #0d121b 6%, transparent 6%, transparent 14%,
+        #0d121b 14%, #0d121b 22%, transparent 22%, transparent 32%,
+        #0d121b 32%, #0d121b 44%, transparent 44%, transparent 56%,
+        #0d121b 56%, #0d121b 68%, transparent 68%, transparent 80%,
+        #0d121b 80%, #0d121b 92%, transparent 92%);
+    background-blend-mode: multiply;
+  }
+  .is-qr-code {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-align: center;
+    color: var(--editorial-black);
+  }
+
+  .is-qr-help {
+    text-align: center;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--editorial-muted);
+    padding: 12px 20px 0;
+  }
+
+  /* Booking row variant — "what you're here for" */
+  .is-booking {
+    margin: 18px 24px 0;
+    padding: 14px 16px;
+    border-left: 2px solid var(--editorial-black);
+    background: var(--bg-warm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .is-booking .left { display: flex; flex-direction: column; gap: 3px; }
+  .is-booking .kicker {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .is-booking .title {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--editorial-black);
+  }
+  .is-booking .title .when { color: var(--editorial-muted); font-weight: 400; }
+  .is-booking .time-mono {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--editorial-black);
+    letter-spacing: 0.08em;
+  }
+
+  /* Escape hatches — two mono links side by side */
+  .is-escapes {
+    margin: 20px 24px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--divider-medium);
+  }
+  .is-escapes a {
+    padding: 18px 0;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-black);
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .is-escapes a + a {
+    border-left: 1px solid var(--divider-medium);
+    padding-left: 16px;
+  }
+  .is-escapes a .chev {
+    color: var(--editorial-muted);
+    font-weight: 400;
+  }
+
+  /* Credit footer */
+  .is-credits {
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .is-credits .v {
+    color: var(--editorial-black);
+    font-weight: 700;
+  }
+
+  /* Signal bars */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery {
+    width: 24px; height: 11px; border: 1.2px solid var(--editorial-black);
+    border-radius: 2.5px; position: relative; padding: 1px;
+  }
+  .battery::after {
+    content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px;
+    background: var(--editorial-black); border-radius: 0 1px 1px 0;
+  }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <!-- Status bar -->
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <div class="frame-content">
+
+      <!-- Context band — venue live -->
+      <div class="alche-context-band">
+        <div class="ctx-left">
+          <span class="is-venue"><span class="dot"></span><span>YOU'RE AT ALCHE BERLIN</span></span>
+        </div>
+        <div class="ctx-right">
+          <span>14:52 · MONDAY</span>
+        </div>
+      </div>
+
+      <!-- Read stamp -->
+      <div class="alche-read-stamp">
+        <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="alche-read-stamp-label">ALCHE · WELCOME BACK</span>
+      </div>
+
+      <!-- The read — doorman voice, one moment -->
+      <div class="alche-read">
+        <span class="line">Welcome back, Lena.</span>
+        <span class="line">You're booked for <em>Suite 2</em>.</span>
+        <span class="line dim">Show this at the door.</span>
+      </div>
+
+      <!-- QR surface — the moment -->
+      <div class="is-qr-surface">
+        <div class="is-qr-frame">
+          <div class="is-qr-kicker">ENTRY CODE · VALID 15:00–15:45</div>
+          <div class="is-qr-canvas" aria-label="QR code for entry"></div>
+          <div class="is-qr-code">ALC-7F2K-9XQM</div>
+        </div>
+        <div class="is-qr-help">Or tap your phone on the reader.</div>
+      </div>
+
+      <!-- Booking row -->
+      <div class="is-booking">
+        <div class="left">
+          <span class="kicker">NEXT · LED SESSION</span>
+          <span class="title">Suite 2 <span class="when">· Recovery Red + Near-IR</span></span>
+        </div>
+        <span class="time-mono">15:00</span>
+      </div>
+
+      <!-- Two escape hatches — order & home -->
+      <div class="is-escapes">
+        <a>
+          <span>Order a smoothie<br>from my seat</span>
+          <span class="chev">→</span>
+        </a>
+        <a>
+          <span>Back to home</span>
+          <span class="chev">→</span>
+        </a>
+      </div>
+
+      <!-- Credits footer -->
+      <div class="is-credits">
+        <span>LONGEVITY+ MEMBER</span>
+        <span><span class="v">4</span> LED CREDITS LEFT</span>
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- iOS tab bar — InStore originates from Profile (membership) -->
+    <div class="ios-tab-bar">
+      <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+      <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche · Mascot Lab · Four Alternatives</title>
+<style>
+  @font-face { font-family: 'Outfit'; src: url('../fonts/outfit_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Outfit'; src: url('../fonts/outfit_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Outfit'; src: url('../fonts/outfit_500.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Outfit'; src: url('../fonts/outfit_600.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cormorant'; src: url('../fonts/cormorantgaramond_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Cormorant'; src: url('../fonts/cormorantgaramond_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Cormorant'; src: url('../fonts/cormorantgaramond_600.woff2') format('woff2'); font-weight: 600; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #141414;
+    --bg-hover: #1a1a1a;
+    --fg: #f5f0eb;
+    --fg-soft: #a8a095;
+    --fg-faint: #6a6258;
+    --gold: #c8a44e;
+    --gold-bright: #e8c96a;
+    --rule: rgba(245,240,235,0.1);
+
+    --lix: #E8B4C8;
+    --havan: #C89968;
+    --filiz: #A8C480;
+    --alo: #F4C89A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--fg); font-family: 'Outfit', -apple-system, sans-serif; font-weight: 300; }
+  html { scroll-behavior: smooth; }
+  body { padding: 64px 48px 96px; max-width: 1440px; margin: 0 auto; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* HEADER */
+  header.site-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 24px; border-bottom: 1px solid var(--rule); margin-bottom: 80px; }
+  .logo { font-family: 'Cormorant', serif; font-weight: 300; font-size: 24px; letter-spacing: 0.02em; }
+  .logo em { color: var(--gold); font-style: italic; }
+  .nav-meta { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-faint); }
+
+  /* INTRO */
+  .intro { max-width: 840px; margin-bottom: 96px; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+  .intro h1 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 96px; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 32px; }
+  .intro h1 em { font-style: italic; color: var(--gold); }
+  .intro p { font-size: 20px; line-height: 1.55; color: var(--fg-soft); max-width: 680px; }
+  .intro p + p { margin-top: 20px; }
+  .intro .kicker { margin-top: 48px; display: flex; gap: 48px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-faint); }
+  .intro .kicker b { display: block; font-family: 'Cormorant', serif; font-size: 32px; font-weight: 400; color: var(--fg); letter-spacing: 0; text-transform: none; margin-top: 8px; }
+
+  /* GALLERY */
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--rule); border: 1px solid var(--rule); margin-bottom: 96px; }
+  .tile { background: var(--bg-card); padding: 56px 48px; display: flex; flex-direction: column; gap: 32px; transition: background 0.3s; text-decoration: none; color: inherit; cursor: pointer; }
+  .tile:hover { background: var(--bg-hover); }
+
+  .tile-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .tile-letter { font-family: 'Cormorant', serif; font-size: 14px; color: var(--fg-faint); letter-spacing: 0.2em; }
+  .tile-tag { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-faint); padding: 4px 10px; border: 1px solid var(--rule); border-radius: 20px; }
+
+  .tile-art { display: flex; justify-content: center; align-items: center; padding: 24px; height: 280px; }
+  .tile-art svg { max-width: 100%; max-height: 100%; filter: drop-shadow(0 12px 40px rgba(0,0,0,0.4)); }
+
+  .tile-body h2 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 56px; line-height: 0.98; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .tile-body h2 em { font-style: italic; }
+  .tile-body .tagline { font-size: 16px; line-height: 1.5; color: var(--fg-soft); max-width: 380px; margin-bottom: 24px; }
+
+  .tile-voice { font-family: 'Cormorant', serif; font-style: italic; font-size: 18px; color: var(--fg); padding: 16px 20px; background: rgba(245,240,235,0.03); border-left: 2px solid currentColor; }
+
+  .tile-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-faint); padding-top: 24px; border-top: 1px solid var(--rule); }
+  .tile-meta b { display: block; font-family: 'Cormorant', serif; font-size: 16px; font-weight: 400; color: var(--fg); letter-spacing: 0; text-transform: none; margin-top: 4px; }
+
+  .tile-cta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 13px; }
+  .tile-cta .view { color: currentColor; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+
+  /* Color the tiles */
+  .tile[data-m="A"] { --accent: var(--lix); color: var(--lix); }
+  .tile[data-m="B"] { --accent: var(--havan); color: var(--havan); }
+  .tile[data-m="C"] { --accent: var(--filiz); color: var(--filiz); }
+  .tile[data-m="D"] { --accent: var(--alo); color: var(--alo); }
+  .tile h2, .tile .tile-body .tagline, .tile-meta b { color: var(--fg); }
+  .tile-voice { color: var(--fg); border-left-color: var(--accent); }
+
+  /* COMPARE MATRIX */
+  .compare { margin-bottom: 96px; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; }
+  .section-head h3 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 48px; letter-spacing: -0.01em; }
+  .section-head h3 em { font-style: italic; color: var(--gold); }
+  .section-head .sub { font-size: 13px; color: var(--fg-faint); letter-spacing: 0.08em; }
+
+  .matrix { width: 100%; border-collapse: collapse; }
+  .matrix th, .matrix td { padding: 20px 16px; text-align: left; border-bottom: 1px solid var(--rule); font-size: 14px; vertical-align: top; }
+  .matrix thead th { font-family: 'Cormorant', serif; font-weight: 400; font-size: 24px; letter-spacing: 0; border-bottom: 1px solid var(--fg); padding-bottom: 16px; }
+  .matrix thead th em { display: block; font-size: 11px; font-family: 'Outfit'; font-weight: 400; font-style: normal; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); margin-top: 4px; }
+  .matrix th[data-m="A"] em { color: var(--lix); }
+  .matrix th[data-m="B"] em { color: var(--havan); }
+  .matrix th[data-m="C"] em { color: var(--filiz); }
+  .matrix th[data-m="D"] em { color: var(--alo); }
+  .matrix td:first-child { font-family: 'Outfit'; font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); width: 180px; }
+
+  /* RECOMMENDATION */
+  .recommend { background: var(--bg-card); padding: 64px; border: 1px solid var(--rule); margin-bottom: 96px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: center; }
+  .recommend h3 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 48px; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .recommend h3 em { font-style: italic; color: var(--gold); }
+  .rec-list { list-style: none; }
+  .rec-list li { padding: 20px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.6; color: var(--fg-soft); }
+  .rec-list li:first-child { border-top: 1px solid var(--rule); }
+  .rec-list li b { font-family: 'Cormorant', serif; font-weight: 400; font-size: 22px; color: var(--fg); font-style: italic; display: block; margin-bottom: 4px; }
+  .rec-list li .rank { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+
+  .rec-pickers { display: flex; flex-direction: column; gap: 16px; }
+  .picker { background: var(--bg); padding: 20px 24px; border: 1px solid var(--rule); text-align: left; font-family: 'Outfit'; color: var(--fg); cursor: pointer; transition: all 0.2s; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .picker:hover { border-color: var(--gold); color: var(--gold); }
+  .picker b { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; font-style: italic; }
+
+  /* ASSETS SECTION */
+  .assets { margin-bottom: 96px; }
+  .asset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .asset-card { background: var(--bg-card); padding: 32px; border: 1px solid var(--rule); }
+  .asset-card h4 { font-family: 'Cormorant', serif; font-weight: 400; font-size: 20px; margin-bottom: 8px; }
+  .asset-card p { font-size: 13px; color: var(--fg-soft); line-height: 1.5; margin-bottom: 16px; }
+  .asset-card code { font-family: 'Space Mono', ui-monospace, monospace; background: var(--bg); padding: 6px 10px; font-size: 11px; color: var(--gold); display: inline-block; }
+
+  /* FOOTER */
+  footer { padding-top: 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
+  footer a { border-bottom: 1px solid transparent; }
+  footer a:hover { border-bottom-color: var(--gold); color: var(--gold); }
+
+  @media print {
+    @page { size: A3; margin: 20mm; }
+    body { padding: 0; max-width: none; background: white; color: black; }
+    :root { --bg: #fff; --bg-card: #fafafa; --bg-hover: #f5f5f5; --fg: #111; --fg-soft: #444; --fg-faint: #888; --rule: rgba(0,0,0,0.1); }
+    .gallery { page-break-inside: avoid; }
+    .tile { page-break-inside: avoid; }
+    .compare, .recommend { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 960px) {
+    body { padding: 32px 20px; }
+    .intro h1 { font-size: 60px; }
+    .gallery { grid-template-columns: 1fr; }
+    .recommend { grid-template-columns: 1fr; gap: 40px; padding: 40px; }
+    .asset-grid { grid-template-columns: 1fr; }
+    .tile { padding: 40px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="logo">alche · <em>mascot lab</em></div>
+  <div class="nav-meta">April 2026 · four alternatives</div>
+</header>
+
+<section class="intro">
+  <div class="eyebrow">Onboarding · brand-within-a-brand</div>
+  <h1>Four mascots,<br>one <em>choice</em>.</h1>
+  <p>A named character meets the user in the first chat. Its voice, its look, its pace — all separate from Alche proper, all coherent with it. A tiny brand inside the brand, built to be loved from turn one.</p>
+  <p style="color:var(--fg-faint); font-size:16px;">Each mascot below is fully specified: visual DNA, palette tokens, voice, seven-turn chat script, five-state expression sheet, app integration, risks, Nano Banana Pro render prompt. Click any tile to open its dedicated page.</p>
+  <div class="kicker">
+    <div>Mascots<b>4</b></div>
+    <div>Turns<b>7</b></div>
+    <div>States<b>5 per</b></div>
+    <div>Prompts<b>Ready</b></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+
+  <!-- TILE A · LIX -->
+  <a class="tile" data-m="A" href="A-lix/preview.html">
+    <div class="tile-head">
+      <div class="tile-letter">A · I of IV</div>
+      <div class="tile-tag">The Droplet</div>
+    </div>
+    <div class="tile-art">
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="tA" cx="40%" cy="30%" r="75%">
+            <stop offset="0%" stop-color="#F9ECD8"/>
+            <stop offset="35%" stop-color="#E8B4C8" stop-opacity="0.7"/>
+            <stop offset="65%" stop-color="#B8D4C4" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.8"/>
+          </radialGradient>
+          <radialGradient id="tAg" cx="50%" cy="75%" r="35%"><stop offset="0%" stop-color="#F5C88A" stop-opacity="0.5"/><stop offset="100%" stop-color="#F5C88A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="100" cy="225" rx="55" ry="7" fill="#000" opacity="0.3"/>
+        <path d="M 100 30 C 145 30, 175 90, 175 140 C 175 190, 140 220, 100 220 C 60 220, 25 190, 25 140 C 25 90, 55 30, 100 30 Z" fill="url(#tA)"/>
+        <ellipse cx="100" cy="170" rx="55" ry="40" fill="url(#tAg)"/>
+        <ellipse cx="65" cy="80" rx="12" ry="8" fill="#FFF6E8" opacity="0.6"/>
+        <ellipse cx="67" cy="135" rx="11" ry="6" fill="#D89B9B" opacity="0.3"/>
+        <ellipse cx="133" cy="135" rx="11" ry="6" fill="#D89B9B" opacity="0.3"/>
+        <ellipse cx="83" cy="120" rx="3.5" ry="4.5" fill="#1A1612"/>
+        <ellipse cx="117" cy="120" rx="3.5" ry="4.5" fill="#1A1612"/>
+        <path d="M 90 145 Q 100 152 110 145" stroke="#1A1612" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="tile-body">
+      <h2>Lix<em>,</em></h2>
+      <h2><em>the droplet</em></h2>
+      <p class="tagline">Alche's elixir made flesh. A single drop of something precious that chose to have a face.</p>
+      <div class="tile-voice">"mostly water. like you. tell me one thing you're tired of."</div>
+    </div>
+    <div class="tile-meta">
+      <div>Archetype<b>Innocent-Sage</b></div>
+      <div>Voice<b>4–12 words</b></div>
+      <div>Risk<b>Water-adjacent</b></div>
+    </div>
+    <div class="tile-cta">
+      <span class="view">Open preview →</span>
+      <span style="color:var(--fg-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;">A-lix/</span>
+    </div>
+  </a>
+
+  <!-- TILE B · HAVAN -->
+  <a class="tile" data-m="B" href="B-havan/preview.html">
+    <div class="tile-head">
+      <div class="tile-letter">B · II of IV</div>
+      <div class="tile-tag">The Pestle · havaneli</div>
+    </div>
+    <div class="tile-art">
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="tBw" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#8F6A3E"/><stop offset="50%" stop-color="#C89968"/><stop offset="100%" stop-color="#9B7448"/></linearGradient>
+          <linearGradient id="tBb" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#F9F2E6"/><stop offset="100%" stop-color="#D8CEC0"/></linearGradient>
+        </defs>
+        <ellipse cx="100" cy="220" rx="72" ry="6" fill="#000" opacity="0.3"/>
+        <ellipse cx="100" cy="170" rx="72" ry="16" fill="#8F8272"/>
+        <rect x="82" y="115" width="36" height="60" rx="4" fill="url(#tBw)"/>
+        <ellipse cx="100" cy="95" rx="34" ry="36" fill="url(#tBw)"/>
+        <path d="M 75 85 Q 100 78 125 85" stroke="#8F6A3E" stroke-width="0.8" opacity="0.4" fill="none"/>
+        <ellipse cx="88" cy="80" rx="10" ry="7" fill="#F5E0B8" opacity="0.5"/>
+        <path d="M 86 102 Q 91 98 96 102" stroke="#3E2817" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M 104 102 Q 109 98 114 102" stroke="#3E2817" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M 95 114 Q 100 117 105 114" stroke="#3E2817" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M 28 170 C 28 196, 60 215, 100 215 C 140 215, 172 196, 172 170 Z" fill="url(#tBb)"/>
+        <ellipse cx="100" cy="170" rx="72" ry="6" fill="none" stroke="#C8B8A0" stroke-width="1" opacity="0.5"/>
+        <circle cx="62" cy="185" r="0.8" fill="#B8A898"/>
+        <circle cx="138" cy="188" r="0.8" fill="#B8A898"/>
+        <circle cx="100" cy="200" r="0.8" fill="#B8A898"/>
+        <!-- herb -->
+        <g transform="translate(138 162)">
+          <path d="M 0 8 Q 4 0 8 -12" stroke="#6E8E4C" stroke-width="0.8" fill="none"/>
+          <ellipse cx="3" cy="0" rx="2.5" ry="1.2" fill="#8AA678" transform="rotate(-25 3 0)"/>
+          <ellipse cx="8" cy="-8" rx="2.5" ry="1.2" fill="#8AA678" transform="rotate(15 8 -8)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="tile-body">
+      <h2>Havan<em>,</em></h2>
+      <h2><em>the pestle</em></h2>
+      <p class="tagline">Your grandmother's kitchen tool, if it had opinions. Turkish name (havan = mortar) with global pronunciation.</p>
+      <div class="tile-voice">"oh. hello. i grind things. have for a long time. what do we call you, then?"</div>
+    </div>
+    <div class="tile-meta">
+      <div>Archetype<b>Caregiver-Sage</b></div>
+      <div>Voice<b>6–14 words</b></div>
+      <div>Risk<b>Kitchen-adjacent</b></div>
+    </div>
+    <div class="tile-cta">
+      <span class="view">Open preview →</span>
+      <span style="color:var(--fg-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;">B-havan/</span>
+    </div>
+  </a>
+
+  <!-- TILE C · FILIZ -->
+  <a class="tile" data-m="C" href="C-filiz/preview.html">
+    <div class="tile-head">
+      <div class="tile-letter">C · III of IV</div>
+      <div class="tile-tag">The Sprout · filiz</div>
+    </div>
+    <div class="tile-art">
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="tCb" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="60%" stop-color="#E6EFD8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient>
+          <radialGradient id="tCl" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient>
+        </defs>
+        <ellipse cx="100" cy="225" rx="48" ry="5" fill="#000" opacity="0.3"/>
+        <ellipse cx="40" cy="115" rx="34" ry="14" fill="url(#tCl)" transform="rotate(-15 40 115)"/>
+        <ellipse cx="160" cy="115" rx="34" ry="14" fill="url(#tCl)" transform="rotate(15 160 115)"/>
+        <ellipse cx="100" cy="155" rx="47" ry="62" fill="url(#tCb)"/>
+        <ellipse cx="100" cy="215" rx="20" ry="4" fill="#8A6E48" opacity="0.5"/>
+        <ellipse cx="88" cy="130" rx="12" ry="8" fill="#F4F8E8" opacity="0.6"/>
+        <path d="M 105 100 Q 112 85 120 82 Q 128 80 126 73" stroke="#A8C480" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="126" cy="73" r="1.5" fill="#A8C480"/>
+        <!-- eyelashes -->
+        <path d="M 84 140 L 82 136" stroke="#2A2418" stroke-width="0.8" stroke-linecap="round"/>
+        <path d="M 90 140 L 91 136" stroke="#2A2418" stroke-width="0.8" stroke-linecap="round"/>
+        <path d="M 110 140 L 109 136" stroke="#2A2418" stroke-width="0.8" stroke-linecap="round"/>
+        <path d="M 116 140 L 118 136" stroke="#2A2418" stroke-width="0.8" stroke-linecap="round"/>
+        <ellipse cx="74" cy="158" rx="10" ry="6" fill="#E8B8B0" opacity="0.35"/>
+        <ellipse cx="126" cy="158" rx="10" ry="6" fill="#E8B8B0" opacity="0.35"/>
+        <ellipse cx="88" cy="150" rx="4" ry="5" fill="#2A2418"/>
+        <ellipse cx="112" cy="150" rx="4" ry="5" fill="#2A2418"/>
+        <circle cx="89" cy="148" r="1" fill="#fff"/>
+        <circle cx="113" cy="148" r="1" fill="#fff"/>
+        <path d="M 93 170 Q 100 176, 107 170" stroke="#2A2418" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="tile-body">
+      <h2>Filiz<em>,</em></h2>
+      <h2><em>the sprout</em></h2>
+      <p class="tagline">The newest thing in the room, paradoxically longest-lived. Turkish for sprout. Tender, feminine, unmistakable.</p>
+      <div class="tile-voice">"hi. i'm filiz. i just came up this morning. what about you?"</div>
+    </div>
+    <div class="tile-meta">
+      <div>Archetype<b>Innocent-Lover</b></div>
+      <div>Voice<b>3–10 words</b></div>
+      <div>Risk<b>Wellness-adjacent</b></div>
+    </div>
+    <div class="tile-cta">
+      <span class="view">Open preview →</span>
+      <span style="color:var(--fg-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;">C-filiz/</span>
+    </div>
+  </a>
+
+  <!-- TILE D · ALO -->
+  <a class="tile" data-m="D" href="D-alo/preview.html">
+    <div class="tile-head">
+      <div class="tile-letter">D · IV of IV</div>
+      <div class="tile-tag">The Stone</div>
+    </div>
+    <div class="tile-art">
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="tDh" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F5B888" stop-opacity="0.5"/><stop offset="100%" stop-color="#F5B888" stop-opacity="0"/></radialGradient>
+          <radialGradient id="tDb" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#FFF4E0"/><stop offset="20%" stop-color="#FFD9A0"/><stop offset="55%" stop-color="#F4C89A"/><stop offset="85%" stop-color="#E8A88C"/><stop offset="100%" stop-color="#C47A68"/></radialGradient>
+          <radialGradient id="tDc" cx="50%" cy="70%" r="40%"><stop offset="0%" stop-color="#FFD9A0" stop-opacity="0.8"/><stop offset="100%" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="100" cy="120" r="110" fill="url(#tDh)"/>
+        <ellipse cx="100" cy="225" rx="32" ry="4" fill="#000" opacity="0.7"/>
+        <ellipse cx="100" cy="120" rx="65" ry="67" fill="url(#tDb)"/>
+        <ellipse cx="100" cy="140" rx="42" ry="32" fill="url(#tDc)"/>
+        <ellipse cx="80" cy="92" rx="18" ry="11" fill="#FFF4E0" opacity="0.55"/>
+        <ellipse cx="75" cy="87" rx="7" ry="4" fill="#FFFFFF" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="tile-body">
+      <h2>Alo<em>,</em></h2>
+      <h2><em>the stone</em></h2>
+      <p class="tagline">The Philosopher's Stone, warmed. Not a character — a presence. Most tech-forward of the four.</p>
+      <div class="tile-voice">"alo. i'm here. one thing. every morning. not medicine. not ritual."</div>
+    </div>
+    <div class="tile-meta">
+      <div>Archetype<b>Magician-Sage</b></div>
+      <div>Voice<b>2–8 words</b></div>
+      <div>Risk<b>Esoteric</b></div>
+    </div>
+    <div class="tile-cta">
+      <span class="view">Open preview →</span>
+      <span style="color:var(--fg-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;">D-alo/</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- COMPARISON MATRIX -->
+<section class="compare">
+  <div class="section-head">
+    <h3>Side by <em>side</em></h3>
+    <div class="sub">Ten dimensions · choose with clarity</div>
+  </div>
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th></th>
+        <th data-m="A">Lix<em>A · droplet</em></th>
+        <th data-m="B">Havan<em>B · pestle</em></th>
+        <th data-m="C">Filiz<em>C · sprout</em></th>
+        <th data-m="D">Alo<em>D · stone</em></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Archetype</td><td>Innocent-Sage</td><td>Caregiver-Sage</td><td>Innocent-Lover</td><td>Magician-Sage</td></tr>
+      <tr><td>Register</td><td>playful, intimate</td><td>grounded, warm</td><td>tender, curious</td><td>still, knowing</td></tr>
+      <tr><td>Sentence length</td><td>4–12 words</td><td>6–14 words</td><td>3–10 words</td><td>2–8 words</td></tr>
+      <tr><td>Category risk</td><td>water/tracking app</td><td>kitchen/food app</td><td>eco/yoga app</td><td>meditation/horoscope</td></tr>
+      <tr><td>Distinctiveness</td><td>medium-high</td><td><b style="color:var(--gold)">very high</b></td><td>medium</td><td>high</td></tr>
+      <tr><td>App-icon iconicity</td><td>medium</td><td>high</td><td>medium</td><td><b style="color:var(--gold)">highest</b></td></tr>
+      <tr><td>Animation complexity</td><td>medium</td><td>low</td><td>medium-high</td><td>low-medium</td></tr>
+      <tr><td>TR heritage play</td><td>medium (Damla alt)</td><td><b style="color:var(--gold)">strongest</b></td><td>strong</td><td>medium (Alo pun)</td></tr>
+      <tr><td>Women &amp; queer resonance</td><td>medium</td><td>medium (grandmother)</td><td><b style="color:var(--gold)">strongest</b></td><td>medium</td></tr>
+      <tr><td>User age fit</td><td>20–40</td><td>30–60</td><td>20–40</td><td>30–50</td></tr>
+      <tr><td>If Alche were a…</td><td>cosmetic</td><td>spice shop</td><td>garden</td><td>temple</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- RECOMMENDATION -->
+<section class="recommend">
+  <div>
+    <h3>My <em>recommendation</em></h3>
+    <ul class="rec-list">
+      <li>
+        <span class="rank">★ Primary</span>
+        <b>Havan</b>
+        Most distinctive. Strongest apothecary-heritage signal. Turkish name is a quiet gift. Lowest category-collision risk. Hardest for a competitor to copy.
+      </li>
+      <li>
+        <span class="rank">★ Close second</span>
+        <b>Filiz</b>
+        Softest, most immediately lovable. Women-&-queer-first instinct pulls here. The name is yours.
+      </li>
+      <li>
+        <span class="rank">★ Bold pick</span>
+        <b>Alo</b>
+        If you want Alche to feel like the most modern longevity brand on the App Store — the one nobody else is making. Highest ceiling, riskiest floor.
+      </li>
+      <li>
+        <span class="rank">○ Not my pick</span>
+        <b>Lix</b>
+        Good but category-adjacent. Would work but wouldn't own the space.
+      </li>
+    </ul>
+  </div>
+  <div class="rec-pickers">
+    <a href="A-lix/preview.html" class="picker"><span><b>Lix</b> · the droplet</span><span>→</span></a>
+    <a href="B-havan/preview.html" class="picker" style="border-color: var(--gold);"><span><b style="color:var(--gold)">Havan</b> · the pestle</span><span style="color:var(--gold)">→ my pick</span></a>
+    <a href="C-filiz/preview.html" class="picker"><span><b>Filiz</b> · the sprout</span><span>→</span></a>
+    <a href="D-alo/preview.html" class="picker"><span><b>Alo</b> · the stone</span><span>→</span></a>
+  </div>
+</section>
+
+<!-- ASSETS -->
+<section class="assets">
+  <div class="section-head">
+    <h3>Everything <em>preserved</em></h3>
+    <div class="sub">Nothing lost · all under this repo</div>
+  </div>
+  <div class="asset-grid">
+    <div class="asset-card">
+      <h4>Character bibles</h4>
+      <p>Full specs per mascot: DNA, palette, voice, expression sheet, chat script, animation, app integration, risks, references.</p>
+      <code>[letter]-[name]/bible.md</code>
+    </div>
+    <div class="asset-card">
+      <h4>Render prompts</h4>
+      <p>Copy-ready Nano Banana Pro prompts in ICS format. Master + 5 expression variants + app icon + logo lockup + negative prompt.</p>
+      <code>[letter]-[name]/prompt.md</code>
+    </div>
+    <div class="asset-card">
+      <h4>Preview pages</h4>
+      <p>Standalone HTML per mascot. SVG mascot, palette swatches, seven-turn chat mockup, expression sheet, copyable prompt.</p>
+      <code>[letter]-[name]/preview.html</code>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Alche · Mascot Lab · <a href="README.md">readme</a></div>
+  <div>April 2026 · built with Claude · waiting for OpenRouter wiring</div>
+</footer>
+
+</body>
+</html>

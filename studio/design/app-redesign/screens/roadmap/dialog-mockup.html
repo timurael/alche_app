@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche — Roadmap · Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- Roadmap specifics ---------- */
+
+  /* Signal glyphs */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery { width: 24px; height: 11px; border: 1.2px solid var(--editorial-black); border-radius: 2.5px; position: relative; padding: 1px; }
+  .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; background: var(--editorial-black); border-radius: 0 1px 1px 0; }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); border-radius: 1px; }
+
+  /* Back row */
+  .rm-back {
+    padding: 4px 24px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .rm-back .back {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--editorial-black);
+    text-decoration: none;
+  }
+  .rm-back .sample {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border: 1px solid var(--divider-medium);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .rm-back .sample .dot {
+    width: 5px; height: 5px; border-radius: 999px;
+    background: var(--warning); opacity: 0.8;
+  }
+
+  /* Title */
+  .rm-title {
+    padding: 8px 24px 2px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1.1;
+    color: var(--editorial-black);
+    letter-spacing: -0.015em;
+  }
+  .rm-title em { color: var(--editorial-muted); font-style: italic; }
+
+  .rm-subline {
+    padding: 0 24px 16px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+
+  /* The read — "you are here" */
+  .rm-read {
+    padding: 4px 24px 14px;
+  }
+  .rm-read .line {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.22;
+    color: var(--editorial-black);
+    display: block;
+    letter-spacing: -0.01em;
+  }
+  .rm-read .line + .line { margin-top: 2px; }
+  .rm-read em {
+    color: var(--primary);
+    font-style: italic;
+    font-weight: 400;
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 1px;
+  }
+
+  /* Honest data strip — no fake lat/grid */
+  .rm-strip {
+    padding: 0 24px 22px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    flex-wrap: wrap;
+  }
+  .rm-strip .sep {
+    width: 3px; height: 3px;
+    background: var(--editorial-muted);
+    border-radius: 999px; opacity: 0.6; flex-shrink: 0;
+  }
+  .rm-strip .k { color: var(--editorial-muted); }
+  .rm-strip .v { color: var(--editorial-black); font-weight: 700; margin-left: 4px; }
+
+  /* Chapter timeline */
+  .rm-chapters {
+    margin: 0 24px 12px;
+    position: relative;
+    padding-left: 24px;
+  }
+  /* Vertical rule */
+  .rm-chapters::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--divider-medium);
+  }
+
+  .rm-chapter {
+    position: relative;
+    padding: 14px 0 16px 4px;
+    border-bottom: 1px solid var(--divider-light);
+  }
+  .rm-chapter:last-child { border-bottom: none; }
+
+  /* Nodes on the rule */
+  .rm-node {
+    position: absolute;
+    left: -24px;
+    top: 18px;
+    width: 13px;
+    height: 13px;
+    background: var(--bg-light);
+    border: 1.3px solid var(--editorial-black);
+    border-radius: 999px;
+    box-sizing: border-box;
+  }
+  .rm-node.done {
+    background: var(--editorial-black);
+  }
+  .rm-node.active {
+    background: var(--bg-light);
+    border: 1.3px solid var(--editorial-black);
+  }
+  .rm-node.active::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    background: var(--primary);
+    border-radius: 999px;
+  }
+  .rm-node.locked {
+    background: var(--bg-light);
+    border-style: dashed;
+    opacity: 0.7;
+  }
+
+  .rm-chapter .c-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .rm-chapter .c-phase {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .rm-chapter .c-when {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .rm-chapter .c-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--editorial-black);
+    margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
+  }
+  .rm-chapter .c-summary {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--editorial-black);
+    max-width: 260px;
+    margin: 0;
+  }
+  .rm-chapter.locked .c-title,
+  .rm-chapter.locked .c-summary {
+    color: var(--editorial-muted);
+  }
+
+  .rm-chapter .c-progress {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .rm-chapter .c-progress .bar {
+    flex: 1;
+    height: 2px;
+    background: var(--divider-medium);
+    position: relative;
+  }
+  .rm-chapter .c-progress .bar .fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--primary);
+  }
+  .rm-chapter .c-progress .label {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+
+  .rm-chapter .c-you {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 8px;
+    background: var(--editorial-black);
+    color: var(--bg-light);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* Escape hatch */
+  .rm-escape {
+    display: block;
+    text-align: center;
+    padding: 14px 0 6px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    text-decoration: none;
+  }
+  .rm-escape .u {
+    border-bottom: 1px solid var(--editorial-muted);
+    padding-bottom: 2px;
+  }
+
+  /* Signature strip */
+  .rm-sig {
+    padding: 10px 24px 6px;
+    text-align: center;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .rm-sig .dot {
+    display: inline-block; width: 4px; height: 4px;
+    background: var(--editorial-muted); border-radius: 999px;
+    margin: 0 8px; vertical-align: middle; opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <!-- Status bar -->
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <!-- Frame content -->
+    <div class="frame-content" style="overflow-y:auto;">
+
+      <!-- Context band -->
+      <div class="alche-context-band">
+        <div class="ctx-left">
+          <span class="ctx-dot"></span>
+          <span>THE ARC · CHAPTER 2</span>
+        </div>
+        <div class="ctx-right">
+          <span>STARTED 8 WEEKS AGO</span>
+        </div>
+      </div>
+
+      <!-- Back + sample -->
+      <div class="rm-back">
+        <a class="back">←&nbsp; PROFILE</a>
+        <span class="sample"><span class="dot"></span>SAMPLE DATA</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="rm-title">Your longevity, <em>as a story.</em></h1>
+      <div class="rm-subline">FIVE CHAPTERS · ONE IN PROGRESS</div>
+
+      <!-- The read -->
+      <div class="rm-read">
+        <span class="line">You are here —</span>
+        <span class="line">Phase 2, <em>week 3 of 12</em>.</span>
+        <span class="line">The next page opens in a month.</span>
+      </div>
+
+      <!-- Honest data strip — real things only -->
+      <div class="rm-strip">
+        <span><span class="k">STARTED</span><span class="v">27 FEB</span></span>
+        <span class="sep"></span>
+        <span><span class="k">NOW</span><span class="v">WEEK 8</span></span>
+        <span class="sep"></span>
+        <span><span class="k">NEXT CHAPTER</span><span class="v">~4 WEEKS</span></span>
+      </div>
+
+      <!-- Chapters — timeline -->
+      <div class="rm-chapters">
+
+        <!-- Chapter 1 — done -->
+        <div class="rm-chapter">
+          <span class="rm-node done"></span>
+          <div class="c-head">
+            <span class="c-phase">CHAPTER 1 · BASELINE</span>
+            <span class="c-when">FEB 27 – MAR 19</span>
+          </div>
+          <h2 class="c-title">Learning your body.</h2>
+          <p class="c-summary">Three weeks of listening. I learned your sleep cadence, your resting HRV, how your body answers caffeine and how quickly it forgives.</p>
+        </div>
+
+        <!-- Chapter 2 — active -->
+        <div class="rm-chapter">
+          <span class="rm-node active"></span>
+          <div class="c-head">
+            <span class="c-phase">CHAPTER 2 · CELLULAR REPAIR</span>
+            <span class="c-when">MAR 20 – MAY 22</span>
+          </div>
+          <h2 class="c-title">The quiet work.</h2>
+          <p class="c-summary">Light therapy, deeper sleep, a softer training load. This chapter isn't loud — the body repairs at its own speed. You're three weeks in.</p>
+          <div class="c-progress">
+            <span class="bar"><span class="fill" style="width:33%;"></span></span>
+            <span class="label">WEEK 3 OF 12</span>
+          </div>
+          <span class="c-you">YOU ARE HERE</span>
+        </div>
+
+        <!-- Chapter 3 — locked -->
+        <div class="rm-chapter locked">
+          <span class="rm-node locked"></span>
+          <div class="c-head">
+            <span class="c-phase">CHAPTER 3 · STRENGTH &amp; SIGNAL</span>
+            <span class="c-when">FROM MAY 22</span>
+          </div>
+          <h2 class="c-title">When the body asks to push.</h2>
+          <p class="c-summary">Eight weeks of progressive load — the chapter where repair turns into capacity. I'll know it's time by your morning readiness.</p>
+        </div>
+
+        <!-- Chapter 4 — locked -->
+        <div class="rm-chapter locked">
+          <span class="rm-node locked"></span>
+          <div class="c-head">
+            <span class="c-phase">CHAPTER 4 · RHYTHM</span>
+            <span class="c-when">SUMMER</span>
+          </div>
+          <h2 class="c-title">Becoming a pattern.</h2>
+          <p class="c-summary">The work stops feeling like work. We settle into a seasonal rhythm — what to do in the long days, what to let go.</p>
+        </div>
+
+        <!-- Chapter 5 — locked -->
+        <div class="rm-chapter locked">
+          <span class="rm-node locked"></span>
+          <div class="c-head">
+            <span class="c-phase">CHAPTER 5 · RE-READ</span>
+            <span class="c-when">AUTUMN</span>
+          </div>
+          <h2 class="c-title">A year in, I read you again.</h2>
+          <p class="c-summary">Full rescan: bio-age, biomarkers, the map. We compare the body I met to the body you've become. Then we write the next arc together.</p>
+        </div>
+
+      </div>
+
+      <!-- Interstitial voice -->
+      <div class="alche-interstitial">
+        <p class="i-voice">A roadmap isn't a schedule. It's a <em>story</em> — and yours is still being written.</p>
+      </div>
+
+      <!-- Escape hatch -->
+      <a class="rm-escape"><span class="u">See the whole arc &nbsp;→</span></a>
+
+      <!-- Signature -->
+      <div class="rm-sig">
+        ALCHE <span class="dot"></span> NARRATOR
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- Tab bar (entry from Profile) -->
+    <div class="ios-tab-bar">
+      <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+      <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+  <!-- Direction caption -->
+  <div class="direction-caption">
+    <p class="alche-overline overline">SCREEN 20 — ROADMAP · THE ARC</p>
+    <h1 class="alche-display-l title">A longevity roadmap is a story, not a Kanban board.</h1>
+    <p class="alche-body philosophy">
+      The current Roadmap wears architectural costume: a blueprint grid, a "VER 5.0" badge, "LAT 34.05" coordinates (actually Los Angeles — the member is in Berlin), "GRID REF A-142" that indexes nothing. The audit called this editorial typography confused for editorial meaning. The dialog-first cut strips every pixel of fiction and writes the thing the screen was always trying to be: <em>chapters of your longevity</em>. Each phase becomes a titled chapter with a real date range and an authored summary in Alche's voice. A "you are here" badge anchors the member. Nothing decorative earns a line.
+    </p>
+
+    <ul class="decisions">
+      <li>
+        <span class="label">ADDED</span>
+        <span class="alche-body">Authored chapter titles ("Learning your body," "The quiet work," "When the body asks to push," "Becoming a pattern," "A year in, I read you again"), real date ranges, summaries in Alche's voice, a "YOU ARE HERE" black tag on the active chapter, and a 2px progress hairline for the chapter in progress.</span>
+      </li>
+      <li>
+        <span class="label">REMOVED</span>
+        <span class="alche-body">The blueprint grid background. "VER 5.0." "PROJECT: LONGEVITY / ROADMAP" stamp. "GRID REF A-142 / LAT 34.05 / SYNC AUTO" metadata bar. The ornamental bell icon with no handler. The Cartesian costume entirely — if it doesn't map to real data, it's cut.</span>
+      </li>
+      <li>
+        <span class="label">REPRIORITIZED</span>
+        <span class="alche-body">The "you are here" read leads — phase, week of weeks, expected wait. Below the read sits an honest mono strip with three real facts: started date, current week, time to next chapter. The timeline itself is a hairline rule with three node states — filled (done), ringed (active), dashed (locked). One escape hatch. No Kanban.</span>
+      </li>
+    </ul>
+
+    <blockquote class="tradeoff">
+      Trade-off: members who loved the blueprint aesthetic lose their spaceship. What they gain is a document that actually tells them where they are and what happens next — in sentences, not coordinates.
+    </blockquote>
+  </div>
+
+</div>
+
+</body>
+</html>

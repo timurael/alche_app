@@ -1,0 +1,317 @@
+/* ==========================================================================
+   Alche — Editorial Longevity Tokens
+   Shared CSS for home-redesign Figma-style mockups.
+   Mirrors app/design/tokens.md exactly.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@1,200;1,300;1,400;1,500;1,600&family=Noto+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* Brand colors */
+  --editorial-black: #0d121b;
+  --editorial-muted: #8d96a6;
+  --editorial-accent: #c4cad6;
+  --primary: #1152d4;
+
+  /* Backgrounds */
+  --bg-white: #ffffff;
+  --bg-light: #fcfcfd;
+  --bg-warm: #f6f6f8;
+  --bg-dark: #101622;
+  --surface-dark: #1a1f2e;
+
+  /* Dividers & borders */
+  --divider-light: rgba(13, 18, 27, 0.05);
+  --divider-medium: rgba(13, 18, 27, 0.10);
+  --divider-strong: rgba(13, 18, 27, 1);
+
+  /* Semantic */
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+  /* Pastels (data viz only) */
+  --pastel-rose: #fda4af;
+  --pastel-indigo: #a5b4fc;
+  --pastel-sage: #a7f3d0;
+  --pastel-lemon: #fef08a;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Radii */
+  --radius-sharp: 2px;
+  --radius-input: 4px;
+  --radius-pill: 9999px;
+
+  /* Shadows (hard drop, no blur) */
+  --shadow-sm: 2px 2px 0 var(--editorial-black);
+  --shadow-md: 4px 4px 0 var(--editorial-black);
+  --shadow-lg: 6px 6px 0 var(--editorial-black);
+
+  /* Figma canvas */
+  --canvas-bg: #eceef2;
+
+  /* Frame (iPhone 14 Pro viewport) */
+  --frame-w: 375px;
+  --frame-h: 812px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans', system-ui, sans-serif;
+  color: var(--editorial-black);
+  background: var(--canvas-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Typography ---------- */
+.alche-display-hero { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 200; font-size: 60px; line-height: 1.1; letter-spacing: -0.02em; }
+.alche-display-xl   { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 300; font-size: 48px; line-height: 1.15; letter-spacing: -0.01em; }
+.alche-display-l    { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 400; font-size: 34px; line-height: 1.2; letter-spacing: -0.01em; }
+.alche-display-m    { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 500; font-size: 28px; line-height: 1.25; }
+.alche-display-s    { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 600; font-size: 22px; line-height: 1.3; }
+.alche-heading      { font-family: 'Noto Sans', sans-serif; font-weight: 700; font-size: 20px; line-height: 1.3; }
+.alche-subheading   { font-family: 'Noto Sans', sans-serif; font-weight: 500; font-size: 17px; line-height: 1.4; }
+.alche-body         { font-family: 'Noto Sans', sans-serif; font-weight: 400; font-size: 15px; line-height: 1.5; }
+.alche-body-medium  { font-family: 'Noto Sans', sans-serif; font-weight: 500; font-size: 15px; line-height: 1.5; }
+.alche-body-bold    { font-family: 'Noto Sans', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.5; }
+.alche-caption      { font-family: 'Noto Sans', sans-serif; font-weight: 400; font-size: 13px; line-height: 1.4; color: var(--editorial-muted); }
+.alche-mono         { font-family: 'Space Mono', Menlo, monospace; font-weight: 400; font-size: 13px; line-height: 1.4; }
+.alche-mono-large   { font-family: 'Space Mono', Menlo, monospace; font-weight: 400; font-size: 48px; line-height: 1.1; }
+.alche-overline     { font-family: 'Space Mono', Menlo, monospace; font-weight: 400; font-size: 10px; line-height: 1.2; letter-spacing: 0.2em; text-transform: uppercase; color: var(--editorial-muted); }
+.alche-overline-tiny{ font-family: 'Space Mono', Menlo, monospace; font-weight: 400; font-size: 9px; line-height: 1.2; letter-spacing: 0.2em; text-transform: uppercase; color: var(--editorial-muted); }
+.alche-mono-bold    { font-family: 'Space Mono', Menlo, monospace; font-weight: 700; font-size: 10px; line-height: 1.2; letter-spacing: 0.15em; text-transform: uppercase; }
+.alche-data-value   { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 300; font-size: 36px; line-height: 1.1; }
+
+/* ---------- Figma frame chrome ---------- */
+.figma-canvas {
+  min-height: 100vh;
+  padding: 64px 32px;
+  background: var(--canvas-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.figma-frame {
+  width: var(--frame-w);
+  min-height: var(--frame-h);
+  background: var(--bg-light);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--divider-medium);
+}
+
+/* Status bar */
+.ios-status-bar {
+  height: 47px;
+  padding: 16px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--editorial-black);
+}
+.ios-status-bar .right {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 13px;
+}
+
+/* Home indicator */
+.ios-home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--editorial-black);
+  opacity: 0.9;
+  z-index: 10;
+}
+
+/* Tab bar */
+.ios-tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 84px;
+  background: var(--bg-white);
+  border-top: 1px solid var(--divider-medium);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 10px 0 28px;
+}
+.ios-tab-bar .tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+}
+.ios-tab-bar .tab.active { color: var(--editorial-black); font-weight: 700; }
+.ios-tab-bar .tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--editorial-muted);
+}
+.ios-tab-bar .tab.active .tab-dot { background: var(--editorial-black); }
+
+/* Content area (between status bar and tab bar) */
+.frame-content {
+  padding-top: 0;
+  padding-bottom: 84px;
+  height: var(--frame-h);
+  overflow: hidden;
+  position: relative;
+}
+.frame-content .scroll-fade {
+  position: absolute;
+  bottom: 84px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to top, var(--bg-light), transparent);
+  pointer-events: none;
+}
+
+/* ---------- Reusable building blocks ---------- */
+.alche-card {
+  background: var(--bg-white);
+  border: 1px solid var(--divider-medium);
+  padding: var(--space-md);
+}
+.alche-card-elevated {
+  background: var(--bg-white);
+  border: 1px solid var(--divider-strong);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-md);
+}
+.alche-card-ghost {
+  background: transparent;
+  border: 1px dashed var(--editorial-muted);
+  padding: var(--space-md);
+  opacity: 0.6;
+}
+.alche-divider-hair { height: 1px; background: var(--divider-light); }
+.alche-divider-soft { height: 1px; background: var(--divider-medium); }
+.alche-divider-hard { height: 1px; background: var(--divider-strong); }
+
+.alche-button-primary {
+  background: var(--editorial-black);
+  color: var(--bg-white);
+  font-family: 'Space Mono', Menlo, monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--radius-sharp);
+  cursor: pointer;
+  text-align: center;
+}
+.alche-button-underline {
+  background: transparent;
+  color: var(--editorial-black);
+  font-family: 'Space Mono', Menlo, monospace;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 4px 0;
+  border: none;
+  border-bottom: 1.5px solid var(--editorial-black);
+  cursor: pointer;
+}
+.alche-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--divider-medium);
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+}
+
+/* Grid overlay (subtle blueprint feel, optional) */
+.alche-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(13,18,27,0.035) 0.5px, transparent 0.5px),
+    linear-gradient(to bottom, rgba(13,18,27,0.035) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
+/* Dark ritual gradient (reusable) */
+.alche-smoke-gradient {
+  background: linear-gradient(
+    to bottom left,
+    rgba(107, 138, 184, 0.4) 0%,
+    var(--editorial-black) 70%,
+    var(--editorial-black) 100%
+  );
+  color: var(--bg-white);
+}
+
+/* Direction caption (below frame) */
+.direction-caption {
+  max-width: 600px;
+  margin: 48px auto 0;
+  padding: 0 24px;
+}
+.direction-caption .overline { margin-bottom: 8px; }
+.direction-caption .title { margin: 0 0 16px; }
+.direction-caption .philosophy { margin: 0 0 24px; color: var(--editorial-black); }
+.direction-caption .decisions {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  border-top: 1px solid var(--divider-medium);
+}
+.direction-caption .decisions li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--divider-medium);
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+}
+.direction-caption .decisions .label {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+}
+.direction-caption .tradeoff {
+  background: var(--bg-warm);
+  border-left: 3px solid var(--editorial-black);
+  padding: 16px 20px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.4;
+}

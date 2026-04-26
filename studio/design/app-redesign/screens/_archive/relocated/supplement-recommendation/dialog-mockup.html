@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — SupplementRecommendation · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .sr-topbar {
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .sr-topbar .crumb {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .sr-topbar .crumb .v { color: var(--editorial-black); font-weight: 700; }
+
+    .sr-read {
+      padding: 18px 24px 12px;
+    }
+    .sr-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 26px;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .sr-read .line em {
+      color: var(--primary);
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+
+    /* Stack list — one supplement per line */
+    .sr-stack {
+      padding: 4px 0 0;
+    }
+    .sr-sup {
+      padding: 16px 24px;
+      border-top: 1px solid var(--divider-light);
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .sr-sup:last-child { border-bottom: 1px solid var(--divider-light); }
+    .sr-sup .idx {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      color: var(--editorial-muted);
+      letter-spacing: 0.15em;
+    }
+    .sr-sup .name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 19px;
+      line-height: 1.25;
+      color: var(--editorial-black);
+    }
+    .sr-sup .mech {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--editorial-muted);
+      margin-top: 3px;
+    }
+    .sr-sup .note {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--editorial-black);
+      margin-top: 6px;
+      padding-left: 8px;
+      border-left: 2px solid var(--primary);
+    }
+    .sr-sup .meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      padding-top: 4px;
+    }
+    .sr-sup .dose {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--editorial-black);
+    }
+    .sr-sup .evidence {
+      display: inline-flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .sr-sup .ev-dot {
+      width: 5px; height: 5px; border-radius: 999px;
+      background: transparent;
+      border: 1px solid var(--editorial-muted);
+    }
+    .sr-sup .ev-dot.full { background: var(--editorial-black); border-color: var(--editorial-black); }
+    .sr-sup .ev-dot.half {
+      background: linear-gradient(to right, var(--editorial-black) 50%, transparent 50%);
+      border-color: var(--editorial-black);
+    }
+    .sr-sup .tag {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Section head for foundation vs goal-specific */
+    .sr-section-head {
+      padding: 22px 24px 4px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .sr-section-head .lbl {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    .sr-disclaimer {
+      padding: 20px 24px 8px;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--editorial-muted);
+    }
+    .sr-disclaimer .lbl {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <div class="sr-topbar">
+          <span class="crumb">← Back</span>
+          <span class="crumb">STEP <span class="v">06</span> · OF · 08</span>
+        </div>
+
+        <!-- Echo from focus areas -->
+        <div class="alche-prev-echo">
+          <span class="tag">PREV · FOCUS</span>
+          <span class="echo">Sleep. Stress. Skin — we heard them.</span>
+        </div>
+
+        <!-- Alche's recommendation opening -->
+        <div class="fa-read-stamp" style="padding:12px 24px 10px; display:flex; align-items:center; gap:10px;">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">Alche · Where I Would Begin</span>
+        </div>
+
+        <div class="sr-read">
+          <span class="line">For what you're asking</span>
+          <span class="line">of your body,</span>
+          <span class="line">these four are <em>where I'd begin</em>.</span>
+        </div>
+
+        <!-- Foundation section -->
+        <div class="sr-section-head">
+          <span class="lbl">Foundation · Everyone</span>
+          <span class="lbl">02 · ITEMS</span>
+        </div>
+        <div class="sr-stack">
+          <div class="sr-sup">
+            <span class="idx">01</span>
+            <div>
+              <div class="name">Magnesium Threonate</div>
+              <div class="mech">Calms the nervous system and supports deep sleep architecture.</div>
+            </div>
+            <div class="meta">
+              <span class="dose">200 MG · PM</span>
+              <span class="evidence" title="Evidence: strong">
+                <span class="ev-dot full"></span><span class="ev-dot full"></span><span class="ev-dot full"></span>
+              </span>
+              <span class="tag">EU · OK</span>
+            </div>
+          </div>
+          <div class="sr-sup">
+            <span class="idx">02</span>
+            <div>
+              <div class="name">Omega-3 EPA/DHA</div>
+              <div class="mech">Membrane fluidity, anti-inflammatory baseline, brain support.</div>
+            </div>
+            <div class="meta">
+              <span class="dose">2 G · AM</span>
+              <span class="evidence">
+                <span class="ev-dot full"></span><span class="ev-dot full"></span><span class="ev-dot half"></span>
+              </span>
+              <span class="tag">EU · OK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alche interstitial between foundation and goal-specific -->
+        <div class="alche-interstitial">
+          <p class="i-voice">Those are the quiet ones. Here are the two that <em>speak to your asks</em>.</p>
+        </div>
+
+        <!-- Goal-specific section -->
+        <div class="sr-section-head">
+          <span class="lbl">For Your Focus · Sleep + Stress + Skin</span>
+          <span class="lbl">02 · ITEMS</span>
+        </div>
+        <div class="sr-stack">
+          <div class="sr-sup">
+            <span class="idx">03</span>
+            <div>
+              <div class="name">Ashwagandha (KSM-66)</div>
+              <div class="mech">Lowers evening cortisol — helps your shoulders come down.</div>
+              <div class="note">Pairs with magnesium. Don't take with the omega-3 at the same meal — split AM / PM.</div>
+            </div>
+            <div class="meta">
+              <span class="dose">600 MG · PM</span>
+              <span class="evidence">
+                <span class="ev-dot full"></span><span class="ev-dot full"></span><span class="ev-dot"></span>
+              </span>
+              <span class="tag">EU · OK</span>
+            </div>
+          </div>
+          <div class="sr-sup">
+            <span class="idx">04</span>
+            <div>
+              <div class="name">Collagen · Type I + III</div>
+              <div class="mech">Skin structural support — works on the mirror, slowly.</div>
+              <div class="note">Take with vitamin C for conversion. Emerging evidence — try for 8 weeks, then we'll look together.</div>
+            </div>
+            <div class="meta">
+              <span class="dose">10 G · AM</span>
+              <span class="evidence">
+                <span class="ev-dot full"></span><span class="ev-dot half"></span><span class="ev-dot"></span>
+              </span>
+              <span class="tag">EU · OK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary + secondary -->
+        <div style="padding-top: 20px;">
+          <button class="alche-primary-action">
+            <span>Add to my stack · 4 items</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Skip supplements for now</span></a>
+        </div>
+
+        <!-- Disclaimer — editorial demotion -->
+        <div class="sr-disclaimer">
+          <span class="lbl">Footnote · Not medical advice</span>
+          These are food-supplement suggestions, not prescriptions. If you're pregnant, nursing, on medication, or under a doctor's care — talk to them before adding these. EU / DE regulated; nothing here is a diagnosis.
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · SUPPLEMENT RECOMMENDATION</p>
+      <h1 class="alche-display-l title">A practitioner's list, read aloud — not a pharmacy printout.</h1>
+      <p class="alche-body philosophy">
+        Four supplements, one per line, each with a single-sentence mechanism in the member's own register ("helps your shoulders come down"). Stacking warnings and timing conflicts fold into an italic blue-bar note on the affected row, not a separate compliance block. Evidence becomes three filled / half / empty dots instead of four coloured badge variants. One disclaimer survives as an editorial footnote.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>Four competing sections (Foundation / Goal-Specific / Stacking / Timing) each with their own overlines. Full `SupplementCard` chrome (name + 4-variant evidence badge + EU pill + mono dosage + 2-line mechanism — 5 weights per card). Horizontal scrolling `AlcheTag` goal row. Sample-data double-badge.</div></li>
+        <li><span class="label">KEPT</span><div>Foundation vs Goal-Specific split (demoted to mono section overlines). EU legal status (demoted to tiny "EU · OK" tag). Dosage + timing (now a single "200 MG · PM" line). Disclaimer (moved to footer as typographic footnote).</div></li>
+        <li><span class="label">ADDED</span><div>(1) `.alche-prev-echo` "PREV · FOCUS · Sleep. Stress. Skin — we heard them." (2) `.alche-interstitial` between Foundation and Goal-Specific so the split feels like Alche turning a page, not a second section starting cold. (3) Stacking and timing warnings inlined as italic blue-bar notes on the specific supplement they concern. (4) Dot-based evidence scale (full / half / empty) replacing coloured badges.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: the compliance team may want stacking and timing warnings in their own section for auditability. The design now surfaces them inline instead — analytics will need to track disclosure exposure differently.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

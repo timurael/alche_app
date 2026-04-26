@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF ↔ HTML Annotator</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --header-bg: #1a1a2e;
+  --header-text: #e8e8f0;
+  --toolbar-bg: #f4f4f6;
+  --toolbar-border: #e0e0e4;
+  --toolbar-btn-hover: #e2e2e8;
+  --toolbar-btn-active: #d0d0da;
+  --editor-bg: #eeeef1;
+  --page-bg: #ffffff;
+  --page-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  --status-bg: #fafafa;
+  --status-border: #e8e8ec;
+  --accent: #3b5bdb;
+  --accent-hover: #2b4bc8;
+  --danger: #e03131;
+  --success: #2b8a3e;
+  --warn: #f59f00;
+  --note-bg: #fff9db;
+  --note-border: #f08c00;
+  --note-highlight: rgba(240, 140, 0, 0.15);
+  --text-primary: #1a1a2e;
+  --text-secondary: #6b6b80;
+  --text-muted: #9b9bae;
+  --radius: 6px;
+  --transition: 150ms ease;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  --sidebar-width: 340px;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: var(--editor-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ---- Header ---- */
+.header {
+  background: var(--header-bg); color: var(--header-text);
+  padding: 0 24px; height: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; user-select: none;
+}
+.header-title { font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
+.header-title span { color: #7b7baa; font-weight: 400; margin: 0 6px; }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.header-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 10px;
+  background: rgba(255,255,255,0.1); color: #a0a0c0;
+}
+
+/* ---- Toolbar ---- */
+.toolbar {
+  background: var(--toolbar-bg); border-bottom: 1px solid var(--toolbar-border);
+  padding: 6px 16px; display: flex; align-items: center; gap: 2px;
+  flex-wrap: wrap; flex-shrink: 0; user-select: none;
+}
+.toolbar-btn {
+  background: transparent; border: 1px solid transparent; border-radius: var(--radius);
+  padding: 6px 10px; font-family: var(--font); font-size: 13px; font-weight: 500;
+  color: var(--text-primary); cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+  display: inline-flex; align-items: center; gap: 5px; line-height: 1; white-space: nowrap;
+}
+.toolbar-btn:hover { background: var(--toolbar-btn-hover); border-color: var(--toolbar-border); }
+.toolbar-btn:active { background: var(--toolbar-btn-active); }
+.toolbar-btn.active { background: var(--toolbar-btn-active); border-color: #c0c0cc; color: var(--accent); }
+.toolbar-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.toolbar-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.toolbar-btn.warn { background: var(--note-border); color: #fff; border-color: var(--note-border); }
+.toolbar-btn.warn:hover { background: #e67700; }
+.toolbar-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+.toolbar-sep { width: 1px; height: 22px; background: var(--toolbar-border); margin: 0 6px; flex-shrink: 0; }
+.toolbar-group { display: flex; align-items: center; gap: 2px; }
+.note-count {
+  font-size: 11px; font-weight: 700; background: var(--note-border); color: #fff;
+  border-radius: 10px; padding: 1px 7px; margin-left: 4px; min-width: 20px; text-align: center;
+}
+
+/* ---- Main layout ---- */
+.main-area { display: flex; flex: 1; overflow: hidden; }
+
+/* ---- Editor ---- */
+.editor-wrapper {
+  flex: 1; overflow-y: auto; padding: 32px 24px;
+  display: flex; justify-content: center;
+}
+.editor {
+  background: var(--page-bg); border-radius: 2px; box-shadow: var(--page-shadow);
+  width: 100%; max-width: 900px; min-height: 1056px;
+  padding: 72px 72px 96px; outline: none;
+  font-size: 15px; line-height: 1.7; color: var(--text-primary);
+  position: relative;
+}
+.editor:empty::before {
+  content: "Upload a PDF to begin reviewing, or drag and drop a PDF here...";
+  color: var(--text-muted); pointer-events: none; font-style: italic;
+}
+.editor.drag-over {
+  box-shadow: var(--page-shadow), 0 0 0 3px var(--accent), 0 0 0 6px rgba(59,91,219,0.12);
+}
+.editor.drag-over::after {
+  content: "Drop PDF here"; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(59,91,219,0.06); color: var(--accent);
+  font-size: 18px; font-weight: 600; border-radius: 2px; pointer-events: none; z-index: 10;
+}
+
+/* Editor typography */
+.editor h1 { font-size: 28px; font-weight: 700; margin: 24px 0 12px; line-height: 1.25; }
+.editor h2 { font-size: 22px; font-weight: 600; margin: 20px 0 10px; line-height: 1.3; }
+.editor h3 { font-size: 18px; font-weight: 600; margin: 16px 0 8px; }
+.editor h4 { font-size: 16px; font-weight: 600; margin: 14px 0 6px; }
+.editor p { margin: 0 0 12px; }
+.editor ul, .editor ol { margin: 0 0 12px; padding-left: 28px; }
+.editor li { margin-bottom: 4px; }
+.editor blockquote { border-left: 3px solid #d0d0da; margin: 12px 0; padding: 8px 0 8px 20px; color: var(--text-secondary); }
+.editor pre { background: #f6f6f8; border-radius: var(--radius); padding: 14px 18px; font-family: var(--mono); font-size: 13px; overflow-x: auto; margin: 12px 0; }
+.editor img { max-width: 100%; height: auto; border-radius: var(--radius); margin: 12px 0; }
+.editor table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+.editor th, .editor td { border: 1px solid #e0e0e4; padding: 8px 12px; text-align: left; }
+.editor th { background: #f6f6f8; font-weight: 600; }
+.editor a { color: var(--accent); text-decoration: underline; }
+.editor hr { border: none; border-top: 1px solid #e0e0e4; margin: 24px 0; }
+
+/* ---- Annotation highlights ---- */
+[data-note-id] {
+  position: relative;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+[data-note-id]::before {
+  content: attr(data-note-num);
+  position: absolute; top: -8px; right: -8px;
+  background: var(--note-border); color: #fff;
+  font-size: 10px; font-weight: 700;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5; pointer-events: none;
+  font-family: var(--font);
+}
+.note-block-highlight { background: var(--note-highlight); outline: 2px solid rgba(240,140,0,0.3); outline-offset: 2px; }
+.note-text-highlight { background: rgba(240,140,0,0.3); border-radius: 2px; }
+
+/* ---- Annotation sidebar ---- */
+.annotation-sidebar {
+  width: 0; overflow: hidden;
+  background: var(--page-bg); border-left: 1px solid var(--toolbar-border);
+  transition: width 250ms ease;
+  display: flex; flex-direction: column; flex-shrink: 0;
+}
+.annotation-sidebar.open { width: var(--sidebar-width); }
+
+.sidebar-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--toolbar-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sidebar-header h3 { font-size: 14px; font-weight: 600; }
+.sidebar-close {
+  background: none; border: none; cursor: pointer; color: var(--text-muted);
+  font-size: 18px; padding: 4px; line-height: 1;
+}
+.sidebar-close:hover { color: var(--text-primary); }
+
+.notes-list { flex: 1; overflow-y: auto; padding: 12px; }
+.notes-empty { text-align: center; color: var(--text-muted); font-size: 13px; padding: 40px 20px; }
+
+.note-card {
+  background: var(--note-bg); border: 1px solid rgba(240,140,0,0.25);
+  border-radius: var(--radius); padding: 12px; margin-bottom: 10px;
+  font-size: 13px; position: relative; transition: border-color var(--transition);
+}
+.note-card:hover { border-color: var(--note-border); }
+.note-card-num {
+  position: absolute; top: -8px; left: 12px;
+  background: var(--note-border); color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 1px 7px; border-radius: 10px;
+}
+.note-card-context {
+  font-size: 12px; color: var(--text-secondary); margin-top: 4px;
+  font-family: var(--mono); background: rgba(0,0,0,0.03);
+  padding: 4px 8px; border-radius: 3px;
+  max-height: 60px; overflow: hidden; line-height: 1.4;
+}
+.note-card-text {
+  margin-top: 8px; padding: 0; border: none; background: transparent;
+  width: 100%; font-family: var(--font); font-size: 13px; line-height: 1.5;
+  color: var(--text-primary); resize: vertical; min-height: 40px; outline: none;
+}
+.note-card-actions {
+  display: flex; justify-content: flex-end; gap: 6px; margin-top: 8px;
+}
+.note-card-actions button {
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: var(--text-muted); padding: 2px 6px;
+  border-radius: 3px; transition: all var(--transition);
+}
+.note-card-actions button:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.note-card-actions .delete-btn:hover { color: var(--danger); }
+
+.note-type-badge {
+  font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 1px 6px; border-radius: 3px; margin-bottom: 6px; display: inline-block;
+}
+.note-type-badge.block { background: #d0ebff; color: #1864ab; }
+.note-type-badge.text { background: #fff3bf; color: #e67700; }
+
+/* ---- Note popover (for text selection) ---- */
+.note-popover {
+  position: absolute; z-index: 100;
+  background: var(--page-bg); border: 1px solid var(--toolbar-border);
+  border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 12px; width: 280px;
+  display: none;
+}
+.note-popover.visible { display: block; }
+.note-popover textarea {
+  width: 100%; border: 1px solid var(--toolbar-border); border-radius: var(--radius);
+  padding: 8px; font-family: var(--font); font-size: 13px; resize: vertical;
+  min-height: 60px; outline: none;
+}
+.note-popover textarea:focus { border-color: var(--accent); }
+.note-popover-actions {
+  display: flex; justify-content: flex-end; gap: 6px; margin-top: 8px;
+}
+.note-popover-actions button {
+  padding: 5px 12px; border-radius: var(--radius); border: 1px solid var(--toolbar-border);
+  font-family: var(--font); font-size: 12px; font-weight: 500; cursor: pointer;
+}
+.note-popover-actions .btn-cancel { background: var(--page-bg); color: var(--text-primary); }
+.note-popover-actions .btn-save { background: var(--note-border); color: #fff; border-color: var(--note-border); }
+.note-popover-actions .btn-save:hover { background: #e67700; }
+
+/* ---- Status bar ---- */
+.status-bar {
+  background: var(--status-bg); border-top: 1px solid var(--status-border);
+  padding: 6px 24px; font-size: 12px; color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; user-select: none;
+}
+.status-indicator { display: inline-flex; align-items: center; gap: 6px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+.status-dot.working { background: var(--warn); animation: pulse 1s ease-in-out infinite; }
+.status-dot.error { background: var(--danger); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.status-right { color: var(--text-muted); font-family: var(--mono); font-size: 11px; }
+
+.file-input-hidden { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
+
+/* ---- Responsive ---- */
+@media (max-width: 1100px) { :root { --sidebar-width: 280px; } }
+@media (max-width: 768px) {
+  .editor { padding: 32px 24px 48px; min-height: auto; }
+  .editor-wrapper { padding: 12px 8px; }
+  .toolbar { padding: 6px 8px; }
+  .toolbar-btn { padding: 6px 7px; font-size: 12px; }
+  .annotation-sidebar.open { position: fixed; right: 0; top: 48px; bottom: 0; z-index: 50; width: 300px; }
+}
+
+/* ---- Print ---- */
+@media print {
+  .header, .toolbar, .status-bar, .annotation-sidebar,
+  .note-popover, .file-input-hidden { display: none !important; }
+  body { background: white; }
+  .main-area { display: block; }
+  .editor-wrapper { padding: 0; overflow: visible; }
+  .editor {
+    box-shadow: none; border-radius: 0; max-width: none; width: 100%;
+    padding: 0; min-height: auto;
+  }
+  .editor img { object-fit: contain; max-width: 100%; page-break-inside: avoid; break-inside: avoid; }
+  .editor h1, .editor h2, .editor h3, .editor h4, .editor h5, .editor h6 { page-break-after: avoid; break-after: avoid; }
+  .editor p, .editor li { orphans: 3; widows: 3; }
+  .editor table, .editor pre, .editor blockquote, .editor figure, .editor ul, .editor ol { page-break-inside: avoid; break-inside: avoid; }
+  [data-note-id]::before { display: none; }
+  .note-block-highlight, .note-text-highlight { background: none; outline: none; }
+  @page { size: A4; margin: 2cm 2.5cm; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-title">PDF <span>↔</span> HTML <span>·</span> Annotator</div>
+  <div class="header-right">
+    <span class="header-badge" id="engineBadge">—</span>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <div class="toolbar-group">
+    <button class="toolbar-btn primary" onclick="triggerUpload()" title="Upload PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Upload PDF
+    </button>
+  </div>
+  <div class="toolbar-sep"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn" id="annotateToggle" onclick="toggleAnnotateMode()" title="Toggle annotation mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Annotate
+    </button>
+    <button class="toolbar-btn warn" onclick="exportNotes()" title="Copy notes for Claude">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy Notes for Claude
+      <span class="note-count" id="noteCount" style="display:none">0</span>
+    </button>
+  </div>
+  <div class="toolbar-sep"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn primary" onclick="exportPDF()" title="Export as PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+      Export PDF
+    </button>
+    <button class="toolbar-btn" onclick="downloadHTML()" title="Download HTML">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+      HTML
+    </button>
+  </div>
+</div>
+
+<input type="file" accept=".pdf,application/pdf" class="file-input-hidden" id="pdfInput" onchange="handleFile(this)">
+
+<!-- Main area -->
+<div class="main-area">
+  <div class="editor-wrapper">
+    <div class="editor" id="editor"></div>
+  </div>
+
+  <!-- Annotation sidebar -->
+  <div class="annotation-sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>Notes</h3>
+      <button class="sidebar-close" onclick="toggleSidebar(false)">×</button>
+    </div>
+    <div class="notes-list" id="notesList">
+      <div class="notes-empty" id="notesEmpty">Click elements or highlight text while in Annotate mode to add notes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Note popover (positioned dynamically) -->
+<div class="note-popover" id="notePopover">
+  <textarea id="popoverInput" placeholder="Add your note for Claude..."></textarea>
+  <div class="note-popover-actions">
+    <button class="btn-cancel" onclick="hidePopover()">Cancel</button>
+    <button class="btn-save" onclick="savePopoverNote()">Save Note</button>
+  </div>
+</div>
+
+<!-- Status bar -->
+<div class="status-bar">
+  <div class="status-indicator">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Ready</span>
+  </div>
+  <div class="status-right" id="statusRight">PDF ↔ HTML Annotator</div>
+</div>
+
+<script>
+/* =========================================================================
+   PDF ↔ HTML Annotator
+   ========================================================================= */
+
+const editor = document.getElementById('editor');
+const sidebar = document.getElementById('sidebar');
+const notesList = document.getElementById('notesList');
+const notesEmpty = document.getElementById('notesEmpty');
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const statusRight = document.getElementById('statusRight');
+const engineBadge = document.getElementById('engineBadge');
+const noteCount = document.getElementById('noteCount');
+const notePopover = document.getElementById('notePopover');
+const popoverInput = document.getElementById('popoverInput');
+const pdfInput = document.getElementById('pdfInput');
+
+// ---- State ----
+let annotateMode = false;
+let notes = []; // {id, type:'block'|'text', selector, context, text, noteNum}
+let noteIdCounter = 0;
+let pendingAnnotation = null; // stores temp data while popover is open
+let currentFilename = '';
+
+// ---- Persistence ----
+function saveNotes() {
+  localStorage.setItem('pdf-annotator-notes', JSON.stringify(notes));
+  localStorage.setItem('pdf-annotator-counter', noteIdCounter.toString());
+}
+function loadNotes() {
+  try {
+    const saved = localStorage.getItem('pdf-annotator-notes');
+    if (saved) { notes = JSON.parse(saved); }
+    const ctr = localStorage.getItem('pdf-annotator-counter');
+    if (ctr) { noteIdCounter = parseInt(ctr, 10); }
+  } catch (_) {}
+}
+
+// ---- Status ----
+function setStatus(state, msg) {
+  statusDot.className = 'status-dot';
+  if (state === 'working') statusDot.classList.add('working');
+  else if (state === 'error') statusDot.classList.add('error');
+  statusText.textContent = msg;
+}
+
+// ---- Upload / Convert ----
+function triggerUpload() { pdfInput.click(); }
+function handleFile(input) {
+  if (input.files[0]) { uploadPDF(input.files[0]); input.value = ''; }
+}
+
+async function uploadPDF(file) {
+  if (!file.name.toLowerCase().endsWith('.pdf')) {
+    setStatus('error', 'Only PDF files accepted');
+    return;
+  }
+  setStatus('working', 'Converting PDF...');
+  const fd = new FormData();
+  fd.append('file', file);
+  try {
+    const res = await fetch('/convert', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Conversion failed');
+    editor.innerHTML = data.html || '';
+    currentFilename = file.name;
+    engineBadge.textContent = data.engine || '—';
+    setStatus('ready', 'Loaded — ' + file.name);
+    statusRight.textContent = file.name;
+    // Clear old notes for new document
+    clearAllNotes();
+    // Index elements for annotation
+    indexElements();
+  } catch (err) {
+    setStatus('error', err.message);
+  }
+}
+
+// ---- Drag & Drop ----
+let dragCounter = 0;
+editor.addEventListener('dragenter', e => { e.preventDefault(); e.stopPropagation(); dragCounter++; editor.classList.add('drag-over'); });
+editor.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); });
+editor.addEventListener('dragleave', e => { e.preventDefault(); e.stopPropagation(); dragCounter--; if (dragCounter <= 0) { dragCounter = 0; editor.classList.remove('drag-over'); } });
+editor.addEventListener('drop', e => {
+  e.preventDefault(); e.stopPropagation(); dragCounter = 0; editor.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f && (f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf'))) uploadPDF(f);
+  else setStatus('error', 'Only PDF files');
+});
+
+// ---- Element indexing (adds data-el-idx for selectors) ----
+function indexElements() {
+  let idx = 0;
+  editor.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,th,blockquote,pre,div,span,section,article,figure,figcaption,a,strong,em,img,table').forEach(el => {
+    if (!el.dataset.elIdx) el.dataset.elIdx = (idx++).toString();
+  });
+}
+
+function getSelector(el) {
+  if (el.dataset.elIdx) return `[data-el-idx="${el.dataset.elIdx}"]`;
+  // Fallback: build a simple path
+  const parts = [];
+  let current = el;
+  while (current && current !== editor) {
+    let tag = current.tagName.toLowerCase();
+    if (current.id) { parts.unshift(`#${current.id}`); break; }
+    const parent = current.parentElement;
+    if (parent) {
+      const siblings = Array.from(parent.children).filter(c => c.tagName === current.tagName);
+      if (siblings.length > 1) {
+        const index = siblings.indexOf(current) + 1;
+        tag += `:nth-of-type(${index})`;
+      }
+    }
+    parts.unshift(tag);
+    current = current.parentElement;
+  }
+  return parts.join(' > ');
+}
+
+function getContext(el, maxLen = 80) {
+  const text = (el.textContent || '').trim();
+  return text.length > maxLen ? text.slice(0, maxLen) + '…' : text;
+}
+
+// ---- Annotate mode ----
+function toggleAnnotateMode() {
+  annotateMode = !annotateMode;
+  const btn = document.getElementById('annotateToggle');
+  btn.classList.toggle('active', annotateMode);
+  editor.style.cursor = annotateMode ? 'crosshair' : '';
+  if (annotateMode) toggleSidebar(true);
+  setStatus('ready', annotateMode ? 'Annotate mode — click elements or highlight text' : 'Ready');
+}
+
+function toggleSidebar(open) {
+  sidebar.classList.toggle('open', open);
+}
+
+// ---- Block annotation (click) ----
+editor.addEventListener('click', e => {
+  if (!annotateMode) return;
+
+  // Ignore clicks on existing note markers
+  if (e.target.closest('[data-note-id]')?.querySelector('.note-marker')) return;
+
+  const sel = window.getSelection();
+  // If there's a text selection, let mouseup handle it
+  if (sel && sel.toString().trim().length > 0) return;
+
+  // Find the nearest annotatable block
+  const block = e.target.closest('h1,h2,h3,h4,h5,h6,p,li,td,blockquote,pre,div,section');
+  if (!block || block === editor) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  pendingAnnotation = {
+    type: 'block',
+    element: block,
+    selector: getSelector(block),
+    context: getContext(block),
+  };
+
+  showPopover(e.clientX, e.clientY);
+});
+
+// ---- Text annotation (highlight) ----
+editor.addEventListener('mouseup', e => {
+  if (!annotateMode) return;
+
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.toString().trim()) return;
+
+  const range = sel.getRangeAt(0);
+  const selectedText = sel.toString().trim();
+  if (selectedText.length < 2) return;
+
+  // Find the container element
+  let container = range.commonAncestorContainer;
+  if (container.nodeType === 3) container = container.parentElement;
+
+  const parentBlock = container.closest('h1,h2,h3,h4,h5,h6,p,li,td,blockquote,pre,div') || container;
+
+  // Wrap selection in a highlight span
+  const span = document.createElement('span');
+  span.className = 'note-text-highlight';
+  try {
+    range.surroundContents(span);
+  } catch (_) {
+    // Complex selections that cross element boundaries
+    span.textContent = selectedText;
+  }
+
+  pendingAnnotation = {
+    type: 'text',
+    element: span,
+    parentElement: parentBlock,
+    selector: getSelector(parentBlock),
+    selectedText: selectedText,
+    context: getContext(parentBlock),
+  };
+
+  sel.removeAllRanges();
+  const rect = span.getBoundingClientRect();
+  showPopover(rect.left + rect.width / 2, rect.bottom + 8);
+});
+
+// ---- Popover ----
+function showPopover(x, y) {
+  notePopover.classList.add('visible');
+  popoverInput.value = '';
+
+  // Position
+  const pw = 280;
+  let left = x - pw / 2;
+  let top = y + 10;
+  if (left < 10) left = 10;
+  if (left + pw > window.innerWidth - 10) left = window.innerWidth - pw - 10;
+  if (top + 200 > window.innerHeight) top = y - 200;
+
+  notePopover.style.left = left + 'px';
+  notePopover.style.top = top + 'px';
+  popoverInput.focus();
+}
+
+function hidePopover() {
+  notePopover.classList.remove('visible');
+  // Remove highlight if text annotation was cancelled
+  if (pendingAnnotation?.type === 'text' && pendingAnnotation.element) {
+    const span = pendingAnnotation.element;
+    if (span.classList.contains('note-text-highlight') && !span.dataset.noteId) {
+      span.outerHTML = span.innerHTML;
+    }
+  }
+  pendingAnnotation = null;
+}
+
+function savePopoverNote() {
+  const text = popoverInput.value.trim();
+  if (!text || !pendingAnnotation) { hidePopover(); return; }
+
+  const id = 'note-' + (++noteIdCounter);
+  const noteNum = notes.length + 1;
+
+  const note = {
+    id,
+    type: pendingAnnotation.type,
+    selector: pendingAnnotation.selector,
+    selectedText: pendingAnnotation.selectedText || null,
+    context: pendingAnnotation.context,
+    text,
+    noteNum,
+  };
+  notes.push(note);
+
+  // Mark the element
+  const el = pendingAnnotation.element;
+  el.dataset.noteId = id;
+  el.dataset.noteNum = noteNum;
+  if (note.type === 'block') el.classList.add('note-block-highlight');
+
+  renderNotesList();
+  saveNotes();
+  hidePopover();
+  setStatus('ready', `Note #${noteNum} added`);
+}
+
+// Handle Enter in popover
+popoverInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); savePopoverNote(); }
+  if (e.key === 'Escape') hidePopover();
+});
+
+// Close popover on outside click
+document.addEventListener('mousedown', e => {
+  if (notePopover.classList.contains('visible') && !notePopover.contains(e.target)) {
+    hidePopover();
+  }
+});
+
+// ---- Notes list rendering ----
+function renderNotesList() {
+  const count = notes.length;
+  noteCount.style.display = count > 0 ? 'inline' : 'none';
+  noteCount.textContent = count;
+  notesEmpty.style.display = count > 0 ? 'none' : 'block';
+
+  // Remove existing cards
+  notesList.querySelectorAll('.note-card').forEach(c => c.remove());
+
+  notes.forEach((note, i) => {
+    const card = document.createElement('div');
+    card.className = 'note-card';
+    card.dataset.noteId = note.id;
+    card.innerHTML = `
+      <span class="note-card-num">#${note.noteNum}</span>
+      <span class="note-type-badge ${note.type}">${note.type}</span>
+      <div class="note-card-context">${escapeHTML(note.context)}</div>
+      ${note.selectedText ? `<div class="note-card-context" style="margin-top:4px;background:rgba(240,140,0,0.1);">"${escapeHTML(note.selectedText)}"</div>` : ''}
+      <textarea class="note-card-text" onchange="updateNote('${note.id}', this.value)">${escapeHTML(note.text)}</textarea>
+      <div class="note-card-actions">
+        <button onclick="scrollToNote('${note.id}')" title="Jump to element">Locate</button>
+        <button class="delete-btn" onclick="deleteNote('${note.id}')" title="Delete note">Delete</button>
+      </div>
+    `;
+    notesList.appendChild(card);
+  });
+}
+
+function updateNote(id, newText) {
+  const note = notes.find(n => n.id === id);
+  if (note) { note.text = newText; saveNotes(); }
+}
+
+function deleteNote(id) {
+  const idx = notes.findIndex(n => n.id === id);
+  if (idx === -1) return;
+  const note = notes[idx];
+  // Remove highlight from element
+  const el = editor.querySelector(`[data-note-id="${id}"]`);
+  if (el) {
+    delete el.dataset.noteId;
+    delete el.dataset.noteNum;
+    el.classList.remove('note-block-highlight');
+    // If it was a text highlight span, unwrap it
+    if (el.classList.contains('note-text-highlight')) {
+      el.outerHTML = el.innerHTML;
+    }
+  }
+  notes.splice(idx, 1);
+  // Renumber
+  notes.forEach((n, i) => {
+    n.noteNum = i + 1;
+    const noteEl = editor.querySelector(`[data-note-id="${n.id}"]`);
+    if (noteEl) noteEl.dataset.noteNum = n.noteNum;
+  });
+  renderNotesList();
+  saveNotes();
+  setStatus('ready', 'Note deleted');
+}
+
+function scrollToNote(id) {
+  const el = editor.querySelector(`[data-note-id="${id}"]`);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.style.transition = 'outline 200ms';
+    el.style.outline = '3px solid var(--note-border)';
+    setTimeout(() => { el.style.outline = ''; }, 1500);
+  }
+}
+
+function clearAllNotes() {
+  // Remove all highlights and markers from DOM
+  editor.querySelectorAll('[data-note-id]').forEach(el => {
+    delete el.dataset.noteId;
+    delete el.dataset.noteNum;
+    el.classList.remove('note-block-highlight');
+    if (el.classList.contains('note-text-highlight')) {
+      el.outerHTML = el.innerHTML;
+    }
+  });
+  notes = [];
+  noteIdCounter = 0;
+  renderNotesList();
+  saveNotes();
+}
+
+// ---- Export notes for Claude ----
+function exportNotes() {
+  if (notes.length === 0) {
+    setStatus('error', 'No notes to export');
+    return;
+  }
+
+  let output = `I reviewed the HTML document${currentFilename ? ` (converted from ${currentFilename})` : ''}. Here are my edit instructions:\n\n`;
+
+  notes.forEach(note => {
+    output += `---\n`;
+    output += `Note #${note.noteNum} [${note.type.toUpperCase()}]\n`;
+    output += `Target: ${note.selector}\n`;
+    output += `Context: "${note.context}"\n`;
+    if (note.selectedText) {
+      output += `Selected text: "${note.selectedText}"\n`;
+    }
+    output += `Instruction: ${note.text}\n\n`;
+  });
+
+  output += `---\n`;
+  output += `Please read the HTML file, locate each target element using the selector and context, and apply the instructions. After editing, confirm what you changed for each note.\n`;
+
+  navigator.clipboard.writeText(output).then(() => {
+    setStatus('ready', `${notes.length} notes copied to clipboard — paste into Claude`);
+  }).catch(() => {
+    // Fallback: create a downloadable text file
+    const blob = new Blob([output], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'annotation-notes.txt';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+    setStatus('ready', `${notes.length} notes saved to file`);
+  });
+}
+
+// ---- Export PDF ----
+async function exportPDF() {
+  // Get the full HTML including styles
+  const html = document.documentElement.outerHTML;
+  if (!editor.innerHTML.trim()) {
+    setStatus('error', 'Nothing to export');
+    return;
+  }
+
+  setStatus('working', 'Exporting PDF via Playwright...');
+  try {
+    const res = await fetch('/export', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        html: document.documentElement.outerHTML,
+        filename: currentFilename ? currentFilename.replace(/\.pdf$/i, '-annotated.pdf') : 'export.pdf',
+      }),
+    });
+    if (!res.ok) {
+      let msg = 'Export failed';
+      try { const d = await res.json(); msg = d.error || msg; } catch(_) {}
+      throw new Error(msg);
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = currentFilename ? currentFilename.replace(/\.pdf$/i, '-export.pdf') : 'export.pdf';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+    setStatus('ready', 'PDF exported');
+  } catch (err) {
+    setStatus('error', err.message);
+  }
+}
+
+// ---- Download HTML ----
+function downloadHTML() {
+  if (!editor.innerHTML.trim()) { setStatus('error', 'Nothing to download'); return; }
+  const doc = document.documentElement.outerHTML;
+  const blob = new Blob([`<!DOCTYPE html>\n${doc}`], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = currentFilename ? currentFilename.replace(/\.pdf$/i, '.html') : 'document.html';
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+  setStatus('ready', 'HTML downloaded');
+}
+
+// ---- Helpers ----
+function escapeHTML(str) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
+
+// ---- Init ----
+loadNotes();
+renderNotesList();
+setStatus('ready', 'Ready');
+
+// Check server health
+fetch('/health').then(r => r.json()).then(d => {
+  engineBadge.textContent = d.converter || '—';
+}).catch(() => {
+  engineBadge.textContent = 'offline';
+});
+</script>
+</body>
+</html>

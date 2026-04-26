@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — GlowScanInvitation · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .gsi-topbar {
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .gsi-topbar .crumb {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .gsi-topbar .crumb .v { color: var(--editorial-black); font-weight: 700; }
+
+    .gsi-stamp {
+      padding: 20px 24px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gsi-read {
+      padding: 0 24px 24px;
+    }
+    .gsi-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 28px;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .gsi-read .line + .line { margin-top: 4px; }
+    .gsi-read .line em {
+      color: var(--primary);
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+    .gsi-read .line.dim { color: var(--editorial-muted); }
+
+    /* A minimalist capture card — negative space instead of a giant faceid glyph */
+    .gsi-capture {
+      margin: 4px 24px 0;
+      border: 1px solid var(--divider-medium);
+      background: var(--bg-white);
+      padding: 22px 20px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      border-radius: var(--radius-sharp);
+    }
+    .gsi-capture .lbl {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .gsi-capture .head {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.3;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .gsi-capture .sub {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 12px;
+      color: var(--editorial-muted);
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+    /* Minimal geometric scan mark — 4 corners */
+    .gsi-scan-mark {
+      width: 56px;
+      height: 56px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .gsi-scan-mark span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--editorial-black);
+    }
+    .gsi-scan-mark span:nth-child(1) { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .gsi-scan-mark span:nth-child(2) { top: 0; right: 0; border-left: none; border-bottom: none; }
+    .gsi-scan-mark span:nth-child(3) { bottom: 0; left: 0; border-right: none; border-top: none; }
+    .gsi-scan-mark span:nth-child(4) { bottom: 0; right: 0; border-left: none; border-top: none; }
+    .gsi-scan-mark .dot {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 4px; height: 4px;
+      background: var(--primary);
+      border-radius: 999px;
+      border: none;
+    }
+
+    /* What's captured — a small mono promise */
+    .gsi-promise {
+      padding: 20px 24px 0;
+    }
+    .gsi-promise .row {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 12px;
+      padding: 6px 0;
+      align-items: baseline;
+    }
+    .gsi-promise .ck {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 13px;
+      color: var(--editorial-black);
+    }
+    .gsi-promise .txt {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--editorial-black);
+    }
+    .gsi-promise .txt .muted { color: var(--editorial-muted); }
+
+    .gsi-footnote {
+      padding: 18px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <div class="gsi-topbar">
+          <span class="crumb">← Back</span>
+          <span class="crumb">STEP <span class="v">07</span> · OF · 08</span>
+        </div>
+
+        <!-- Prev echo — ties to the skin answer in QuickScan -->
+        <div class="alche-prev-echo">
+          <span class="tag">PREV · YOUR WORDS</span>
+          <span class="echo">"The mirror tells me more than the calendar."</span>
+        </div>
+
+        <!-- Stamp -->
+        <div class="gsi-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">Alche · A First Look</span>
+        </div>
+
+        <!-- Read — connects skin answer to the act of scanning -->
+        <div class="gsi-read">
+          <span class="line">You told me your skin</span>
+          <span class="line">is where you see the years.</span>
+          <span class="line"><em>Let's look once</em> — together.</span>
+          <span class="line dim">Then we build from what we see.</span>
+        </div>
+
+        <!-- Capture card — no huge faceid glyph, just a small editorial mark -->
+        <div class="gsi-capture">
+          <div>
+            <span class="lbl">GlowScan · 60 seconds</span>
+            <span class="head">A quiet photograph, front-lit — not a Face ID.</span>
+            <div class="sub">Indirect window light, no makeup if possible. I'll measure tone, hydration signal, even-ness — nothing else.</div>
+          </div>
+          <div class="gsi-scan-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <!-- What we capture (tiny promise list) -->
+        <div class="gsi-promise">
+          <div class="row"><span class="ck">●</span><span class="txt">Lives on your phone — <span class="muted">encrypted, your baseline only.</span></span></div>
+          <div class="row"><span class="ck">●</span><span class="txt">Deleted after analysis unless you pin it.</span></div>
+          <div class="row"><span class="ck">○</span><span class="txt"><span class="muted">Skip and we'll set a baseline later. Your focus areas still work.</span></span></div>
+        </div>
+
+        <!-- Interstitial — one more soft line before the CTA -->
+        <div class="alche-interstitial" style="margin-top: 14px;">
+          <p class="i-voice">If now isn't the time, that's fine. I'll ask again on a morning with <em>better light</em>.</p>
+        </div>
+
+        <!-- Primary -->
+        <div style="padding-top: 6px;">
+          <button class="alche-primary-action">
+            <span>Start the scan · 60 sec</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Not now · Take me home</span></a>
+        </div>
+
+        <div class="gsi-footnote">
+          <span>DRAFT · BASELINE</span>
+          <span>CAMERA · FRONT · PRIVATE</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · GLOW SCAN INVITATION</p>
+      <h1 class="alche-display-l title">An invitation tied to what was just said — never a face-id prompt.</h1>
+      <p class="alche-body philosophy">
+        The giant blue `faceid` glyph leaves the stage. In its place: the member's own QuickScan quote ("The mirror tells me more than the calendar"), a four-line italic read that makes the scan feel like a next page of the same letter, and a small editorial capture card with a geometric corner-scan mark instead of a system icon. Privacy lives as three quiet promise rows.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>56pt blue `faceid` SF Symbol as the screen's loudest element. Ghost-style "Skip for now" that reads as equal weight. Zero continuity to the rest of onboarding. "See where your / skin stands" headline that could belong to any app.</div></li>
+        <li><span class="label">KEPT</span><div>60-second duration mention. Skip / continue binary. Forward route to Home. The "if you have no skin focus, skip this screen" fall-through logic.</div></li>
+        <li><span class="label">ADDED</span><div>(1) `.alche-prev-echo` quoting the user's own skin answer. (2) A minimalist corner-mark glyph (editorial scan brackets) replacing the face-id. (3) Three privacy promises as a tiny mono row — honest, not legalese. (4) `.alche-interstitial` giving the member a graceful out: "I'll ask again on a morning with better light."</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: members who responded to the current "start a scan" mental model may miss the bold face-id glyph. The new invitation asks them to read a paragraph before tapping.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

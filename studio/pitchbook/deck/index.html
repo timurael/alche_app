@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alche — Pitch Book v6 · Retail-First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_design-system.css">
+<style>
+  /* v6 additions — brand + layout tweaks that don't belong in the global system */
+  .cover-page { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: var(--page-height); padding: 0 var(--page-margin-x); }
+  .cover-wordmark { font-family: var(--font-serif); font-size: 120px; font-weight: 300; letter-spacing: -0.04em; color: var(--deep); line-height: 1; margin-bottom: var(--space-6); }
+  .cover-tagline { font-family: var(--font-serif); font-size: 24px; font-style: italic; font-weight: 400; color: var(--deep-70); margin-bottom: var(--space-10); text-align: center; }
+  .cover-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--stone); text-transform: uppercase; text-align: center; line-height: 1.8; }
+  .flywheel {
+    font-family: var(--font-mono); font-size: 11px; line-height: 1.8;
+    color: var(--deep); white-space: pre-wrap;
+    padding: var(--space-6) var(--space-7);
+    background: var(--glass-strong); border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+  }
+  .big-number { font-family: var(--font-serif); font-size: 72px; line-height: 1; color: var(--amber); font-weight: 700; }
+  .four-quarters { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+  .six-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .feature-card { padding: var(--space-5); background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-md); }
+  .feature-card__label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: var(--space-2); }
+  .feature-card__title { font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 600; color: var(--deep); margin-bottom: var(--space-2); }
+  .feature-card__body { font-size: var(--text-xs); line-height: 1.5; color: var(--deep-70); }
+  .use-of-funds-row { display: grid; grid-template-columns: 32px 100px 1fr 60px; gap: var(--space-3); align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--deep-04); }
+  .use-of-funds-pct { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--amber); font-variant-numeric: tabular-nums; }
+  .use-of-funds-amt { font-family: var(--font-mono); font-size: 11px; color: var(--stone); font-weight: 700; }
+  .use-of-funds-label { font-family: var(--font-serif); font-size: 16px; font-weight: 600; color: var(--deep); }
+  .use-of-funds-desc { font-size: 11px; line-height: 1.5; color: var(--deep-70); }
+  .use-of-funds-bar { width: 100%; height: 4px; background: var(--deep-08); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+  .use-of-funds-bar-fill { height: 100%; background: var(--amber); }
+  .back-cover { background: var(--deep); color: var(--cream); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .back-cover h1, .back-cover p { color: var(--cream); }
+  .back-cover .cover-wordmark { color: var(--cream); font-size: 90px; margin-bottom: var(--space-8); }
+  .back-cover-tagline { font-family: var(--font-serif); font-size: 20px; font-style: italic; color: rgba(245, 240, 232, 0.7); max-width: 480px; line-height: 1.5; margin-bottom: var(--space-8); }
+  .back-cover-meta { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(245, 240, 232, 0.5); text-transform: uppercase; }
+  .pillar-card { padding: var(--space-6); background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); border-top: 3px solid var(--amber); }
+  .pillar-card--sage { border-top-color: var(--sage); }
+  .pillar-card--terra { border-top-color: var(--terra); }
+  .pillar-number { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: var(--space-2); }
+  .pillar-card--sage .pillar-number { color: var(--sage); }
+  .pillar-card--terra .pillar-number { color: var(--terra); }
+  .pillar-title { font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 600; color: var(--deep); margin-bottom: var(--space-3); }
+  .pillar-body { font-size: var(--text-sm); line-height: 1.6; color: var(--deep-70); }
+  .reveal-mark { font-family: var(--font-mono); font-weight: 700; color: var(--sage); font-size: 11px; }
+  .reveal-mark-no { font-family: var(--font-mono); font-weight: 400; color: var(--stone); font-size: 11px; }
+</style>
+</head>
+<body>
+
+<!-- =========================== SLIDE 1 — COVER =========================== -->
+<div class="page cover-page">
+  <div class="cover-wordmark">alche</div>
+  <div class="cover-tagline">Longevity, simplified.</div>
+  <div class="cover-meta">
+    Editorial commerce for longevity<br>
+    Built in Berlin · For Europe<br><br>
+    Pre-seed · €500K · April 2026<br>
+    Confidential
+  </div>
+  <div class="page-footer">
+    <div class="page-footer__number">01</div>
+    <div class="page-footer__confidential">alche · v6 · confidential</div>
+  </div>
+</div>
+
+<!-- =========================== SLIDE 2 — PROBLEM =========================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">THE PROBLEM · 02</div>
+  </div>
+  <div class="section-header">
+    <span class="section-header__number">§ 01 · The problem</span>
+    <h1 class="section-header__title">The longevity market is <strong>loud, clinical, and expensive.</strong></h1>
+    <p class="section-header__subtitle">Europe has a €50B+ supplement market and 66% of Germans taking vitamins — but no editorial curator worth trusting.</p>
+  </div>
+  <div class="prose mb-7" style="max-width: 580px;">
+    <p class="lead">Consumers bounce between Amazon algorithms, pharmacist defaults, and influencer chaos. The one thing that should be simple — a daily longevity protocol that actually works — is the one thing nobody has solved.</p>
+  </div>
+  <div class="four-quarters">
+    <div class="glass-accent glass-accent--terra">
+      <h5 class="mb-2">Overwhelm</h5>
+      <p class="text-sm">Thousands of SKUs, conflicting claims, no clear starting point. 73% of consumers report decision paralysis when buying health products online.</p>
+    </div>
+    <div class="glass-accent glass-accent--terra">
+      <h5 class="mb-2">Trust gap</h5>
+      <p class="text-sm">Influencer wellness trust is collapsing. 93% read reviews; 85% won't buy without ratings. No source of editorial authority in European wellness.</p>
+    </div>
+    <div class="glass-accent glass-accent--rose">
+      <h5 class="mb-2">Gatekept pricing</h5>
+      <p class="text-sm">Personalized longevity plans cost €1,000+ through concierge services. Everyone else gets generic advice and Amazon.</p>
+    </div>
+    <div class="glass-accent glass-accent--rose">
+      <h5 class="mb-2">No editorial authority</h5>
+      <p class="text-sm">Europe has no Goop, no Thrive Market, no Wirecutter-for-wellness. The editorial layer that makes commerce trustworthy simply doesn't exist yet.</p>
+    </div>
+  </div>
+  <div class="callout callout--amber mt-7">
+    <div class="callout__title">What's missing</div>
+    <div class="callout__body">A free, intelligent, editorially curated way to get from <em>"I want to live longer and feel better"</em> to <em>"these three products arrive on Thursday."</em></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">02</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 3 — INSIGHT =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">THE INSIGHT · 03</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 02 · The insight</span>
+    <h1 class="section-header__title">We <strong>give intelligence away.</strong><br>And monetize the decision.</h1>
+  </div>
+  <div class="pull-quote mt-10" style="border-left: 3px solid var(--amber); padding-left: var(--space-7);">
+    <div class="pull-quote__text" style="font-size: 32px; line-height: 1.3;">Longevity shouldn't feel like a lab report.<br>It should feel like your smartest friend.<br><em>And your smartest friend tells you what to buy.</em></div>
+  </div>
+  <div class="prose mt-8" style="max-width: 580px;">
+    <p class="lead">Every longevity app to date has tried to monetize <em>intelligence</em> behind a paywall. We give intelligence away. We monetize the <strong>decision</strong> — the moment of purchase — where the customer already wants to act.</p>
+  </div>
+  <div class="sidebar mt-8">
+    <div class="sidebar__label">Why this works</div>
+    <div class="sidebar__text">Sephora's free app drives 80% of North American sales. AG1 spends $2.2M/mo on free content to sell $600M in products. Content isn't marketing — it's the sales engine. The Ordinary hit €700M by giving ingredient transparency away and selling the product.</div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">03</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 4 — SOLUTION =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">THE SOLUTION · 04</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 03 · The solution</span>
+    <h1 class="section-header__title">Free intelligence.<br><strong>Curated commerce.</strong> Transparent margins.</h1>
+    <p class="section-header__subtitle">Alche — the European longevity platform. App stays free. Revenue from editorial retail + thin membership.</p>
+  </div>
+  <div class="three-col mt-8">
+    <div class="pillar-card">
+      <div class="pillar-number">Pillar 01</div>
+      <div class="pillar-title">Free AI protocol</div>
+      <div class="pillar-body">Onboarding generates a personalized daily protocol — supplements, timing, habits — grounded in peer-reviewed research. No paywall, no feature gate.</div>
+    </div>
+    <div class="pillar-card pillar-card--sage">
+      <div class="pillar-number">Pillar 02</div>
+      <div class="pillar-title">Curated commerce</div>
+      <div class="pillar-body">AI recommends specific products from Alche's editorially vetted shelf. Every product tied to studies. Every margin disclosed. Research-backed decisions, not algorithmic ones.</div>
+    </div>
+    <div class="pillar-card pillar-card--terra">
+      <div class="pillar-number">Pillar 03</div>
+      <div class="pillar-title">Membership flywheel</div>
+      <div class="pillar-body">€5-9/mo membership unlocks discounted pricing, bio-age tracking, and priority access. Small fee, disproportionate commitment. Costco's proof, applied to longevity.</div>
+    </div>
+  </div>
+  <div class="glass-elevated mt-8">
+    <h5 class="mb-3 uppercase tracking-wide text-amber">The bridge</h5>
+    <p style="font-size: 17px; line-height: 1.5;">Research → Protocol → Product — one continuous thread.<br>
+    <em>"Here's what your body needs. Here's the science. It arrives Thursday."</em></p>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">04</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 5 — HOW IT WORKS =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">HOW IT WORKS · 05</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 04 · How it works</span>
+    <h1 class="section-header__title">Four steps. <strong>No friction.</strong></h1>
+  </div>
+  <div class="timeline mt-8">
+    <div class="timeline__item">
+      <div class="timeline__label">Step 01 · ~3 minutes</div>
+      <div class="timeline__title">Tell us about you</div>
+      <div class="timeline__body">Onboarding captures goals, lifestyle, and health context. Optional biomarker import (Oura, Apple Health, lab results) enriches the model.</div>
+    </div>
+    <div class="timeline__item timeline__item--sage">
+      <div class="timeline__label">Step 02 · instant</div>
+      <div class="timeline__title">Get your protocol</div>
+      <div class="timeline__body">AI generates a personalized plan — supplements, timing, routines, priorities. Every recommendation linked to research. Updateable in seconds.</div>
+    </div>
+    <div class="timeline__item timeline__item--terra">
+      <div class="timeline__label">Step 03 · the commerce moment</div>
+      <div class="timeline__title">Shop the shelf</div>
+      <div class="timeline__body">Curated products matched to your protocol. Transparent cost + Alche margin shown on every SKU. Subscribe-and-save locks reorder.</div>
+    </div>
+    <div class="timeline__item timeline__item--rose">
+      <div class="timeline__label">Step 04 · ongoing</div>
+      <div class="timeline__title">Live it daily</div>
+      <div class="timeline__body">Track adherence, reorder, evolve. Membership layer adds bio-age tracking, advanced insights, priority access. Free tier never expires.</div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">05</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 6 — PRODUCT =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">PRODUCT · 06</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 05 · Product</span>
+    <h1 class="section-header__title">What it looks like. <strong>What it does.</strong></h1>
+  </div>
+  <div class="three-col mt-7">
+    <div class="glass" style="aspect-ratio: 9/16; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <h5 class="mb-2 text-amber uppercase tracking-wide">Screen 01</h5>
+      <div class="font-serif text-lg text-deep-70" style="line-height: 1.4;">Protocol view<br>daily plan + timing<br>evidence panel</div>
+    </div>
+    <div class="glass" style="aspect-ratio: 9/16; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <h5 class="mb-2 text-sage uppercase tracking-wide">Screen 02</h5>
+      <div class="font-serif text-lg text-deep-70" style="line-height: 1.4;">Product shelf<br>curated SKUs<br>cost + margin visible</div>
+    </div>
+    <div class="glass" style="aspect-ratio: 9/16; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;">
+      <h5 class="mb-2 text-terra uppercase tracking-wide">Screen 03</h5>
+      <div class="font-serif text-lg text-deep-70" style="line-height: 1.4;">Evidence library<br>studies per product<br>adaptive learning</div>
+    </div>
+  </div>
+  <div class="callout callout--sage mt-7">
+    <div class="callout__title">Beta status · Apr 2026</div>
+    <div class="callout__body">iOS MVP live on TestFlight. Protocol engine tested with 40 beta users. Commerce layer integrated in design system, wiring to suppliers underway.</div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">06</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 7 — KEY FEATURES =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">KEY FEATURES · 07</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 06 · Key features</span>
+    <h1 class="section-header__title">Six things.<br><strong>That's the product.</strong></h1>
+  </div>
+  <div class="six-features mt-7">
+    <div class="feature-card"><div class="feature-card__label">Core · Free</div><div class="feature-card__title">AI-personalized protocols</div><div class="feature-card__body">Daily supplement, routine, and lifestyle plans. Tailored to goals, biomarkers, and ongoing feedback. Protocol evolves with adherence data.</div></div>
+    <div class="feature-card"><div class="feature-card__label">Core · Free</div><div class="feature-card__title">Evidence library</div><div class="feature-card__body">Every recommendation links to peer-reviewed research. Transparent, challengeable, updated. The editorial layer that earns trust.</div></div>
+    <div class="feature-card"><div class="feature-card__label">Commerce · Free</div><div class="feature-card__title">Curated shelf</div><div class="feature-card__body">30-50 editorially vetted products at launch. Every SKU tied to specific protocols. Margin visible on every page.</div></div>
+    <div class="feature-card"><div class="feature-card__label">Commerce · Free</div><div class="feature-card__title">Transparent margins</div><div class="feature-card__body">Product cost + Alche markup shown publicly. German consumers reward transparency — 60-75% will switch brands for a better deal. Disclosure is the moat.</div></div>
+    <div class="feature-card"><div class="feature-card__label">Core · Free</div><div class="feature-card__title">Adaptive learning</div><div class="feature-card__body">Protocol evolves with adherence data, feedback, reorder patterns, and outcomes. AI gets smarter with every interaction.</div></div>
+    <div class="feature-card" style="border-top: 3px solid var(--amber);"><div class="feature-card__label" style="color: var(--amber);">Premium · €5-9/mo</div><div class="feature-card__title">Digital twin</div><div class="feature-card__body">Bio-age score, predictive model, advanced insights. Membership-tier feature that extends the free product — not a paywall on it.</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">07</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 8 — COMPETITIVE =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">COMPETITIVE LANDSCAPE · 08</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 07 · Competitive</span>
+    <h1 class="section-header__title">No one in Europe combines<br><strong>science + curation + commerce.</strong></h1>
+  </div>
+  <table class="data-table mt-6">
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th class="align-right" style="color: var(--amber);">ALCHE</th>
+        <th class="align-right">Sunday Natural (DE)</th>
+        <th class="align-right">AG1 (US)</th>
+        <th class="align-right">Thrive Market (US)</th>
+        <th class="align-right">The Ordinary</th>
+        <th class="align-right">Xiaohongshu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Free AI protocol</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td></tr>
+      <tr><td>Editorial curation</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right muted">partial</td><td class="align-right muted">single SKU</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right muted">n/a (maker)</td><td class="align-right"><span class="reveal-mark">✓</span></td></tr>
+      <tr><td>Transparent margins</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td></tr>
+      <tr><td>EU-native</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td></tr>
+      <tr><td>Content→commerce flywheel</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right muted">partial</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right muted">partial</td><td class="align-right muted">partial</td><td class="align-right"><span class="reveal-mark">✓</span></td></tr>
+      <tr><td>Multi-brand curated shelf</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">— (own-brand only)</span></td><td class="align-right"><span class="reveal-mark-no">— (single SKU)</span></td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">— (own-brand only)</span></td><td class="align-right"><span class="reveal-mark">✓</span></td></tr>
+      <tr><td>Own-brand (Phase 2)</td><td class="align-right muted">planned</td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark">✓</span></td><td class="align-right"><span class="reveal-mark-no">—</span></td></tr>
+    </tbody>
+  </table>
+  <div class="glass-elevated mt-8" style="border-left: 3px solid var(--amber);">
+    <h3 class="mb-2">Positioning line</h3>
+    <p style="font-size: 17px; line-height: 1.5;">Alche is <strong>"Xiaohongshu for longevity in Europe"</strong> — editorial commerce with AI as the curator. <strong>Sunday Natural is single-brand vertical commerce.</strong> We are multi-brand, editorially curated, AI-led. Different game, same city.</p>
+  </div>
+  <div class="callout callout--terra mt-4">
+    <div class="callout__title">Honest read on Sunday Natural (Berlin)</div>
+    <div class="callout__body">Sunday Natural is a <strong>~€680M revenue business (2023), acquired by CVC for ~€800M in April 2024.</strong> They are 10 years ahead. They are also <strong>structurally a single-brand vertical retailer</strong> — DTC-only, no curated shelf, no editorial layer. Alche's multi-brand editorial play lives in the space their model structurally can't occupy. They are not the competitor; they are the proof that German longevity commerce is huge.</div>
+  </div>
+  <div class="sources">Sources: company websites, press coverage (TechCrunch, Sifted, SCMP) · revenue-model-research.md · public financial filings.</div>
+  <div class="page-footer"><div class="page-footer__number">08</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 9 — MARKET =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">MARKET OPPORTUNITY · 09</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 08 · Market</span>
+    <h1 class="section-header__title">A €7.2B home market,<br>with <strong>€50B+ of European tailwind.</strong></h1>
+  </div>
+  <div class="kpi-grid kpi-grid--4 mb-7">
+    <div class="kpi-grid__item"><div class="kpi-grid__value kpi-grid__value--accent">€380B</div><div class="kpi-grid__label">TAM — EU Health & Wellness</div><div class="kpi-grid__note">2026 est.</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">€52B</div><div class="kpi-grid__label">SAM — EU Supplements + Digital Wellness</div><div class="kpi-grid__note">supplements €35B + digital €17B</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">€7.2B</div><div class="kpi-grid__label">Germany Supplements (Home)</div><div class="kpi-grid__note">9.2% CAGR</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value kpi-grid__value--accent">€50M</div><div class="kpi-grid__label">SOM — Year 3 Target GMV</div><div class="kpi-grid__note">75K × €70 × 6 × 15%</div></div>
+  </div>
+  <h5 class="mb-3 text-amber uppercase tracking-wider">The tailwinds</h5>
+  <div class="two-col">
+    <div class="glass-accent glass-accent--sage">
+      <h5 class="mb-2">Germany = #1 functional drinks in EU</h5>
+      <p class="text-sm">21.7% of European functional beverage market. 66-70% of population uses vitamins/minerals/supplements. Cultural acceptance is already here.</p>
+    </div>
+    <div class="glass-accent glass-accent--sage">
+      <h5 class="mb-2">Online share growing 12.6% CAGR</h5>
+      <p class="text-sm">30-35% of supplement sales online and climbing. German consumers want e-commerce + trust — exactly Alche's intersection.</p>
+    </div>
+    <div class="glass-accent glass-accent--amber">
+      <h5 class="mb-2">European white space</h5>
+      <p class="text-sm">AG1, Ritual, Thrive Market are all US-first. iHerb does 82% of revenue internationally but has no European editorial layer. No EU brand combines science + curation + commerce.</p>
+    </div>
+    <div class="glass-accent glass-accent--amber">
+      <h5 class="mb-2">Trust is redistributing</h5>
+      <p class="text-sm">83% of Germans trust their pharmacist — the highest-trusted health source. Alche rebuilds that infrastructure for the digital native. Editorial authority replaces clinical gatekeeping.</p>
+    </div>
+  </div>
+  <div class="sources">Sources: Statista 2024-2026 · EU Commission food supplement market report · German BVL market data · revenue-model-research.md §4.</div>
+  <div class="page-footer"><div class="page-footer__number">09</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 10 — AUDIENCE =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">TARGET AUDIENCE · 10</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 09 · Audience</span>
+    <h1 class="section-header__title">Three people.<br><strong>Different friction, same solution.</strong></h1>
+  </div>
+  <div class="three-col mt-7">
+    <div class="persona-card">
+      <div class="persona-card__eyebrow">Persona 01</div>
+      <div class="persona-card__name">The Optimizer</div>
+      <div class="persona-card__role">28-42 · urban · already in the game</div>
+      <p class="persona-card__detail">Takes 3+ supplements. Tracks sleep and HRV with Oura or Apple Watch. Frustrated by fragmentation — brand-juggling across 5 providers.</p>
+      <p class="persona-card__detail">Wants: a unified protocol with clear priorities.</p>
+      <div class="persona-card__spending">
+        <div class="persona-card__spending-item"><div class="persona-card__spending-value">€80-150</div><div class="persona-card__spending-label">monthly spend</div></div>
+        <div class="persona-card__spending-item"><div class="persona-card__spending-value">40%</div><div class="persona-card__spending-label">of Y1 users</div></div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-card__eyebrow">Persona 02</div>
+      <div class="persona-card__name">The Curious Beginner</div>
+      <div class="persona-card__role">26-38 · health-conscious · overwhelmed</div>
+      <p class="persona-card__detail">Wants to start but doesn't know where. Reads Huberman, scrolls Reddit, follows influencers — but never buys.</p>
+      <p class="persona-card__detail">Wants: an evidence-based starting point without judgment.</p>
+      <div class="persona-card__spending">
+        <div class="persona-card__spending-item"><div class="persona-card__spending-value">€40-70</div><div class="persona-card__spending-label">monthly spend</div></div>
+        <div class="persona-card__spending-item"><div class="persona-card__spending-value">35%</div><div class="persona-card__spending-label">of Y1 users</div></div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-card__eyebrow">Persona 03</div>
+      <div class="persona-card__name">The Busy Professional</div>
+      <div class="persona-card__role">30-45 · high-performer · outsources</div>
+      <p class="persona-card__detail">Has the money and no time. Currently paying €1K+ for concierge services that deliver the same research-backed advice Alche's AI can give in 3 minutes.</p>
+      <p class="persona-card__detail">Wants: concierge quality at consumer pricing.</p>
+      <div class="persona-card__spending">
+        <div class="persona-card__spending-item"><div class="persona-card__spending-value">€100-200</div><div class="persona-card__spending-label">monthly spend</div></div>
+        <div class="persona-card__spending-item"><div class="persona-card__spending-value">25%</div><div class="persona-card__spending-label">of Y1 users</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout--sage mt-7">
+    <div class="callout__title">Geography · Y1-Y2</div>
+    <div class="callout__body">Primary: Germany, Austria, Switzerland, Netherlands, UK. Language launch: EN + DE at Day 1. FR + NL by Month 6.</div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">10</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 11 — GO-TO-MARKET =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">GO-TO-MARKET · 11</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 10 · Go-to-market</span>
+    <h1 class="section-header__title">Three phases.<br><strong>Content compounds. Commerce captures.</strong></h1>
+  </div>
+  <div class="timeline mt-8">
+    <div class="timeline__item">
+      <div class="timeline__label">Phase 01 · Months 0-3</div>
+      <div class="timeline__title">Foundation</div>
+      <div class="timeline__body">Waitlist growth via editorial content. 15-20 curated SKU launch. Berlin-first community — supplement masterclasses with MDs, longevity researcher AMAs. <strong>Outcome:</strong> 3K waitlist, 20 SKUs live, 500 paying customers.</div>
+    </div>
+    <div class="timeline__item timeline__item--sage">
+      <div class="timeline__label">Phase 02 · Months 4-9</div>
+      <div class="timeline__title">Acceleration</div>
+      <div class="timeline__body">Membership tier launch (€5-9/mo, digital twin perk). Expand SKU count to 50+. Influencer seeding with aligned EU voices. Content library compounds SEO. <strong>Outcome:</strong> 10K active paying customers, €250K MRR, membership at 10%+ conversion.</div>
+    </div>
+    <div class="timeline__item timeline__item--terra">
+      <div class="timeline__label">Phase 03 · Months 10-18</div>
+      <div class="timeline__title">Compounding</div>
+      <div class="timeline__body">Own-brand 2-3 hero products launch (Magnesium, Omega-3). DACH expansion. B2B wellness pilot with 1-2 German employers. <strong>Outcome:</strong> 30K actives, €1M MRR, own-brand at 20% of mix, Series A readiness.</div>
+    </div>
+  </div>
+  <div class="glass mt-8">
+    <h5 class="mb-3 text-amber uppercase tracking-wider">Primary channels · CAC target €35 blended</h5>
+    <div class="two-col" style="gap: var(--space-3);">
+      <ul style="list-style: none; padding: 0; font-size: 12px; line-height: 1.8;">
+        <li>→ <strong>Long-form content</strong> — blog, YouTube essay format, SEO compounds over 18 months</li>
+        <li>→ <strong>Berlin community events</strong> — masterclasses, advisor salons, free-to-attend</li>
+        <li>→ <strong>Podcast partnerships</strong> — EU longevity voices, not US imports</li>
+      </ul>
+      <ul style="list-style: none; padding: 0; font-size: 12px; line-height: 1.8;">
+        <li>→ <strong>Referral program</strong> — member-exclusive products unlock with referrals</li>
+        <li>→ <strong>Editorial media</strong> — Sifted, ZEIT Wissen, Monocle Weekly placements</li>
+        <li>→ <strong>Paid</strong> — accelerator, not engine. Meta/Google for protocol quiz entry.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">11</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 12 — BUSINESS MODEL =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">BUSINESS MODEL · 12</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 11 · Business model</span>
+    <h1 class="section-header__title">App is free.<br><strong>Retail is the business.</strong></h1>
+    <p class="section-header__subtitle">Revenue composition shifts from curated-heavy to own-brand-heavy as the flywheel compounds.</p>
+  </div>
+  <h5 class="mb-3 text-amber uppercase tracking-wider">Revenue composition — Y1 → Y3</h5>
+  <table class="data-table mb-6">
+    <thead><tr><th>Stream</th><th class="align-right">Year 1</th><th class="align-right">Year 2</th><th class="align-right">Year 3</th></tr></thead>
+    <tbody>
+      <tr><td>Curated third-party product sales</td><td class="numeric">45%</td><td class="numeric">35%</td><td class="numeric">30%</td></tr>
+      <tr><td>Own-brand product sales <span class="text-stone text-xs">(launches Q1 '27)</span></td><td class="numeric">20%</td><td class="numeric">35%</td><td class="numeric">40%</td></tr>
+      <tr><td>Membership (€5-9/mo, digital twin + perks)</td><td class="numeric">15%</td><td class="numeric">15%</td><td class="numeric">15%</td></tr>
+      <tr><td>Physical space (events, services — Phase 2)</td><td class="numeric">15%</td><td class="numeric">10%</td><td class="numeric">10%</td></tr>
+      <tr><td>Premium tier (advanced insights, CGM integration)</td><td class="numeric">5%</td><td class="numeric">5%</td><td class="numeric">5%</td></tr>
+      <tr class="subtotal"><td>Total revenue composition</td><td class="numeric bold">100%</td><td class="numeric bold">100%</td><td class="numeric bold">100%</td></tr>
+    </tbody>
+  </table>
+  <h5 class="mb-3 text-sage uppercase tracking-wider">Gross margin by stream</h5>
+  <div class="kpi-grid kpi-grid--4">
+    <div class="kpi-grid__item"><div class="kpi-grid__value">25-45%</div><div class="kpi-grid__label">Curated third-party</div><div class="kpi-grid__note">wholesale markup</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value kpi-grid__value--accent">60-80%</div><div class="kpi-grid__label">Own-brand (Phase 2)</div><div class="kpi-grid__note">private label economics</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">~55%</div><div class="kpi-grid__label">Blended Y2 (base)</div><div class="kpi-grid__note">60% by Y3</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">90%+</div><div class="kpi-grid__label">Membership</div><div class="kpi-grid__note">nearly pure margin</div></div>
+  </div>
+  <div class="sources">Sources: revenue-model-research.md §2 · 100+ comp references (AG1, Ritual, Thrive, The Ordinary, iHerb, Sephora, Xiaohongshu) · Confidence flagged VERIFIED / LIKELY / ESTIMATE per metric.</div>
+  <div class="page-footer"><div class="page-footer__number">12</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 13 — FLYWHEEL =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">THE FLYWHEEL · 13</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 12 · The flywheel</span>
+    <h1 class="section-header__title">Free content <strong>compounds</strong><br>into owned revenue.</h1>
+  </div>
+  <div class="flywheel mt-8">Science content (free, open)
+  → builds trust + SEO
+    → free app download
+      → genuine wellness value delivered
+        → AI recommends products matched to protocol
+          → customer purchases curated SKU
+            → subscribe-and-save locks reorder
+              → data feeds better recommendations
+                → content library expands
+                  → loop compounds
+                    ↻ Xiaohongshu pattern at European scale</div>
+  <div class="callout callout--amber mt-8">
+    <div class="callout__title">Key proof · why this works</div>
+    <div class="callout__body">
+      <strong>Sephora's free app drives 80% of North American sales.</strong><br>
+      <strong>AG1 spends $2.2M/mo on free content</strong> to sell $600M in products.<br>
+      <strong>The Ordinary hit €700M</strong> by giving ingredient transparency away.<br>
+      <strong>Xiaohongshu reached $31B valuation</strong> on content→commerce — in 14 months.<br><br>
+      Content isn't marketing. It's the sales engine.
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">13</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 14 — TRACTION =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">TRACTION · 14</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 13 · Traction</span>
+    <h1 class="section-header__title">Where we are.<br><strong>Where we land by Q3.</strong></h1>
+  </div>
+  <div class="two-col mt-7">
+    <div class="glass-elevated">
+      <h5 class="mb-4 uppercase tracking-wider text-sage">Live today · April 2026</h5>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">✓&nbsp;&nbsp;MVP live on TestFlight (iOS)</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">✓&nbsp;&nbsp;AI protocol engine functional — personalized outputs verified</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">✓&nbsp;&nbsp;Protocol tested with 40 beta users</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">✓&nbsp;&nbsp;20 supplier conversations underway (curated shelf)</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">✓&nbsp;&nbsp;Berlin advisory network in formation (MDs, nutritionists)</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">✓&nbsp;&nbsp;Design system complete + production-ready</li>
+        <li style="padding: 8px 0; font-size: 13px;">✓&nbsp;&nbsp;Revenue model validated (100+ comp refs, Apr '26)</li>
+      </ul>
+    </div>
+    <div class="glass-elevated">
+      <h5 class="mb-4 uppercase tracking-wider text-amber">Next 90 days · post-close</h5>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">→&nbsp;&nbsp;Close €500K pre-seed</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">→&nbsp;&nbsp;10-15 wholesale supplier agreements executed</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">→&nbsp;&nbsp;3PL onboarded (supplement-specialist, DE warehouse)</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">→&nbsp;&nbsp;Public waitlist opened — 3K target</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">→&nbsp;&nbsp;Content engine launches (blog + newsletter)</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid var(--deep-04); font-size: 13px;">→&nbsp;&nbsp;First merchandising lead hired (contractor-to-FT)</li>
+        <li style="padding: 8px 0; font-size: 13px;">→&nbsp;&nbsp;Membership tier design finalized</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">14</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 15 — ROADMAP =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">ROADMAP · 15</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 14 · Roadmap</span>
+    <h1 class="section-header__title">18 months to <strong>Series A readiness.</strong></h1>
+  </div>
+  <table class="data-table mt-6">
+    <thead>
+      <tr><th>Quarter</th><th>Milestone</th><th class="align-right">KPI gate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">Q2 2026</td><td>Public waitlist · 20-SKU curated shelf launch · membership beta</td><td class="numeric">3K waitlist · 500 paying</td></tr>
+      <tr><td class="bold">Q3 2026</td><td>App Store public launch (iOS, DE+EN) · first 10K members</td><td class="numeric">10K actives · €250K MRR</td></tr>
+      <tr><td class="bold">Q4 2026</td><td>Android launch · 50+ SKU catalog · EU-wide shipping</td><td class="numeric">20K actives · €500K MRR</td></tr>
+      <tr class="highlight"><td class="bold">Q1 2027</td><td>Own-brand Hero #1 (Magnesium) · Berlin pop-up series · B2B wellness pilot</td><td class="numeric">30K actives · €1M MRR</td></tr>
+      <tr><td class="bold">Q2 2027</td><td>Own-brand Hero #2 (Omega-3) · DACH expansion · Series A prep</td><td class="numeric">€50M GMV run-rate</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout--sage mt-7">
+    <div class="callout__title">Series A thesis — what they'll buy</div>
+    <div class="callout__body">€50M GMV run-rate + 30K actives + own-brand at 30% of mix + membership at 12% conversion = commerce + membership + AI multiple (3-5x revenue, not 1-2x). Series A target: €5-8M at €25-40M post.</div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">15</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 16 — FINANCIALS =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">FINANCIAL PROJECTIONS · 16</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 15 · Financials</span>
+    <h1 class="section-header__title">Retail economics.<br><strong>Honest numbers.</strong></h1>
+    <p class="section-header__subtitle">Base case below. Conservative and optimistic scenarios + full 24-month model in appendix.</p>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th class="align-right">Y1 (2026)</th><th class="align-right">Y2 (2027)</th><th class="align-right">Y3 (2028)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Active customers (paying)</td><td class="numeric">8,000</td><td class="numeric">35,000</td><td class="numeric">90,000</td></tr>
+      <tr><td>Orders / year / customer</td><td class="numeric">4.5</td><td class="numeric">6.0</td><td class="numeric">7.5</td></tr>
+      <tr><td>Average Order Value</td><td class="numeric">€68</td><td class="numeric">€72</td><td class="numeric">€78</td></tr>
+      <tr class="subtotal"><td>GMV</td><td class="numeric bold">€2.4M</td><td class="numeric bold">€15.1M</td><td class="numeric bold">€52.7M</td></tr>
+      <tr><td>Gross revenue (Alche take)</td><td class="numeric">€780K</td><td class="numeric">€5.8M</td><td class="numeric">€22.2M</td></tr>
+      <tr><td>Blended gross margin</td><td class="numeric">48%</td><td class="numeric">55%</td><td class="numeric">60%</td></tr>
+      <tr><td>Gross profit</td><td class="numeric">€375K</td><td class="numeric">€3.2M</td><td class="numeric">€13.3M</td></tr>
+      <tr><td>OPEX</td><td class="numeric">€750K</td><td class="numeric">€2.4M</td><td class="numeric">€6.0M</td></tr>
+      <tr class="highlight"><td class="bold">EBITDA</td><td class="numeric bold">(€375K)</td><td class="numeric bold">€800K</td><td class="numeric bold">€7.3M</td></tr>
+    </tbody>
+  </table>
+  <h5 class="mb-3 mt-7 uppercase tracking-wider text-amber">Three scenarios · Y3</h5>
+  <div class="kpi-grid kpi-grid--3">
+    <div class="kpi-grid__item" style="background: var(--rose-10);"><div class="kpi-grid__value">€14M</div><div class="kpi-grid__label">Conservative Y3 Revenue</div><div class="kpi-grid__note">(€200K) EBITDA</div></div>
+    <div class="kpi-grid__item" style="background: var(--amber-10);"><div class="kpi-grid__value kpi-grid__value--accent">€22M</div><div class="kpi-grid__label">Base Y3 Revenue</div><div class="kpi-grid__note">€7.3M EBITDA · 33% margin</div></div>
+    <div class="kpi-grid__item" style="background: var(--sage-10);"><div class="kpi-grid__value">€38M</div><div class="kpi-grid__label">Optimistic Y3 Revenue</div><div class="kpi-grid__note">€14M EBITDA</div></div>
+  </div>
+  <div class="sources">Swing factors: own-brand mix Y3 · 90-day reorder rate · CAC stability. Full sensitivity matrix in financial appendix.</div>
+  <div class="page-footer"><div class="page-footer__number">16</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 17 — UNIT ECONOMICS =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">UNIT ECONOMICS · 17</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 16 · Unit economics</span>
+    <h1 class="section-header__title">The math works <strong>from Day 1.</strong><br>No 23-month CAC payback.</h1>
+  </div>
+  <div class="kpi-grid kpi-grid--4 mb-6">
+    <div class="kpi-grid__item"><div class="kpi-grid__value">€35</div><div class="kpi-grid__label">CAC blended</div><div class="kpi-grid__note">€45 conservative</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">€68</div><div class="kpi-grid__label">AOV (launch)</div><div class="kpi-grid__note">€78+ with own-brand</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">6x</div><div class="kpi-grid__label">Orders/year</div><div class="kpi-grid__note">4-9 range</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">&lt;3mo</div><div class="kpi-grid__label">Payback period</div><div class="kpi-grid__note">derived</div></div>
+  </div>
+  <div class="kpi-grid kpi-grid--4">
+    <div class="kpi-grid__item"><div class="kpi-grid__value">€350</div><div class="kpi-grid__label">LTV base</div><div class="kpi-grid__note">€550 optimistic</div></div>
+    <div class="kpi-grid__item" style="background: var(--amber-15);"><div class="kpi-grid__value kpi-grid__value--accent">10:1</div><div class="kpi-grid__label">LTV : CAC</div><div class="kpi-grid__note">4.4:1 conservative · 22:1 opt</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">45%</div><div class="kpi-grid__label">90-day reorder target</div><div class="kpi-grid__note">industry benchmark</div></div>
+    <div class="kpi-grid__item"><div class="kpi-grid__value">€8</div><div class="kpi-grid__label">Fulfillment / order</div><div class="kpi-grid__note">FLEX / byrd verified</div></div>
+  </div>
+  <div class="callout callout--amber mt-8">
+    <div class="callout__title">What's honest — and what we dropped</div>
+    <div class="callout__body">
+      v5 claimed <strong>12-15x LTV:CAC with 85% gross margin</strong>. That was SaaS math applied to a retail business. It doesn't survive a first due diligence call.<br><br>
+      v6 says: <strong>10:1 LTV:CAC at 55% blended gross margin</strong>. Sephora-tier. Costco-tier. The Ordinary-tier. That's what actually wins in editorial commerce — and the numbers survive scrutiny.
+    </div>
+  </div>
+  <div class="sources">Reorder rate data: industry benchmarks from Recurring Revenue Quarterly · CAC estimates: base case from content-first acquisition channels · Fulfillment: FLEX Logistik & byrd published rate cards (Apr 2026).</div>
+  <div class="page-footer"><div class="page-footer__number">17</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 18 — TEAM =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">THE TEAM · 18</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 17 · Team</span>
+    <h1 class="section-header__title">One founder.<br><strong>Zero-to-MVP, solo.</strong></h1>
+  </div>
+  <div class="glass-elevated mt-7">
+    <h5 class="mb-2 uppercase tracking-wider text-amber">Founder & CEO</h5>
+    <h2 class="mb-3" style="font-size: 32px;"><strong>Timu</strong></h2>
+    <div class="prose" style="max-width: 100%;">
+      <p>Product builder, brand strategist, AI-native operator. Built Alche zero-to-MVP solo — product, design, engineering, strategy, supplier research. Berlin-based. Prior: editorial and brand work across EU fashion, wellness, and harm reduction communities.</p>
+      <p>Circassian heritage. Queer perspective. Builds for underserved wellness markets — not pivoting into wellness, arriving from inside it.</p>
+    </div>
+  </div>
+  <h5 class="mb-3 mt-8 uppercase tracking-wider text-sage">Planned hires · post-seed</h5>
+  <div class="three-col">
+    <div class="glass">
+      <h5 class="mb-2">Head of Merchandising</h5>
+      <p class="text-sm">Ex-Sephora / ex-Thrive / ex-AG1. Curation + supplier relationships. First hire, contractor-to-FT path.</p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-2">Head of Longevity Science</h5>
+      <p class="text-sm">MD or PhD advisory chair. Research integrity, content authority, product review — the name on the door.</p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-2">Growth Lead</h5>
+      <p class="text-sm">Content-first marketer. SEO + community + DTC wellness background. Second hire by Month 6.</p>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">18</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 19 — WHY NOW =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">WHY NOW · 19</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 18 · Why now</span>
+    <h1 class="section-header__title">Five things<br>happening <strong>at the same time.</strong></h1>
+  </div>
+  <div class="timeline mt-7">
+    <div class="timeline__item">
+      <div class="timeline__label">Driver 01 · AI maturity</div>
+      <div class="timeline__title">LLMs synthesize research at scale</div>
+      <div class="timeline__body">First generation of consumer wellness where intelligence isn't the bottleneck. Personalization at a marginal cost near zero.</div>
+    </div>
+    <div class="timeline__item timeline__item--sage">
+      <div class="timeline__label">Driver 02 · European white space</div>
+      <div class="timeline__title">No EU winner yet</div>
+      <div class="timeline__body">AG1, Ritual, Thrive Market are US-first with minimal EU presence. No European brand combines science + curation + commerce. The gap is obvious and undefended.</div>
+    </div>
+    <div class="timeline__item timeline__item--terra">
+      <div class="timeline__label">Driver 03 · Trust shift</div>
+      <div class="timeline__title">Pharmacist trust moves digital</div>
+      <div class="timeline__body">83% of Germans trust their pharmacist — the highest-trusted health source in the country. Alche replicates that trust infrastructure for the digital native.</div>
+    </div>
+    <div class="timeline__item timeline__item--rose">
+      <div class="timeline__label">Driver 04 · Content collapse</div>
+      <div class="timeline__title">Influencer trust is cracking</div>
+      <div class="timeline__body">€50B+ European supplement market. Influencer authority collapsing. Editorial authority — transparent, evidence-backed — is the moat that fills the void.</div>
+    </div>
+    <div class="timeline__item timeline__item--stone">
+      <div class="timeline__label">Driver 05 · Post-subscription era</div>
+      <div class="timeline__title">Retail + thin membership wins</div>
+      <div class="timeline__body">Consumers over SaaS fatigue. Costco renewal: 92.9%. Amazon Prime spend: 2.3x non-members. Retail + content + optional membership is what works now.</div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">19</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 20 — VISION =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">THE VISION · 20</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 19 · Vision</span>
+    <h1 class="section-header__title">The <strong>European longevity platform.</strong></h1>
+  </div>
+  <div class="pull-quote mt-8" style="border-left: 3px solid var(--amber);">
+    <div class="pull-quote__text" style="font-size: 22px; line-height: 1.45;">Alche becomes the operating system for European longevity — the single place where science, habit, personal data, and curated products converge.</div>
+  </div>
+  <div class="glass-elevated mt-8">
+    <h5 class="mb-3 uppercase tracking-wider text-amber">The long game</h5>
+    <p style="font-size: 16px; line-height: 1.5;">From <strong>app</strong> → to <strong>editorial platform</strong> → to <strong>own-brand standard</strong> → to <strong>protocol canon.</strong></p>
+    <p style="font-size: 14px; line-height: 1.6; color: var(--deep-70); margin-top: 16px;">Alche's protocol becomes the Wirecutter of longevity — the standard European consumers reach for when they want to know what actually works. Editorial authority, compounded over a decade, becomes the infrastructure the next generation builds on.</p>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">20</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 21 — THE ASK =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">THE ASK · 21</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 20 · The ask</span>
+    <h1 class="section-header__title">Raising <strong>€500K pre-seed.</strong><br>MVP → revenue-generating retail in 18 months.</h1>
+  </div>
+  <div class="kpi-row">
+    <div class="big-number">€500K</div>
+    <div>
+      <div class="kpi-row__label" style="font-size: 22px; color: var(--deep);"><strong>Pre-seed round</strong></div>
+      <div class="kpi-row__source">SAFE @ €3.5-4.5M cap, or priced preferred · 15-20% dilution target · 18-month runway to Series A readiness</div>
+    </div>
+  </div>
+  <h5 class="mb-4 mt-8 uppercase tracking-wider text-amber">Use of funds</h5>
+
+  <div class="use-of-funds-row">
+    <div class="use-of-funds-pct">25%</div>
+    <div class="use-of-funds-amt">€125K</div>
+    <div>
+      <div class="use-of-funds-label">Inventory + supplier advances</div>
+      <div class="use-of-funds-desc">First 20 SKU stock · supplier onboarding · 3PL integration · initial buffer inventory for bestseller SKUs</div>
+      <div class="use-of-funds-bar"><div class="use-of-funds-bar-fill" style="width:25%;"></div></div>
+    </div>
+    <div></div>
+  </div>
+  <div class="use-of-funds-row">
+    <div class="use-of-funds-pct">25%</div>
+    <div class="use-of-funds-amt">€125K</div>
+    <div>
+      <div class="use-of-funds-label">Engineering</div>
+      <div class="use-of-funds-desc">iOS polish · Android build · AI engine extension · commerce + membership infrastructure</div>
+      <div class="use-of-funds-bar"><div class="use-of-funds-bar-fill" style="width:25%;"></div></div>
+    </div>
+    <div></div>
+  </div>
+  <div class="use-of-funds-row">
+    <div class="use-of-funds-pct">25%</div>
+    <div class="use-of-funds-amt">€125K</div>
+    <div>
+      <div class="use-of-funds-label">Growth & content</div>
+      <div class="use-of-funds-desc">Content engine · waitlist conversion · Berlin community events · EU influencer seeding · referral program</div>
+      <div class="use-of-funds-bar"><div class="use-of-funds-bar-fill" style="width:25%;"></div></div>
+    </div>
+    <div></div>
+  </div>
+  <div class="use-of-funds-row">
+    <div class="use-of-funds-pct">15%</div>
+    <div class="use-of-funds-amt">€75K</div>
+    <div>
+      <div class="use-of-funds-label">Team</div>
+      <div class="use-of-funds-desc">Merchandising lead (contractor-to-FT) · advisory compensation · content writer retainer</div>
+      <div class="use-of-funds-bar"><div class="use-of-funds-bar-fill" style="width:15%;"></div></div>
+    </div>
+    <div></div>
+  </div>
+  <div class="use-of-funds-row" style="border-bottom: none;">
+    <div class="use-of-funds-pct">10%</div>
+    <div class="use-of-funds-amt">€50K</div>
+    <div>
+      <div class="use-of-funds-label">Operations + legal</div>
+      <div class="use-of-funds-desc">BVL notifications · GmbH setup · legal review (wholesale contracts, EU health claims) · accounting</div>
+      <div class="use-of-funds-bar"><div class="use-of-funds-bar-fill" style="width:10%;"></div></div>
+    </div>
+    <div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">21</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 22 — WHY ALCHE =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">WHY ALCHE · 22</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 21 · Why Alche</span>
+    <h1 class="section-header__title"><strong>Xiaohongshu</strong><br>for longevity in Europe.</h1>
+  </div>
+  <div class="four-quarters mt-8">
+    <div class="glass-accent glass-accent--amber">
+      <h5 class="mb-2">European white space</h5>
+      <p class="text-sm">€50B+ market, no editorial-commerce winner. AG1 / Ritual / Thrive stay US-focused. Sunday Natural is vertical-only. The seat at the intersection is empty — we take it.</p>
+    </div>
+    <div class="glass-accent glass-accent--sage">
+      <h5 class="mb-2">Real revenue from Day 1</h5>
+      <p class="text-sm">Retail model means transactions immediately. No 23-month CAC payback masquerading as "investment." Every marketing euro gets repaid within 3 months in the base case.</p>
+    </div>
+    <div class="glass-accent glass-accent--terra">
+      <h5 class="mb-2">The multiple math</h5>
+      <p class="text-sm">Commerce + membership + AI = 3-5x revenue multiple territory (vs 1-2x for traditional retail). The premium is captured by the model, not claimed on the pitch.</p>
+    </div>
+    <div class="glass-accent glass-accent--rose">
+      <h5 class="mb-2">Founder-market fit</h5>
+      <p class="text-sm">Solo-built MVP under real constraints. Berlin-native. Queer-built for underserved wellness. Not a pivot — a conviction, shipping since February.</p>
+    </div>
+  </div>
+  <div class="pull-quote mt-10">
+    <div class="pull-quote__text" style="font-size: 22px;">This is the company that eats the 10-year gap<br>between what AG1 proved works<br>and what Europe hasn't built yet.</div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">22</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 23 — IN THE WILD =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">IN THE WILD · 23</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 22 · Social proof</span>
+    <h1 class="section-header__title">In the wild.<br><em style="font-weight: 300; color: var(--deep-50);">(traction fills this page.)</em></h1>
+  </div>
+  <div class="callout callout--amber mt-7">
+    <div class="callout__title">Placeholder · fills as traction builds</div>
+    <div class="callout__body">This page stays lean until real signal lands. Post-close, this becomes the page that sells the story after the numbers: press mentions, beta user testimonials, advisor endorsements, supplier partner quotes. Not vanity — validation.</div>
+  </div>
+  <div class="three-col mt-8">
+    <div class="glass" style="opacity: 0.6;"><h5 class="mb-2">Press</h5><p class="text-sm text-stone">Sifted · ZEIT · Monocle · TechCrunch EU — targeting Q3 '26 launch coverage.</p></div>
+    <div class="glass" style="opacity: 0.6;"><h5 class="mb-2">Users</h5><p class="text-sm text-stone">40 beta testers. Quotes curated and permission-secured before inclusion.</p></div>
+    <div class="glass" style="opacity: 0.6;"><h5 class="mb-2">Advisors</h5><p class="text-sm text-stone">Berlin medical + science advisory forming. Names added when commitments are written.</p></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">23</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 24 — CONTACT =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">CONTACT · 24</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 23 · Contact</span>
+    <h1 class="section-header__title">Let's talk.</h1>
+  </div>
+  <div class="glass-elevated mt-8">
+    <h5 class="mb-4 uppercase tracking-wider text-amber">How to reach us</h5>
+    <table class="data-table">
+      <tbody>
+        <tr><td class="bold" style="width: 120px;">Founder</td><td>Timu · CEO & Product</td></tr>
+        <tr><td class="bold">Email</td><td><a href="mailto:[founder@alche.health]">[founder@alche.health]</a></td></tr>
+        <tr><td class="bold">Website</td><td>alche.health · coming soon · waitlist live</td></tr>
+        <tr><td class="bold">App</td><td>TestFlight beta · invite on request</td></tr>
+        <tr><td class="bold">Location</td><td>Berlin, Germany</td></tr>
+        <tr><td class="bold">Language</td><td>EN / DE / TR — pitch in any of these, or whichever works for your team</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pull-quote mt-10">
+    <div class="pull-quote__text" style="font-size: 22px; font-style: italic;">The future of longevity is editorial, curated, and European. Let's build it.</div>
+  </div>
+  <div class="page-footer"><div class="page-footer__number">24</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 25 — APPENDIX =========================== -->
+<div class="page">
+  <div class="page-header"><div class="page-header__brand">alche</div><div class="page-header__meta">APPENDIX · 25</div></div>
+  <div class="section-header">
+    <span class="section-header__number">§ 24 · Appendix</span>
+    <h1 class="section-header__title">Deeper. <strong>What lives behind the deck.</strong></h1>
+  </div>
+  <div class="two-col mt-7">
+    <div class="glass">
+      <h5 class="mb-3 text-amber uppercase tracking-wide">Financial model</h5>
+      <p class="text-sm">24-month P&L across three scenarios (Conservative / Base / Optimistic). Sensitivity matrix on AOV × orders/year. Risk mitigations per line. File: <span class="font-mono">financials/pnl-model.html</span></p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-3 text-sage uppercase tracking-wide">Revenue model research</h5>
+      <p class="text-sm">8-section synthesis, 100+ references. Comp validation across 8 companies (AG1, Ritual, Thrive, The Ordinary, iHerb, Sephora, Xiaohongshu, Costco). File: <span class="font-mono">pitchbook-final/revenue-model-research.md</span></p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-3 text-terra uppercase tracking-wide">Investor landscape</h5>
+      <p class="text-sm">30-50 EU pre-seed wellness funds, ranked, with partners, check sizes, theses, and outreach vectors. Files: <span class="font-mono">research/investors-uk.md · investors-dach.md · investors-eu.md · investors-angels.md</span></p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-3 text-rose uppercase tracking-wide">Supplier due diligence</h5>
+      <p class="text-sm">13 brands assessed: wholesale terms, MOQ, margins, compliance, outreach contacts. Files: <span class="font-mono">research/suppliers-nordic.md · suppliers-uk.md · suppliers-german.md</span></p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-3 text-stone uppercase tracking-wide">Regulatory brief</h5>
+      <p class="text-sm">German supplement law (BVL, LFGB), EU health claims, ashwagandha watchlist, 3PL landscape, fulfillment costs. Files: <span class="font-mono">research/regulatory-germany.md · regulatory-eu.md · fulfillment-germany.md</span></p>
+    </div>
+    <div class="glass">
+      <h5 class="mb-3 text-amber uppercase tracking-wide">Decisions log</h5>
+      <p class="text-sm">What's locked, why, and what that means for the deck. 6 strategic decisions resolved 2026-04-24. File: <span class="font-mono">decisions-locked.md</span></p>
+    </div>
+  </div>
+  <div class="sources mt-7">All materials available on request. Confidentiality standards per NDA — please request before sharing further.</div>
+  <div class="page-footer"><div class="page-footer__number">25</div><div class="page-footer__confidential">alche · v6 · confidential</div></div>
+</div>
+
+<!-- =========================== SLIDE 26 — BACK COVER =========================== -->
+<div class="page back-cover">
+  <div class="cover-wordmark">alche</div>
+  <div class="back-cover-tagline">Longevity, simplified.<br>Built in Berlin · For Europe.<br>The world's first editorial longevity commerce platform.</div>
+  <div class="back-cover-meta">
+    v6 · 2026-04-24<br>
+    Confidential · For investor circulation only
+  </div>
+</div>
+
+</body>
+</html>

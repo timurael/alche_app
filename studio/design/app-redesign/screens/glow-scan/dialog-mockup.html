@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — GlowScan · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* GlowScan goes dark — the camera is the canvas. */
+    .gs-frame { background: var(--bg-dark); color: var(--bg-white); position: relative; height: 100%; }
+    .gs-frame .ios-status-bar { color: var(--bg-white); }
+    .gs-frame .battery,
+    .gs-frame .battery::after { border-color: var(--bg-white); background: transparent; }
+    .gs-frame .battery::after { background: var(--bg-white); }
+    .gs-frame .battery .fill { background: var(--bg-white); }
+    .gs-frame .signal-bars span { background: var(--bg-white); }
+
+    .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+    .signal-bars span { width: 3px; border-radius: 1px; }
+    .signal-bars span:nth-child(1) { height: 3px; }
+    .signal-bars span:nth-child(2) { height: 5px; }
+    .signal-bars span:nth-child(3) { height: 7px; }
+    .signal-bars span:nth-child(4) { height: 9px; }
+    .battery { width: 24px; height: 11px; border: 1.2px solid var(--bg-white); border-radius: 2.5px; position: relative; padding: 1px; display: inline-block; }
+    .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; border-radius: 0 1px 1px 0; }
+    .battery .fill { display: block; height: 100%; width: 80%; border-radius: 1px; }
+
+    /* Top bar: close + sample tag */
+    .gs-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 24px 10px;
+    }
+    .gs-close {
+      font-family: 'Space Mono', monospace; font-size: 18px;
+      color: var(--bg-white); background: none; border: none; cursor: pointer;
+      padding: 0; line-height: 1;
+    }
+    .gs-sample-tag {
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 4px 8px;
+    }
+
+    /* Opening read — italic, above the frame */
+    .gs-read {
+      padding: 24px 24px 20px;
+    }
+    .gs-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 22px; line-height: 1.3;
+      color: var(--bg-white);
+      display: block;
+    }
+    .gs-read .line + .line { margin-top: 2px; color: rgba(255,255,255,0.65); }
+
+    /* Viewfinder — quiet. Corner brackets only. */
+    .gs-viewfinder {
+      width: 260px; height: 320px;
+      margin: 8px auto 20px;
+      position: relative;
+    }
+    .gs-bracket {
+      position: absolute; width: 18px; height: 18px;
+      border: 1.5px solid var(--bg-white);
+    }
+    .gs-bracket.tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .gs-bracket.tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+    .gs-bracket.bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+    .gs-bracket.br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+    /* A silhouette hint so the frame reads as "face" without camera feed */
+    .gs-silhouette {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 170px; height: 240px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 50% / 45%;
+    }
+
+    /* Mono timer / steadiness indicator — real data only */
+    .gs-meta {
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .gs-meta .dot { display: inline-block; width: 4px; height: 4px; background: var(--bg-white); border-radius: 999px; margin: 0 10px; vertical-align: middle; opacity: 0.5; }
+
+    /* Primary capture — editorial mono button, dark context */
+    .gs-capture {
+      margin: 0 24px 10px;
+      width: calc(100% - 48px);
+      background: var(--bg-white);
+      color: var(--editorial-black);
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 16px 18px;
+      border: 1px solid var(--bg-white);
+      border-radius: var(--radius-sharp);
+      box-shadow: 2px 2px 0 rgba(255,255,255,0.25);
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer;
+    }
+    .gs-capture .arrow { font-weight: 400; font-size: 13px; letter-spacing: 0; }
+
+    /* Secondary — ghost link on dark */
+    .gs-secondary {
+      display: block; text-align: center;
+      padding: 10px 0 18px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+    }
+    .gs-secondary .u {
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+      padding-bottom: 2px;
+    }
+
+    /* Previous echo at bottom */
+    .gs-prev {
+      margin: 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 16px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .gs-prev .tag {
+      flex-shrink: 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      padding-top: 2px;
+    }
+    .gs-prev .echo {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 13px; line-height: 1.4;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* Tab bar on dark frame */
+    .gs-frame .ios-tab-bar {
+      background: var(--bg-dark);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .gs-frame .ios-tab-bar .tab { color: rgba(255,255,255,0.45); }
+    .gs-frame .ios-tab-bar .tab.active { color: var(--bg-white); font-weight: 700; }
+    .gs-frame .ios-tab-bar .tab-dot { background: rgba(255,255,255,0.45); }
+    .gs-frame .ios-tab-bar .tab.active .tab-dot { background: var(--bg-white); }
+    .gs-frame .ios-home-indicator { background: var(--bg-white); opacity: 0.85; }
+
+    /* Neutralize default scroll fade (we're on dark) */
+    .gs-frame .frame-content .scroll-fade { background: linear-gradient(to top, var(--bg-dark), transparent); }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame gs-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Top bar: close + single sample tag -->
+        <div class="gs-topbar">
+          <button class="gs-close" aria-label="Close">×</button>
+          <span class="gs-sample-tag">Sample · Mock Scan</span>
+        </div>
+
+        <!-- Opening read: observational, appearance-based -->
+        <div class="gs-read">
+          <span class="line">Hold it steady.</span>
+          <span class="line">I'll look for 30 seconds.</span>
+        </div>
+
+        <!-- Quiet viewfinder -->
+        <div class="gs-viewfinder" aria-hidden="true">
+          <span class="gs-bracket tl"></span>
+          <span class="gs-bracket tr"></span>
+          <span class="gs-bracket bl"></span>
+          <span class="gs-bracket br"></span>
+          <span class="gs-silhouette"></span>
+        </div>
+
+        <!-- Real-only meta: time + face detection state -->
+        <div class="gs-meta">
+          <span>Ready</span>
+          <span class="dot"></span>
+          <span>Front Camera</span>
+          <span class="dot"></span>
+          <span>Good Light</span>
+        </div>
+
+        <!-- Primary capture -->
+        <button class="gs-capture">
+          <span>Tap to Capture · 30s</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <!-- Secondary: see last scan -->
+        <a class="gs-secondary">
+          <span class="u">See last scan &nbsp;→</span>
+        </a>
+
+        <!-- Previous echo -->
+        <div class="gs-prev">
+          <span class="tag">PREV · 12 DAYS AGO</span>
+          <span class="echo">Your skin looked well-hydrated, with some brightness dips around the T-zone.</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <!-- Direction caption -->
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · GLOWSCAN</p>
+      <h1 class="alche-display-l title">The camera should be quiet. The read comes after.</h1>
+      <p class="alche-body philosophy">
+        A 60-second mock skin scan does not need a sci-fi prop. Alche watches — observationally, never clinically — and speaks a single appearance-based line before the capture. All numeric readouts, fake camera metadata, and fictional mode tabs are cut. One action: capture.
+      </p>
+
+      <ul class="decisions">
+        <li>
+          <span class="label">CUT</span>
+          <div class="alche-body">
+            Rotating dashed circle, scan-line animation, breathing red "LIVE ANALYSIS" dot, "S: 1/200 ISO 120" fake camera metadata, floating "HYDRATION 64%" and "COLLAGEN INDEX 0.8" numeric callouts during scan, the three fictional mode tabs (Texture / Structural / Thermal), the grid overlay, "SCANNING EPIDERMIS..." progress bar. None of them carried real data or a real capability.
+          </div>
+        </li>
+        <li>
+          <span class="label">KEPT</span>
+          <div class="alche-body">
+            The viewfinder as a concept — reduced to four corner brackets and a faint dashed silhouette hint. Dark surface (the camera is the canvas). Capture as the single primary action. Front camera only.
+          </div>
+        </li>
+        <li>
+          <span class="label">ADDED</span>
+          <div class="alche-body">
+            A two-line italic read above the viewfinder — "Hold it steady. / I'll look for 30 seconds." Observational voice, never clinical. One unified "Sample · Mock Scan" tag top-right (replacing the scattered indicators). A quiet mono meta row with real-only data (camera state, light level). A previous-echo line at the bottom that previews what results will sound like: "Your skin looked well-hydrated…" — appearance-based, not numeric.
+          </div>
+        </li>
+      </ul>
+
+      <blockquote class="tradeoff">
+        Trade-off: users who expected a bright sci-fi scanner get a slower, quieter interface. But the mock can no longer over-promise — the only numbers on this screen are the scan duration and the time-since-last.
+      </blockquote>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — FocusAreaReveal · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .fa-topbar {
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fa-topbar .crumb {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .fa-topbar .crumb .v { color: var(--editorial-black); font-weight: 700; }
+
+    /* The read — this is the validation moment */
+    .fa-read-stamp {
+      padding: 20px 24px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .fa-read {
+      padding: 0 24px 20px;
+    }
+    .fa-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 28px;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .fa-read .line + .line { margin-top: 4px; }
+    .fa-read .line em {
+      color: var(--primary);
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+    .fa-read .line.dim { color: var(--editorial-muted); }
+
+    /* Focus list — three quiet lines, no cards */
+    .fa-list {
+      padding: 4px 0;
+    }
+    .fa-area {
+      padding: 14px 24px;
+      border-top: 1px solid var(--divider-light);
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .fa-area:last-child { border-bottom: 1px solid var(--divider-light); }
+    .fa-area .idx {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .fa-area .name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.25;
+      color: var(--editorial-black);
+    }
+    .fa-area .quote {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--editorial-muted);
+      margin-top: 4px;
+      padding-left: 8px;
+      border-left: 2px solid var(--divider-medium);
+    }
+    .fa-area .tag {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      padding-top: 4px;
+    }
+
+    .fa-footnote {
+      padding: 14px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Top crumb -->
+        <div class="fa-topbar">
+          <span class="crumb">← Back</span>
+          <span class="crumb">STEP <span class="v">05</span> · OF · 08</span>
+        </div>
+
+        <!-- Prev echo — we're still in the conversation -->
+        <div class="alche-prev-echo">
+          <span class="tag">PREV · YOU CHOSE</span>
+          <span class="echo">Sleep. Stress. The mirror.</span>
+        </div>
+
+        <!-- Alche stamp -->
+        <div class="fa-read-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">Alche · What I Heard</span>
+        </div>
+
+        <!-- The read — validation, not "reveal" -->
+        <div class="fa-read">
+          <span class="line">You told me about your sleep,</span>
+          <span class="line">your stress,</span>
+          <span class="line">and the mirror you're <em>tired of checking</em>.</span>
+          <span class="line dim">So this is where we'll start.</span>
+        </div>
+
+        <!-- Three focus areas as quiet lines, not cards -->
+        <div class="fa-list">
+          <div class="fa-area">
+            <span class="idx">01</span>
+            <div>
+              <div class="name">Restorative Sleep</div>
+              <div class="quote">"I wake up wired or wake up tired."</div>
+            </div>
+            <span class="tag">SLP · A4</span>
+          </div>
+          <div class="fa-area">
+            <span class="idx">02</span>
+            <div>
+              <div class="name">Stress Resilience</div>
+              <div class="quote">"My shoulders find their way to my ears."</div>
+            </div>
+            <span class="tag">STR · A4</span>
+          </div>
+          <div class="fa-area">
+            <span class="idx">03</span>
+            <div>
+              <div class="name">Radiant Skin</div>
+              <div class="quote">"The mirror tells me more than the calendar."</div>
+            </div>
+            <span class="tag">SKN · A4</span>
+          </div>
+        </div>
+
+        <!-- Interstitial — Alche speaks across to the next beat -->
+        <div class="alche-interstitial">
+          <p class="i-voice">Three is enough. I can always <em>listen for more</em> later.</p>
+        </div>
+
+        <!-- Primary -->
+        <div style="padding-top: 12px;">
+          <button class="alche-primary-action">
+            <span>Continue with these</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Adjust what I heard</span></a>
+        </div>
+
+        <div class="fa-footnote">
+          <span>DRAFT · YOUR FIRST READ</span>
+          <span>HEARD · 03 OF 03</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · FOCUS AREA REVEAL</p>
+      <h1 class="alche-display-l title">Validation, not a reveal. The companion says what it heard.</h1>
+      <p class="alche-body philosophy">
+        The word "Revealed" leaves with its staggered animation. In its place: an Alche stamp, a four-line italic read paraphrasing the user's own QuickScan answers, and three quiet rows naming the focus areas. The iconised AlcheCards are gone. Each row carries the member's <em>actual quote</em> from the scan, rendered as a tiny italic blockquote — so the validation is honest, not ceremonial.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>"Your Alchemy, Revealed" hero and its staggered 600ms/300ms card-in animation. Three rounded `AlcheCard`s with SF Symbol icons. The library-string "user feeling" blockquote that never matched what the user said. Sticky-bottom "Continue" appearing after animation.</div></li>
+        <li><span class="label">KEPT</span><div>The three computed focus areas themselves. The `codeTag` suffix (now carries evidence tier e.g. "A4"). The index ordering. The "Continue" + "Adjust" intent pair.</div></li>
+        <li><span class="label">ADDED</span><div>(1) `.alche-prev-echo` "PREV · YOU CHOSE · Sleep. Stress. The mirror." (2) The member's actual QuickScan quote as a tiny italic blockquote under each goal — not a library string. (3) `.alche-interstitial` — "Three is enough. I can always listen for more later." — which makes the cap feel like a promise, not a limit.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: if the member's QuickScan answers were the default option (no custom text captured), the quotes fall back to the library string — the honesty of the moment is only as good as the inputs.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

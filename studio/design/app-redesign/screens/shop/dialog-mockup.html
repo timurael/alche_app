@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Shop · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* Shop — three formulations, then the rest */
+
+    .s-month-head {
+      padding: 4px 24px 12px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .s-month-head .title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--editorial-black);
+      letter-spacing: -0.01em;
+    }
+    .s-month-head .meta {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Hero product row — single line per product */
+    .s-products {
+      margin: 0 24px;
+    }
+    .s-product {
+      padding: 16px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--divider-medium);
+    }
+    .s-product:last-of-type { border-bottom: none; }
+    .s-product .p-num {
+      flex-shrink: 0;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+      width: 16px;
+      padding-top: 3px;
+    }
+    .s-product .p-image {
+      flex-shrink: 0;
+      width: 64px;
+      height: 80px;
+      border: 1px solid var(--editorial-black);
+      background: var(--bg-warm);
+      position: relative;
+      overflow: hidden;
+    }
+    .s-product .p-image::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      background:
+        radial-gradient(ellipse at 50% 65%, #c4cad6 0%, transparent 60%),
+        linear-gradient(160deg, #e8e2d6 0%, #b8c0cf 100%);
+      border-radius: 0;
+    }
+    .s-product .p-image.magnesium::before {
+      background:
+        radial-gradient(ellipse at 50% 60%, #a5b4fc 0%, transparent 55%),
+        linear-gradient(160deg, #e6e3f4 0%, #8a92b8 100%);
+    }
+    .s-product .p-image.omega::before {
+      background:
+        radial-gradient(ellipse at 50% 65%, #fcd9a5 0%, transparent 60%),
+        linear-gradient(160deg, #f0e6d0 0%, #c8a584 100%);
+    }
+    .s-product .p-image.iron::before {
+      background:
+        radial-gradient(ellipse at 50% 70%, #e8b4a5 0%, transparent 60%),
+        linear-gradient(160deg, #f0d8cf 0%, #a56b5a 100%);
+    }
+    .s-product .p-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .s-product .p-kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 4px;
+    }
+    .s-product .p-name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.15;
+      color: var(--editorial-black);
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+    .s-product .p-mech {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--editorial-muted);
+      margin-bottom: 10px;
+    }
+    .s-product .p-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .s-product .p-price {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--editorial-black);
+    }
+    .s-product .p-price .member {
+      color: var(--editorial-muted);
+      margin-left: 6px;
+    }
+    .s-product .p-price .strike {
+      text-decoration: line-through;
+      color: var(--editorial-muted);
+      margin-right: 4px;
+    }
+    .s-product .p-add {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--editorial-black);
+      padding: 3px 0;
+      cursor: pointer;
+    }
+
+    /* Elsewhere — the rest of the shop */
+    .s-elsewhere {
+      padding: 6px 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .s-elsewhere .eh-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      text-decoration: none;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+    }
+    .s-elsewhere .eh-link .u {
+      border-bottom: 1px solid var(--editorial-black);
+      padding-bottom: 2px;
+    }
+    .s-elsewhere .eh-link .eh-hint {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--editorial-muted);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* Cart summary — sharp mono strip above tab bar */
+    .s-cart {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 84px;
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+    .s-cart .c-left { display: flex; gap: 10px; align-items: center; }
+    .s-cart .c-arrow { letter-spacing: 0; font-weight: 400; font-size: 13px; }
+
+    /* Legal footer */
+    .s-legal {
+      padding: 4px 24px 20px;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 10.5px;
+      line-height: 1.45;
+      color: var(--editorial-muted);
+      font-style: italic;
+      border-top: 1px solid var(--divider-light);
+      margin-top: 10px;
+      padding-top: 14px;
+    }
+
+    /* Status bar */
+    .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+    .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+    .signal-bars span:nth-child(1) { height: 3px; }
+    .signal-bars span:nth-child(2) { height: 5px; }
+    .signal-bars span:nth-child(3) { height: 7px; }
+    .signal-bars span:nth-child(4) { height: 9px; }
+    .battery { width: 24px; height: 11px; border: 1.2px solid var(--editorial-black); border-radius: 2.5px; position: relative; padding: 1px; }
+    .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; background: var(--editorial-black); }
+    .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Context -->
+        <div class="alche-context-band">
+          <div class="ctx-left">
+            <span class="ctx-dot"></span>
+            <span>APRIL · MEMBER · FREE SHIPPING 60€+</span>
+          </div>
+          <div class="ctx-right"><span>3 IN CART</span></div>
+        </div>
+
+        <!-- Read stamp -->
+        <div class="alche-read-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">ALCHE · THREE I'D TAKE MYSELF</span>
+        </div>
+
+        <!-- The read -->
+        <div class="alche-read">
+          <span class="line">Your protocol calls for <em>magnesium</em>.</span>
+          <span class="line">The iron you restocked last</span>
+          <span class="line dim">month is almost out — this month, three.</span>
+        </div>
+
+        <!-- Month masthead -->
+        <div class="s-month-head">
+          <span class="title">April formulations</span>
+          <span class="meta">3 PICKS</span>
+        </div>
+
+        <!-- Three hero products -->
+        <div class="s-products">
+
+          <!-- 1. Magnesium — explicit recommendation -->
+          <div class="s-product">
+            <span class="p-num">01</span>
+            <div class="p-image magnesium" aria-hidden="true"></div>
+            <div class="p-body">
+              <div class="p-kicker">FOR SLEEP · REORDER</div>
+              <div class="p-name">Magnesium glycinate.</div>
+              <div class="p-mech">The form that crosses the blood-brain barrier. Pair with protein, take 9pm.</div>
+              <div class="p-bottom">
+                <span class="p-price"><span class="strike">€34</span>€28 <span class="member">MEMBER</span></span>
+                <button class="p-add">Add &nbsp;→</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Omega-3 -->
+          <div class="s-product">
+            <span class="p-num">02</span>
+            <div class="p-image omega" aria-hidden="true"></div>
+            <div class="p-body">
+              <div class="p-kicker">FOR BRAIN · NEW BATCH</div>
+              <div class="p-name">Omega-3, triglyceride form.</div>
+              <div class="p-mech">2g EPA/DHA per serving, third-party tested for oxidation. Not the drugstore kind.</div>
+              <div class="p-bottom">
+                <span class="p-price">€42 <span class="member">MEMBER €36</span></span>
+                <button class="p-add">Add &nbsp;→</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Iron — replenish -->
+          <div class="s-product">
+            <span class="p-num">03</span>
+            <div class="p-image iron" aria-hidden="true"></div>
+            <div class="p-body">
+              <div class="p-kicker">FOR BLOOD · RESTOCK</div>
+              <div class="p-name">Iron bisglycinate.</div>
+              <div class="p-mech">Gentle on the gut, dosed for anyone who menstruates. Take on an empty stomach with vitamin C.</div>
+              <div class="p-bottom">
+                <span class="p-price">€24 <span class="member">MEMBER €20</span></span>
+                <button class="p-add">Add &nbsp;→</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Narrator interstitial before Elsewhere -->
+        <div class="alche-interstitial">
+          <p class="i-voice">Everything else lives <em>below</em> — search, the full catalogue, what you've saved.</p>
+        </div>
+
+        <!-- Elsewhere -->
+        <div class="s-elsewhere">
+          <a class="eh-link">
+            <span class="u">Full catalogue &nbsp;→</span>
+            <span class="eh-hint">42 formulations</span>
+          </a>
+          <a class="eh-link">
+            <span class="u">Saved &nbsp;→</span>
+            <span class="eh-hint">5 pieces</span>
+          </a>
+          <a class="eh-link">
+            <span class="u">Search &nbsp;→</span>
+            <span class="eh-hint">by ingredient or goal</span>
+          </a>
+        </div>
+
+        <!-- Legal -->
+        <div class="s-legal">
+          Ethically sourced, third-party tested. Supplements support wellness — they do not diagnose, treat, or cure disease.
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <!-- Cart summary strip -->
+      <div class="s-cart">
+        <span class="c-left"><span>3 · BASKET</span><span style="opacity:.6; letter-spacing:.15em;">€84</span></span>
+        <span class="c-arrow">Review &nbsp;→</span>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · SHOP</p>
+      <h1 class="alche-display-l title">Three I'd take myself — everything else, below.</h1>
+      <p class="alche-body philosophy">
+        Shop leads with a short curatorial read and three monthly picks, each written as a sentence with a mechanism-note in Alche's voice. Categories, search, and saved demote to a mono "Elsewhere" list. The cart becomes a sharp black mono strip above the tab bar — present, never shouting. Women & queer framing: iron-bisglycinate row names menstruating bodies explicitly (the Shop is not built around AMAB defaults).
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>The horizontal category-tag row, the Saved/Wishlist pill-count-bubble button, the 2-column staggered grid with BESTSELLER/NEW badges, the 3-column "ethically sourced" info strip as afterthought, the SF-Symbol heart on every card.</div></li>
+        <li><span class="label">KEPT</span><div>All product data (name, price, memberPrice, categories, in-stock), the `isMember` flag, saved/wishlist as a destination, full search, and the cart bar.</div></li>
+        <li><span class="label">ADDED</span><div>The monthly curation (three picks tied to protocol + restock + new batch), a mechanism line in Noto Sans under each italic product name, an explicit menstruating-bodies note on iron, a narrator interstitial before Elsewhere, and a sharp 2px-corner black cart strip.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: a member who wants to scroll through all 42 SKUs now taps "Full catalogue →" first — but nothing aisle-shouts from the hero surface anymore.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

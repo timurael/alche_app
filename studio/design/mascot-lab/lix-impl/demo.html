@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lix · Live Onboarding Demo</title>
+<style>
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_500.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_600.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_600.woff2') format('woff2'); font-weight: 600; }
+
+  :root {
+    --bg: #F4E4D6;
+    --bg-deep: #E8D4C0;
+    --bg-card: #FAF1E8;
+    --ink: #1A1612;
+    --ink-soft: #5a4a3e;
+    --ink-faint: #8a7766;
+    --amber: #F5C88A;
+    --rule: rgba(26,22,18,0.1);
+    --warning: #c46440;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Outfit', -apple-system, sans-serif; font-weight: 400; min-height: 100vh; }
+
+  /* Top warning bar for dev mode */
+  #mode-bar { display: none; padding: 10px 24px; background: var(--warning); color: #fff; font-size: 12px; letter-spacing: 0.06em; text-align: center; }
+  #mode-bar.show { display: block; }
+  #mode-bar.production { background: #2a7a3a; }
+  #mode-bar b { font-weight: 600; }
+
+  .stage { display: grid; grid-template-columns: 1fr 380px; gap: 48px; padding: 48px; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 40px); align-items: start; }
+
+  /* iPhone */
+  .phone-wrap { display: flex; justify-content: center; }
+  .phone { width: 390px; height: 780px; background: #000; border-radius: 48px; padding: 12px; box-shadow: 0 40px 100px rgba(26,22,18,0.3); position: relative; }
+  .phone-screen { background: var(--bg); height: 100%; border-radius: 36px; padding: 64px 16px 20px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+  .phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 110px; height: 32px; background: #000; border-radius: 20px; z-index: 2; }
+
+  /* Lix hero slot */
+  .lix-slot { height: 140px; display: flex; align-items: center; justify-content: center; padding-bottom: 12px; border-bottom: 1px solid var(--rule); margin-bottom: 12px; transition: background 0.5s; }
+  .lix-slot svg { height: 120px; filter: drop-shadow(0 10px 20px rgba(26,22,18,0.12)); transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1); transform-origin: center bottom; }
+  .lix-slot.mood-delighted svg { transform: translateY(-4px) scale(1.06); }
+  .lix-slot.mood-pleased svg { transform: scale(1.02); }
+  .lix-slot.mood-curious svg { transform: translateY(-2px) rotate(-2deg); }
+  .lix-slot.mood-quiet svg { transform: scale(0.96); opacity: 0.9; }
+  .lix-slot.mood-thinking svg { animation: thinking-pulse 1.4s ease-in-out infinite; }
+  @keyframes thinking-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+  .lix-nav { position: absolute; top: 68px; left: 72px; right: 24px; display: flex; align-items: center; gap: 10px; z-index: 1; pointer-events: none; }
+  .lix-nav .who { font-family: 'Cormorant', serif; font-size: 18px; font-weight: 400; line-height: 1; }
+  .lix-nav .who small { display: block; font-family: 'Outfit', sans-serif; font-size: 9px; color: var(--ink-faint); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px; }
+
+  /* Turn counter */
+  .turn-pill { position: absolute; top: 74px; right: 24px; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); z-index: 2; }
+
+  /* Chat scrollable area */
+  .chat { flex: 1; overflow-y: auto; scroll-behavior: smooth; padding: 8px 4px 16px; }
+  .chat::-webkit-scrollbar { width: 0; }
+
+  .bubble-row { display: flex; flex-direction: column; margin-bottom: 10px; animation: bubble-in 280ms cubic-bezier(0.2,0.8,0.2,1); }
+  .bubble-row.user-row { align-items: flex-end; }
+  @keyframes bubble-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .bubble { max-width: 82%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.45; word-wrap: break-word; }
+  .bubble.lix { background: #fff; color: var(--ink); border-bottom-left-radius: 4px; }
+  .bubble.user { background: var(--ink); color: var(--bg); margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble.typing { padding: 12px 16px; background: #fff; border-bottom-left-radius: 4px; }
+  .bubble.typing span { display: inline-block; width: 6px; height: 6px; background: var(--ink-faint); border-radius: 50%; margin: 0 1px; animation: dot 1.2s infinite ease-in-out; }
+  .bubble.typing span:nth-child(2) { animation-delay: 0.15s; }
+  .bubble.typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dot { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.85); } 40% { opacity: 1; transform: scale(1); } }
+
+  /* Choice chips */
+  .choices { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .chip { padding: 6px 12px; border: 1px solid var(--rule); border-radius: 16px; background: transparent; font-family: 'Outfit'; font-size: 13px; color: var(--ink); cursor: pointer; transition: all 0.18s; }
+  .chip:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chip:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+  /* Input */
+  .composer { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--rule); align-items: center; }
+  .composer input { flex: 1; padding: 12px 16px; border: 1px solid var(--rule); border-radius: 20px; background: var(--bg-card); font-family: 'Outfit'; font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.18s; }
+  .composer input:focus { border-color: var(--ink); }
+  .composer input:disabled { opacity: 0.4; }
+  .composer button { padding: 12px 18px; border: none; border-radius: 20px; background: var(--ink); color: var(--bg); font-family: 'Outfit'; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.18s; }
+  .composer button:hover { background: #2a241a; }
+  .composer button:disabled { opacity: 0.3; cursor: default; }
+
+  .composer.hidden { display: none; }
+
+  /* Right panel */
+  .panel { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 48px; }
+  .panel-card { background: var(--bg-card); border: 1px solid var(--rule); border-radius: 4px; padding: 24px; }
+  .panel-card h2 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 28px; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .panel-card h2 em { font-style: italic; color: var(--ink-soft); }
+  .panel-card .sub { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+
+  .profile-grid { display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 14px; }
+  .profile-grid dt { color: var(--ink-faint); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; align-self: center; }
+  .profile-grid dd { font-family: 'Cormorant', serif; font-size: 18px; font-weight: 400; }
+  .profile-grid dd:empty::before { content: "—"; color: var(--ink-faint); opacity: 0.5; }
+
+  .meta-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; padding-top: 12px; border-top: 1px solid var(--rule); margin-top: 12px; }
+  .meta-row b { color: var(--ink); font-weight: 500; }
+
+  .actions { display: flex; flex-direction: column; gap: 8px; }
+  .actions button { padding: 12px 16px; background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; font-family: 'Outfit'; font-size: 12px; letter-spacing: 0.04em; cursor: pointer; transition: all 0.18s; text-align: left; }
+  .actions button:hover { border-color: var(--ink); background: var(--bg-card); }
+  .actions button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .actions button.primary:hover { background: #2a241a; }
+
+  .log-card { font-family: 'Space Mono', ui-monospace, monospace; font-size: 10px; max-height: 200px; overflow-y: auto; line-height: 1.5; color: var(--ink-soft); }
+  .log-card .l-ts { color: var(--ink-faint); margin-right: 8px; }
+  .log-card .l-error { color: var(--warning); }
+  .log-card .l-ok { color: #2a7a3a; }
+
+  /* Setup modal */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(10,6,2,0.85); display: none; align-items: center; justify-content: center; z-index: 100; padding: 24px; }
+  .modal-backdrop.show { display: flex; }
+  .modal { background: var(--bg-card); max-width: 520px; width: 100%; padding: 40px; border: 1px solid var(--rule); }
+  .modal h2 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 40px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .modal .modal-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.5; }
+  .modal label { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
+  .modal input { width: 100%; padding: 12px 14px; border: 1px solid var(--rule); background: #fff; font-family: 'Space Mono', monospace; font-size: 12px; border-radius: 2px; }
+  .modal .opts { display: flex; gap: 8px; margin-top: 20px; }
+  .modal button { padding: 12px 24px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); font-family: 'Outfit'; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; border-radius: 2px; }
+  .modal button.secondary { background: transparent; color: var(--ink); }
+  .modal .warn { padding: 12px; background: rgba(196,100,64,0.1); border-left: 3px solid var(--warning); font-size: 12px; color: var(--ink); margin-top: 16px; line-height: 1.5; }
+
+  @media (max-width: 1040px) {
+    .stage { grid-template-columns: 1fr; padding: 24px; }
+    .panel { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<div id="mode-bar" class="show">
+  <b>DEV MODE</b> — API key in sessionStorage. Calls OpenRouter directly from browser. Use only on trusted devices. For production, deploy the Worker and pass <code>?worker=https://...</code>.
+</div>
+
+<div class="stage">
+
+  <!-- iPhone frame -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="turn-pill" id="turn-pill">turn 1 / 7</div>
+
+        <!-- Lix hero -->
+        <div class="lix-slot mood-pleased" id="lix-slot">
+          <svg viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg" id="lix-svg">
+            <defs>
+              <radialGradient id="lixBody2" cx="40%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#F9ECD8"/>
+                <stop offset="35%" stop-color="#E8B4C8" stop-opacity="0.7"/>
+                <stop offset="65%" stop-color="#B8D4C4" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.8"/>
+              </radialGradient>
+              <radialGradient id="lixGlow2" cx="50%" cy="75%" r="35%">
+                <stop offset="0%" stop-color="#F5C88A" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#F5C88A" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="70" cy="150" rx="36" ry="5" fill="#1A1612" opacity="0.15"/>
+            <path d="M 70 18 C 105 18, 125 62, 125 95 C 125 130, 100 146, 70 146 C 40 146, 15 130, 15 95 C 15 62, 35 18, 70 18 Z" fill="url(#lixBody2)"/>
+            <ellipse cx="70" cy="115" rx="38" ry="26" fill="url(#lixGlow2)"/>
+            <ellipse cx="46" cy="55" rx="10" ry="6" fill="#FFF6E8" opacity="0.7"/>
+            <ellipse cx="47" cy="92" rx="7" ry="4" fill="#D89B9B" opacity="0.3" id="blush-l"/>
+            <ellipse cx="93" cy="92" rx="7" ry="4" fill="#D89B9B" opacity="0.3" id="blush-r"/>
+            <g id="face">
+              <!-- eyes — will be re-drawn per mood -->
+              <ellipse cx="58" cy="82" rx="2.5" ry="3" fill="#1A1612" class="eye eye-l"/>
+              <ellipse cx="82" cy="82" rx="2.5" ry="3" fill="#1A1612" class="eye eye-r"/>
+              <path d="M 62 98 Q 70 102 78 98" stroke="#1A1612" stroke-width="2" fill="none" stroke-linecap="round" class="mouth"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Chat area -->
+        <div class="chat" id="chat"></div>
+
+        <!-- Composer -->
+        <div class="composer" id="composer">
+          <input type="text" id="input" placeholder="type..." autocomplete="off"/>
+          <button id="send">send</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="panel">
+
+    <div class="panel-card">
+      <h2>profile<em>, captured</em></h2>
+      <div class="sub">Live as Lix learns you</div>
+      <dl class="profile-grid">
+        <dt>name</dt><dd id="p-name"></dd>
+        <dt>age</dt><dd id="p-age"></dd>
+        <dt>loudest</dt><dd id="p-axis"></dd>
+        <dt>consent</dt><dd id="p-consent"></dd>
+      </dl>
+      <div class="meta-row">
+        <span>turn <b id="m-turn">1</b> / 7</span>
+        <span>mood <b id="m-mood">pleased</b></span>
+      </div>
+    </div>
+
+    <div class="panel-card">
+      <h2>session<em>.log</em></h2>
+      <div class="sub">LLM calls + responses</div>
+      <div class="log-card" id="log"></div>
+    </div>
+
+    <div class="panel-card">
+      <h2>controls</h2>
+      <div class="sub">Reset, swap endpoint</div>
+      <div class="actions">
+        <button id="btn-restart" class="primary">↻ restart onboarding</button>
+        <button id="btn-setkey">change API key / endpoint</button>
+        <button id="btn-clearkey">clear key (logout)</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Setup modal -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h2>Lix · setup</h2>
+    <p class="modal-sub">Paste the OpenRouter API key (starts with <code>sk-or-v1-</code>). Stored in this tab's <b>sessionStorage</b> only — evaporates when the tab closes.</p>
+    <label for="keyinput">OpenRouter API key</label>
+    <input type="password" id="keyinput" placeholder="sk-or-v1-..."/>
+    <div class="warn">⚠ Browser mode for local testing only. For production, deploy the Cloudflare Worker (see README) and open this page with <code>?worker=https://your-worker.workers.dev/chat</code>.</div>
+    <div class="opts">
+      <button id="modal-save">save &amp; start</button>
+      <button id="modal-cancel" class="secondary">cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<!-- JS · inlined turns + runtime                                 -->
+<!-- ─────────────────────────────────────────────────────────── -->
+<script>
+"use strict";
+
+// ═══════════════════════════════════════════
+// TURNS SCRIPT (inlined from lix/turns.js)
+// ═══════════════════════════════════════════
+const LIX_TURNS = [
+  {
+    id: 1, purpose: "intro",
+    prompts: ["hi. i'm lix.", "i mix things. small doses. long timelines.", "what should i call you?"],
+    awaits: "free_text", capture: "name", expect_reaction: false, mood_default: "curious"
+  },
+  {
+    id: 2, purpose: "name_ack",
+    prompts: ["quick — how old is this body?"],
+    awaits: "free_text", capture: "age", expect_reaction: true, mood_default: "pleased",
+    validate: (v) => { const n = parseInt(v, 10); return Number.isInteger(n) && n >= 13 && n <= 110; }
+  },
+  {
+    id: 3, purpose: "age_ack",
+    prompts: ["one more — pick the one that's loudest:"],
+    awaits: "choice", choices: ["sleep", "energy", "focus", "sex", "mood"],
+    capture: "chief_complaint", expect_reaction: true, mood_default: "pleased"
+  },
+  {
+    id: 4, purpose: "axis_ack",
+    prompts: ["here's my promise —", "one small thing, every morning.", "no pills-that-look-like-clinical. no rituals-that-feel-like-work.", "just us."],
+    awaits: null, expect_reaction: true, auto_advance_delay: 2400, mood_default: "curious"
+  },
+  {
+    id: 5, purpose: "consent",
+    prompts: ["one thing before we start.", "i'll ask, i'll offer. you'll always choose.", "nothing prescribed. nothing pushy.", "okay with you?"],
+    awaits: "choice", choices: ["okay with me", "tell me more"],
+    capture: "consent", expect_reaction: true, mood_default: "quiet"
+  },
+  {
+    id: 6, purpose: "personalize_preview",
+    prompts: ["[[DYNAMIC]]"],
+    awaits: null, expect_reaction: false, auto_advance_delay: 2800, mood_default: "pleased",
+    build_prompt: (p) => {
+      const name = p.name || "friend"; const axis = (p.chief_complaint || "").toLowerCase();
+      const hooks = {
+        sleep:  `for you, ${name}: magnesium glycinate, 8pm. one less phone, 30 min before bed. that's it.`,
+        energy: `for you, ${name}: creatine 5g, morning. a cold rinse at the end of your shower. that's it.`,
+        focus:  `for you, ${name}: caffeine with l-theanine, 2:1. one 90-minute block, no slack. that's it.`,
+        sex:    `for you, ${name}: ashwagandha in the evening. zinc at dinner. see how two weeks feel.`,
+        mood:   `for you, ${name}: saffron capsule, morning. omega-3 at lunch. little sun before 10am.`,
+      };
+      return hooks[axis] || `for you, ${name}: one small thing, every morning. we'll shape it together.`;
+    }
+  },
+  {
+    id: 7, purpose: "handoff",
+    prompts: ["ready when you are.", "→"],
+    awaits: "choice", choices: ["let's go"], capture: null, expect_reaction: false,
+    is_terminal: true, mood_default: "delighted"
+  },
+];
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const state = {
+  turnId: 1,
+  profile: {},
+  awaitingUser: false,
+  busy: false,
+  mode: null,         // "worker" or "browser"
+  workerUrl: null,
+  apiKey: null,
+};
+
+// ═══════════════════════════════════════════
+// DOM
+// ═══════════════════════════════════════════
+const $ = (id) => document.getElementById(id);
+const chat = $("chat");
+const inputEl = $("input");
+const sendBtn = $("send");
+const composer = $("composer");
+const lixSlot = $("lix-slot");
+const turnPill = $("turn-pill");
+const pName = $("p-name"), pAge = $("p-age"), pAxis = $("p-axis"), pConsent = $("p-consent");
+const mTurn = $("m-turn"), mMood = $("m-mood");
+const logEl = $("log");
+const modal = $("modal");
+const modeBar = $("mode-bar");
+
+// ═══════════════════════════════════════════
+// MODE DETECTION
+// ═══════════════════════════════════════════
+function detectMode() {
+  const params = new URLSearchParams(location.search);
+  const workerUrl = params.get("worker");
+  if (workerUrl) {
+    state.mode = "worker";
+    state.workerUrl = workerUrl;
+    modeBar.classList.remove("show");
+    modeBar.classList.add("production");
+    modeBar.classList.add("show");
+    modeBar.innerHTML = `<b>PRODUCTION</b> — calls ${workerUrl}`;
+    return;
+  }
+  const stored = sessionStorage.getItem("LIX_KEY");
+  if (stored) {
+    state.mode = "browser";
+    state.apiKey = stored;
+  } else {
+    showModal();
+  }
+}
+
+function showModal() {
+  $("keyinput").value = "";
+  modal.classList.add("show");
+  setTimeout(() => $("keyinput").focus(), 100);
+}
+
+function hideModal() {
+  modal.classList.remove("show");
+}
+
+$("modal-save").onclick = () => {
+  const k = $("keyinput").value.trim();
+  if (!k.startsWith("sk-or-v1-")) {
+    alert("That doesn't look like an OpenRouter key (should start with sk-or-v1-)");
+    return;
+  }
+  sessionStorage.setItem("LIX_KEY", k);
+  state.apiKey = k;
+  state.mode = "browser";
+  hideModal();
+  restart();
+};
+$("modal-cancel").onclick = hideModal;
+$("keyinput").addEventListener("keydown", (e) => { if (e.key === "Enter") $("modal-save").click(); });
+
+$("btn-restart").onclick = () => restart();
+$("btn-setkey").onclick = () => showModal();
+$("btn-clearkey").onclick = () => {
+  sessionStorage.removeItem("LIX_KEY");
+  state.apiKey = null;
+  log("key cleared", "ok");
+  showModal();
+};
+
+// ═══════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════
+function addBubble(text, who = "lix", opts = {}) {
+  const row = document.createElement("div");
+  row.className = "bubble-row" + (who === "user" ? " user-row" : "");
+  const b = document.createElement("div");
+  b.className = "bubble " + who;
+  b.textContent = text;
+  if (opts.chips) {
+    const chips = document.createElement("div");
+    chips.className = "choices";
+    opts.chips.forEach(c => {
+      const chip = document.createElement("button");
+      chip.className = "chip";
+      chip.textContent = c;
+      chip.onclick = () => { if (!state.awaitingUser) return; handleUserInput(c, true); };
+      chips.appendChild(chip);
+    });
+    b.appendChild(chips);
+  }
+  row.appendChild(b);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+  return b;
+}
+
+function addTypingBubble() {
+  const row = document.createElement("div");
+  row.className = "bubble-row";
+  const b = document.createElement("div");
+  b.className = "bubble typing";
+  b.innerHTML = "<span></span><span></span><span></span>";
+  row.appendChild(b);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+  return row;
+}
+
+function setMood(mood) {
+  mMood.textContent = mood || "pleased";
+  lixSlot.className = "lix-slot mood-" + (mood || "pleased");
+  // Swap face features for major mood changes
+  const face = $("face");
+  face.innerHTML = "";
+  if (mood === "delighted") {
+    face.innerHTML = `
+      <path d="M 53 82 Q 58 77 63 82" stroke="#1A1612" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M 77 82 Q 82 77 87 82" stroke="#1A1612" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M 58 97 Q 70 107 82 97" stroke="#1A1612" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+  } else if (mood === "quiet") {
+    face.innerHTML = `
+      <line x1="54" y1="82" x2="62" y2="82" stroke="#1A1612" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="78" y1="82" x2="86" y2="82" stroke="#1A1612" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="64" y1="99" x2="76" y2="99" stroke="#1A1612" stroke-width="1.8" stroke-linecap="round"/>`;
+  } else if (mood === "curious") {
+    face.innerHTML = `
+      <ellipse cx="58" cy="80" rx="2.5" ry="3" fill="#1A1612"/>
+      <ellipse cx="82" cy="82" rx="2.5" ry="2" fill="#1A1612"/>
+      <path d="M 62 98 Q 70 101 78 97" stroke="#1A1612" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+  } else {
+    // pleased (default)
+    face.innerHTML = `
+      <ellipse cx="58" cy="82" rx="2.5" ry="3" fill="#1A1612"/>
+      <ellipse cx="82" cy="82" rx="2.5" ry="3" fill="#1A1612"/>
+      <path d="M 62 98 Q 70 102 78 98" stroke="#1A1612" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+  }
+}
+
+function setThinking(on) {
+  if (on) lixSlot.classList.add("mood-thinking");
+  else lixSlot.classList.remove("mood-thinking");
+}
+
+function updateProfile() {
+  pName.textContent = state.profile.name || "";
+  pAge.textContent = state.profile.age || "";
+  pAxis.textContent = state.profile.chief_complaint || "";
+  pConsent.textContent = state.profile.consent || "";
+}
+
+function updateTurnPill() {
+  turnPill.textContent = `turn ${state.turnId} / 7`;
+  mTurn.textContent = state.turnId;
+}
+
+function log(msg, cls = "") {
+  const line = document.createElement("div");
+  const ts = new Date().toLocaleTimeString();
+  line.innerHTML = `<span class="l-ts">${ts}</span><span class="l-${cls}">${msg}</span>`;
+  logEl.appendChild(line);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+// ═══════════════════════════════════════════
+// LLM CALL
+// ═══════════════════════════════════════════
+async function callLix(turn, userInput) {
+  const body = {
+    turn: turn.id,
+    turn_purpose: turn.purpose,
+    user_input: userInput,
+    profile_so_far: state.profile,
+  };
+  log(`→ turn ${turn.id} (${turn.purpose}) · "${userInput}"`);
+
+  if (state.mode === "worker") {
+    const res = await fetch(state.workerUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`worker error ${res.status}`);
+    return await res.json();
+  }
+
+  // Browser mode — direct to OpenRouter
+  const SYSTEM = `You are Lix — a tiny iridescent droplet character who is the onboarding host for Alche, a longevity app grounded in apothecary traditions and modern science.
+
+VOICE — non-negotiable:
+- LOWERCASE ALWAYS. Never capitalize.
+- 4 to 14 words per sentence. Fragments welcome.
+- Punctuation: em-dashes, ellipsis, periods. NEVER exclamation marks. NEVER emojis.
+- BANNED: "amazing","awesome","great","journey","wellness","embrace","unlock","absolutely","love that","I understand".
+- Warm but terse. Curious, not chirpy. Quietly knowing.
+
+KNOWLEDGE: You know longevity science — sleep (magnesium glycinate, apigenin, l-theanine, phosphatidylserine), energy (NAD+, CoQ10, creatine, urolithin A), focus (alpha-GPC, lion's mane, rhodiola, caffeine+theanine), mood (saffron, SAMe, NAC, EPA:DHA, psychobiotics), stress (ashwagandha, tulsi, HRV), sex (tongkat ali, maca, shilajit, boron, zinc), skin (collagen, astaxanthin, bakuchiol), gut (L. reuteri, apigenin, zinc carnosine), general (fisetin, quercetin, spermidine, sulforaphane, D+K2, sauna, fasting).
+
+NEVER: give medical advice, diagnose, promise results, push supplements, invent studies, ask more than one question, break character.
+
+OUTPUT: strict JSON only, no prose. Exactly: {"mood":"delighted"|"pleased"|"curious"|"quiet","text":"<reaction, 4-14 words, lowercase>"}
+
+EXAMPLES:
+IN: {"turn":2,"turn_purpose":"name_ack","user_input":"Timu","profile_so_far":{}}
+OUT: {"mood":"pleased","text":"timu. good."}
+IN: {"turn":3,"turn_purpose":"age_ack","user_input":"29","profile_so_far":{"name":"Timu"}}
+OUT: {"mood":"pleased","text":"still soft. easy work."}
+IN: {"turn":4,"turn_purpose":"axis_ack","user_input":"focus","profile_so_far":{"name":"Timu","age":29}}
+OUT: {"mood":"curious","text":"ah. the quiet one. alpha-gpc weather."}
+IN: {"turn":4,"turn_purpose":"axis_ack","user_input":"sleep","profile_so_far":{"name":"Mira","age":34}}
+OUT: {"mood":"quiet","text":"of course. fix the root. rest follows."}
+
+Remember: terse. warm. knowing. one reaction. strict JSON.`;
+
+  // Model can be overridden via ?model=... URL param
+  // Default to the :free variant so the demo works without OpenRouter credits
+  const modelOverride = new URLSearchParams(location.search).get("model");
+  const model = modelOverride || "openai/gpt-oss-120b:free";
+
+  const payload = {
+    model,
+    messages: [
+      { role: "system", content: SYSTEM },
+      { role: "user", content: JSON.stringify(body) }
+    ],
+    temperature: 0.8,
+    max_tokens: 120,
+    response_format: { type: "json_object" },
+  };
+
+  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${state.apiKey}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": location.origin,
+      "X-Title": "Alche Lix Demo",
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`openrouter ${res.status}: ${err.slice(0, 200)}`);
+  }
+  const data = await res.json();
+  const raw = data?.choices?.[0]?.message?.content || "";
+  let parsed;
+  try { parsed = JSON.parse(raw); }
+  catch { const m = raw.match(/\{[\s\S]*\}/); parsed = m ? JSON.parse(m[0]) : null; }
+  if (!parsed || !parsed.text) return { mood: "pleased", text: "mm. noted." };
+  // Sanitize
+  parsed.text = (parsed.text + "").replace(/!/g, ".").toLowerCase().trim();
+  if (!["delighted","pleased","curious","quiet"].includes(parsed.mood)) parsed.mood = "pleased";
+  return parsed;
+}
+
+// ═══════════════════════════════════════════
+// FLOW
+// ═══════════════════════════════════════════
+async function runTurn(turnId) {
+  const turn = LIX_TURNS.find(t => t.id === turnId);
+  if (!turn) return;
+  state.turnId = turnId;
+  updateTurnPill();
+  setMood(turn.mood_default);
+
+  // Render prompts (scripted)
+  const prompts = turn.prompts.map(p => p === "[[DYNAMIC]]" ? turn.build_prompt(state.profile) : p);
+  for (let i = 0; i < prompts.length; i++) {
+    await sleep(i === 0 ? 400 : 700);
+    const isLast = i === prompts.length - 1;
+    if (isLast && turn.awaits === "choice") {
+      addBubble(prompts[i], "lix", { chips: turn.choices });
+    } else {
+      addBubble(prompts[i], "lix");
+    }
+  }
+
+  if (turn.awaits === "free_text") {
+    composer.classList.remove("hidden");
+    inputEl.disabled = false; sendBtn.disabled = false; inputEl.focus();
+    state.awaitingUser = true;
+  } else if (turn.awaits === "choice") {
+    composer.classList.add("hidden");
+    state.awaitingUser = true;
+  } else {
+    // auto-advance
+    composer.classList.add("hidden");
+    state.awaitingUser = false;
+    await sleep(turn.auto_advance_delay || 1800);
+    advance();
+  }
+}
+
+async function handleUserInput(raw, fromChip = false) {
+  if (!state.awaitingUser || state.busy) return;
+  const turn = LIX_TURNS.find(t => t.id === state.turnId);
+  if (!turn) return;
+
+  const input = (raw || "").trim();
+  if (!input) return;
+  if (turn.validate && !turn.validate(input)) {
+    // gentle nudge
+    addBubble("mm — give me a number?", "lix");
+    return;
+  }
+
+  // Echo user bubble
+  addBubble(input, "user");
+  if (turn.capture) state.profile[turn.capture] = input;
+  updateProfile();
+
+  state.awaitingUser = false;
+  state.busy = true;
+  composer.classList.add("hidden");
+  inputEl.value = "";
+
+  // If terminal, finish
+  if (turn.is_terminal) {
+    log("onboarding complete", "ok");
+    setMood("delighted");
+    state.busy = false;
+    return;
+  }
+
+  // Call LLM if next turn expects reaction
+  const nextTurn = LIX_TURNS.find(t => t.id === turn.id + 1);
+  if (nextTurn?.expect_reaction) {
+    const typing = addTypingBubble();
+    setThinking(true);
+    try {
+      const reaction = await callLix(turn, input);
+      log(`← ${reaction.mood} · "${reaction.text}"`, "ok");
+      typing.remove();
+      setThinking(false);
+      setMood(reaction.mood);
+      addBubble(reaction.text, "lix");
+      await sleep(900);
+    } catch (e) {
+      log(`✕ ${e.message}`, "error");
+      typing.remove();
+      setThinking(false);
+      addBubble("mm. noted.", "lix");
+      await sleep(600);
+    }
+  }
+
+  state.busy = false;
+  advance();
+}
+
+function advance() {
+  const next = state.turnId + 1;
+  if (next > LIX_TURNS.length) {
+    log("flow ended", "ok");
+    return;
+  }
+  runTurn(next);
+}
+
+sendBtn.onclick = () => handleUserInput(inputEl.value);
+inputEl.addEventListener("keydown", (e) => { if (e.key === "Enter") handleUserInput(inputEl.value); });
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function restart() {
+  state.turnId = 1;
+  state.profile = {};
+  state.awaitingUser = false;
+  state.busy = false;
+  updateProfile();
+  chat.innerHTML = "";
+  logEl.innerHTML = "";
+  setMood("pleased");
+  runTurn(1);
+}
+
+// ═══════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════
+detectMode();
+if (state.mode) {
+  restart();
+}
+
+</script>
+</body>
+</html>

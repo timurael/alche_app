@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filiz · Alche Mascot Lab · C</title>
+<style>
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_500.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_600.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_600.woff2') format('woff2'); font-weight: 600; }
+
+  :root {
+    --bg: #E6EFD8;
+    --bg-deep: #D4E0C4;
+    --bg-card: #F2F7E8;
+    --ink: #2A2418;
+    --ink-soft: #4a4230;
+    --ink-faint: #7a7256;
+    --body-core: #E6EFD8;
+    --body-shade: #C4D4A8;
+    --leaf: #A8C480;
+    --leaf-vein: #6E8E4C;
+    --dew: #F4F8E8;
+    --blush: #E8B8B0;
+    --root: #8A6E48;
+    --shadow: rgba(42,36,24,0.12);
+    --rule: rgba(42,36,24,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Outfit', -apple-system, sans-serif; }
+
+  body { padding: 64px 48px 96px; max-width: 1280px; margin: 0 auto; }
+
+  header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 72px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+  .crumb { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .crumb a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  .crumb a:hover { border-bottom-color: currentColor; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; margin-bottom: 96px; }
+  .hero-text h1 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 88px; line-height: 0.95; letter-spacing: -0.02em; }
+  .hero-text h1 em { font-style: italic; color: var(--ink-soft); }
+  .hero-text .tagline { font-size: 20px; line-height: 1.5; color: var(--ink-soft); margin-top: 24px; max-width: 440px; }
+  .hero-text .meta { display: flex; gap: 32px; margin-top: 40px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+  .hero-text .meta div b { display: block; font-family: 'Cormorant', serif; font-size: 24px; font-weight: 400; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 4px; }
+
+  .hero-art { display: flex; justify-content: center; align-items: center; padding: 40px; }
+  .hero-art svg { width: 100%; max-width: 420px; filter: drop-shadow(0 20px 40px var(--shadow)); }
+
+  @keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .sway-l { animation: sway 3s ease-in-out infinite; transform-origin: 100% 50%; }
+  .sway-r { animation: sway 3s ease-in-out infinite reverse; transform-origin: 0% 50%; }
+
+  section { margin-bottom: 80px; }
+  h2 { font-family: 'Cormorant', serif; font-weight: 400; font-size: 42px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  h2 + .sub { font-size: 14px; color: var(--ink-faint); letter-spacing: 0.04em; margin-bottom: 32px; }
+  h2 em { font-style: italic; color: var(--ink-soft); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+
+  .card { background: var(--bg-card); border-radius: 2px; padding: 40px; }
+
+  .palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .swatch { aspect-ratio: 1; border-radius: 2px; position: relative; overflow: hidden; }
+  .swatch-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(42,36,24,0.85); color: #fff; font-size: 10px; letter-spacing: 0.04em; }
+  .swatch-label b { display: block; font-weight: 500; font-size: 11px; margin-bottom: 2px; letter-spacing: 0.06em; }
+  .swatch-label span { opacity: 0.7; font-weight: 300; }
+
+  .voice-samples li { list-style: none; font-family: 'Cormorant', serif; font-weight: 400; font-size: 24px; line-height: 1.5; padding: 14px 0; border-top: 1px solid var(--rule); font-style: italic; }
+  .voice-samples li:first-child { border-top: none; }
+  .voice-meta { display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 13px; }
+  .voice-meta dt { color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; padding-top: 4px; }
+  .voice-meta dd { line-height: 1.5; }
+
+  .chat-stage { display: flex; justify-content: center; }
+  .phone { width: 360px; height: 720px; background: #000; border-radius: 44px; padding: 12px; box-shadow: 0 40px 80px rgba(42,36,24,0.25); position: relative; }
+  .phone-screen { background: var(--bg); height: 100%; border-radius: 34px; padding: 56px 20px 40px; overflow-y: auto; position: relative; }
+  .phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 110px; height: 32px; background: #000; border-radius: 20px; z-index: 2; }
+  .phone-nav { display: flex; align-items: center; gap: 12px; padding: 0 4px 16px; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
+  .phone-nav svg { width: 36px; height: 36px; }
+  .phone-nav .who { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; }
+  .phone-nav .who small { display: block; font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .bubble { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.45; margin-bottom: 6px; }
+  .bubble.filiz { background: #fff; color: var(--ink); border-bottom-left-radius: 4px; }
+  .bubble.user { background: var(--ink); color: var(--bg); margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble-row { display: flex; flex-direction: column; margin-bottom: 10px; }
+  .bubble-row.user-row { align-items: flex-end; }
+  .bubble .choices { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .bubble .chip { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 12px; font-size: 12px; }
+
+  .expressions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .expr { text-align: center; }
+  .expr-frame { aspect-ratio: 1; background: var(--bg-card); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; padding: 20px; }
+  .expr-frame svg { width: 100%; }
+  .expr b { font-family: 'Cormorant', serif; font-weight: 400; font-size: 18px; display: block; }
+  .expr span { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+
+  .prompt-card { background: var(--ink); color: var(--bg); padding: 40px; border-radius: 2px; }
+  .prompt-card h3 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 28px; margin-bottom: 4px; color: var(--bg); }
+  .prompt-card .sub { color: rgba(230,239,216,0.5); margin-bottom: 24px; font-size: 13px; }
+  .prompt-code { background: rgba(230,239,216,0.06); padding: 24px; border-radius: 2px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; color: rgba(230,239,216,0.95); max-height: 320px; overflow-y: auto; margin-bottom: 16px; }
+  .copy-btn { background: var(--leaf); color: var(--ink); border: none; padding: 12px 24px; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
+  .copy-btn:hover { background: #bbd098; }
+  .copy-btn.copied { background: var(--blush); color: var(--ink); }
+
+  .risk-table { width: 100%; border-collapse: collapse; }
+  .risk-table th, .risk-table td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 14px; vertical-align: top; }
+  .risk-table td:first-child { width: 40%; padding-right: 32px; font-weight: 500; }
+
+  footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  footer a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  footer a:hover { border-bottom-color: currentColor; }
+
+  @media print {
+    @page { size: A3; margin: 20mm; }
+    body { padding: 0; max-width: none; }
+    .hero { page-break-after: always; }
+    section { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 32px 20px; }
+    .hero, .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .hero-text h1 { font-size: 56px; }
+    .expressions { grid-template-columns: repeat(2, 1fr); }
+    .palette { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumb"><a href="../index.html">← Mascot Lab</a></div>
+  <div class="crumb">C of IV · The Sprout · filiz</div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Filiz<em>,</em><br>the sprout</h1>
+    <p class="tagline">The newest thing in the room, paradoxically longest-lived. Seed memory meets new-leaf freshness.</p>
+    <div class="meta">
+      <div>Archetype<b>Innocent-Lover</b></div>
+      <div>Voice<b>3–10 words</b></div>
+      <div>User age<b>20–40</b></div>
+    </div>
+  </div>
+  <div class="hero-art">
+    <!-- Filiz SVG -->
+    <svg viewBox="0 0 420 480" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="filizBody" cx="50%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#F4F8E8"/>
+          <stop offset="60%" stop-color="#E6EFD8"/>
+          <stop offset="100%" stop-color="#C4D4A8"/>
+        </radialGradient>
+        <radialGradient id="filizLeaf" cx="30%" cy="30%" r="80%">
+          <stop offset="0%" stop-color="#C8DCA4"/>
+          <stop offset="100%" stop-color="#A8C480"/>
+        </radialGradient>
+        <linearGradient id="filizRoot" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#E6EFD8" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#8A6E48"/>
+        </linearGradient>
+      </defs>
+      <!-- ground shadow -->
+      <ellipse cx="210" cy="452" rx="100" ry="12" fill="#2A2418" opacity="0.15"/>
+
+      <g>
+        <!-- left leaf -->
+        <g class="sway-l" style="transform-origin: 210px 220px;">
+          <path d="M 210 220
+                   Q 140 190, 80 200
+                   Q 60 230, 90 265
+                   Q 150 260, 210 240 Z"
+                fill="url(#filizLeaf)"/>
+          <path d="M 210 232 Q 170 226 100 232" stroke="#6E8E4C" stroke-width="1.2" fill="none" opacity="0.6"/>
+          <path d="M 160 240 Q 155 250 158 258" stroke="#6E8E4C" stroke-width="0.8" fill="none" opacity="0.5"/>
+          <path d="M 130 235 Q 122 245 118 255" stroke="#6E8E4C" stroke-width="0.8" fill="none" opacity="0.5"/>
+        </g>
+        <!-- right leaf -->
+        <g class="sway-r" style="transform-origin: 210px 220px;">
+          <path d="M 210 220
+                   Q 280 185, 340 198
+                   Q 360 230, 335 268
+                   Q 270 260, 210 240 Z"
+                fill="url(#filizLeaf)"/>
+          <path d="M 210 232 Q 260 228 320 230" stroke="#6E8E4C" stroke-width="1.2" fill="none" opacity="0.6"/>
+          <path d="M 260 240 Q 265 250 263 258" stroke="#6E8E4C" stroke-width="0.8" fill="none" opacity="0.5"/>
+          <path d="M 295 235 Q 305 245 310 255" stroke="#6E8E4C" stroke-width="0.8" fill="none" opacity="0.5"/>
+        </g>
+
+        <!-- body (root bulb) -->
+        <ellipse cx="210" cy="320" rx="95" ry="125" fill="url(#filizBody)"/>
+        <!-- root base (brown fade at bottom) -->
+        <ellipse cx="210" cy="440" rx="40" ry="8" fill="#8A6E48" opacity="0.6"/>
+        <ellipse cx="210" cy="420" rx="60" ry="18" fill="url(#filizRoot)" opacity="0.4"/>
+        <!-- highlight -->
+        <ellipse cx="185" cy="270" rx="28" ry="18" fill="#F4F8E8" opacity="0.6"/>
+
+        <!-- tendril on top -->
+        <path d="M 215 195
+                 Q 218 170, 230 165
+                 Q 242 160, 240 148
+                 Q 238 138, 228 140"
+              stroke="#A8C480" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="228" cy="140" r="3" fill="#A8C480"/>
+
+        <!-- eyelashes -->
+        <path d="M 178 290 L 174 284" stroke="#2A2418" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 182 288 L 180 282" stroke="#2A2418" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 186 290 L 188 284" stroke="#2A2418" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 234 290 L 232 284" stroke="#2A2418" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 238 288 L 240 282" stroke="#2A2418" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M 242 290 L 246 284" stroke="#2A2418" stroke-width="1.2" stroke-linecap="round"/>
+
+        <!-- blush -->
+        <ellipse cx="152" cy="320" rx="20" ry="12" fill="#E8B8B0" opacity="0.35"/>
+        <ellipse cx="268" cy="320" rx="20" ry="12" fill="#E8B8B0" opacity="0.35"/>
+
+        <!-- eyes -->
+        <ellipse cx="182" cy="300" rx="8" ry="10" fill="#2A2418"/>
+        <ellipse cx="238" cy="300" rx="8" ry="10" fill="#2A2418"/>
+        <!-- eye highlights -->
+        <circle cx="185" cy="297" r="2" fill="#fff"/>
+        <circle cx="241" cy="297" r="2" fill="#fff"/>
+
+        <!-- smile -->
+        <path d="M 195 340 Q 210 350, 225 340" stroke="#2A2418" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <h2>Voice <em>&</em> Palette</h2>
+  <p class="sub">How Filiz talks, how Filiz looks.</p>
+  <div class="two-col">
+    <div class="card">
+      <ul class="voice-samples">
+        <li>"hi. i'm filiz."</li>
+        <li>"just came up this morning."</li>
+        <li>"what's your name?"</li>
+        <li>"ohh. pretty."</li>
+        <li>"okay — i'll find you something green."</li>
+      </ul>
+      <dl class="voice-meta">
+        <dt>Length</dt><dd>3–10 words.</dd>
+        <dt>Register</dt><dd>Wondering &gt; declaring. Asks a lot.</dd>
+        <dt>Never</dt><dd>Sarcasm. Corporate words.</dd>
+        <dt>Uses</dt><dd>Soft questions. Turkish tenderness ("ya").</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <div class="palette">
+        <div class="swatch" style="background:#E6EFD8;"><div class="swatch-label"><b>body-core</b><span>#E6EFD8</span></div></div>
+        <div class="swatch" style="background:#C4D4A8;"><div class="swatch-label"><b>body-shade</b><span>#C4D4A8</span></div></div>
+        <div class="swatch" style="background:#A8C480;"><div class="swatch-label"><b>leaf</b><span>#A8C480</span></div></div>
+        <div class="swatch" style="background:#6E8E4C;"><div class="swatch-label"><b>leaf-vein</b><span>#6E8E4C</span></div></div>
+        <div class="swatch" style="background:#F4F8E8; border:1px solid var(--rule);"><div class="swatch-label"><b>dew</b><span>#F4F8E8</span></div></div>
+        <div class="swatch" style="background:#E8B8B0;"><div class="swatch-label"><b>blush</b><span>#E8B8B0</span></div></div>
+        <div class="swatch" style="background:#8A6E48;"><div class="swatch-label"><b>root-base</b><span>#8A6E48</span></div></div>
+        <div class="swatch" style="background:#2A2418;"><div class="swatch-label"><b>eye</b><span>#2A2418</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The onboarding<em>, in full</em></h2>
+  <p class="sub">Seven turns. Every word crafted in Filiz's voice.</p>
+  <div class="chat-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-nav">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="navFiliz" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient>
+              <radialGradient id="navLeaf" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient>
+            </defs>
+            <ellipse cx="11" cy="22" rx="7" ry="3" fill="url(#navLeaf)" transform="rotate(-15 11 22)"/>
+            <ellipse cx="29" cy="22" rx="7" ry="3" fill="url(#navLeaf)" transform="rotate(15 29 22)"/>
+            <ellipse cx="20" cy="26" rx="9" ry="12" fill="url(#navFiliz)"/>
+            <path d="M 21 12 Q 23 8 26 9" stroke="#A8C480" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+            <ellipse cx="17" cy="24" rx="1.2" ry="1.6" fill="#2A2418"/>
+            <ellipse cx="23" cy="24" rx="1.2" ry="1.6" fill="#2A2418"/>
+            <path d="M 18 29 Q 20 31 22 29" stroke="#2A2418" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="who">Filiz<small>Alche · onboarding</small></div>
+        </div>
+
+        <div class="bubble-row"><div class="bubble filiz">hi. i'm filiz.</div></div>
+        <div class="bubble-row"><div class="bubble filiz">i just came up this morning. what about you?</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">Timu</div></div>
+        <div class="bubble-row"><div class="bubble filiz">timu. okay.</div></div>
+        <div class="bubble-row"><div class="bubble filiz">can i ask two tiny things?</div></div>
+        <div class="bubble-row"><div class="bubble filiz">first — how many years is the body you're in?</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">29</div></div>
+        <div class="bubble-row"><div class="bubble filiz">oh, same-ish! i'm, like, 400. but young in leaf years.</div></div>
+        <div class="bubble-row"><div class="bubble filiz">second — which one needs the most love right now:<div class="choices"><span class="chip">sleep</span><span class="chip">energy</span><span class="chip">focus</span><span class="chip">sex</span><span class="chip">mood</span></div></div></div>
+        <div class="bubble-row user-row"><div class="bubble user">mood</div></div>
+        <div class="bubble-row"><div class="bubble filiz">mm. okay. i know a few things for mood.</div></div>
+        <div class="bubble-row"><div class="bubble filiz">here's what i'll do, ya —</div></div>
+        <div class="bubble-row"><div class="bubble filiz">one soft thing every morning. grown, not made. nothing that feels like medicine. nothing that feels like homework. just a little green, a little you.</div></div>
+        <div class="bubble-row"><div class="bubble filiz">ready? →</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Expression sheet</h2>
+  <p class="sub">Five states the chat component animates through.</p>
+  <div class="expressions">
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="f1" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient><radialGradient id="l1" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient></defs><ellipse cx="28" cy="55" rx="18" ry="8" fill="url(#l1)" transform="rotate(-15 28 55)"/><ellipse cx="72" cy="55" rx="18" ry="8" fill="url(#l1)" transform="rotate(15 72 55)"/><ellipse cx="50" cy="70" rx="22" ry="32" fill="url(#f1)"/><path d="M 52 35 Q 57 28 64 30" stroke="#A8C480" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="42" cy="64" rx="2.5" ry="3" fill="#2A2418"/><ellipse cx="58" cy="64" rx="2.5" ry="3" fill="#2A2418"/><path d="M 45 77 Q 50 80 55 77" stroke="#2A2418" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    </div><b>Idle</b><span>default</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="f2" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient><radialGradient id="l2" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient></defs><ellipse cx="26" cy="50" rx="18" ry="8" fill="url(#l2)" transform="rotate(-30 26 50)"/><ellipse cx="74" cy="50" rx="18" ry="8" fill="url(#l2)" transform="rotate(30 74 50)"/><ellipse cx="50" cy="72" rx="22" ry="32" fill="url(#f2)"/><path d="M 52 37 Q 57 30 64 32" stroke="#A8C480" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="42" cy="64" rx="3" ry="3.8" fill="#2A2418"/><ellipse cx="58" cy="64" rx="3" ry="3.8" fill="#2A2418"/><circle cx="50" cy="78" r="2.5" fill="none" stroke="#2A2418" stroke-width="1.2"/></svg>
+    </div><b>Listening</b><span>user typing</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="f3" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient><radialGradient id="l3" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient></defs><ellipse cx="28" cy="55" rx="18" ry="8" fill="url(#l3)" transform="rotate(-15 28 55)"/><ellipse cx="72" cy="55" rx="18" ry="8" fill="url(#l3)" transform="rotate(15 72 55)"/><ellipse cx="50" cy="70" rx="22" ry="32" fill="url(#f3)"/><path d="M 52 35 Q 58 22 68 22 Q 76 22 72 34" stroke="#A8C480" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="42" cy="62" rx="2.5" ry="3" fill="#2A2418"/><ellipse cx="58" cy="62" rx="2.5" ry="3" fill="#2A2418"/><line x1="46" y1="77" x2="54" y2="77" stroke="#2A2418" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div><b>Thinking</b><span>unfurl</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="f4" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient><radialGradient id="l4" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient></defs><ellipse cx="22" cy="38" rx="18" ry="8" fill="url(#l4)" transform="rotate(-45 22 38)"/><ellipse cx="78" cy="38" rx="18" ry="8" fill="url(#l4)" transform="rotate(45 78 38)"/><ellipse cx="50" cy="74" rx="22" ry="30" fill="url(#f4)"/><path d="M 52 45 Q 57 38 64 40" stroke="#A8C480" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 38 63 Q 42 59 46 63" stroke="#2A2418" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M 54 63 Q 58 59 62 63" stroke="#2A2418" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M 42 76 Q 50 84 58 76" stroke="#2A2418" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+    </div><b>Delighted</b><span>submits</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="f5" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#F4F8E8"/><stop offset="100%" stop-color="#C4D4A8"/></radialGradient><radialGradient id="l5" cx="30%" cy="30%" r="80%"><stop offset="0%" stop-color="#C8DCA4"/><stop offset="100%" stop-color="#A8C480"/></radialGradient></defs><ellipse cx="38" cy="80" rx="16" ry="6" fill="url(#l5)" transform="rotate(30 38 80)"/><ellipse cx="62" cy="80" rx="16" ry="6" fill="url(#l5)" transform="rotate(-30 62 80)"/><ellipse cx="50" cy="72" rx="22" ry="32" fill="url(#f5)"/><path d="M 52 37 Q 60 32 65 38" stroke="#A8C480" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/><line x1="38" y1="64" x2="46" y2="64" stroke="#2A2418" stroke-width="1.4" stroke-linecap="round"/><line x1="54" y1="64" x2="62" y2="64" stroke="#2A2418" stroke-width="1.4" stroke-linecap="round"/><text x="72" y="38" font-family="Cormorant, serif" font-size="12" font-style="italic" fill="#2A2418" opacity="0.5">z</text></svg>
+    </div><b>Sleeping</b><span>end</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="two-col">
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Name shortlist</h2>
+      <table class="risk-table">
+        <tr><td><b>Filiz</b> <span style="color:var(--ink-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; margin-left:8px;">top pick</span></td><td>Turkish for "sprout" · fee-leez · fem-leaning</td></tr>
+        <tr><td>Sprig</td><td>light, botanical, short · western-safe</td></tr>
+        <tr><td>Fenu</td><td>from fenugreek · adaptogen ref</td></tr>
+        <tr><td>Pip</td><td>tiny, bouncy · risks too childlike</td></tr>
+        <tr><td>Shoot</td><td>plant + photography pun · confusable</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Risks &amp; mitigations</h2>
+      <table class="risk-table">
+        <tr><td>Most expected choice</td><td>Named/voiced so specifically that category-generic becomes Alche-specific</td></tr>
+        <tr><td>"Eco-app" drift</td><td>Longevity framing in copy, not sustainability. Zero earth tones in UI.</td></tr>
+        <tr><td>Too cute / childlike</td><td>Adult voice, no exclamation marks, slow blink rate</td></tr>
+        <tr><td>Gender-coded feminine</td><td>Actually an asset — Women &amp; Queer first</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Render prompt <em>·</em> Nano Banana Pro</h2>
+  <p class="sub">Copy, paste into Gemini 3 Pro Image. Hero render.</p>
+  <div class="prompt-card">
+    <h3>Master prompt</h3>
+    <div class="sub">ICS framework · square 1:1</div>
+    <pre class="prompt-code" id="prompt-c">Image type: 3D character render, botanical still life photography style, square 1:1 frame, centered composition, pale cream-off-white backdrop.
+
+Content: a tiny sprout creature named Filiz. The character is a pale cream-green root-bulb body (~60% of character volume), with two small symmetric (but not mirrored — slightly asymmetric for liveliness) oval leaves extending sideways as arms, and one curled unfurling tendril on top slightly off-center like a cowlick. Height-to-width ratio 1:1.4. Body has a matte surface with faint morning-dew sheen on crown. Leaves show subsurface-scattering — light passes through them revealing a single midvein shadow. Leaf tips gently pointed. Two 5px round black-dot eyes mid-body, with a tiny single eyelash tuft above each (3 delicate strokes each — pure sentiment). Soft curved smile 10px wide. Two pinkish blush ovals at 25% opacity. Slight warm-brown fade at the very bottom of the root-bulb, suggesting the sprout was just lifted from soil.
+
+Style: Pixar-Disney cute with botanical illustration DNA, 3D subsurface scattering on leaves, morning-dew micro-highlights, soft overcast lighting (early-morning window light), shallow depth of field. References: Totoro's soot-sprites and kodama (warm, not eerie), Apple Health rings meet a living houseplant, Muji's garden collection, Studio Ghibli nature-spirits. NO cartoon outline. NO chibi-anime features. NO visible human arms — the leaves ARE the arms.</pre>
+    <button class="copy-btn" onclick="copyPrompt('prompt-c', this)">Copy prompt</button>
+    <a href="prompt.md" style="color:var(--bg); opacity:0.6; margin-left:16px; font-size:13px;">all prompts + variations →</a>
+  </div>
+</section>
+
+<footer>
+  <div>Alche · Mascot Lab · C of IV</div>
+  <div><a href="../B-havan/preview.html">← B · Havan</a> · <a href="../index.html">all</a> · <a href="../D-alo/preview.html">D · Alo →</a></div>
+</footer>
+
+<script>
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerText;
+      btn.classList.add('copied');
+      btn.innerText = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerText = old; }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

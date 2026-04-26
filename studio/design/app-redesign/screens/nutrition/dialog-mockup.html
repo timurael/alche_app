@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche · Nutrition — Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- Nutrition specifics ---------- */
+
+  /* Kcal masthead — quieter than a ring, still present */
+  .nu-masthead {
+    padding: 4px 24px 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--divider-medium);
+    margin: 0 0 4px;
+  }
+  .nu-masthead .big {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--editorial-black);
+  }
+  .nu-masthead .big .slash {
+    color: var(--editorial-muted);
+    font-weight: 200;
+    padding: 0 4px;
+  }
+  .nu-masthead .big .goal {
+    color: var(--editorial-muted);
+    font-size: 26px;
+  }
+  .nu-masthead .unit {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    padding-bottom: 4px;
+  }
+
+  /* Macro grid — editorial 2px cells, no pastel bars */
+  .nu-macros {
+    margin: 0 24px;
+    border: 1px solid var(--divider-medium);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .nu-macro {
+    padding: 14px 16px;
+    border-right: 1px solid var(--divider-medium);
+    border-bottom: 1px solid var(--divider-medium);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .nu-macro:nth-child(2n) { border-right: none; }
+  .nu-macro:nth-last-child(-n+2) { border-bottom: none; }
+  .nu-macro .k {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .nu-macro .v {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--editorial-black);
+    letter-spacing: -0.01em;
+  }
+  .nu-macro .v .goal {
+    color: var(--editorial-muted);
+    font-size: 14px;
+  }
+  .nu-macro .bar {
+    height: 2px;
+    background: var(--divider-medium);
+    position: relative;
+    margin-top: 2px;
+  }
+  .nu-macro .bar::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--editorial-black);
+  }
+  .nu-macro .bar.pct-63::after { width: 63%; }
+  .nu-macro .bar.pct-66::after { width: 66%; }
+  .nu-macro .bar.pct-62::after { width: 62%; }
+  .nu-macro .bar.pct-46::after { width: 46%; background: var(--warning); }
+  .nu-macro.watch .k { color: var(--warning); }
+
+  /* Meals list — editorial single-line rows */
+  .nu-meals {
+    margin: 4px 24px 0;
+  }
+  .nu-meal {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--divider-light);
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .nu-meal:last-child { border-bottom: none; }
+  .nu-meal .when {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--editorial-muted);
+  }
+  .nu-meal .title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--editorial-black);
+    line-height: 1.3;
+  }
+  .nu-meal .title .src {
+    font-family: 'Noto Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--editorial-muted);
+    letter-spacing: 0.02em;
+    display: block;
+    margin-top: 2px;
+  }
+  .nu-meal .kcal {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--editorial-black);
+  }
+
+  /* Empty slot */
+  .nu-meal.empty .title {
+    font-style: italic;
+    color: var(--editorial-muted);
+    font-weight: 300;
+  }
+  .nu-meal.empty .kcal { color: var(--editorial-muted); font-weight: 400; }
+
+  /* Disclaimer strip */
+  .nu-disclaimer {
+    margin: 16px 24px 0;
+    padding: 10px 14px;
+    border: 1px dashed var(--editorial-muted);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    line-height: 1.5;
+  }
+
+  /* Date footer */
+  .nu-date-footer {
+    padding: 18px 24px 8px;
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .nu-date-footer .day {
+    padding: 4px 6px;
+    border-bottom: 1px solid transparent;
+  }
+  .nu-date-footer .day.today {
+    color: var(--editorial-black);
+    font-weight: 700;
+    border-bottom: 1px solid var(--editorial-black);
+  }
+
+  /* Signal bars */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery {
+    width: 24px; height: 11px; border: 1.2px solid var(--editorial-black);
+    border-radius: 2.5px; position: relative; padding: 1px;
+  }
+  .battery::after {
+    content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px;
+    background: var(--editorial-black); border-radius: 0 1px 1px 0;
+  }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <div class="frame-content">
+
+      <!-- Context band -->
+      <div class="alche-context-band">
+        <div class="ctx-left">
+          <span>14:08 · MONDAY · DAY 41</span>
+        </div>
+        <div class="ctx-right">
+          <span>POST-LUNCH</span>
+        </div>
+      </div>
+
+      <!-- Read stamp -->
+      <div class="alche-read-stamp">
+        <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="alche-read-stamp-label">ALCHE · YOUR NUTRITION TODAY</span>
+      </div>
+
+      <!-- The read — nutritionist-as-reader -->
+      <div class="alche-read">
+        <span class="line">You've eaten lunch.</span>
+        <span class="line">Protein's holding.</span>
+        <span class="line"><em>Fiber</em> is the one to watch.</span>
+      </div>
+
+      <!-- Kcal masthead — italic, no ring -->
+      <div class="nu-masthead">
+        <div class="big">1,240 <span class="slash">/</span><span class="goal">1,800</span></div>
+        <div class="unit">KCAL · <span style="color:var(--editorial-black);font-weight:700;">560 LEFT</span></div>
+      </div>
+
+      <!-- Macros grid — editorial cells -->
+      <div class="nu-macros">
+        <div class="nu-macro">
+          <span class="k">PROTEIN</span>
+          <span class="v">82<span class="goal">/130 g</span></span>
+          <span class="bar pct-63"></span>
+        </div>
+        <div class="nu-macro">
+          <span class="k">CARBS</span>
+          <span class="v">145<span class="goal">/220 g</span></span>
+          <span class="bar pct-66"></span>
+        </div>
+        <div class="nu-macro">
+          <span class="k">FAT</span>
+          <span class="v">40<span class="goal">/65 g</span></span>
+          <span class="bar pct-62"></span>
+        </div>
+        <div class="nu-macro watch">
+          <span class="k">FIBER · WATCH</span>
+          <span class="v">12<span class="goal">/26 g</span></span>
+          <span class="bar pct-46"></span>
+        </div>
+      </div>
+
+      <!-- Interstitial — voice between blocks -->
+      <div class="alche-interstitial">
+        <p class="i-voice">Your lunch was protein-forward but light on leaves. <em>A handful of greens with dinner</em> closes the day cleanly.</p>
+      </div>
+
+      <!-- Meals list — editorial rows -->
+      <div class="alche-section-head">
+        <span class="sh-label">TODAY'S MEALS</span>
+        <span class="sh-count">3 LOGGED</span>
+      </div>
+      <div class="nu-meals">
+        <div class="nu-meal">
+          <span class="when">08:20</span>
+          <span class="title">Green smoothie
+            <span class="src">Alche Berlin · house recipe</span>
+          </span>
+          <span class="kcal">320 KCAL</span>
+        </div>
+        <div class="nu-meal">
+          <span class="when">10:45</span>
+          <span class="title">Two eggs, sourdough
+            <span class="src">Logged manually</span>
+          </span>
+          <span class="kcal">380 KCAL</span>
+        </div>
+        <div class="nu-meal">
+          <span class="when">13:15</span>
+          <span class="title">Salmon bowl
+            <span class="src">Oukan · Mitte</span>
+          </span>
+          <span class="kcal">540 KCAL</span>
+        </div>
+        <div class="nu-meal empty">
+          <span class="when">~19:00</span>
+          <span class="title">Dinner — not yet logged</span>
+          <span class="kcal">—</span>
+        </div>
+      </div>
+
+      <!-- Primary action -->
+      <div style="height:14px;"></div>
+      <button class="alche-primary-action">
+        <span>Log a meal</span>
+        <span class="arrow">→</span>
+      </button>
+      <a class="alche-secondary-action"><span class="u">Find a restaurant &nbsp;→</span></a>
+
+      <!-- Disclaimer — REQ-025 -->
+      <div class="nu-disclaimer">
+        All nutritional data is independently estimated — approximate, not clinical.
+      </div>
+
+      <!-- Date footer (demoted strip) -->
+      <div class="nu-date-footer">
+        <span class="day">TUE</span>
+        <span class="day">WED</span>
+        <span class="day">THU</span>
+        <span class="day">FRI</span>
+        <span class="day">SAT</span>
+        <span class="day">SUN</span>
+        <span class="day today">MON · TODAY</span>
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- Originating from Discover (Eat Smart Outside segment) -->
+    <div class="ios-tab-bar">
+      <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+      <div class="tab active"><div class="tab-dot"></div><span>DISCOVER</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

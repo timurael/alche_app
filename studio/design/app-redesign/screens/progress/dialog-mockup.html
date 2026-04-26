@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Progress · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .pg-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 24px 4px;
+    }
+    .pg-topbar .back {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      text-decoration: none;
+    }
+    .pg-topbar .back .arr { display: inline-block; margin-right: 6px; }
+
+    /* Chart: slim, single metric, with annotation */
+    .pg-chart-wrap {
+      padding: 10px 24px 0;
+      position: relative;
+    }
+    .pg-chart-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 14px;
+    }
+    .pg-chart-head .metric {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      font-weight: 700;
+    }
+    .pg-chart-head .range {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+    }
+
+    .pg-chart {
+      height: 140px;
+      width: 100%;
+      position: relative;
+      border-bottom: 1px solid var(--divider-medium);
+    }
+    .pg-chart svg {
+      width: 100%; height: 100%;
+      display: block;
+    }
+    .pg-chart .annot {
+      position: absolute;
+      top: 10px; left: 48%;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 2px 6px;
+      background: var(--bg-light);
+    }
+    .pg-chart .annot::before {
+      content: "";
+      position: absolute; top: 100%; left: 10px;
+      width: 1px; height: 14px;
+      background: var(--primary);
+    }
+
+    .pg-chart-labels {
+      display: flex; justify-content: space-between;
+      padding: 8px 0 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+    }
+
+    /* Data strip — real numbers, mono */
+    .pg-data-strip {
+      padding: 14px 24px 0;
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.12em;
+      color: var(--editorial-muted);
+      text-transform: uppercase;
+    }
+    .pg-data-strip .sep {
+      width: 3px; height: 3px;
+      background: var(--editorial-muted);
+      border-radius: 999px;
+      opacity: 0.6;
+    }
+    .pg-data-strip .k { color: var(--editorial-muted); }
+    .pg-data-strip .v { color: var(--editorial-black); font-weight: 700; margin-left: 4px; }
+
+    /* Mono picker footer — Alche picked, but member can switch */
+    .pg-picker-row {
+      padding: 22px 24px 6px;
+      display: flex; gap: 14px; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      border-top: 1px solid var(--divider-light);
+    }
+    .pg-picker-row .grp {
+      display: flex; gap: 10px;
+    }
+    .pg-picker-row .opt {
+      color: var(--editorial-muted);
+      cursor: pointer;
+    }
+    .pg-picker-row .opt.on {
+      color: var(--editorial-black);
+      font-weight: 700;
+      border-bottom: 1.5px solid var(--editorial-black);
+      padding-bottom: 2px;
+    }
+    .pg-picker-row .spacer { flex: 1; }
+
+    /* Check-in continuity line */
+    .pg-checkin {
+      margin: 4px 24px 0;
+      padding: 14px 16px;
+      border: 1px solid var(--divider-medium);
+      background: var(--bg-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: var(--radius-sharp);
+    }
+    .pg-checkin .l {
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .pg-checkin .l .k {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .pg-checkin .l .v {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--editorial-black);
+    }
+    .pg-checkin .l .v .q {
+      color: var(--editorial-muted);
+      font-weight: 400;
+    }
+    .pg-checkin .r {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: var(--editorial-black);
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <div class="right">
+          <span>●●●●●</span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;">5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <div class="frame-content">
+
+        <div class="pg-topbar">
+          <a class="back"><span class="arr">←</span>PROFILE</a>
+          <span class="alche-tag">Sample Data</span>
+        </div>
+
+        <!-- Stamp -->
+        <div class="alche-read-stamp" style="margin-top: 10px;">
+          <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span class="alche-read-stamp-label">ALCHE · YOUR CURVE</span>
+        </div>
+
+        <!-- Opening read -->
+        <div class="alche-read">
+          <span class="line">Three weeks in — <em>your sleep is 14% deeper</em>.</span>
+          <span class="line dim">Mood holds. Energy is the one worth watching.</span>
+        </div>
+
+        <!-- Chart block — Alche picks what to show -->
+        <div class="pg-chart-wrap">
+          <div class="pg-chart-head">
+            <span class="metric">SLEEP · 30 DAYS</span>
+            <span class="range">1–5 SCALE</span>
+          </div>
+
+          <div class="pg-chart">
+            <!-- Annotation over the inflection point -->
+            <span class="annot">DEEP RECOVERY · DAY 1</span>
+            <svg viewBox="0 0 320 140" preserveAspectRatio="none" aria-hidden="true">
+              <!-- Faint gridlines -->
+              <line x1="0" y1="35" x2="320" y2="35" stroke="rgba(13,18,27,0.06)" stroke-width="1"/>
+              <line x1="0" y1="70" x2="320" y2="70" stroke="rgba(13,18,27,0.06)" stroke-width="1"/>
+              <line x1="0" y1="105" x2="320" y2="105" stroke="rgba(13,18,27,0.06)" stroke-width="1"/>
+
+              <!-- Sleep line — climbs around day 10 (inflection point) -->
+              <polyline
+                points="0,95 20,92 40,88 60,96 80,102 100,94 120,85 140,72 160,68 180,62 200,58 220,55 240,52 260,50 280,48 300,46 320,44"
+                fill="none"
+                stroke="#0d121b"
+                stroke-width="1.5"
+              />
+
+              <!-- Protocol-start marker -->
+              <line x1="150" y1="0" x2="150" y2="140" stroke="#1152d4" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+              <!-- End-point dot (current) -->
+              <circle cx="320" cy="44" r="3" fill="#0d121b"/>
+            </svg>
+          </div>
+
+          <div class="pg-chart-labels">
+            <span>MAR 25</span>
+            <span>APR 08</span>
+            <span>APR 24</span>
+          </div>
+        </div>
+
+        <!-- Real data strip under the chart -->
+        <div class="pg-data-strip">
+          <span><span class="k">14D AVG</span><span class="v">3.9</span></span>
+          <span class="sep"></span>
+          <span><span class="k">DELTA</span><span class="v">+0.5</span></span>
+          <span class="sep"></span>
+          <span><span class="k">STREAK</span><span class="v">12D</span></span>
+        </div>
+
+        <!-- Interstitial: narrator connects sleep to energy -->
+        <div class="alche-interstitial" style="margin-top: 18px;">
+          <p class="i-voice">Energy didn't follow sleep up — <em>yet</em>. Give it another week.</p>
+        </div>
+
+        <!-- Mono picker — Alche picked sleep; member can switch -->
+        <div class="pg-picker-row">
+          <div class="grp">
+            <span class="opt on">SLEEP</span>
+            <span class="opt">MOOD</span>
+            <span class="opt">ENERGY</span>
+            <span class="opt">OVERALL</span>
+          </div>
+          <span class="spacer"></span>
+          <div class="grp">
+            <span class="opt">7D</span>
+            <span class="opt on">30D</span>
+            <span class="opt">90D</span>
+          </div>
+        </div>
+
+        <!-- Check-ins collapsed into a single utility row -->
+        <div class="pg-checkin" style="margin-top: 18px;">
+          <div class="l">
+            <span class="k">CHECK-INS · LAST 14 DAYS</span>
+            <span class="v">12 of 14 <span class="q">— last night noted "slept deep"</span></span>
+          </div>
+          <span class="r">→</span>
+        </div>
+
+        <!-- Primary action: log today -->
+        <button class="alche-primary-action" style="margin-top: 18px;">
+          <span>Log today's check-in</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <a class="alche-secondary-action">
+          <span class="u">Open full history &nbsp;→</span>
+        </a>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · PROGRESS</p>
+      <h1 class="alche-display-l title">One chart, chosen by Alche. The rest is a mono footer you can override.</h1>
+      <p class="alche-body philosophy">
+        A dashboard with four charts says nothing. Alche picks the metric worth talking about today, annotates the curve with the event that caused the shift ("Deep Recovery · Day 1"), and says what's still unresolved. Pickers survive — demoted to a mono footer row the member can override if they disagree.
+      </p>
+
+      <ul class="decisions">
+        <li>
+          <span class="label">CUT</span>
+          <div class="alche-body">
+            The two stacked segmented pickers (Metric + Range) — both now live as a single mono underline row. The three `SummaryCard`s (Average / Trend / Streak) as top row — that data moved into a mono strip under the chart, where it carries meaning. The check-in list with colored E/S/M dots — collapsed into one continuity row ("12 of 14 — last night noted 'slept deep'").
+          </div>
+        </li>
+        <li>
+          <span class="label">KEPT</span>
+          <div class="alche-body">
+            The line chart — now slimmer (140pt, not ~200), with only the metric Alche chose, one protocol-start dashed marker for context, and a current-value dot. Still scannable, now legible about causality.
+          </div>
+        </li>
+        <li>
+          <span class="label">ADDED</span>
+          <div class="alche-body">
+            A two-line italic opening read ("Three weeks in — your sleep is 14% deeper. Mood holds. Energy is the one worth watching."). An inline chart annotation ("Deep Recovery · Day 1") so the inflection has a cause, not just a shape. An interstitial between chart and picker ("Energy didn't follow sleep up — yet. Give it another week."). One primary CTA: Log today's check-in.
+          </div>
+        </li>
+      </ul>
+
+      <blockquote class="tradeoff">
+        Trade-off: members who wanted four charts at once now see one. They gain a screen that tells them which metric matters, why it moved, and what's still open — instead of four trend lines with no narrator.
+      </blockquote>
+    </div>
+  </div>
+</body>
+</html>

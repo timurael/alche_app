@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Discover · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* Discover — editorial weekly dispatch */
+
+    .d-masthead {
+      padding: 4px 24px 18px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .d-masthead .title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 30px;
+      line-height: 1;
+      color: var(--editorial-black);
+      letter-spacing: -0.015em;
+    }
+    .d-masthead .issue {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Featured editorial — the lead piece */
+    .d-lead {
+      margin: 0 24px 22px;
+      border: 1px solid var(--editorial-black);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-sharp);
+      overflow: hidden;
+    }
+    .d-lead .lead-image {
+      height: 148px;
+      background:
+        radial-gradient(circle at 30% 40%, #c8a584 0%, transparent 55%),
+        radial-gradient(circle at 70% 60%, #6b8ab8 0%, transparent 60%),
+        linear-gradient(135deg, #e8dccb 0%, #8a9bb3 100%);
+      position: relative;
+      border-bottom: 1px solid var(--editorial-black);
+    }
+    .d-lead .lead-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(13,18,27,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(13,18,27,0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .d-lead .lead-kicker {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      padding: 4px 8px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .d-lead .lead-body {
+      padding: 14px 16px 16px;
+    }
+    .d-lead .lead-meta {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 8px;
+    }
+    .d-lead .lead-headline {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.2;
+      color: var(--editorial-black);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .d-lead .lead-byline {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 12px;
+      color: var(--editorial-muted);
+      font-style: italic;
+    }
+
+    /* Article list — quieter, three more */
+    .d-list {
+      padding: 0 24px;
+    }
+    .d-article {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--divider-light);
+    }
+    .d-article:last-child { border-bottom: none; }
+    .d-article .a-num {
+      flex-shrink: 0;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      color: var(--editorial-muted);
+      padding-top: 2px;
+      width: 18px;
+    }
+    .d-article .a-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .d-article .a-meta {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 4px;
+    }
+    .d-article .a-headline {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--editorial-black);
+      letter-spacing: -0.005em;
+    }
+
+    /* Footer escape hatches */
+    .d-elsewhere {
+      padding: 8px 24px 24px;
+    }
+    .d-elsewhere .eh-label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 10px;
+    }
+    .d-elsewhere .eh-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .d-elsewhere .eh-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      text-decoration: none;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+    }
+    .d-elsewhere .eh-link .u {
+      border-bottom: 1px solid var(--editorial-black);
+      padding-bottom: 2px;
+    }
+    .d-elsewhere .eh-link .eh-hint {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--editorial-muted);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* Scrollable content (mockup only — to let content breathe) */
+    .d-scroll {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Status bar signal glyphs */
+    .signal-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 10px;
+    }
+    .signal-bars span {
+      width: 3px;
+      background: var(--editorial-black);
+      border-radius: 1px;
+    }
+    .signal-bars span:nth-child(1) { height: 3px; }
+    .signal-bars span:nth-child(2) { height: 5px; }
+    .signal-bars span:nth-child(3) { height: 7px; }
+    .signal-bars span:nth-child(4) { height: 9px; }
+    .battery {
+      width: 24px;
+      height: 11px;
+      border: 1.2px solid var(--editorial-black);
+      border-radius: 2.5px;
+      position: relative;
+      padding: 1px;
+    }
+    .battery::after {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: 3px;
+      width: 2px;
+      height: 5px;
+      background: var(--editorial-black);
+    }
+    .battery .fill {
+      display: block;
+      height: 100%;
+      width: 80%;
+      background: var(--editorial-black);
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Context band -->
+        <div class="alche-context-band">
+          <div class="ctx-left">
+            <span class="ctx-dot"></span>
+            <span>WEEK 17 · FRI</span>
+          </div>
+          <div class="ctx-right">
+            <span>ISSUE 41</span>
+          </div>
+        </div>
+
+        <!-- Read stamp -->
+        <div class="alche-read-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">ALCHE · THIS WEEK I'M READING</span>
+        </div>
+
+        <!-- The read -->
+        <div class="alche-read">
+          <span class="line">Three pieces on <em>slow strength</em>,</span>
+          <span class="line">one on sleep debt —</span>
+          <span class="line dim">the lead is for you.</span>
+        </div>
+
+        <!-- Masthead -->
+        <div class="d-masthead">
+          <span class="title">The Lead</span>
+          <span class="issue">4 MIN READ</span>
+        </div>
+
+        <!-- Featured editorial -->
+        <div class="d-lead">
+          <div class="lead-image">
+            <span class="lead-kicker">FOR YOU · LONGEVITY</span>
+          </div>
+          <div class="lead-body">
+            <div class="lead-meta">RESEARCH · 4 MIN · APR 18</div>
+            <div class="lead-headline">Why your zone-2 walk beats the gym on a recovery week.</div>
+            <div class="lead-byline">— a note from the research desk</div>
+          </div>
+        </div>
+
+        <!-- Narrator interstitial between lead and list -->
+        <div class="alche-interstitial">
+          <p class="i-voice">And three quieter ones I kept <em>flagged</em> for you.</p>
+        </div>
+
+        <!-- Article list -->
+        <div class="d-list">
+          <div class="d-article">
+            <span class="a-num">02</span>
+            <div class="a-body">
+              <div class="a-meta">SLEEP · 6 MIN · APR 17</div>
+              <div class="a-headline">The 90-minute debt nobody talks about.</div>
+            </div>
+          </div>
+          <div class="d-article">
+            <span class="a-num">03</span>
+            <div class="a-body">
+              <div class="a-meta">STRENGTH · 5 MIN · APR 15</div>
+              <div class="a-headline">Slow tempo, long tension — a case for unhurried training.</div>
+            </div>
+          </div>
+          <div class="d-article">
+            <span class="a-num">04</span>
+            <div class="a-body">
+              <div class="a-meta">NUTRITION · 8 MIN · APR 14</div>
+              <div class="a-headline">What fermented food actually does for the gut barrier.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Narrator interstitial before escape hatches -->
+        <div class="alche-interstitial">
+          <p class="i-voice">Looking for something else?</p>
+        </div>
+
+        <!-- Elsewhere -->
+        <div class="d-elsewhere">
+          <div class="eh-label">ELSEWHERE</div>
+          <div class="eh-links">
+            <a class="eh-link">
+              <span class="u">Events &nbsp;→</span>
+              <span class="eh-hint">2 near you this week</span>
+            </a>
+            <a class="eh-link">
+              <span class="u">Eat Out &nbsp;→</span>
+              <span class="eh-hint">partner kitchens</span>
+            </a>
+            <a class="eh-link">
+              <span class="u">Saved &nbsp;→</span>
+              <span class="eh-hint">7 pieces</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · DISCOVER</p>
+      <h1 class="alche-display-l title">A weekly dispatch, not a feed.</h1>
+      <p class="alche-body philosophy">
+        Discover becomes Alche's weekly reading list — three lines of italic framing, one featured lead with editorial chrome, three quieter follow-ups numbered like a table of contents. Events, Eat Out and Saved retreat to a mono "elsewhere" block. The segmented picker is gone; the voice returns.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>Segmented iOS picker, Eat Out sub-homepage, standalone bookmark list as a top-level tab. Four equal categories flattened to one lead + a quiet list.</div></li>
+        <li><span class="label">KEPT</span><div>All four content types (articles, events, eat out, saved) and the underlying ViewModel data. Events/Eat Out/Saved still reachable — one tap, not zero.</div></li>
+        <li><span class="label">ADDED</span><div>The weekly read, the lead/follow-up hierarchy, two narrator interstitials, and a single "Elsewhere" block with italic hints next to mono labels.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: members who came for an event calendar now wait one tap — but the curation finally feels authored.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

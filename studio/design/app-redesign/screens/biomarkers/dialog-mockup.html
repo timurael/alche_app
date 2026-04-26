@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Biomarkers · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* Top utility row */
+    .bm-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 24px 4px;
+    }
+    .bm-topbar .back {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      text-decoration: none;
+    }
+    .bm-topbar .back .arr { display: inline-block; margin-right: 6px; }
+
+    /* Bio age line — hero italic as a read, not a card */
+    .bm-bioage {
+      padding: 8px 24px 22px;
+      border-bottom: 1px solid var(--divider-medium);
+    }
+    .bm-bioage .label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 10px;
+    }
+    .bm-bioage .val {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 52px; line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--editorial-black);
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .bm-bioage .val .delta {
+      font-family: 'Space Mono', monospace;
+      font-style: normal; font-weight: 700;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      padding: 4px 8px;
+      border: 1px solid var(--primary);
+    }
+    .bm-bioage .sub {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 15px; line-height: 1.4;
+      color: var(--editorial-muted);
+      margin-top: 12px;
+    }
+
+    /* Two-to-watch block — the only numeric area */
+    .bm-watch-head {
+      padding: 22px 24px 6px;
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .bm-watch-head .label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .bm-watch-head .count {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+    }
+    .bm-watch-row {
+      padding: 14px 24px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px; align-items: baseline;
+      border-bottom: 1px solid var(--divider-light);
+    }
+    .bm-watch-row .name {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--editorial-black);
+    }
+    .bm-watch-row .name .ctx {
+      display: block;
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 12px; line-height: 1.35;
+      color: var(--editorial-muted);
+      margin-top: 2px;
+    }
+    .bm-watch-row .val {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; font-weight: 700;
+      color: var(--editorial-black);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .bm-watch-row .val .ref {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--editorial-muted);
+      margin-top: 2px; text-align: right;
+    }
+    .bm-watch-row .chev {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; color: var(--editorial-muted);
+    }
+
+    /* Held-steady mono strip (categories reduced to inline chips) */
+    .bm-held {
+      padding: 16px 24px 18px;
+      display: flex; gap: 6px; flex-wrap: wrap;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      align-items: center;
+    }
+    .bm-held .lead {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic; font-weight: 300;
+      font-size: 13px; line-height: 1.4;
+      color: var(--editorial-muted);
+      text-transform: none;
+      letter-spacing: 0;
+      margin-right: 6px;
+    }
+    .bm-held .chip {
+      padding: 3px 8px;
+      border: 1px solid var(--divider-medium);
+      color: var(--editorial-black);
+      background: var(--bg-white);
+    }
+    .bm-held .chip.quiet {
+      color: var(--editorial-muted);
+      background: transparent;
+    }
+
+    /* Primary + secondary */
+    .bm-primary {
+      margin: 18px 24px 10px;
+      width: calc(100% - 48px);
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 16px 18px;
+      border: 1px solid var(--editorial-black);
+      border-radius: var(--radius-sharp);
+      box-shadow: var(--shadow-sm);
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer;
+    }
+    .bm-primary .arrow { font-weight: 400; font-size: 13px; letter-spacing: 0; }
+
+    .bm-secondary {
+      display: block; text-align: center;
+      padding: 8px 0 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      text-decoration: none;
+    }
+    .bm-secondary .u {
+      border-bottom: 1px solid var(--editorial-muted);
+      padding-bottom: 2px;
+    }
+
+    /* Footer echo */
+    .bm-footer {
+      padding: 14px 24px 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      text-align: center;
+      border-top: 1px solid var(--divider-light);
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <div class="right">
+          <span>●●●●●</span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;">5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Top bar: back + ONE sample-data tag -->
+        <div class="bm-topbar">
+          <a class="back"><span class="arr">←</span>PROFILE</a>
+          <span class="alche-tag">Sample Data</span>
+        </div>
+
+        <!-- Read stamp -->
+        <div class="alche-read-stamp" style="margin-top: 10px;">
+          <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span class="alche-read-stamp-label">ALCHE · YOUR PANEL TODAY</span>
+        </div>
+
+        <!-- The Read -->
+        <div class="alche-read">
+          <span class="line">Your fasting glucose is <em>at the low end of optimal</em>.</span>
+          <span class="line dim">Iron and thyroid held. Two to look at; four quietly fine.</span>
+        </div>
+
+        <!-- Bio age as italic hero line -->
+        <div class="bm-bioage">
+          <div class="label">BIOLOGICAL AGE · VS CHRONOLOGICAL 34</div>
+          <div class="val">
+            <span>31.4</span>
+            <span class="delta">−2.6 YRS</span>
+          </div>
+          <div class="sub">Reading two and a half years younger than the candles on your last cake.</div>
+        </div>
+
+        <!-- Interstitial narration before the numeric block -->
+        <div class="alche-interstitial">
+          <p class="i-voice">Hold your evening-carb protocol. <em>That's what this read is about</em> — not an alarm, a nudge.</p>
+        </div>
+
+        <!-- Two to look at -->
+        <div class="bm-watch-head">
+          <span class="label">TWO TO LOOK AT</span>
+          <span class="count">Vs PANEL · FEB 2026</span>
+        </div>
+
+        <div class="bm-watch-row">
+          <div class="name">
+            Fasting Glucose
+            <span class="ctx">Lower than last spring. Within optimal.</span>
+          </div>
+          <div class="val">
+            78 mg/dL
+            <span class="ref">OPT 70–90</span>
+          </div>
+          <span class="chev">→</span>
+        </div>
+
+        <div class="bm-watch-row">
+          <div class="name">
+            Vitamin D
+            <span class="ctx">Below the floor you like. Winter's tail.</span>
+          </div>
+          <div class="val">
+            24 ng/mL
+            <span class="ref">OPT 40–80</span>
+          </div>
+          <span class="chev">→</span>
+        </div>
+
+        <!-- Held-steady chips (categories reduced to a single mono line) -->
+        <div class="bm-held">
+          <span class="lead">Quietly fine —</span>
+          <span class="chip">IRON</span>
+          <span class="chip">THYROID</span>
+          <span class="chip">LIPIDS</span>
+          <span class="chip">LIVER</span>
+          <span class="chip quiet">+6 MORE</span>
+        </div>
+
+        <!-- Primary -->
+        <button class="bm-primary">
+          <span>Book follow-up Panel · May 18</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <!-- Secondary -->
+        <a class="bm-secondary">
+          <span class="u">Connect your lab instead &nbsp;→</span>
+        </a>
+
+        <!-- Footer continuity -->
+        <div class="bm-footer">
+          LAST PANEL · 12 WEEKS AGO · 18 MARKERS
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <!-- Direction caption -->
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · BIOMARKERS</p>
+      <h1 class="alche-display-l title">A panel without a narrator is a lab report the member didn't order.</h1>
+      <p class="alche-body philosophy">
+        Biomarkers don't need another dashboard. They need Alche saying "here's what changed, here's what held." Two numbers carry weight — the rest become a quiet mono line of steady categories. One italic observation opens the screen; one interstitial breaks the silence before the numeric block.
+      </p>
+
+      <ul class="decisions">
+        <li>
+          <span class="label">CUT</span>
+          <div class="alche-body">
+            The double <code>DataSourceIndicator</code> (top AND bottom). The "NEEDS ATTENTION" warning-triangle card pattern (it looked like an ER chart). The full CATEGORIES card list with score numbers and chevrons — a taxonomy without narrative. The raw "ref: 0-100" brackets that made mock data look like a real panel.
+          </div>
+        </li>
+        <li>
+          <span class="label">KEPT</span>
+          <div class="alche-body">
+            The biological-age hero moment — but reframed as an italic editorial line with a mono delta tag, then one humanizing sub-line ("two and a half years younger than the candles on your last cake"). Per-marker reference ranges on the two markers Alche chose to speak about.
+          </div>
+        </li>
+        <li>
+          <span class="label">ADDED</span>
+          <div class="alche-body">
+            A single, clear <code>.alche-tag</code> "Sample Data" indicator at top right (no duplicate). A two-line italic read opens the screen, naming the insight before showing the number. An <code>.alche-interstitial</code> breaks between bio-age and the marker block — Alche transitions: "Hold your evening-carb protocol. That's what this read is about — not an alarm, a nudge." Categories collapse to a "Quietly fine —" mono chip line instead of a card list.
+          </div>
+        </li>
+      </ul>
+
+      <blockquote class="tradeoff">
+        Trade-off: members lose the scannable full-category scoreboard. They gain a screen that doesn't pretend to be a lab report — and a voice that tells them which two numbers actually moved.
+      </blockquote>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havan · Alche Mascot Lab · B</title>
+<style>
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_500.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_600.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_600.woff2') format('woff2'); font-weight: 600; }
+
+  :root {
+    --bg: #F2EBE0;
+    --bg-deep: #E6DCCB;
+    --bg-card: #FAF4E8;
+    --ink: #3E2817;
+    --ink-soft: #6B4E32;
+    --ink-faint: #9c8668;
+    --wood-core: #C89968;
+    --wood-dark: #8F6A3E;
+    --wood-light: #E8C89A;
+    --bowl: #F2EBE0;
+    --bowl-shade: #D8CEC0;
+    --sprig: #8AA678;
+    --shadow: rgba(62,40,23,0.14);
+    --rule: rgba(62,40,23,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Outfit', -apple-system, sans-serif; }
+
+  body { padding: 64px 48px 96px; max-width: 1280px; margin: 0 auto; }
+
+  header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 72px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+  .crumb { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .crumb a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  .crumb a:hover { border-bottom-color: currentColor; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; margin-bottom: 96px; }
+  .hero-text h1 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 88px; line-height: 0.95; letter-spacing: -0.02em; }
+  .hero-text h1 em { font-style: italic; color: var(--ink-soft); }
+  .hero-text .tagline { font-size: 20px; line-height: 1.5; color: var(--ink-soft); margin-top: 24px; max-width: 440px; }
+  .hero-text .meta { display: flex; gap: 32px; margin-top: 40px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+  .hero-text .meta div b { display: block; font-family: 'Cormorant', serif; font-size: 24px; font-weight: 400; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 4px; }
+
+  .hero-art { display: flex; justify-content: center; align-items: center; padding: 40px; }
+  .hero-art svg { width: 100%; max-width: 440px; filter: drop-shadow(0 24px 48px var(--shadow)); }
+
+  @keyframes breathe-h { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  .breathe { animation: breathe-h 4s ease-in-out infinite; transform-origin: center bottom; }
+
+  section { margin-bottom: 80px; }
+  h2 { font-family: 'Cormorant', serif; font-weight: 400; font-size: 42px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  h2 + .sub { font-size: 14px; color: var(--ink-faint); letter-spacing: 0.04em; margin-bottom: 32px; }
+  h2 em { font-style: italic; color: var(--ink-soft); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+
+  .card { background: var(--bg-card); border-radius: 2px; padding: 40px; }
+
+  .palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .swatch { aspect-ratio: 1; border-radius: 2px; position: relative; overflow: hidden; }
+  .swatch-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(62,40,23,0.85); color: #fff; font-size: 10px; letter-spacing: 0.04em; }
+  .swatch-label b { display: block; font-weight: 500; font-size: 11px; margin-bottom: 2px; letter-spacing: 0.06em; }
+  .swatch-label span { opacity: 0.7; font-weight: 300; }
+
+  .voice-samples li { list-style: none; font-family: 'Cormorant', serif; font-weight: 400; font-size: 24px; line-height: 1.5; padding: 14px 0; border-top: 1px solid var(--rule); font-style: italic; }
+  .voice-samples li:first-child { border-top: none; }
+  .voice-meta { display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 13px; }
+  .voice-meta dt { color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; padding-top: 4px; }
+  .voice-meta dd { line-height: 1.5; }
+
+  /* Chat mockup */
+  .chat-stage { display: flex; justify-content: center; }
+  .phone { width: 360px; height: 720px; background: #000; border-radius: 44px; padding: 12px; box-shadow: 0 40px 80px rgba(62,40,23,0.3); position: relative; }
+  .phone-screen { background: var(--bg); height: 100%; border-radius: 34px; padding: 56px 20px 40px; overflow-y: auto; position: relative; }
+  .phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 110px; height: 32px; background: #000; border-radius: 20px; z-index: 2; }
+  .phone-nav { display: flex; align-items: center; gap: 12px; padding: 0 4px 16px; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
+  .phone-nav svg { width: 36px; height: 36px; }
+  .phone-nav .who { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; }
+  .phone-nav .who small { display: block; font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .bubble { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.45; margin-bottom: 6px; }
+  .bubble.havan { background: #fff; color: var(--ink); border-bottom-left-radius: 4px; }
+  .bubble.user { background: var(--ink); color: var(--bg); margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble-row { display: flex; flex-direction: column; margin-bottom: 10px; }
+  .bubble-row.user-row { align-items: flex-end; }
+  .bubble .choices { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .bubble .chip { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 12px; font-size: 12px; }
+
+  .expressions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .expr { text-align: center; }
+  .expr-frame { aspect-ratio: 1; background: var(--bg-card); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; padding: 20px; }
+  .expr-frame svg { width: 100%; }
+  .expr b { font-family: 'Cormorant', serif; font-weight: 400; font-size: 18px; display: block; }
+  .expr span { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+
+  .prompt-card { background: var(--ink); color: var(--bg); padding: 40px; border-radius: 2px; }
+  .prompt-card h3 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 28px; margin-bottom: 4px; color: var(--bg); }
+  .prompt-card .sub { color: rgba(242,235,224,0.5); margin-bottom: 24px; font-size: 13px; }
+  .prompt-code { background: rgba(242,235,224,0.06); padding: 24px; border-radius: 2px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; color: rgba(242,235,224,0.95); max-height: 320px; overflow-y: auto; margin-bottom: 16px; }
+  .copy-btn { background: var(--wood-light); color: var(--ink); border: none; padding: 12px 24px; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
+  .copy-btn:hover { background: #f0d5a8; }
+  .copy-btn.copied { background: var(--sprig); color: #fff; }
+
+  .risk-table { width: 100%; border-collapse: collapse; }
+  .risk-table th, .risk-table td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 14px; vertical-align: top; }
+  .risk-table td:first-child { width: 40%; padding-right: 32px; font-weight: 500; }
+
+  footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  footer a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  footer a:hover { border-bottom-color: currentColor; }
+
+  @media print {
+    @page { size: A3; margin: 20mm; }
+    body { padding: 0; max-width: none; }
+    .hero { page-break-after: always; }
+    section { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 32px 20px; }
+    .hero, .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .hero-text h1 { font-size: 56px; }
+    .expressions { grid-template-columns: repeat(2, 1fr); }
+    .palette { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumb"><a href="../index.html">← Mascot Lab</a></div>
+  <div class="crumb">B of IV · The Pestle · havaneli</div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Havan<em>,</em><br>the pestle</h1>
+    <p class="tagline">Your grandmother's kitchen tool, if it had opinions and wisdom. Lives in its mortar bowl like a pet in its bed.</p>
+    <div class="meta">
+      <div>Archetype<b>Caregiver-Sage</b></div>
+      <div>Voice<b>6–14 words</b></div>
+      <div>User age<b>30–60</b></div>
+    </div>
+  </div>
+  <div class="hero-art">
+    <!-- Havan SVG -->
+    <svg viewBox="0 0 440 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wood" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8F6A3E"/>
+          <stop offset="30%" stop-color="#C89968"/>
+          <stop offset="60%" stop-color="#E8C89A"/>
+          <stop offset="100%" stop-color="#9B7448"/>
+        </linearGradient>
+        <linearGradient id="bowlGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F9F2E6"/>
+          <stop offset="100%" stop-color="#D8CEC0"/>
+        </linearGradient>
+        <radialGradient id="bowlInner" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#C0B4A0"/>
+          <stop offset="100%" stop-color="#8F8272"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ground shadow -->
+      <ellipse cx="220" cy="465" rx="150" ry="14" fill="#3E2817" opacity="0.15"/>
+
+      <g class="breathe">
+        <!-- mortar bowl: back of rim -->
+        <ellipse cx="220" cy="360" rx="150" ry="32" fill="url(#bowlInner)"/>
+        <!-- pestle body -->
+        <g>
+          <!-- stem (lower tapered body) -->
+          <path d="M 180 360
+                   L 172 260
+                   C 172 250, 180 240, 195 240
+                   L 245 240
+                   C 260 240, 268 250, 268 260
+                   L 260 360 Z" fill="url(#wood)"/>
+          <!-- head bulb -->
+          <ellipse cx="220" cy="200" rx="72" ry="78" fill="url(#wood)"/>
+          <!-- wood grain -->
+          <path d="M 170 180 Q 220 170 270 180" stroke="#8F6A3E" stroke-width="1" opacity="0.4" fill="none"/>
+          <path d="M 165 210 Q 220 200 275 210" stroke="#8F6A3E" stroke-width="1" opacity="0.3" fill="none"/>
+          <path d="M 170 240 Q 220 232 270 240" stroke="#8F6A3E" stroke-width="0.8" opacity="0.3" fill="none"/>
+          <path d="M 185 280 L 182 340" stroke="#8F6A3E" stroke-width="0.6" opacity="0.3" fill="none"/>
+          <path d="M 255 280 L 258 340" stroke="#8F6A3E" stroke-width="0.6" opacity="0.3" fill="none"/>
+          <!-- highlight on bulb -->
+          <ellipse cx="195" cy="175" rx="22" ry="14" fill="#F5E0B8" opacity="0.5"/>
+          <!-- closed eyes (arcs) -->
+          <path d="M 188 220 Q 198 214 208 220" stroke="#3E2817" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <path d="M 232 220 Q 242 214 252 220" stroke="#3E2817" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <!-- smile -->
+          <path d="M 212 244 Q 220 250 228 244" stroke="#3E2817" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- mortar bowl front (in front of pestle base) -->
+        <path d="M 70 360
+                 C 70 400, 120 440, 220 440
+                 C 320 440, 370 400, 370 360
+                 Z" fill="url(#bowlGrad)"/>
+        <!-- rim highlight ring -->
+        <ellipse cx="220" cy="360" rx="150" ry="16" fill="none" stroke="#C8B8A0" stroke-width="1.5" opacity="0.4"/>
+        <!-- bowl specks -->
+        <circle cx="140" cy="395" r="1.5" fill="#B8A898" opacity="0.5"/>
+        <circle cx="170" cy="412" r="1" fill="#B8A898" opacity="0.4"/>
+        <circle cx="280" cy="400" r="1.5" fill="#B8A898" opacity="0.5"/>
+        <circle cx="310" cy="420" r="1" fill="#B8A898" opacity="0.4"/>
+        <circle cx="220" cy="420" r="1.2" fill="#B8A898" opacity="0.4"/>
+
+        <!-- herb sprig -->
+        <g transform="translate(295 340)">
+          <path d="M 0 20 Q 8 10 18 -5 Q 24 -22 20 -40" stroke="#6E8E4C" stroke-width="1.5" fill="none"/>
+          <ellipse cx="6" cy="2" rx="5" ry="2.5" fill="#8AA678" transform="rotate(-30 6 2)"/>
+          <ellipse cx="15" cy="-12" rx="5" ry="2.5" fill="#8AA678" transform="rotate(-20 15 -12)"/>
+          <ellipse cx="20" cy="-28" rx="5" ry="2.5" fill="#8AA678" transform="rotate(30 20 -28)"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <h2>Voice <em>&</em> Palette</h2>
+  <p class="sub">How Havan talks, how Havan looks.</p>
+  <div class="two-col">
+    <div class="card">
+      <ul class="voice-samples">
+        <li>"oh. hello."</li>
+        <li>"havan. that's me. been here a while."</li>
+        <li>"tell me a small thing. we'll work with it."</li>
+        <li>"mm-hmm."</li>
+        <li>"i'll grind it into something you can carry."</li>
+      </ul>
+      <dl class="voice-meta">
+        <dt>Length</dt><dd>6–14 words. Fragments often.</dd>
+        <dt>Register</dt><dd>Observational, slow, dry.</dd>
+        <dt>Never</dt><dd>Slang. Emojis. Urgency.</dd>
+        <dt>Uses</dt><dd>Period-heavy. Turkish diminutives ("canım") sparingly.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <div class="palette">
+        <div class="swatch" style="background:#C89968;"><div class="swatch-label"><b>wood-core</b><span>#C89968</span></div></div>
+        <div class="swatch" style="background:#8F6A3E;"><div class="swatch-label"><b>wood-dark</b><span>#8F6A3E</span></div></div>
+        <div class="swatch" style="background:#E8C89A;"><div class="swatch-label"><b>wood-light</b><span>#E8C89A</span></div></div>
+        <div class="swatch" style="background:#F2EBE0; border:1px solid var(--rule);"><div class="swatch-label"><b>bowl</b><span>#F2EBE0</span></div></div>
+        <div class="swatch" style="background:#D8CEC0;"><div class="swatch-label"><b>bowl-shade</b><span>#D8CEC0</span></div></div>
+        <div class="swatch" style="background:#B8A898;"><div class="swatch-label"><b>bowl-speck</b><span>#B8A898</span></div></div>
+        <div class="swatch" style="background:#8AA678;"><div class="swatch-label"><b>sprig</b><span>#8AA678</span></div></div>
+        <div class="swatch" style="background:#3E2817;"><div class="swatch-label"><b>eye</b><span>#3E2817</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The onboarding<em>, in full</em></h2>
+  <p class="sub">Seven turns. Every word crafted in Havan's voice.</p>
+  <div class="chat-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-nav">
+          <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="navWood" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#8F6A3E"/>
+                <stop offset="50%" stop-color="#C89968"/>
+                <stop offset="100%" stop-color="#9B7448"/>
+              </linearGradient>
+            </defs>
+            <path d="M 8 32 C 8 38, 16 40, 22 40 C 28 40, 36 38, 36 32 Z" fill="#F2EBE0" stroke="#D8CEC0" stroke-width="0.5"/>
+            <ellipse cx="22" cy="18" rx="10" ry="12" fill="url(#navWood)"/>
+            <rect x="19" y="26" width="6" height="8" fill="url(#navWood)"/>
+            <path d="M 18 20 Q 22 18 26 20" stroke="#3E2817" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+            <path d="M 21 23 Q 22 24 23 23" stroke="#3E2817" stroke-width="0.6" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="who">Havan<small>Alche · onboarding</small></div>
+        </div>
+
+        <div class="bubble-row"><div class="bubble havan">oh. hello.</div></div>
+        <div class="bubble-row"><div class="bubble havan">i'm havan. i grind things. have for a long time.</div></div>
+        <div class="bubble-row"><div class="bubble havan">what do we call you, then?</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">Timu</div></div>
+        <div class="bubble-row"><div class="bubble havan">timu. nice name. okay.</div></div>
+        <div class="bubble-row"><div class="bubble havan">tell me — how's the body this week? tired? wired? fine?</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">tired</div></div>
+        <div class="bubble-row"><div class="bubble havan">mm. we'll start with that.</div></div>
+        <div class="bubble-row"><div class="bubble havan">one more. of these, which is the loudest right now:<div class="choices"><span class="chip">sleep</span><span class="chip">energy</span><span class="chip">focus</span><span class="chip">sex</span><span class="chip">mood</span></div></div></div>
+        <div class="bubble-row user-row"><div class="bubble user">sleep</div></div>
+        <div class="bubble-row"><div class="bubble havan">of course. fix the root, the rest follows.</div></div>
+        <div class="bubble-row"><div class="bubble havan">here's what i'll do.</div></div>
+        <div class="bubble-row"><div class="bubble havan">one small thing in your morning. something ground, something steeped. nothing that feels like a hospital. nothing that feels like a yoga retreat. just what i know.</div></div>
+        <div class="bubble-row"><div class="bubble havan">whenever you're ready, canım. →</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Expression sheet</h2>
+  <p class="sub">Five states the chat component animates through.</p>
+  <div class="expressions">
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 110"><defs><linearGradient id="w1" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#8F6A3E"/><stop offset="50%" stop-color="#C89968"/><stop offset="100%" stop-color="#9B7448"/></linearGradient></defs><path d="M 16 85 C 16 98, 34 104, 50 104 C 66 104, 84 98, 84 85 Z" fill="#F2EBE0"/><rect x="42" y="62" width="16" height="24" fill="url(#w1)"/><ellipse cx="50" cy="40" rx="22" ry="24" fill="url(#w1)"/><path d="M 40 42 Q 45 38 50 42" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 56 42 Q 61 38 66 42" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 47 50 Q 50 52 53 50" stroke="#3E2817" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+    </div><b>Idle</b><span>default</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 110"><defs><linearGradient id="w2" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#8F6A3E"/><stop offset="50%" stop-color="#C89968"/><stop offset="100%" stop-color="#9B7448"/></linearGradient></defs><path d="M 16 85 C 16 98, 34 104, 50 104 C 66 104, 84 98, 84 85 Z" fill="#F2EBE0"/><g transform="rotate(8 50 80)"><rect x="42" y="62" width="16" height="24" fill="url(#w2)"/><ellipse cx="50" cy="40" rx="22" ry="24" fill="url(#w2)"/><path d="M 40 42 L 50 42" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 56 42 Q 61 38 66 42" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 47 50 Q 50 52 53 50" stroke="#3E2817" stroke-width="1.2" fill="none" stroke-linecap="round"/></g></svg>
+    </div><b>Listening</b><span>user typing</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 110"><defs><linearGradient id="w3" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#8F6A3E"/><stop offset="50%" stop-color="#C89968"/><stop offset="100%" stop-color="#9B7448"/></linearGradient></defs><path d="M 16 85 C 16 98, 34 104, 50 104 C 66 104, 84 98, 84 85 Z" fill="#F2EBE0"/><g transform="rotate(15 50 70)"><rect x="42" y="62" width="16" height="24" fill="url(#w3)"/><ellipse cx="50" cy="40" rx="22" ry="24" fill="url(#w3)"/><path d="M 40 42 Q 45 40 50 42" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 56 42 Q 61 40 66 42" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 44 32 Q 50 30 56 32" stroke="#3E2817" stroke-width="0.6" fill="none" opacity="0.5"/></g></svg>
+    </div><b>Thinking</b><span>grinding</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 110"><defs><linearGradient id="w4" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#8F6A3E"/><stop offset="50%" stop-color="#C89968"/><stop offset="100%" stop-color="#9B7448"/></linearGradient></defs><path d="M 16 85 C 16 98, 34 104, 50 104 C 66 104, 84 98, 84 85 Z" fill="#F2EBE0"/><g transform="translate(0 -6)"><rect x="42" y="62" width="16" height="24" fill="url(#w4)"/><ellipse cx="50" cy="40" rx="22" ry="24" fill="url(#w4)"/><path d="M 38 40 Q 45 34 52 40" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 54 40 Q 61 34 68 40" stroke="#3E2817" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 47 50 Q 50 53 53 50" stroke="#3E2817" stroke-width="1.2" fill="none" stroke-linecap="round"/></g></svg>
+    </div><b>Pleased</b><span>user submits</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 110"><defs><linearGradient id="w5" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#8F6A3E"/><stop offset="50%" stop-color="#C89968"/><stop offset="100%" stop-color="#9B7448"/></linearGradient></defs><path d="M 12 75 C 12 98, 32 104, 50 104 C 68 104, 88 98, 88 75 C 88 70, 78 64, 50 64 C 22 64, 12 70, 12 75 Z" fill="#F2EBE0"/><ellipse cx="50" cy="70" rx="18" ry="6" fill="url(#w5)"/><line x1="42" y1="67" x2="48" y2="67" stroke="#3E2817" stroke-width="1.2" stroke-linecap="round"/><line x1="52" y1="67" x2="58" y2="67" stroke="#3E2817" stroke-width="1.2" stroke-linecap="round"/><!-- herb over head --><path d="M 40 58 Q 50 50 60 58" stroke="#8AA678" stroke-width="1.5" fill="none"/><ellipse cx="44" cy="54" rx="3" ry="1.5" fill="#8AA678" transform="rotate(-20 44 54)"/><ellipse cx="55" cy="52" rx="3" ry="1.5" fill="#8AA678" transform="rotate(20 55 52)"/></svg>
+    </div><b>Sleeping</b><span>end</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="two-col">
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Name shortlist</h2>
+      <table class="risk-table">
+        <tr><td><b>Havan</b> <span style="color:var(--ink-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; margin-left:8px;">top pick</span></td><td>Turkish for mortar · hah-VAHN</td></tr>
+        <tr><td>Mort</td><td>short, western, bookish · from "mortar"</td></tr>
+        <tr><td>Pesto</td><td>cute but food-app-adjacent</td></tr>
+        <tr><td>Otto</td><td>round, Bauhaus, distinctive</td></tr>
+        <tr><td>Bibi</td><td>risks too infantile</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Risks &amp; mitigations</h2>
+      <table class="risk-table">
+        <tr><td>Reads "kitchen app"</td><td>No food props other than single herb, apothecary context</td></tr>
+        <tr><td>Rustic/crunchy drift</td><td>Clean 3D render, modern type, never illustrated</td></tr>
+        <tr><td>TR name alienates non-TR</td><td>Pronunciation tooltip on first meet — makes it a detail</td></tr>
+        <tr><td>Old-soul reads condescending</td><td>Never tells user what to do. Offers. Asks. Observes.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Render prompt <em>·</em> Nano Banana Pro</h2>
+  <p class="sub">Copy, paste into Gemini 3 Pro Image. Hero render.</p>
+  <div class="prompt-card">
+    <h3>Master prompt</h3>
+    <div class="sub">ICS framework · square 1:1</div>
+    <pre class="prompt-code" id="prompt-b">Image type: 3D character render, still life product photography style, square 1:1 frame, centered composition, warm cream backdrop (#F2EBE0).
+
+Content: a small pestle-and-mortar creature named Havan. The character is a hand-turned olive-wood pestle, ~3.5 inches implied scale, standing upright inside a pale ceramic mortar bowl that serves as his bed/home. The pestle body is pear-shaped — rounded bulb-top (his head where the face lives), gentle tapered waist, flared base hidden inside the bowl. Height-to-width ratio 2:1. Warm honey olive-wood grain curving with the body form. Slight patina near the base. Two tiny closed-arc eyes low on the head-bulb, dark bark color (#3E2817). Micro-smile: 1px thick curved line, 8px wide. No nose, no cheeks — the wood grain IS his skin. The mortar bowl: off-white hand-thrown ceramic with cream-speckle glaze, slightly irregular rim, interior shadow visible. A single muted-sage dried herb sprig rests to his right, against the bowl's inner wall.
+
+Style: Japanese-mascot tradition (Rilakkuma, Gudetama) rendered as a serious product. Blender 3D soft shading, warm tungsten key light upper-left 35°, cool soft fill from right, subtle film grain 8%. References: Mariage Frères tea tins, Aesop apothecary interiors, Totoro's stillness, Muji homeware, Studio Ghibli object-spirits. Premium apothecary-kawaii. NO cartoon outline. NO illustrated look. NO anthropomorphic arms or legs.</pre>
+    <button class="copy-btn" onclick="copyPrompt('prompt-b', this)">Copy prompt</button>
+    <a href="prompt.md" style="color:var(--bg); opacity:0.6; margin-left:16px; font-size:13px;">all prompts + variations →</a>
+  </div>
+</section>
+
+<footer>
+  <div>Alche · Mascot Lab · B of IV</div>
+  <div><a href="../A-lix/preview.html">← A · Lix</a> · <a href="../index.html">all</a> · <a href="../C-filiz/preview.html">C · Filiz →</a></div>
+</footer>
+
+<script>
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerText;
+      btn.classList.add('copied');
+      btn.innerText = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerText = old; }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": 1,
+  "lastUpdated": "2026-04-25",
+  "items": [
+    {
+      "id": "T-001",
+      "lane": 1,
+      "title": "Wrangler login + worker deploy",
+      "owner": "user",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "15m",
+      "acceptance": "wrangler deploy returns success URL"
+    },
+    {
+      "id": "T-002",
+      "lane": 1,
+      "title": "Patch LixAPIClient.swift to use real worker URL",
+      "owner": "roy",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-001"],
+      "estimate": "30m",
+      "acceptance": "LixChatView turns 1-7 hit real LLM, fallback only on network failure",
+      "scope": "app/Alche/Features/Onboarding/Lix/LixAPIClient.swift only"
+    },
+    {
+      "id": "T-003",
+      "lane": 1,
+      "title": "Commit + parent pin Lix worker integration",
+      "owner": "release-manager",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-002"],
+      "estimate": "15m"
+    },
+    {
+      "id": "T-010",
+      "lane": 2,
+      "title": "Generate 10 stills via Nano Banana Pro from welcome-video-prompts-v2.md",
+      "owner": "image-pipeline",
+      "priority": "HIGH",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "2h",
+      "budget": "~$10",
+      "outputDir": "studio/design/app-redesign/screens/welcome/stills/"
+    },
+    {
+      "id": "T-011",
+      "lane": 2,
+      "title": "Generate 3 hero clips via Veo 3.1 Fast (still as first frame)",
+      "owner": "video-pipeline",
+      "priority": "HIGH",
+      "status": "pending",
+      "blockedBy": ["T-010"],
+      "estimate": "1h",
+      "budget": "~$8"
+    },
+    {
+      "id": "T-012",
+      "lane": 2,
+      "title": "Composite in DaVinci Resolve to welcome-loop.mp4",
+      "owner": "user",
+      "priority": "HIGH",
+      "status": "pending",
+      "blockedBy": ["T-011"],
+      "estimate": "1h",
+      "deliverable": "1080×1920, ~10s loop"
+    },
+    {
+      "id": "T-013",
+      "lane": 2,
+      "title": "Drop welcome-loop.mp4 + welcome-still.jpg into app/Alche/Resources/",
+      "owner": "jen",
+      "priority": "HIGH",
+      "status": "pending",
+      "blockedBy": ["T-012"],
+      "estimate": "5m"
+    },
+    {
+      "id": "T-014",
+      "lane": 2,
+      "title": "Wire welcome video into LixChatView first-launch state",
+      "owner": "jen",
+      "priority": "HIGH",
+      "status": "pending",
+      "blockedBy": ["T-013"],
+      "estimate": "1h",
+      "scope": "LixChatView.swift first-launch block OR new LixWelcomeView wrapper",
+      "acceptance": "Welcome plays before Turn 01, soft fade to mascot. Performance OK on simulator + device."
+    },
+    {
+      "id": "T-040",
+      "lane": 4,
+      "title": "Delete Practitioner.rating + Practitioner.reviewCount model fields",
+      "owner": "roy",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "10m",
+      "scope": "app/Alche/Core/Models/Practitioner.swift",
+      "acceptance": "no UI consumers (already audited), grep clean for .rating / .reviewCount on Practitioner"
+    },
+    {
+      "id": "T-041",
+      "lane": 4,
+      "title": "BiologicalAgeCard wire-or-delete decision",
+      "owner": "roy",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "20m",
+      "scope": "app/Alche/Features/Biomarkers/BiologicalAgeCard.swift + BiomarkerDashboardView.swift"
+    },
+    {
+      "id": "T-042",
+      "lane": 4,
+      "title": "BiomarkerCategoryView + BiomarkerDetailView wire-or-delete",
+      "owner": "roy",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "30m",
+      "scope": "app/Alche/Features/Biomarkers/{BiomarkerCategoryView,BiomarkerDetailView}.swift + parent dashboard"
+    },
+    {
+      "id": "T-043",
+      "lane": 4,
+      "title": "SmoothieMenuViewModel favorite methods orphan check + delete",
+      "owner": "roy",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "15m",
+      "scope": "app/Alche/Features/Booking/SmoothieMenuViewModel.swift"
+    },
+    {
+      "id": "T-044",
+      "lane": 4,
+      "title": "ContentCardView + EventCardView wire-or-delete",
+      "owner": "roy",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "20m",
+      "scope": "app/Alche/Features/Discover/{ContentCardView,EventCardView}.swift + DiscoverView.swift"
+    },
+    {
+      "id": "T-045",
+      "lane": 4,
+      "title": "PractitionerDetailView .longevityPlus member tier — wire to AppState (defer if no AppState)",
+      "owner": "roy",
+      "priority": "LOW",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "30m",
+      "scope": "app/Alche/Features/DoctorSessions/PractitionerDetailView.swift",
+      "notes": "Skip if AppState.member.tier doesn't exist yet — flag for later"
+    },
+    {
+      "id": "T-030",
+      "lane": 3,
+      "title": "Confirm build 4 processed in App Store Connect",
+      "owner": "user",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": [],
+      "estimate": "5m"
+    },
+    {
+      "id": "T-031",
+      "lane": 3,
+      "title": "Pre-flight: xcodebuild + 21/21 tests + 4 defeat tests + senior dev checklist",
+      "owner": "release-manager",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-003", "T-014", "T-040", "T-041", "T-042", "T-043", "T-044"],
+      "estimate": "10m"
+    },
+    {
+      "id": "T-032",
+      "lane": 3,
+      "title": "Bump CFBundleVersion 4 → 5",
+      "owner": "release-manager",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-031"],
+      "estimate": "5m",
+      "scope": "app/Alche.xcodeproj/project.pbxproj"
+    },
+    {
+      "id": "T-033",
+      "lane": 3,
+      "title": "xcodebuild archive",
+      "owner": "release-manager",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-032"],
+      "estimate": "10m"
+    },
+    {
+      "id": "T-034",
+      "lane": 3,
+      "title": "xcrun altool upload to TestFlight",
+      "owner": "release-manager",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-033"],
+      "estimate": "5m"
+    },
+    {
+      "id": "T-035",
+      "lane": 3,
+      "title": "Parent repo pin: submodule ref + PROGRESS.md update + devlog entry",
+      "owner": "release-manager",
+      "priority": "CRITICAL",
+      "status": "pending",
+      "blockedBy": ["T-034"],
+      "estimate": "10m"
+    }
+  ]
+}

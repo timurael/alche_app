@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lix · Alche Mascot Lab · A</title>
+<style>
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_500.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_600.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_600.woff2') format('woff2'); font-weight: 600; }
+
+  :root {
+    --bg: #F4E4D6;
+    --bg-deep: #E8D4C0;
+    --bg-card: #FAF1E8;
+    --ink: #1A1612;
+    --ink-soft: #5a4a3e;
+    --ink-faint: #8a7766;
+    --pink: #E8B4C8;
+    --pistachio: #B8D4C4;
+    --lavender: #C4B8E0;
+    --amber: #F5C88A;
+    --blush: #D89B9B;
+    --shadow: rgba(26,22,18,0.12);
+    --rule: rgba(26,22,18,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Outfit', -apple-system, sans-serif; font-weight: 400; }
+
+  body { padding: 64px 48px 96px; max-width: 1280px; margin: 0 auto; }
+
+  header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 72px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+  .crumb { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .crumb a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  .crumb a:hover { border-bottom-color: currentColor; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; margin-bottom: 96px; }
+  .hero-text h1 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 88px; line-height: 0.95; letter-spacing: -0.02em; }
+  .hero-text h1 em { font-style: italic; color: var(--ink-soft); }
+  .hero-text .tagline { font-size: 20px; line-height: 1.5; color: var(--ink-soft); margin-top: 24px; max-width: 440px; }
+  .hero-text .meta { display: flex; gap: 32px; margin-top: 40px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+  .hero-text .meta div b { display: block; font-family: 'Cormorant', serif; font-size: 24px; font-weight: 400; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 4px; }
+
+  .hero-art { display: flex; justify-content: center; align-items: center; padding: 40px; }
+  .hero-art svg { width: 100%; max-width: 420px; filter: drop-shadow(0 20px 40px var(--shadow)); }
+
+  @keyframes wobble { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-6px) scale(0.99, 1.01); } }
+  .wobble { animation: wobble 3s ease-in-out infinite; transform-origin: center bottom; }
+
+  section { margin-bottom: 80px; }
+  h2 { font-family: 'Cormorant', serif; font-weight: 400; font-size: 42px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  h2 + .sub { font-size: 14px; color: var(--ink-faint); letter-spacing: 0.04em; margin-bottom: 32px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+
+  .card { background: var(--bg-card); border-radius: 2px; padding: 40px; }
+
+  .palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .swatch { aspect-ratio: 1; border-radius: 2px; position: relative; overflow: hidden; }
+  .swatch-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(26,22,18,0.85); color: #fff; font-size: 10px; font-family: 'Outfit', sans-serif; letter-spacing: 0.04em; }
+  .swatch-label b { display: block; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 11px; margin-bottom: 2px; letter-spacing: 0.06em; }
+  .swatch-label span { opacity: 0.7; font-family: 'Outfit', sans-serif; font-weight: 300; }
+
+  .voice-samples li { list-style: none; font-family: 'Cormorant', serif; font-weight: 400; font-size: 24px; line-height: 1.5; color: var(--ink); padding: 14px 0; border-top: 1px solid var(--rule); font-style: italic; }
+  .voice-samples li:first-child { border-top: none; }
+  .voice-meta { display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 13px; }
+  .voice-meta dt { color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; padding-top: 4px; }
+  .voice-meta dd { line-height: 1.5; }
+
+  /* Chat mockup */
+  .chat-stage { display: flex; justify-content: center; padding: 0; }
+  .phone { width: 360px; height: 720px; background: #000; border-radius: 44px; padding: 12px; box-shadow: 0 40px 80px rgba(26,22,18,0.25); position: relative; }
+  .phone-screen { background: var(--bg); height: 100%; border-radius: 34px; padding: 56px 20px 40px; overflow-y: auto; position: relative; }
+  .phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 110px; height: 32px; background: #000; border-radius: 20px; z-index: 2; }
+  .phone-nav { display: flex; align-items: center; gap: 12px; padding: 0 4px 16px; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
+  .phone-nav svg { width: 32px; height: 32px; }
+  .phone-nav .who { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; }
+  .phone-nav .who small { display: block; font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; }
+
+  .bubble { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.45; margin-bottom: 6px; font-weight: 400; }
+  .bubble.lix { background: #fff; color: var(--ink); border-bottom-left-radius: 4px; }
+  .bubble.user { background: var(--ink); color: var(--bg); margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble-row { display: flex; flex-direction: column; margin-bottom: 10px; }
+  .bubble-row.user-row { align-items: flex-end; }
+  .bubble-row + .bubble-row { margin-top: 4px; }
+  .bubble .choices { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .bubble .chip { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 12px; font-size: 12px; }
+
+  /* Expressions */
+  .expressions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .expr { text-align: center; }
+  .expr-frame { aspect-ratio: 1; background: var(--bg-card); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; padding: 24px; }
+  .expr-frame svg { width: 100%; }
+  .expr b { font-family: 'Cormorant', serif; font-weight: 400; font-size: 18px; display: block; }
+  .expr span { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+
+  /* Prompt card */
+  .prompt-card { background: var(--ink); color: var(--bg); padding: 40px; border-radius: 2px; }
+  .prompt-card h3 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 28px; margin-bottom: 4px; color: var(--bg); }
+  .prompt-card .sub { color: rgba(244,228,214,0.5); margin-bottom: 24px; font-size: 13px; }
+  .prompt-code { background: rgba(244,228,214,0.06); padding: 24px; border-radius: 2px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; color: rgba(244,228,214,0.95); max-height: 320px; overflow-y: auto; margin-bottom: 16px; }
+  .copy-btn { background: var(--amber); color: var(--ink); border: none; padding: 12px 24px; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
+  .copy-btn:hover { background: #ffd9a0; }
+  .copy-btn.copied { background: var(--pistachio); }
+
+  /* Risks table */
+  .risk-table { width: 100%; border-collapse: collapse; }
+  .risk-table th, .risk-table td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 14px; vertical-align: top; }
+  .risk-table th { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); padding-bottom: 12px; }
+  .risk-table td:first-child { width: 40%; padding-right: 32px; font-weight: 500; }
+
+  footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  footer a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  footer a:hover { border-bottom-color: currentColor; }
+
+  @media print {
+    @page { size: A3; margin: 20mm; }
+    body { padding: 0; max-width: none; }
+    .hero { page-break-after: always; }
+    section { page-break-inside: avoid; }
+    .phone { box-shadow: none; }
+    .hero-art svg { filter: none; }
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 32px 20px; }
+    .hero, .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .hero-text h1 { font-size: 56px; }
+    .expressions { grid-template-columns: repeat(2, 1fr); }
+    .palette { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumb"><a href="../index.html">← Mascot Lab</a></div>
+  <div class="crumb">A of IV · The Droplet</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Lix<em>,</em><br>the droplet</h1>
+    <p class="tagline">Alche's elixir made flesh. A single drop of something precious that chose to have a face.</p>
+    <div class="meta">
+      <div>Archetype<b>Innocent-Sage</b></div>
+      <div>Voice<b>4–12 words</b></div>
+      <div>User age<b>20–40</b></div>
+    </div>
+  </div>
+  <div class="hero-art">
+    <!-- Lix SVG — 420px -->
+    <svg viewBox="0 0 420 480" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="lixBody" cx="40%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#F9ECD8"/>
+          <stop offset="35%" stop-color="#E8B4C8" stop-opacity="0.7"/>
+          <stop offset="65%" stop-color="#B8D4C4" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.8"/>
+        </radialGradient>
+        <radialGradient id="lixGlow" cx="50%" cy="75%" r="35%">
+          <stop offset="0%" stop-color="#F5C88A" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#F5C88A" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="lixBlur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+      </defs>
+      <!-- ground shadow -->
+      <ellipse cx="210" cy="450" rx="110" ry="14" fill="#1A1612" opacity="0.15"/>
+      <g class="wobble">
+        <!-- body: teardrop -->
+        <path d="M 210 60
+                 C 300 60, 360 180, 360 280
+                 C 360 380, 290 440, 210 440
+                 C 130 440, 60 380, 60 280
+                 C 60 180, 120 60, 210 60 Z"
+              fill="url(#lixBody)"/>
+        <!-- inner glow -->
+        <ellipse cx="210" cy="340" rx="110" ry="80" fill="url(#lixGlow)"/>
+        <!-- crescent highlight -->
+        <path d="M 120 160 C 130 130, 160 110, 195 115 C 175 125, 150 145, 135 180 Z" fill="#FFF6E8" opacity="0.7" filter="url(#lixBlur)"/>
+        <!-- blush -->
+        <ellipse cx="140" cy="270" rx="22" ry="12" fill="#D89B9B" opacity="0.3"/>
+        <ellipse cx="280" cy="270" rx="22" ry="12" fill="#D89B9B" opacity="0.3"/>
+        <!-- eyes -->
+        <ellipse cx="175" cy="240" rx="7" ry="9" fill="#1A1612"/>
+        <ellipse cx="245" cy="240" rx="7" ry="9" fill="#1A1612"/>
+        <!-- smile -->
+        <path d="M 190 285 Q 210 298, 230 285" stroke="#1A1612" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- VOICE + PALETTE -->
+<section>
+  <h2>Voice <em>&</em> Palette</h2>
+  <p class="sub">How Lix talks, how Lix looks.</p>
+  <div class="two-col">
+    <div class="card">
+      <ul class="voice-samples">
+        <li>"hi. i'm lix."</li>
+        <li>"mostly water. like you."</li>
+        <li>"tell me one thing you're tired of."</li>
+        <li>"mm. noted."</li>
+        <li>"okay — give me 24 hours. i'm mixing."</li>
+      </ul>
+      <dl class="voice-meta">
+        <dt>Length</dt><dd>4–12 words. Fragments welcome.</dd>
+        <dt>Register</dt><dd>Curious &gt; declarative. Lowercase always.</dd>
+        <dt>Never</dt><dd>Exclamation marks. "Amazing." "Journey." "Wellness."</dd>
+        <dt>Uses</dt><dd>Em-dashes. Ellipsis. Small observations.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <div class="palette">
+        <div class="swatch" style="background:#F4E4D6;"><div class="swatch-label"><b>lix-core</b><span>#F4E4D6</span></div></div>
+        <div class="swatch" style="background:#E8B4C8;"><div class="swatch-label"><b>lix-irid-1</b><span>#E8B4C8</span></div></div>
+        <div class="swatch" style="background:#B8D4C4;"><div class="swatch-label"><b>lix-irid-2</b><span>#B8D4C4</span></div></div>
+        <div class="swatch" style="background:#C4B8E0;"><div class="swatch-label"><b>lix-irid-3</b><span>#C4B8E0</span></div></div>
+        <div class="swatch" style="background:#F5C88A;"><div class="swatch-label"><b>lix-glow</b><span>#F5C88A</span></div></div>
+        <div class="swatch" style="background:#D89B9B;"><div class="swatch-label"><b>lix-blush</b><span>#D89B9B</span></div></div>
+        <div class="swatch" style="background:#1A1612;"><div class="swatch-label"><b>lix-eye</b><span>#1A1612</span></div></div>
+        <div class="swatch" style="background:#FAF1E8;"><div class="swatch-label" style="color:#1A1612; background:rgba(255,255,255,0.85);"><b>lix-surface</b><span>#FAF1E8</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAT MOCKUP -->
+<section>
+  <h2>The onboarding<em>, in full</em></h2>
+  <p class="sub">Seven turns. Every word crafted in Lix's voice.</p>
+  <div class="chat-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-nav">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="navLix" cx="40%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#F9ECD8"/>
+                <stop offset="60%" stop-color="#E8B4C8" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.7"/>
+              </radialGradient>
+            </defs>
+            <path d="M 20 4 C 32 4, 36 20, 36 26 C 36 33, 28 36, 20 36 C 12 36, 4 33, 4 26 C 4 20, 8 4, 20 4 Z" fill="url(#navLix)"/>
+            <ellipse cx="16" cy="20" rx="1.4" ry="1.8" fill="#1A1612"/>
+            <ellipse cx="24" cy="20" rx="1.4" ry="1.8" fill="#1A1612"/>
+            <path d="M 17 24 Q 20 26 23 24" stroke="#1A1612" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="who">Lix<small>Alche · onboarding</small></div>
+        </div>
+
+        <div class="bubble-row"><div class="bubble lix">hi. i'm lix.</div></div>
+        <div class="bubble-row"><div class="bubble lix">i mix things. small doses. long timelines.</div></div>
+        <div class="bubble-row"><div class="bubble lix">what should i call you?</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">Timu</div></div>
+        <div class="bubble-row"><div class="bubble lix">timu. good.</div></div>
+        <div class="bubble-row"><div class="bubble lix">quick — how old is this body?</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">29</div></div>
+        <div class="bubble-row"><div class="bubble lix">still soft. easy work.</div></div>
+        <div class="bubble-row"><div class="bubble lix">one more — pick the one that's loudest:<div class="choices"><span class="chip">sleep</span><span class="chip">energy</span><span class="chip">focus</span><span class="chip">sex</span><span class="chip">mood</span></div></div></div>
+        <div class="bubble-row user-row"><div class="bubble user">focus</div></div>
+        <div class="bubble-row"><div class="bubble lix">ah. the quiet one. okay.</div></div>
+        <div class="bubble-row"><div class="bubble lix">here's my promise —</div></div>
+        <div class="bubble-row"><div class="bubble lix">one small thing, every morning. no pills-that-look-like-clinical. no rituals-that-feel-like-work. just us.</div></div>
+        <div class="bubble-row"><div class="bubble lix">ready when you are. →</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPRESSIONS -->
+<section>
+  <h2>Expression sheet</h2>
+  <p class="sub">Five states the chat component animates through.</p>
+  <div class="expressions">
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="exp1" cx="40%" cy="30%" r="75%"><stop offset="0%" stop-color="#F9ECD8"/><stop offset="60%" stop-color="#E8B4C8" stop-opacity="0.6"/><stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.7"/></radialGradient></defs><path d="M 50 10 C 80 10, 92 55, 92 75 C 92 100, 72 110, 50 110 C 28 110, 8 100, 8 75 C 8 55, 20 10, 50 10 Z" fill="url(#exp1)"/><ellipse cx="40" cy="62" rx="2" ry="2.6" fill="#1A1612"/><ellipse cx="60" cy="62" rx="2" ry="2.6" fill="#1A1612"/><path d="M 44 75 Q 50 80 56 75" stroke="#1A1612" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+    </div><b>Idle</b><span>default</span></div>
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="exp2" cx="45%" cy="30%" r="75%"><stop offset="0%" stop-color="#F9ECD8"/><stop offset="60%" stop-color="#E8B4C8" stop-opacity="0.6"/><stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.7"/></radialGradient></defs><g transform="rotate(8 50 80)"><path d="M 50 10 C 80 10, 92 55, 92 75 C 92 100, 72 110, 50 110 C 28 110, 8 100, 8 75 C 8 55, 20 10, 50 10 Z" fill="url(#exp2)"/><ellipse cx="40" cy="62" rx="2" ry="1.6" fill="#1A1612"/><ellipse cx="60" cy="62" rx="2" ry="2.6" fill="#1A1612"/><path d="M 44 75 Q 50 80 56 75" stroke="#1A1612" stroke-width="1.2" fill="none" stroke-linecap="round"/></g></svg>
+    </div><b>Listening</b><span>user typing</span></div>
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="exp3" cx="40%" cy="30%" r="75%"><stop offset="0%" stop-color="#F9ECD8"/><stop offset="50%" stop-color="#F5C88A" stop-opacity="0.6"/><stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.7"/></radialGradient></defs><path d="M 50 10 C 80 10, 92 55, 92 75 C 92 100, 72 110, 50 110 C 28 110, 8 100, 8 75 C 8 55, 20 10, 50 10 Z" fill="url(#exp3)"/><ellipse cx="40" cy="58" rx="2" ry="2.6" fill="#1A1612"/><ellipse cx="60" cy="58" rx="2" ry="2.6" fill="#1A1612"/><circle cx="50" cy="78" r="3" fill="none" stroke="#1A1612" stroke-width="1.2"/></svg>
+    </div><b>Thinking</b><span>API wait</span></div>
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="exp4" cx="40%" cy="30%" r="75%"><stop offset="0%" stop-color="#F9ECD8"/><stop offset="60%" stop-color="#E8B4C8" stop-opacity="0.7"/><stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.7"/></radialGradient></defs><path d="M 50 14 C 80 14, 92 58, 92 78 C 92 100, 72 108, 50 108 C 28 108, 8 100, 8 78 C 8 58, 20 14, 50 14 Z" fill="url(#exp4)"/><path d="M 36 62 Q 40 58 44 62" stroke="#1A1612" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M 56 62 Q 60 58 64 62" stroke="#1A1612" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M 40 74 Q 50 84 60 74" stroke="#1A1612" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="22" cy="96" r="1.8" fill="#E8B4C8"/><circle cx="80" cy="96" r="2.2" fill="#B8D4C4"/></svg>
+    </div><b>Delighted</b><span>user submits</span></div>
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 120"><defs><radialGradient id="exp5" cx="40%" cy="30%" r="75%"><stop offset="0%" stop-color="#F9ECD8" stop-opacity="0.85"/><stop offset="60%" stop-color="#E8B4C8" stop-opacity="0.4"/><stop offset="100%" stop-color="#C4B8E0" stop-opacity="0.5"/></radialGradient></defs><path d="M 50 14 C 80 14, 92 58, 92 78 C 92 104, 72 112, 50 112 C 28 112, 8 104, 8 78 C 8 58, 20 14, 50 14 Z" fill="url(#exp5)"/><line x1="36" y1="62" x2="44" y2="62" stroke="#1A1612" stroke-width="1.4" stroke-linecap="round"/><line x1="56" y1="62" x2="64" y2="62" stroke="#1A1612" stroke-width="1.4" stroke-linecap="round"/><line x1="44" y1="76" x2="56" y2="76" stroke="#1A1612" stroke-width="1.4" stroke-linecap="round"/><text x="70" y="34" font-family="Cormorant, serif" font-size="12" font-style="italic" fill="#1A1612" opacity="0.5">z</text><text x="78" y="22" font-family="Cormorant, serif" font-size="9" font-style="italic" fill="#1A1612" opacity="0.35">z</text></svg>
+    </div><b>Sleeping</b><span>end</span></div>
+  </div>
+</section>
+
+<!-- NAME + RISKS -->
+<section>
+  <div class="two-col">
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Name shortlist</h2>
+      <table class="risk-table">
+        <tr><td><b>Lix</b> <span style="color:var(--ink-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; margin-left:8px;">top pick</span></td><td>sharp, 3 letters, brand-shaped</td></tr>
+        <tr><td>Damla</td><td>Turkish for "droplet" — TR without folklore</td></tr>
+        <tr><td>Elix</td><td>on-the-nose, safer, less distinct</td></tr>
+        <tr><td>Dew</td><td>drifts wellness-generic</td></tr>
+        <tr><td>Qi</td><td>risks TCM appropriation</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Risks &amp; mitigations</h2>
+      <table class="risk-table">
+        <tr><td>Reads "water-tracking app"</td><td>Iridescent palette never pure blue + apothecary context in first line</td></tr>
+        <tr><td>Liquid Glass knock-off</td><td>Matte finish, warm tones, never glassy</td></tr>
+        <tr><td>Duolingo-adjacent kawaii</td><td>Adult voice, slower animation, no loud expressions</td></tr>
+        <tr><td>AI-slop 3D mascot</td><td>Single continuous form, editorial lighting, no limbs</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROMPT CARD -->
+<section>
+  <h2>Render prompt <em>·</em> Nano Banana Pro</h2>
+  <p class="sub">Copy, paste into Gemini 3 Pro Image. Hero render.</p>
+  <div class="prompt-card">
+    <h3>Master prompt</h3>
+    <div class="sub">ICS framework · square 1:1</div>
+    <pre class="prompt-code" id="prompt-a">Image type: 3D character render, pack-shot product photography style, transparent or soft-cream backdrop, centered composition, square 1:1 frame.
+
+Content: a single plump iridescent droplet character named Lix, occupying ~70% of frame. Teardrop silhouette with rounded top and very soft gently-pointed tip, body ratio roughly 1:1.2 taller than wide. Two small round dot eyes high on the body (upper third), solid soft-black, 4px relative size, no pupils. Tiny closed-mouth smile: a simple curved arc 12px wide, warm-black. Two soft rosy blush ovals at 30% opacity. Body surface: iridescent oil-on-water holography — muted pastel pinks, pistachio greens, soft lavenders, warm creams shifting across the form. Never saturated. Matte-to-satin finish, never glossy candy plastic. One crescent specular highlight upper-left. A soft internal amber core glow (8% opacity) in the lower third. Single soft elliptical shadow beneath at 30% opacity, implying the character floats 3mm above the ground.
+
+Style: Pixar-adjacent cute realism with editorial restraint, Cinema 4D soft global illumination, shallow depth of field, key light upper-left 45°. References: Aesop product photography, Le Labo bottle shoots, Apple Siri orb circa 2011, Headspace mascot with adult restraint, Rilakkuma stripped of kawaii excess. Premium apothecary aesthetic. NO visible limbs. NO cartoon outline. NO stock-AI mascot tropes.</pre>
+    <button class="copy-btn" onclick="copyPrompt('prompt-a', this)">Copy prompt</button>
+    <a href="prompt.md" style="color:var(--bg); opacity:0.6; margin-left:16px; font-size:13px;">all prompts + variations →</a>
+  </div>
+</section>
+
+<footer>
+  <div>Alche · Mascot Lab · A of IV</div>
+  <div><a href="../index.html">← all mascots</a> · <a href="../B-havan/preview.html">B · Havan →</a></div>
+</footer>
+
+<script>
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerText;
+      btn.classList.add('copied');
+      btn.innerText = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerText = old; }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alche — 24-Month P&L Model (v6)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_design-system.css">
+<style>
+  body { padding: 0; }
+  .controls {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    padding: 16px 22mm; border-bottom: 1px solid var(--deep-15);
+    display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+  }
+  .controls__label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--stone); }
+  .controls button {
+    font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 1px solid var(--glass-border-strong); background: var(--glass-strong);
+    border-radius: 8px; cursor: pointer; color: var(--deep);
+  }
+  .controls button.active { background: var(--amber); color: var(--cream); border-color: var(--amber); }
+  .assumption { display: grid; grid-template-columns: 220px 1fr 80px; gap: 12px; align-items: center; padding: 6px 0; font-size: 12px; }
+  .assumption__label { color: var(--deep-70); }
+  .assumption__bar { height: 6px; background: var(--deep-08); border-radius: 3px; position: relative; overflow: hidden; }
+  .assumption__bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--amber); }
+  .assumption__value { font-family: var(--font-mono); font-size: 11px; text-align: right; font-weight: 700; }
+  .scenario-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-family: var(--font-mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;
+  }
+  .scenario-tag--conservative { background: var(--rose-15); color: var(--terra); }
+  .scenario-tag--base { background: var(--amber-15); color: var(--amber); }
+  .scenario-tag--optimistic { background: var(--sage-15); color: var(--sage); }
+  @media print {
+    .controls { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <span class="controls__label">Scenario</span>
+  <button class="active" data-scenario="base" onclick="setScenario('base')">Base</button>
+  <button data-scenario="conservative" onclick="setScenario('conservative')">Conservative</button>
+  <button data-scenario="optimistic" onclick="setScenario('optimistic')">Optimistic</button>
+  <span class="controls__label" style="margin-left:auto;">Alche · Pre-seed · 2026-04-24</span>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">P&L MODEL v6 · retail-first · confidential</div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-header__number">Financial Model — 24 months</span>
+    <h1 class="section-header__title">The math, <strong>honest and drivable.</strong></h1>
+    <p class="section-header__subtitle">Retail-first model. Blended gross margin 48-60% as own-brand mix increases. Base case: EBITDA-positive in Year 2. Numbers below update live with scenario toggle.</p>
+  </div>
+
+  <div class="glass-elevated mb-7" id="scenario-summary">
+    <h3 class="mb-4">Year 3 outcome — <span class="scenario-tag scenario-tag--base" id="scenario-tag">Base</span></h3>
+    <div class="kpi-grid kpi-grid--4">
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value kpi-grid__value--accent" id="y3-revenue">€22.2M</div>
+        <div class="kpi-grid__label">Revenue (Year 3)</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value" id="y3-ebitda">€7.3M</div>
+        <div class="kpi-grid__label">EBITDA (Year 3)</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value" id="y3-gm">60%</div>
+        <div class="kpi-grid__label">Gross Margin</div>
+      </div>
+      <div class="kpi-grid__item">
+        <div class="kpi-grid__value" id="y3-actives">90K</div>
+        <div class="kpi-grid__label">Active Customers</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mb-4">Operating assumptions</h3>
+
+  <div class="two-col">
+    <div class="glass">
+      <h5 class="mb-3 text-amber uppercase tracking-wide">Customer & funnel</h5>
+      <div class="assumption">
+        <div class="assumption__label">CAC (blended)</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-cac"></div></div>
+        <div class="assumption__value" id="val-cac">€35</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Time to 1st purchase</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-ttfp"></div></div>
+        <div class="assumption__value" id="val-ttfp">&lt;30d</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Orders / year / user</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-orders"></div></div>
+        <div class="assumption__value" id="val-orders">6.0</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">AOV Year 2</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-aov"></div></div>
+        <div class="assumption__value" id="val-aov">€72</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">90-day reorder rate</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-reorder"></div></div>
+        <div class="assumption__value" id="val-reorder">45%</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">LTV:CAC</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-ltvcac"></div></div>
+        <div class="assumption__value" id="val-ltvcac">10.0x</div>
+      </div>
+    </div>
+    <div class="glass">
+      <h5 class="mb-3 text-sage uppercase tracking-wide">Margin & cost</h5>
+      <div class="assumption">
+        <div class="assumption__label">Gross margin — curated</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-gmc"></div></div>
+        <div class="assumption__value" id="val-gmc">35%</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Gross margin — own-brand</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-gmob"></div></div>
+        <div class="assumption__value" id="val-gmob">70%</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Gross margin — blended Y3</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-gmb"></div></div>
+        <div class="assumption__value" id="val-gmb">60%</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Fulfillment cost / order</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-fc"></div></div>
+        <div class="assumption__value" id="val-fc">€8</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Own-brand mix Y3</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-obmix"></div></div>
+        <div class="assumption__value" id="val-obmix">40%</div>
+      </div>
+      <div class="assumption">
+        <div class="assumption__label">Membership conversion</div>
+        <div class="assumption__bar"><div class="assumption__bar-fill" id="bar-mc"></div></div>
+        <div class="assumption__value" id="val-mc">12%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-footer__number">P&L · page 1 / 3</div>
+    <div class="page-footer__confidential">alche · v6 · confidential</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">24-MONTH P&L — all scenarios</div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-header__number">The numbers</span>
+    <h2 class="section-header__title">24-month P&L — <strong>side by side</strong></h2>
+  </div>
+
+  <h5 class="mb-2 uppercase tracking-wider text-amber">Revenue build (Base case)</h5>
+  <table class="data-table mb-7">
+    <thead>
+      <tr>
+        <th>Driver</th>
+        <th class="align-right">Q1 '26</th>
+        <th class="align-right">Q2 '26</th>
+        <th class="align-right">Q3 '26</th>
+        <th class="align-right">Q4 '26</th>
+        <th class="align-right">Y1 total</th>
+        <th class="align-right">Y2 total</th>
+        <th class="align-right">Y3 total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Active customers (avg)</td><td class="numeric">500</td><td class="numeric">2,000</td><td class="numeric">5,000</td><td class="numeric">8,000</td><td class="numeric bold">8,000</td><td class="numeric bold">35,000</td><td class="numeric bold">90,000</td></tr>
+      <tr><td>Orders per year per active</td><td class="numeric">3.0</td><td class="numeric">3.8</td><td class="numeric">4.2</td><td class="numeric">4.5</td><td class="numeric">4.5</td><td class="numeric">6.0</td><td class="numeric">7.5</td></tr>
+      <tr><td>AOV (€)</td><td class="numeric">60</td><td class="numeric">64</td><td class="numeric">66</td><td class="numeric">68</td><td class="numeric">68</td><td class="numeric">72</td><td class="numeric">78</td></tr>
+      <tr class="subtotal"><td>GMV (€)</td><td class="numeric">90K</td><td class="numeric">487K</td><td class="numeric">1.4M</td><td class="numeric">2.4M</td><td class="numeric bold">2.4M</td><td class="numeric bold">15.1M</td><td class="numeric bold">52.7M</td></tr>
+      <tr><td>Alche net take rate</td><td class="numeric">30%</td><td class="numeric">32%</td><td class="numeric">33%</td><td class="numeric">33%</td><td class="numeric">33%</td><td class="numeric">38%</td><td class="numeric">42%</td></tr>
+      <tr><td>Membership revenue (€)</td><td class="numeric">0</td><td class="numeric">15K</td><td class="numeric">55K</td><td class="numeric">110K</td><td class="numeric">180K</td><td class="numeric">870K</td><td class="numeric">3.2M</td></tr>
+      <tr class="highlight"><td>Gross revenue (€)</td><td class="numeric bold">27K</td><td class="numeric bold">171K</td><td class="numeric bold">517K</td><td class="numeric bold">902K</td><td class="numeric bold">780K (~Y1)</td><td class="numeric bold">5.8M</td><td class="numeric bold">22.2M</td></tr>
+    </tbody>
+  </table>
+
+  <h5 class="mb-2 uppercase tracking-wider text-sage">Cost structure (Base case)</h5>
+  <table class="data-table mb-7">
+    <thead>
+      <tr><th>Line item</th><th class="align-right">Y1</th><th class="align-right">Y2</th><th class="align-right">Y3</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Gross revenue</td><td class="numeric">780K</td><td class="numeric">5,800K</td><td class="numeric">22,200K</td></tr>
+      <tr><td>COGS (product + fulfillment)</td><td class="numeric">405K</td><td class="numeric">2,610K</td><td class="numeric">8,880K</td></tr>
+      <tr class="subtotal"><td>Gross profit</td><td class="numeric bold">375K</td><td class="numeric bold">3,190K</td><td class="numeric bold">13,320K</td></tr>
+      <tr><td class="muted">— Gross margin</td><td class="numeric muted">48%</td><td class="numeric muted">55%</td><td class="numeric muted">60%</td></tr>
+      <tr><td>Marketing & CAC</td><td class="numeric">280K</td><td class="numeric">1,225K</td><td class="numeric">3,150K</td></tr>
+      <tr><td>Team & contractors</td><td class="numeric">260K</td><td class="numeric">650K</td><td class="numeric">1,850K</td></tr>
+      <tr><td>Technology & infra</td><td class="numeric">55K</td><td class="numeric">170K</td><td class="numeric">380K</td></tr>
+      <tr><td>Operations & legal</td><td class="numeric">95K</td><td class="numeric">220K</td><td class="numeric">350K</td></tr>
+      <tr><td>G&A</td><td class="numeric">60K</td><td class="numeric">135K</td><td class="numeric">290K</td></tr>
+      <tr class="subtotal"><td>Total OPEX</td><td class="numeric bold">750K</td><td class="numeric bold">2,400K</td><td class="numeric bold">6,020K</td></tr>
+      <tr class="highlight"><td>EBITDA</td><td class="numeric bold">(375K)</td><td class="numeric bold">790K</td><td class="numeric bold">7,300K</td></tr>
+      <tr><td class="muted">— EBITDA margin</td><td class="numeric muted">-48%</td><td class="numeric muted">14%</td><td class="numeric muted">33%</td></tr>
+    </tbody>
+  </table>
+
+  <h5 class="mb-2 uppercase tracking-wider text-terra">Scenarios — side by side</h5>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Scenario</th>
+        <th class="align-right">Y3 Actives</th>
+        <th class="align-right">Y3 AOV</th>
+        <th class="align-right">Y3 Orders</th>
+        <th class="align-right">Y3 Revenue</th>
+        <th class="align-right">Y3 GM</th>
+        <th class="align-right">Y3 EBITDA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="scenario-tag scenario-tag--conservative">Conservative</span></td>
+        <td class="numeric">50K</td>
+        <td class="numeric">€65</td>
+        <td class="numeric">5.5</td>
+        <td class="numeric bold">€14.0M</td>
+        <td class="numeric">50%</td>
+        <td class="numeric">(€200K)</td>
+      </tr>
+      <tr class="highlight">
+        <td><span class="scenario-tag scenario-tag--base">Base</span></td>
+        <td class="numeric">90K</td>
+        <td class="numeric">€78</td>
+        <td class="numeric">7.5</td>
+        <td class="numeric bold">€22.2M</td>
+        <td class="numeric">60%</td>
+        <td class="numeric bold">€7.3M</td>
+      </tr>
+      <tr>
+        <td><span class="scenario-tag scenario-tag--optimistic">Optimistic</span></td>
+        <td class="numeric">140K</td>
+        <td class="numeric">€90</td>
+        <td class="numeric">9.0</td>
+        <td class="numeric bold">€38.0M</td>
+        <td class="numeric">65%</td>
+        <td class="numeric">€14.0M</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout--amber mt-7">
+    <div class="callout__title">What makes or breaks the model</div>
+    <div class="callout__body">
+      <strong>Biggest swing factor:</strong> own-brand mix in Year 3. At 20% own-brand mix, gross margin stalls at 52%. At 40% (base), 60%. At 55% (optimistic), 65%. Own-brand launch timing (Q1 2027) is the EBITDA gate.<br><br>
+      <strong>Second lever:</strong> 90-day reorder rate. Below 35% = CAC never pays back. Above 45% = compounding LTV. Content + subscribe-and-save are the levers.<br><br>
+      <strong>Membership:</strong> Thin, intentional. 12% conversion at €7/mo = €3.2M Y3 revenue. But the real value is commitment (Costco: 73% of gross profit from 1.9% of revenue).
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-footer__number">P&L · page 2 / 3</div>
+    <div class="page-footer__confidential">alche · v6 · confidential</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__brand">alche</div>
+    <div class="page-header__meta">SENSITIVITY & RISK</div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-header__number">Sensitivity</span>
+    <h2 class="section-header__title">What breaks the model — <strong>and how we defend.</strong></h2>
+  </div>
+
+  <h5 class="mb-3 uppercase tracking-wider text-amber">Sensitivity matrix — Year 3 EBITDA (€M)</h5>
+  <table class="data-table mb-7">
+    <thead>
+      <tr>
+        <th>AOV ↓ / Orders/yr →</th>
+        <th class="align-right">5.0</th>
+        <th class="align-right">6.5</th>
+        <th class="align-right">7.5</th>
+        <th class="align-right">9.0</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>€65</strong></td><td class="numeric">(0.4)</td><td class="numeric">2.8</td><td class="numeric">5.2</td><td class="numeric">8.6</td></tr>
+      <tr><td><strong>€72</strong></td><td class="numeric">0.8</td><td class="numeric">4.1</td><td class="numeric">6.6</td><td class="numeric">10.2</td></tr>
+      <tr class="highlight"><td><strong>€78 (base)</strong></td><td class="numeric">1.7</td><td class="numeric">5.3</td><td class="numeric bold">7.3</td><td class="numeric">11.4</td></tr>
+      <tr><td><strong>€85</strong></td><td class="numeric">2.9</td><td class="numeric">6.6</td><td class="numeric">9.1</td><td class="numeric">13.5</td></tr>
+      <tr><td><strong>€95</strong></td><td class="numeric">4.6</td><td class="numeric">8.7</td><td class="numeric">11.7</td><td class="numeric">17.0</td></tr>
+    </tbody>
+  </table>
+
+  <h5 class="mb-3 uppercase tracking-wider text-terra">Key risks</h5>
+  <div class="two-col">
+    <div class="glass-accent glass-accent--terra">
+      <h5 class="mb-2">Reorder rate below 35%</h5>
+      <p class="text-sm">Base requires 45% 90-day reorder. Industry comp: Ritual 92%, AG1 high-retention DTC. Mitigation: subscribe-and-save at checkout, AI-driven protocol updates, content touchpoints at Day 14 / 30 / 60.</p>
+    </div>
+    <div class="glass-accent glass-accent--terra">
+      <h5 class="mb-2">Own-brand launch slips past Q1 2027</h5>
+      <p class="text-sm">Every quarter of slip costs ~€1.2M EBITDA in Y3. Mitigation: supplier conversations already underway, first SKU (Magnesium) is BVL-registered with multiple copackers in DACH.</p>
+    </div>
+    <div class="glass-accent glass-accent--rose">
+      <h5 class="mb-2">Regulatory — ashwagandha + health claims</h5>
+      <p class="text-sm">German BfR watchlist restricts ashwagandha. Health claims must use EU-approved verbatim language. Mitigation: curated shelf launches with no watchlist SKUs; legal review integrated into supplier onboarding.</p>
+    </div>
+    <div class="glass-accent glass-accent--rose">
+      <h5 class="mb-2">Sunday Natural (Berlin, ~€100M rev)</h5>
+      <p class="text-sm">Nearest direct competitor. Mitigation: we're not vertical-only — we're editorial commerce. Their model is own-brand closed-loop; ours is curated + AI + membership. Different game.</p>
+    </div>
+    <div class="glass-accent glass-accent--sage">
+      <h5 class="mb-2">CAC inflation</h5>
+      <p class="text-sm">Meta/Google CAC rising. Mitigation: content-led acquisition (SEO compounds), Berlin community events, podcast partnerships — all lower-CAC channels. Paid is the accelerator, not the engine.</p>
+    </div>
+    <div class="glass-accent glass-accent--sage">
+      <h5 class="mb-2">Membership &lt;8% conversion</h5>
+      <p class="text-sm">Base 12%, conservative 8%. Even at 8% membership is ~€2M Y3. The commitment effect matters more than the revenue — mitigation is ensuring membership perks are visible and valuable (discounted pricing, early access, digital twin).</p>
+    </div>
+  </div>
+
+  <div class="sources mt-8">
+    Sources: revenue-model-research.md (internal, Apr 2026) · Statista Germany supplements 2024-2026 · AG1 / Ritual / Thrive Market public filings & press · EFSA health claims register · BfR ashwagandha evaluation · FLEX Logistik + byrd rate cards · German LFGB enforcement data · Xiaohongshu financial disclosures via SCMP / Reuters (2024-2025).
+  </div>
+
+  <div class="page-footer">
+    <div class="page-footer__number">P&L · page 3 / 3</div>
+    <div class="page-footer__confidential">alche · v6 · confidential</div>
+  </div>
+</div>
+
+<script>
+const scenarios = {
+  conservative: {
+    y3Revenue: '€14.0M', y3Ebitda: '(€0.2M)', y3Gm: '50%', y3Actives: '50K',
+    cac: { val: '€45', pct: 64 },
+    ttfp: { val: '<45d', pct: 67 },
+    orders: { val: '4.5', pct: 50 },
+    aov: { val: '€65', pct: 65 },
+    reorder: { val: '35%', pct: 58 },
+    ltvcac: { val: '4.4x', pct: 44 },
+    gmc: { val: '25%', pct: 50 },
+    gmob: { val: '60%', pct: 75 },
+    gmb: { val: '50%', pct: 71 },
+    fc: { val: '€10', pct: 83 },
+    obmix: { val: '25%', pct: 42 },
+    mc: { val: '8%', pct: 40 }
+  },
+  base: {
+    y3Revenue: '€22.2M', y3Ebitda: '€7.3M', y3Gm: '60%', y3Actives: '90K',
+    cac: { val: '€35', pct: 50 },
+    ttfp: { val: '<30d', pct: 85 },
+    orders: { val: '6.0', pct: 67 },
+    aov: { val: '€72', pct: 72 },
+    reorder: { val: '45%', pct: 75 },
+    ltvcac: { val: '10.0x', pct: 80 },
+    gmc: { val: '35%', pct: 70 },
+    gmob: { val: '70%', pct: 88 },
+    gmb: { val: '60%', pct: 86 },
+    fc: { val: '€8', pct: 67 },
+    obmix: { val: '40%', pct: 67 },
+    mc: { val: '12%', pct: 60 }
+  },
+  optimistic: {
+    y3Revenue: '€38.0M', y3Ebitda: '€14.0M', y3Gm: '65%', y3Actives: '140K',
+    cac: { val: '€25', pct: 36 },
+    ttfp: { val: '<21d', pct: 100 },
+    orders: { val: '9.0', pct: 100 },
+    aov: { val: '€90', pct: 90 },
+    reorder: { val: '55%', pct: 92 },
+    ltvcac: { val: '22.0x', pct: 100 },
+    gmc: { val: '45%', pct: 90 },
+    gmob: { val: '80%', pct: 100 },
+    gmb: { val: '65%', pct: 93 },
+    fc: { val: '€6', pct: 50 },
+    obmix: { val: '55%', pct: 92 },
+    mc: { val: '16%', pct: 80 }
+  }
+};
+
+function setScenario(name) {
+  const s = scenarios[name];
+  document.getElementById('y3-revenue').textContent = s.y3Revenue;
+  document.getElementById('y3-ebitda').textContent = s.y3Ebitda;
+  document.getElementById('y3-gm').textContent = s.y3Gm;
+  document.getElementById('y3-actives').textContent = s.y3Actives;
+  const tag = document.getElementById('scenario-tag');
+  tag.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+  tag.className = 'scenario-tag scenario-tag--' + name;
+  ['cac','ttfp','orders','aov','reorder','ltvcac','gmc','gmob','gmb','fc','obmix','mc'].forEach(k => {
+    document.getElementById('val-'+k).textContent = s[k].val;
+    document.getElementById('bar-'+k).style.width = s[k].pct + '%';
+  });
+  document.querySelectorAll('.controls button').forEach(b => b.classList.toggle('active', b.dataset.scenario === name));
+}
+setScenario('base');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Home Screen Redesign · Three Directions</title>
+  <link rel="stylesheet" href="alche-figma-tokens.css">
+  <style>
+    :root {
+      --max-w: 1200px;
+    }
+
+    body {
+      background: var(--bg-light);
+      color: var(--editorial-black);
+    }
+
+    .page {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ===== Cover ===== */
+    .cover {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 48px;
+      padding-bottom: 48px;
+      position: relative;
+    }
+    .cover .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--editorial-black);
+      padding-top: 16px;
+    }
+    .cover .masthead .logo {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+    .cover .masthead .meta {
+      display: flex;
+      gap: 32px;
+      color: var(--editorial-muted);
+    }
+    .cover .title-block h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 200;
+      font-size: clamp(56px, 9vw, 120px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin: 0 0 24px;
+    }
+    .cover .title-block .lede {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(22px, 2.5vw, 28px);
+      line-height: 1.4;
+      max-width: 680px;
+      color: var(--editorial-black);
+      margin: 0;
+    }
+    .cover .title-block .lede em {
+      color: var(--editorial-muted);
+      font-style: normal;
+    }
+    .cover .metabar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      border-top: 1px solid var(--divider-medium);
+      padding-top: 24px;
+    }
+    .cover .metabar .cell .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 6px;
+    }
+    .cover .metabar .cell .value {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+    }
+
+    /* ===== Section header ===== */
+    .section {
+      padding: 96px 0 48px;
+      border-top: 1px solid var(--editorial-black);
+    }
+    .section-header {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      margin-bottom: 56px;
+      align-items: baseline;
+    }
+    .section-header .num {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .section-header h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(42px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+    }
+    .section-header .sub {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      color: var(--editorial-muted);
+      max-width: 620px;
+      margin: 0;
+    }
+
+    /* ===== Problem diagnosis ===== */
+    .problems {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+    }
+    .problems .column {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .problem {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 24px;
+      padding: 32px 0;
+      border-top: 1px solid var(--divider-medium);
+      align-items: start;
+    }
+    .problem:last-child { border-bottom: 1px solid var(--divider-medium); }
+    .problem .p-num {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 44px;
+      line-height: 1;
+      color: var(--editorial-black);
+    }
+    .problem .p-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 26px;
+      line-height: 1.25;
+      margin: 0 0 6px;
+    }
+    .problem .p-tag {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .problem .p-body {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--editorial-black);
+      margin: 0;
+    }
+
+    /* ===== Direction showcase ===== */
+    .direction-block {
+      margin-top: 48px;
+    }
+    .direction-lead {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+    .direction-lead .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+    }
+    .direction-lead .name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(38px, 4.5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      margin: 0 0 16px;
+    }
+    .direction-lead .pull {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.4;
+      color: var(--editorial-muted);
+      max-width: 680px;
+      margin: 0;
+    }
+
+    .frame-embed {
+      width: 100%;
+      height: 1720px;
+      border: 1px solid var(--divider-medium);
+      background: var(--canvas-bg);
+      display: block;
+    }
+
+    .direction-footer {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-top: 1px solid var(--divider-medium);
+      border-bottom: 1px solid var(--editorial-black);
+      margin-bottom: 48px;
+    }
+    .direction-footer .cell .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 6px;
+    }
+    .direction-footer .cell p {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== Comparison matrix ===== */
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 14px;
+    }
+    .matrix thead th {
+      text-align: left;
+      padding: 20px 20px;
+      border-bottom: 1px solid var(--editorial-black);
+      border-top: 1px solid var(--editorial-black);
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      vertical-align: bottom;
+    }
+    .matrix thead th.direction-col {
+      color: var(--editorial-black);
+      font-weight: 700;
+    }
+    .matrix tbody td {
+      padding: 20px;
+      border-bottom: 1px solid var(--divider-medium);
+      vertical-align: top;
+    }
+    .matrix tbody td.criterion {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 19px;
+      width: 24%;
+    }
+    .matrix .score {
+      display: inline-block;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      margin-right: 8px;
+    }
+    .score.high { color: var(--editorial-black); border: 1px solid var(--editorial-black); }
+    .score.med  { color: var(--editorial-muted); border: 1px solid var(--editorial-muted); }
+    .score.low  { color: var(--editorial-muted); background: var(--bg-warm); }
+
+    /* ===== Recommendation ===== */
+    .recommendation {
+      padding: 64px 0 96px;
+    }
+    .recommendation-card {
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      padding: 64px 56px;
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .recommendation-card .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--editorial-accent);
+    }
+    .recommendation-card h3 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(36px, 4vw, 52px);
+      line-height: 1.05;
+      margin: 0 0 20px;
+    }
+    .recommendation-card p {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--editorial-accent);
+      margin: 0 0 24px;
+      max-width: 720px;
+    }
+    .recommendation-card .next-steps {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    .recommendation-card .next-steps li {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      align-items: baseline;
+    }
+    .recommendation-card .next-steps .n {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--editorial-accent);
+    }
+    .recommendation-card .next-steps .s {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--bg-white);
+    }
+
+    /* ===== Colophon ===== */
+    .colophon {
+      padding: 48px 0 80px;
+      border-top: 1px solid var(--divider-medium);
+      display: flex;
+      justify-content: space-between;
+      color: var(--editorial-muted);
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ===== Print ===== */
+    @page { size: A3 portrait; margin: 18mm 16mm; }
+    @media print {
+      body { background: white; }
+      .page { max-width: none; padding: 0; }
+      .cover { min-height: 0; page-break-after: always; }
+      .section { page-break-before: always; break-before: page; }
+      .direction-block { page-break-inside: avoid; }
+      .frame-embed { height: 1000px; }
+      .recommendation-card { box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      iframe { border: 1px solid var(--divider-medium); }
+    }
+
+    /* Responsive tighten */
+    @media (max-width: 900px) {
+      .section-header, .problems, .direction-lead { grid-template-columns: 1fr; }
+      .direction-footer { grid-template-columns: 1fr; }
+      .problem { grid-template-columns: 60px 1fr; }
+      .problem .p-body { grid-column: 1 / -1; }
+      .cover .metabar { grid-template-columns: repeat(2, 1fr); }
+      .recommendation-card { grid-template-columns: 1fr; padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ===================== COVER ===================== -->
+  <section class="cover">
+    <div class="masthead">
+      <div class="logo">Alche</div>
+      <div class="meta">
+        <span class="alche-overline">Internal · Design Review</span>
+        <span class="alche-overline">Rev. 2026-04-24</span>
+      </div>
+    </div>
+
+    <div class="title-block">
+      <p class="alche-overline" style="margin: 0 0 24px;">Home Screen · Redesign Study</p>
+      <h1>A home<br>worth<br><em style="color: var(--editorial-muted); font-style: italic;">waking up to.</em></h1>
+      <p class="lede">
+        The current Alche home has twelve zones and no centre of gravity.
+        This study proposes three directions — each with a different
+        answer to the only question a home screen should answer:
+        <em>what should I do right now?</em>
+      </p>
+    </div>
+
+    <div class="metabar">
+      <div class="cell">
+        <div class="label">Study</div>
+        <div class="value">Home · iOS</div>
+      </div>
+      <div class="cell">
+        <div class="label">Scope</div>
+        <div class="value">Design only</div>
+      </div>
+      <div class="cell">
+        <div class="label">Directions</div>
+        <div class="value">Three</div>
+      </div>
+      <div class="cell">
+        <div class="label">Next</div>
+        <div class="value">Pick one</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE DIAGNOSIS ===================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="num">I · Diagnosis</div>
+      <div>
+        <h2>The current home confesses<br>its own confusion.</h2>
+        <p class="sub">
+          Twelve zones on one screen. A poetic hero, a cycle band, a bio card,
+          a ritual CTA, a 2×2 grid, a hairline divider — and then seven functional
+          cards stacked below. The divider is a tell: <em>editorial stuff above,
+          functional stuff below, we didn't know where to put the rest.</em>
+          Five problems, specifically.
+        </p>
+      </div>
+    </div>
+
+    <div class="problems">
+      <div class="num alche-overline">Five issues</div>
+      <div class="column">
+
+        <div class="problem">
+          <div class="p-num">01</div>
+          <div>
+            <div class="p-tag">Primary action</div>
+            <h3 class="p-title">No clear "what do I do right now?"</h3>
+          </div>
+          <p class="p-body">
+            The ritual card wants to be the hero. The 2×2 grid wants to be the hero.
+            The functional stack wants to exist. Three primary actions cancel each
+            other out; the user scrolls and scrolls.
+          </p>
+        </div>
+
+        <div class="problem">
+          <div class="p-num">02</div>
+          <div>
+            <div class="p-tag">Inclusivity</div>
+            <h3 class="p-title">The cycle band assumes menstruation.</h3>
+          </div>
+          <p class="p-body">
+            Alche's own founder is AMAB and queer. Defaulting every member to a
+            28-day estrogen cycle excludes a meaningful share of the target audience
+            — and quietly signals whose body the app was designed around.
+          </p>
+        </div>
+
+        <div class="problem">
+          <div class="p-num">03</div>
+          <div>
+            <div class="p-tag">Metric vs. trigger</div>
+            <h3 class="p-title">Bio Age is vanity, not action.</h3>
+          </div>
+          <p class="p-body">
+            A large italic number at the top of the home is aesthetically strong
+            and behaviourally weak. It's a result, not a decision. On a home
+            screen, every element should either tell the user what to do or
+            get out of the way.
+          </p>
+        </div>
+
+        <div class="problem">
+          <div class="p-num">04</div>
+          <div>
+            <div class="p-tag">Hierarchy</div>
+            <h3 class="p-title">The divider is a confession.</h3>
+          </div>
+          <p class="p-body">
+            A hairline separating "hero stuff" from "the rest" is the UI admitting
+            it couldn't find a shared rhythm. A good home has one conceptual
+            frame — not two stapled together.
+          </p>
+        </div>
+
+        <div class="problem">
+          <div class="p-num">05</div>
+          <div>
+            <div class="p-tag">Voice</div>
+            <h3 class="p-title">"Approaching Luminous." is empty poetry.</h3>
+          </div>
+          <p class="p-body">
+            It looks like copy. It reads like filler. A line that occupies
+            the most valuable pixel real estate on screen must either carry
+            information or be cut — not loiter beautifully.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DIRECTION A ===================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="num">II · Direction A</div>
+      <div>
+        <h2>Ritual-first.</h2>
+        <p class="sub">
+          The whole home is today's ritual moment. One question on waking —
+          <em>what should I do right now?</em> — answered in the first fold,
+          uncompromisingly.
+        </p>
+      </div>
+    </div>
+
+    <div class="direction-block">
+      <div class="direction-lead">
+        <div class="kicker">A · Ritual-first</div>
+        <div>
+          <h3 class="name">The ritual is the room.</h3>
+          <p class="pull">
+            The hero isn't a tile on the home screen — it <em>is</em> the home
+            screen. Smoke gradient takes ~60% of the frame. One verb: Begin.
+            Everything else is one tap deeper.
+          </p>
+        </div>
+      </div>
+
+      <iframe class="frame-embed" src="direction-a-mockup.html" title="Direction A — Ritual-first"></iframe>
+
+      <div class="direction-footer">
+        <div class="kicker">Added · Removed · Reprioritized</div>
+        <div class="cell">
+          <div class="label">Added</div>
+          <p>Time-of-day overline (08:42 · Morning Window). Body-inclusive "why-now" diagnostic that works for any physiology.</p>
+        </div>
+        <div class="cell">
+          <div class="label">Removed</div>
+          <p>2×2 quick grid. Bio-age card. Default cycle band. "Approaching Luminous" filler poetry.</p>
+        </div>
+        <div class="cell">
+          <div class="label">Trade-off</div>
+          <p><em>At-a-glance dashboard is gone.</em> Credits, bookings, protocol status live one tap deeper.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DIRECTION B ===================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="num">III · Direction B</div>
+      <div>
+        <h2>Signal-first.</h2>
+        <p class="sub">
+          You open Alche and you <em>see</em> where your body is right now.
+          Actions emerge from signals, not from a grid of random choices.
+          The editorial-longevity take on a Whoop home.
+        </p>
+      </div>
+    </div>
+
+    <div class="direction-block">
+      <div class="direction-lead">
+        <div class="kicker">B · Signal-first</div>
+        <div>
+          <h3 class="name">Your body, read aloud in italics.</h3>
+          <p class="pull">
+            Two typographic lead signals, six tight supporting rows with
+            CSS sparklines, and a body-mode switcher that makes cycle opt-in.
+            Kinfolk magazine spread, not dashboard chaos.
+          </p>
+        </div>
+      </div>
+
+      <iframe class="frame-embed" src="direction-b-mockup.html" title="Direction B — Signal-first"></iframe>
+
+      <div class="direction-footer">
+        <div class="kicker">Added · Removed · Reprioritized</div>
+        <div class="cell">
+          <div class="label">Added</div>
+          <p>Typographic lead signals (Readiness · Bio Age) side-by-side. Six-row signal column with sparklines. Body Mode strip — Menstrual / Androgen / Off.</p>
+        </div>
+        <div class="cell">
+          <div class="label">Removed</div>
+          <p>"Approaching Luminous" hero. 2×2 quick grid. Full-width smoke ritual card. The hero/functional divider.</p>
+        </div>
+        <div class="cell">
+          <div class="label">Trade-off</div>
+          <p><em>First-time members see numbers before narrative.</em> More Bloomberg than Kinfolk on day one — until the italics earn their meaning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DIRECTION C ===================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="num">IV · Direction C</div>
+      <div>
+        <h2>Dialog-first.</h2>
+        <p class="sub">
+          Alche speaks. The home is a single conversational card — a read,
+          an opinion, one action. Dashboard → dialog. This is what longevity
+          apps look like in 2027, not 2022.
+        </p>
+      </div>
+    </div>
+
+    <div class="direction-block">
+      <div class="direction-lead">
+        <div class="kicker">C · Dialog-first</div>
+        <div>
+          <h3 class="name">A letter from your companion.</h3>
+          <p class="pull">
+            Three italic lines stating what today is. One primary action.
+            A redirect instead of a dismiss. A tiny "Browse instead" escape
+            hatch for members who aren't in the mood to be read.
+          </p>
+        </div>
+      </div>
+
+      <iframe class="frame-embed" src="direction-c-mockup.html" title="Direction C — Dialog-first"></iframe>
+
+      <div class="direction-footer">
+        <div class="kicker">Added · Removed · Reprioritized</div>
+        <div class="cell">
+          <div class="label">Added</div>
+          <p>Single italic three-line Alche read. Space Mono data strip. Continuity echo from yesterday. "Browse instead" escape hatch.</p>
+        </div>
+        <div class="cell">
+          <div class="label">Removed</div>
+          <p>Editorial hero. Cycle band. Bio-age card. Ritual card. 2×2 grid. Functional stack. The hero/functional divider.</p>
+        </div>
+        <div class="cell">
+          <div class="label">Trade-off</div>
+          <p><em>Users who open wanting to do arrive one tap late.</em> Alche's opinion comes first, always. The AI persona cannot be switched off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARISON ===================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="num">V · Comparison</div>
+      <div>
+        <h2>Not "which is best."<br>Which is <em style="color: var(--editorial-muted); font-style: italic;">right</em>.</h2>
+        <p class="sub">
+          Each direction optimizes for a different posture. Read the matrix
+          through the lens of the member Alche is actually trying to build
+          for — and the version of the app that earns a second open tomorrow.
+        </p>
+      </div>
+    </div>
+
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th class="direction-col">A · Ritual-first</th>
+          <th class="direction-col">B · Signal-first</th>
+          <th class="direction-col">C · Dialog-first</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="criterion">Primary-action clarity</td>
+          <td><span class="score high">High</span> Begin is the only verb.</td>
+          <td><span class="score med">Med</span> Actions hang off the right signal.</td>
+          <td><span class="score high">High</span> Alche picks for you.</td>
+        </tr>
+        <tr>
+          <td class="criterion">Cognitive load</td>
+          <td><span class="score high">Low</span> One visual focus.</td>
+          <td><span class="score med">Med</span> Signal-dense, editorial.</td>
+          <td><span class="score high">Low</span> One card, one read.</td>
+        </tr>
+        <tr>
+          <td class="criterion">AMAB / queer-inclusive by default</td>
+          <td><span class="score high">Yes</span> Cycle optional, moved to prefs.</td>
+          <td><span class="score high">Yes</span> Body Mode is a switch.</td>
+          <td><span class="score high">Yes</span> Cycle only if dialog surfaces it.</td>
+        </tr>
+        <tr>
+          <td class="criterion">Why come back tomorrow</td>
+          <td><span class="score med">Fresh ritual</span> New protocol to begin.</td>
+          <td><span class="score high">Fresh signals</span> Your body changed overnight.</td>
+          <td><span class="score high">Fresh read</span> New opinion, new card.</td>
+        </tr>
+        <tr>
+          <td class="criterion">Brand fit — Editorial Longevity</td>
+          <td><span class="score high">Strong</span> Smoke-gradient hero owns the DNA.</td>
+          <td><span class="score high">Strong</span> Italic numbers, Kinfolk spread.</td>
+          <td><span class="score high">Strong</span> The read feels written, not generated.</td>
+        </tr>
+        <tr>
+          <td class="criterion">Build cost from current</td>
+          <td><span class="score high">Low</span> Most components already exist.</td>
+          <td><span class="score med">Med</span> New signal-row + sparkline components.</td>
+          <td><span class="score med">Med</span> Requires a real read-generator behind the card.</td>
+        </tr>
+        <tr>
+          <td class="criterion">Risk</td>
+          <td><span class="score low">Rigidity</span> Feels thin for members who want to browse.</td>
+          <td><span class="score low">Numeracy</span> First-timer overwhelm before trust is built.</td>
+          <td><span class="score low">Voice fatigue</span> If the AI read ever feels off, the whole home breaks.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== RECOMMENDATION ===================== -->
+  <section class="recommendation">
+    <div class="recommendation-card">
+      <div class="kicker">VI · Recommendation</div>
+      <div>
+        <p style="color: rgba(196,202,214,0.7); margin-bottom: 20px; font-size: 14px; font-family: 'Space Mono', Menlo, monospace; letter-spacing: 0.2em; text-transform: uppercase; font-style: normal;">
+          Ship A first. Evolve toward C.
+        </p>
+        <h3>Direction A is the cheapest<br>path to a right home.</h3>
+        <p>
+          The ritual card DNA already exists in the codebase. Ritual-first uses
+          it as the <em>room</em> instead of a tile. It answers "what do I do
+          now?" cleanly, restores AMAB/queer inclusivity by moving cycle to a
+          preference, and removes the editorial/functional divider without
+          losing the Kinfolk voice. It's the shortest flight from here to a
+          home that confesses nothing.
+        </p>
+        <p>
+          Direction C is the true north for a Longevity companion in 2027 —
+          but it needs a real opinion-generator behind it. Ship that after
+          the read engine is trained on member data, not before.
+          <em>Direction B stays as a pattern library</em> for Profile and
+          the future Biomarkers / Digital Twin screens — signal-density is
+          a language Alche will need, just not at the front door.
+        </p>
+        <ul class="next-steps">
+          <li>
+            <span class="n">Step 01</span>
+            <span class="s">Lock Direction A as the home target. Timu reviews; "A go" commits.</span>
+          </li>
+          <li>
+            <span class="n">Step 02</span>
+            <span class="s">Tighten A's secondary rows: which 1–2 utilities live below the hero (next booking vs. credits vs. protocol progress).</span>
+          </li>
+          <li>
+            <span class="n">Step 03</span>
+            <span class="s">Port A into HomeView.swift — keep the smoke gradient, retire the 2×2 grid, move cycle to Profile settings under "Body tracking."</span>
+          </li>
+          <li>
+            <span class="n">Step 04</span>
+            <span class="s">Ship to TestFlight, measure: did members open a ritual within the first session? That's the only metric that counts.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COLOPHON ===================== -->
+  <footer class="colophon">
+    <div>Alche · Home Screen Redesign</div>
+    <div>Rev. 2026-04-24</div>
+    <div>Editorial Longevity · 375 × 812</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

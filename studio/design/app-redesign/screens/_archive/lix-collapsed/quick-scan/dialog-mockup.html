@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — QuickScan · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* QuickScan is a page of dialog. Alche speaks, then asks. */
+    .qs-topbar {
+      padding: 10px 24px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .qs-back {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .qs-counter {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    .qs-progress {
+      margin: 4px 24px 0;
+      display: flex;
+      gap: 3px;
+    }
+    .qs-progress span {
+      flex: 1;
+      height: 2px;
+      background: var(--divider-medium);
+    }
+    .qs-progress span.on { background: var(--editorial-black); }
+
+    /* The voice — Alche speaks first */
+    .qs-voice {
+      padding: 28px 24px 6px;
+    }
+    .qs-voice .kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qs-voice .kicker .dot {
+      width: 4px; height: 4px; background: var(--editorial-black); border-radius: 999px;
+    }
+    .qs-voice .said {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--editorial-muted);
+      margin: 0 0 8px;
+    }
+
+    /* The question — larger italic read */
+    .qs-question {
+      padding: 0 24px 8px;
+    }
+    .qs-question .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 26px;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .qs-question .line em {
+      color: var(--primary);
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+
+    /* Select-up-to indicator */
+    .qs-select-meta {
+      padding: 14px 24px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .qs-select-meta .count { color: var(--editorial-black); font-weight: 700; }
+
+    /* Answer rows — mono-list, no cards */
+    .qs-answers {
+      padding: 4px 0 0;
+    }
+    .qs-answer {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-top: 1px solid var(--divider-light);
+      position: relative;
+      cursor: pointer;
+    }
+    .qs-answer:last-child { border-bottom: 1px solid var(--divider-light); }
+    .qs-answer .idx {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+      width: 18px;
+      flex-shrink: 0;
+    }
+    .qs-answer .label {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--editorial-black);
+      flex: 1;
+    }
+    .qs-answer .tag {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .qs-answer.selected::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--primary);
+    }
+    .qs-answer.selected .label {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 17px;
+      color: var(--editorial-black);
+    }
+    .qs-answer.selected .idx { color: var(--primary); font-weight: 700; }
+    .qs-answer .mark {
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--divider-medium);
+      border-radius: var(--radius-sharp);
+      flex-shrink: 0;
+    }
+    .qs-answer.selected .mark {
+      background: var(--editorial-black);
+      border-color: var(--editorial-black);
+      position: relative;
+    }
+    .qs-answer.selected .mark::after {
+      content: "";
+      position: absolute;
+      top: 3px; left: 4px;
+      width: 3px; height: 6px;
+      border-right: 1.5px solid var(--bg-white);
+      border-bottom: 1.5px solid var(--bg-white);
+      transform: rotate(45deg);
+    }
+
+    /* Actions footer */
+    .qs-actions {
+      padding-top: 16px;
+    }
+    .qs-footer {
+      padding: 10px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Top: back + quiet counter -->
+        <div class="qs-topbar">
+          <div class="qs-back"><span>←</span><span>Back</span></div>
+          <div class="qs-counter">03 · OF · 05</div>
+        </div>
+
+        <!-- Slim progress bar -->
+        <div class="qs-progress" aria-hidden="true">
+          <span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span>
+        </div>
+
+        <!-- Alche speaks first -->
+        <div class="qs-voice">
+          <div class="kicker"><span class="dot"></span><span>Alche · Listening</span></div>
+          <p class="said">So — your mornings feel heavier than they used to.<br/>I want to understand what's pulling on you most.</p>
+        </div>
+
+        <!-- The question (italic read) -->
+        <div class="qs-question">
+          <span class="line">Where do you <em>feel it</em> first?</span>
+        </div>
+
+        <!-- Select-up-to meta -->
+        <div class="qs-select-meta">
+          <span>Choose up to three</span>
+          <span><span class="count">2</span> · 3</span>
+        </div>
+
+        <!-- Answer list — mono rows, left-bar for selected -->
+        <div class="qs-answers">
+          <div class="qs-answer selected">
+            <span class="idx">01</span>
+            <span class="label">Sleep — I wake up wired or wake up tired.</span>
+            <span class="tag">SLP</span>
+            <span class="mark"></span>
+          </div>
+          <div class="qs-answer selected">
+            <span class="idx">02</span>
+            <span class="label">Stress — my shoulders find their way to my ears.</span>
+            <span class="tag">STR</span>
+            <span class="mark"></span>
+          </div>
+          <div class="qs-answer">
+            <span class="idx">03</span>
+            <span class="label">Skin — the mirror tells me more than the calendar.</span>
+            <span class="tag">SKN</span>
+            <span class="mark"></span>
+          </div>
+          <div class="qs-answer">
+            <span class="idx">04</span>
+            <span class="label">Energy — 3pm and the day has left me.</span>
+            <span class="tag">ENR</span>
+            <span class="mark"></span>
+          </div>
+          <div class="qs-answer">
+            <span class="idx">05</span>
+            <span class="label">Focus — my thoughts drift before they land.</span>
+            <span class="tag">FCS</span>
+            <span class="mark"></span>
+          </div>
+        </div>
+
+        <!-- Voice between data: echo what was chosen -->
+        <div class="alche-interstitial">
+          <p class="i-voice">I'm hearing <em>sleep</em> and <em>stress</em>. Tell me one more — or keep going.</p>
+        </div>
+
+        <!-- Primary -->
+        <div class="qs-actions">
+          <button class="alche-primary-action">
+            <span>Continue · Question 4</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Skip this one</span></a>
+        </div>
+
+        <div class="qs-footer">
+          <span>DRAFT · YOUR FIRST READ</span>
+          <span>02:14 ELAPSED</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · QUICKSCAN</p>
+      <h1 class="alche-display-l title">A page of dialog, not a row on a form.</h1>
+      <p class="alche-body philosophy">
+        Each question is preceded by Alche saying <em>why</em> it's asking. The question is an italic read. Answers are mono-list rows with a left accent bar when selected. After a selection, Alche interjects an italic echo ("I'm hearing sleep and stress") before the Continue button. Progress demotes to a 2px hairline and a mono counter in the top-right — present, not preaching.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>Typeform-style hero progress bar with loud "3 OF 5" at the top. RoundedRectangle(md) answer cards. Blue checkmark + blue border glow selection. The styled sparkles micro-insight toast.</div></li>
+        <li><span class="label">KEPT</span><div>Progress tracking (demoted to a 2px hairline + tiny counter), back navigation (moved to a mono link), the multi-select cap signal (rewritten as "CHOOSE UP TO THREE · 2 · 3"), per-answer metadata (now a 3-letter mono code tag).</div></li>
+        <li><span class="label">ADDED</span><div>(1) A "voice-first" opening — "So — your mornings feel heavier than they used to" — that reflects the PREVIOUS answer. (2) An `.alche-interstitial` echo between selection and continue button that names what Alche just heard. (3) A bottom footer reading "DRAFT · YOUR FIRST READ · 02:14 ELAPSED" so the quiz feels like a letter being written together.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: longer read time per question. A member who wants to speed-click through is now asked to slow down for two sentences of voice first.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

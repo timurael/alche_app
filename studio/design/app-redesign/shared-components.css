@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Alche — Dialog-first Shared Components
+   Pattern library extracted from Direction C (Home). Every screen mockup
+   must use these classes. Direction-specific tweaks go in inline <style>.
+   ========================================================================== */
+
+/* ---------- Context band (top of every screen) ---------- */
+.alche-context-band {
+  padding: 10px 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.alche-context-band .ctx-left,
+.alche-context-band .ctx-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+}
+.alche-context-band .ctx-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--editorial-black);
+  border-radius: 999px;
+  opacity: 0.8;
+}
+
+/* ---------- Read stamp ---------- */
+.alche-read-stamp {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.alche-stamp-mark {
+  display: inline-grid;
+  grid-template-columns: 3px 3px;
+  grid-template-rows: 3px 3px;
+  gap: 1px;
+  flex-shrink: 0;
+}
+.alche-stamp-mark span {
+  width: 3px;
+  height: 3px;
+  background: var(--editorial-black);
+  display: block;
+}
+.alche-stamp-mark span:nth-child(3) { background: var(--primary); }
+.alche-read-stamp-label {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--editorial-black);
+}
+
+/* ---------- The Read (italic three-line hero) ---------- */
+.alche-read {
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+.alche-read .line {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+  color: var(--editorial-black);
+  display: block;
+}
+.alche-read .line + .line { margin-top: 4px; }
+.alche-read .line.dim { color: var(--editorial-muted); }
+.alche-read .line em {
+  font-style: italic;
+  color: var(--primary);
+  font-weight: 400;
+  border-bottom: 1px solid var(--primary);
+  padding-bottom: 1px;
+}
+
+/* ---------- Data strip (Space Mono row under the read) ---------- */
+.alche-data-strip {
+  padding: 0 24px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--editorial-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+.alche-data-strip .sep {
+  width: 3px;
+  height: 3px;
+  background: var(--editorial-muted);
+  border-radius: 999px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.alche-data-strip .k { color: var(--editorial-muted); }
+.alche-data-strip .v { color: var(--editorial-black); font-weight: 700; margin-left: 4px; }
+
+/* ---------- Primary action (filled black mono button) ---------- */
+.alche-primary-action {
+  margin: 0 24px 12px;
+  width: calc(100% - 48px);
+  background: var(--editorial-black);
+  color: var(--bg-white);
+  font-family: 'Space Mono', Menlo, monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 16px 18px;
+  border: 1px solid var(--editorial-black);
+  border-radius: var(--radius-sharp);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.alche-primary-action .arrow {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* ---------- Secondary action (ghost mono link) ---------- */
+.alche-secondary-action {
+  display: block;
+  text-align: center;
+  padding: 8px 0 20px;
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+  text-decoration: none;
+  cursor: pointer;
+}
+.alche-secondary-action .u {
+  border-bottom: 1px solid var(--editorial-muted);
+  padding-bottom: 2px;
+}
+
+/* ---------- Hairline divider inside frame ---------- */
+.alche-inner-divider {
+  margin: 0 24px;
+  height: 1px;
+  background: var(--divider-medium);
+}
+
+/* ---------- Previous echo (continuity line) ---------- */
+.alche-prev-echo {
+  padding: 18px 24px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.alche-prev-echo .tag {
+  flex-shrink: 0;
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+  padding-top: 2px;
+}
+.alche-prev-echo .echo {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--editorial-muted);
+}
+
+/* ---------- Utility row (single-line card) ---------- */
+.alche-utility-row {
+  margin: 4px 24px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--divider-medium);
+  background: var(--bg-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: var(--radius-sharp);
+}
+.alche-utility-row .u-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.alche-utility-row .u-kicker {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+}
+.alche-utility-row .u-title {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--editorial-black);
+}
+.alche-utility-row .u-arrow {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 13px;
+  color: var(--editorial-black);
+  flex-shrink: 0;
+}
+
+/* ---------- Browse escape (bottom) ---------- */
+.alche-browse-escape {
+  display: block;
+  text-align: center;
+  padding: 20px 0 12px;
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+  text-decoration: none;
+  opacity: 0.8;
+}
+.alche-browse-escape .u {
+  border-bottom: 1px solid var(--editorial-muted);
+  padding-bottom: 2px;
+}
+
+/* ---------- Narrator interstitial (for screens with multiple sections) ---------- */
+/* Use this to INTERRUPT data with Alche's voice between blocks — addresses
+   cross-screen pattern "voice is absent between data blocks". */
+.alche-interstitial {
+  padding: 20px 24px;
+  margin: 8px 0;
+  border-top: 1px solid var(--divider-light);
+  border-bottom: 1px solid var(--divider-light);
+}
+.alche-interstitial .i-voice {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--editorial-black);
+  margin: 0;
+}
+.alche-interstitial .i-voice em {
+  color: var(--primary);
+  font-style: italic;
+  border-bottom: 1px solid var(--primary);
+  padding-bottom: 1px;
+}
+
+/* ---------- Section overline (when a screen must have multiple sections) ---------- */
+.alche-section-head {
+  padding: 20px 24px 10px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.alche-section-head .sh-label {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--editorial-muted);
+  font-weight: 400;
+}
+.alche-section-head .sh-count {
+  font-family: 'Space Mono', Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--editorial-muted);
+}
+
+/* ---------- Screen title (for non-home screens — italic Newsreader) ---------- */
+.alche-screen-title {
+  padding: 8px 24px 14px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.1;
+  color: var(--editorial-black);
+  letter-spacing: -0.015em;
+}
+.alche-screen-title em {
+  color: var(--editorial-muted);
+  font-style: italic;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Welcome · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* Welcome-specific tweaks — the cover of a personal letter */
+    .welcome-masthead {
+      padding: 56px 24px 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .welcome-wordmark {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      color: var(--editorial-black);
+      line-height: 1;
+    }
+    .welcome-wordmark .dot { color: var(--primary); }
+    .welcome-meta {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      text-align: right;
+      line-height: 1.5;
+    }
+    .welcome-read {
+      padding: 0 24px;
+      margin-top: 80px;
+      margin-bottom: 28px;
+    }
+    .welcome-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 32px;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .welcome-read .line + .line { margin-top: 4px; }
+    .welcome-read .line em {
+      font-style: italic;
+      color: var(--primary);
+      font-weight: 400;
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+    .welcome-signature {
+      padding: 0 24px;
+      margin-bottom: 180px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .welcome-signature .rule {
+      width: 28px;
+      height: 1px;
+      background: var(--editorial-black);
+    }
+    .welcome-signature .sig {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+      font-weight: 700;
+    }
+    .welcome-actions {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 56px;
+    }
+    .welcome-footnote {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+      <div class="frame-content" style="padding-bottom:0;">
+
+        <!-- Masthead: small wordmark + release stamp -->
+        <div class="welcome-masthead">
+          <div class="welcome-wordmark">alche<span class="dot">.</span></div>
+          <div class="welcome-meta">
+            <div>PRIVATE RELEASE</div>
+            <div style="opacity:0.65;">V · 1.04</div>
+          </div>
+        </div>
+
+        <!-- The read — the first sentence of a long letter -->
+        <div class="welcome-read">
+          <span class="line">Some apps count steps.</span>
+          <span class="line">This one will <em>listen to your body</em></span>
+          <span class="line">and read back what it hears.</span>
+        </div>
+
+        <!-- Signature — the companion introduces itself -->
+        <div class="welcome-signature">
+          <span class="rule"></span>
+          <span class="sig">Alche · Your Read</span>
+        </div>
+
+        <!-- Actions anchored bottom -->
+        <div class="welcome-actions">
+          <button class="alche-primary-action" style="margin-bottom:8px;">
+            <span>Begin Your Read</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Already a member · Sign in</span></a>
+        </div>
+
+        <div class="welcome-footnote">
+          <span>EN · BERLIN</span>
+          <span>●  INVITATION OPEN</span>
+        </div>
+
+      </div>
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · WELCOME</p>
+      <h1 class="alche-display-l title">A short invitation from a companion, not a tagline from a brand.</h1>
+      <p class="alche-body philosophy">
+        Welcome is the cover of a letter. Three italic lines describe what this app actually does — <em>listen</em> — then sign off as "Alche · Your Read." One primary action. One sign-in escape. The decorative opacity grid, the blue marketing CTA, the corporate strapline all go; the screen breathes instead.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>"Your longevity, curated." headline, the 3-cell opacity grid, the 30%-width surface panel, the filled blue primary button with rounded corners, the "V.1.04 — PRIVATE RELEASE" footer-with-lock.</div></li>
+        <li><span class="label">KEPT</span><div>Lowercase "alche" wordmark (moved to a small masthead), private-release signal (demoted to typographic stamp), Apple Sign In / Sign In path (moved to a quiet secondary).</div></li>
+        <li><span class="label">ADDED</span><div>A three-line italic <em>read</em> that names the product's posture — "listen" — plus a horizontal rule signature introducing "Alche · Your Read" the way a newspaper masthead names its editor.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: visitors don't see a value-prop list — they see a sentence. If the tone doesn't land, the screen has nothing else to catch them.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+name = "alche-lix-proxy"
+main = "worker.js"
+compatibility_date = "2026-04-01"
+
+# The API key is NEVER committed. Set it with:
+#   wrangler secret put OPENROUTER_KEY
+# Then paste the key at the prompt. It lives only in Cloudflare's secret store.
+
+[vars]
+# Non-secret env vars go here if needed later.
+
+[observability]
+enabled = true

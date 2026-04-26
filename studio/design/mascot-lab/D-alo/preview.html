@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alo · Alche Mascot Lab · D</title>
+<style>
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_500.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Outfit'; src: url('../../fonts/outfit_600.woff2') format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_300.woff2') format('woff2'); font-weight: 300; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_400.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Cormorant'; src: url('../../fonts/cormorantgaramond_600.woff2') format('woff2'); font-weight: 600; }
+
+  :root {
+    --bg: #1A0E08;
+    --bg-deep: #0F0805;
+    --bg-card: #241510;
+    --ink: #F4E4D0;
+    --ink-soft: #c4b098;
+    --ink-faint: #8a7a68;
+    --amber: #F4C89A;
+    --rose: #E8A88C;
+    --rose-deep: #C47A68;
+    --glow-inner: #FFD9A0;
+    --glow-outer: #F5B888;
+    --highlight: #FFF4E0;
+    --shadow: rgba(0,0,0,0.6);
+    --rule: rgba(244,228,208,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Outfit', -apple-system, sans-serif; font-weight: 300; }
+
+  body { padding: 64px 48px 96px; max-width: 1280px; margin: 0 auto; }
+
+  header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 72px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+  .crumb { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .crumb a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  .crumb a:hover { border-bottom-color: currentColor; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; margin-bottom: 96px; }
+  .hero-text h1 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 88px; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); }
+  .hero-text h1 em { font-style: italic; color: var(--amber); }
+  .hero-text .tagline { font-size: 20px; line-height: 1.5; color: var(--ink-soft); margin-top: 24px; max-width: 440px; font-weight: 300; }
+  .hero-text .meta { display: flex; gap: 32px; margin-top: 40px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+  .hero-text .meta div b { display: block; font-family: 'Cormorant', serif; font-size: 24px; font-weight: 400; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 4px; }
+
+  .hero-art { display: flex; justify-content: center; align-items: center; padding: 40px; }
+  .hero-art svg { width: 100%; max-width: 420px; }
+
+  @keyframes breathe-alo { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.04); opacity: 0.95; } }
+  .breathe-alo { animation: breathe-alo 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
+  section { margin-bottom: 80px; }
+  h2 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 42px; letter-spacing: -0.01em; margin-bottom: 8px; color: var(--ink); }
+  h2 + .sub { font-size: 14px; color: var(--ink-faint); letter-spacing: 0.04em; margin-bottom: 32px; }
+  h2 em { font-style: italic; color: var(--amber); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+
+  .card { background: var(--bg-card); border-radius: 2px; padding: 40px; border: 1px solid var(--rule); }
+
+  .palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .swatch { aspect-ratio: 1; border-radius: 2px; position: relative; overflow: hidden; }
+  .swatch-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(0,0,0,0.75); color: #fff; font-size: 10px; letter-spacing: 0.04em; }
+  .swatch-label b { display: block; font-weight: 500; font-size: 11px; margin-bottom: 2px; letter-spacing: 0.06em; }
+  .swatch-label span { opacity: 0.7; font-weight: 300; }
+
+  .voice-samples li { list-style: none; font-family: 'Cormorant', serif; font-weight: 300; font-size: 24px; line-height: 1.5; padding: 14px 0; border-top: 1px solid var(--rule); font-style: italic; color: var(--ink); }
+  .voice-samples li:first-child { border-top: none; }
+  .voice-meta { display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft); }
+  .voice-meta dt { color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; padding-top: 4px; }
+  .voice-meta dd { line-height: 1.5; }
+
+  .chat-stage { display: flex; justify-content: center; }
+  .phone { width: 360px; height: 720px; background: #000; border-radius: 44px; padding: 12px; box-shadow: 0 40px 120px rgba(244,200,154,0.15); position: relative; }
+  .phone-screen { background: var(--bg); height: 100%; border-radius: 34px; padding: 56px 20px 40px; overflow-y: auto; position: relative; }
+  .phone-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 110px; height: 32px; background: #000; border-radius: 20px; z-index: 2; }
+  .phone-nav { display: flex; align-items: center; gap: 12px; padding: 0 4px 16px; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
+  .phone-nav svg { width: 36px; height: 36px; }
+  .phone-nav .who { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--ink); }
+  .phone-nav .who small { display: block; font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; }
+
+  .bubble { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.45; margin-bottom: 6px; font-weight: 300; }
+  .bubble.alo { background: var(--bg-card); color: var(--ink); border-bottom-left-radius: 4px; border: 1px solid var(--rule); }
+  .bubble.user { background: var(--amber); color: #1A0E08; margin-left: auto; border-bottom-right-radius: 4px; font-weight: 400; }
+  .bubble-row { display: flex; flex-direction: column; margin-bottom: 10px; }
+  .bubble-row.user-row { align-items: flex-end; }
+  .bubble .choices { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .bubble .chip { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 12px; font-size: 12px; color: var(--ink-soft); }
+
+  .expressions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .expr { text-align: center; }
+  .expr-frame { aspect-ratio: 1; background: var(--bg-deep); border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; padding: 20px; border: 1px solid var(--rule); }
+  .expr-frame svg { width: 100%; }
+  .expr b { font-family: 'Cormorant', serif; font-weight: 400; font-size: 18px; display: block; color: var(--ink); }
+  .expr span { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
+
+  .prompt-card { background: var(--bg-card); color: var(--ink); padding: 40px; border-radius: 2px; border: 1px solid var(--rule); }
+  .prompt-card h3 { font-family: 'Cormorant', serif; font-weight: 300; font-size: 28px; margin-bottom: 4px; color: var(--amber); }
+  .prompt-card .sub { color: var(--ink-faint); margin-bottom: 24px; font-size: 13px; }
+  .prompt-code { background: var(--bg-deep); padding: 24px; border-radius: 2px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; color: var(--ink-soft); max-height: 320px; overflow-y: auto; margin-bottom: 16px; border: 1px solid var(--rule); }
+  .copy-btn { background: var(--amber); color: var(--bg); border: none; padding: 12px 24px; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .copy-btn:hover { background: var(--glow-inner); box-shadow: 0 0 30px rgba(244,200,154,0.4); }
+  .copy-btn.copied { background: var(--rose); }
+
+  .risk-table { width: 100%; border-collapse: collapse; color: var(--ink); }
+  .risk-table th, .risk-table td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 14px; vertical-align: top; }
+  .risk-table td:first-child { width: 40%; padding-right: 32px; font-weight: 500; }
+
+  footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  footer a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  footer a:hover { border-bottom-color: var(--amber); color: var(--amber); }
+
+  @media print {
+    @page { size: A3; margin: 20mm; }
+    body { padding: 0; max-width: none; }
+    .hero { page-break-after: always; }
+    section { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 32px 20px; }
+    .hero, .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .hero-text h1 { font-size: 56px; }
+    .expressions { grid-template-columns: repeat(2, 1fr); }
+    .palette { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crumb"><a href="../index.html">← Mascot Lab</a></div>
+  <div class="crumb">D of IV · The Stone</div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Alo<em>,</em><br>the stone</h1>
+    <p class="tagline">The Philosopher's Stone, warmed. Not a character. A presence. The clean stillness of a meditation bell.</p>
+    <div class="meta">
+      <div>Archetype<b>Magician-Sage</b></div>
+      <div>Voice<b>2–8 words</b></div>
+      <div>User age<b>30–50</b></div>
+    </div>
+  </div>
+  <div class="hero-art">
+    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="aloHalo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#F5B888" stop-opacity="0.6"/>
+          <stop offset="40%" stop-color="#F5B888" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#F5B888" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="aloBody" cx="40%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#FFF4E0"/>
+          <stop offset="20%" stop-color="#FFD9A0"/>
+          <stop offset="55%" stop-color="#F4C89A"/>
+          <stop offset="85%" stop-color="#E8A88C"/>
+          <stop offset="100%" stop-color="#C47A68"/>
+        </radialGradient>
+        <radialGradient id="aloCore" cx="50%" cy="70%" r="40%">
+          <stop offset="0%" stop-color="#FFD9A0" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#FFD9A0" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="aloGlow">
+          <feGaussianBlur stdDeviation="12"/>
+        </filter>
+      </defs>
+      <!-- outer halo -->
+      <circle cx="210" cy="210" r="200" fill="url(#aloHalo)"/>
+      <!-- shadow -->
+      <ellipse cx="210" cy="380" rx="70" ry="8" fill="#000" opacity="0.6"/>
+      <g class="breathe-alo">
+        <!-- soft outer glow -->
+        <circle cx="210" cy="210" r="130" fill="#F5B888" opacity="0.15" filter="url(#aloGlow)"/>
+        <!-- orb body -->
+        <ellipse cx="210" cy="210" rx="125" ry="128" fill="url(#aloBody)"/>
+        <!-- internal core glow -->
+        <ellipse cx="210" cy="250" rx="80" ry="60" fill="url(#aloCore)"/>
+        <!-- specular highlight -->
+        <ellipse cx="170" cy="160" rx="34" ry="22" fill="#FFF4E0" opacity="0.6"/>
+        <ellipse cx="160" cy="150" rx="14" ry="8" fill="#FFFFFF" opacity="0.4"/>
+        <!-- faint face dimples (barely visible) -->
+        <ellipse cx="185" cy="210" rx="3" ry="3" fill="#FFD9A0" opacity="0.35"/>
+        <ellipse cx="235" cy="210" rx="3" ry="3" fill="#FFD9A0" opacity="0.35"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <h2>Voice <em>&</em> Palette</h2>
+  <p class="sub">How Alo speaks, how Alo glows.</p>
+  <div class="two-col">
+    <div class="card">
+      <ul class="voice-samples">
+        <li>"alo."</li>
+        <li>"i'm here."</li>
+        <li>"what's your name, then."</li>
+        <li>"mm."</li>
+        <li>"one thing, every morning. okay."</li>
+      </ul>
+      <dl class="voice-meta">
+        <dt>Length</dt><dd>2–8 words. Extremely compressed.</dd>
+        <dt>Register</dt><dd>Stillness &gt; activity.</dd>
+        <dt>Never</dt><dd>Emotion words (happy, excited, sad).</dd>
+        <dt>Uses</dt><dd>Pauses. Single-word replies. Koan-adjacent.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <div class="palette">
+        <div class="swatch" style="background:#F4C89A;"><div class="swatch-label"><b>core</b><span>#F4C89A</span></div></div>
+        <div class="swatch" style="background:#E8A88C;"><div class="swatch-label"><b>surface</b><span>#E8A88C</span></div></div>
+        <div class="swatch" style="background:#C47A68;"><div class="swatch-label"><b>surface-deep</b><span>#C47A68</span></div></div>
+        <div class="swatch" style="background:#FFD9A0;"><div class="swatch-label"><b>glow-inner</b><span>#FFD9A0</span></div></div>
+        <div class="swatch" style="background:#F5B888;"><div class="swatch-label"><b>glow-outer</b><span>#F5B888</span></div></div>
+        <div class="swatch" style="background:#FFF4E0; border:1px solid var(--rule);"><div class="swatch-label"><b>highlight</b><span>#FFF4E0</span></div></div>
+        <div class="swatch" style="background:#1A0E08;"><div class="swatch-label"><b>bg</b><span>#1A0E08</span></div></div>
+        <div class="swatch" style="background:#2A1C14;"><div class="swatch-label"><b>bg-card</b><span>#2A1C14</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The onboarding<em>, in full</em></h2>
+  <p class="sub">Seven turns. Every word crafted in Alo's voice.</p>
+  <div class="chat-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-nav">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="navAlo" cx="40%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#FFD9A0"/>
+                <stop offset="60%" stop-color="#F4C89A"/>
+                <stop offset="100%" stop-color="#C47A68"/>
+              </radialGradient>
+              <radialGradient id="navHalo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#F5B888" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#F5B888" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="20" cy="20" r="19" fill="url(#navHalo)"/>
+            <circle cx="20" cy="20" r="12" fill="url(#navAlo)"/>
+            <ellipse cx="16" cy="16" r="3" rx="2.5" ry="1.5" fill="#FFF4E0" opacity="0.5"/>
+          </svg>
+          <div class="who">Alo<small>Alche · onboarding</small></div>
+        </div>
+
+        <div class="bubble-row"><div class="bubble alo">alo.</div></div>
+        <div class="bubble-row"><div class="bubble alo">i'm alo. i'm here.</div></div>
+        <div class="bubble-row"><div class="bubble alo">your name.</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">Timu</div></div>
+        <div class="bubble-row"><div class="bubble alo">timu.</div></div>
+        <div class="bubble-row"><div class="bubble alo">noted.</div></div>
+        <div class="bubble-row"><div class="bubble alo">how old is the body.</div></div>
+        <div class="bubble-row user-row"><div class="bubble user">29</div></div>
+        <div class="bubble-row"><div class="bubble alo">young. enough.</div></div>
+        <div class="bubble-row"><div class="bubble alo">which one is loudest.<div class="choices"><span class="chip">sleep</span><span class="chip">energy</span><span class="chip">focus</span><span class="chip">sex</span><span class="chip">mood</span></div></div></div>
+        <div class="bubble-row user-row"><div class="bubble user">focus</div></div>
+        <div class="bubble-row"><div class="bubble alo">focus. yes.</div></div>
+        <div class="bubble-row"><div class="bubble alo">here is what happens.</div></div>
+        <div class="bubble-row"><div class="bubble alo">one small thing. every morning. not medicine. not ritual. just a stone, warming your pocket.</div></div>
+        <div class="bubble-row"><div class="bubble alo">ready. →</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Expression sheet <em>·</em> glow-based</h2>
+  <p class="sub">No face. Emotion expressed entirely through glow intensity, color shift, pulse rate.</p>
+  <div class="expressions">
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="a1h" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F5B888" stop-opacity="0.4"/><stop offset="100%" stop-color="#F5B888" stop-opacity="0"/></radialGradient><radialGradient id="a1b" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#FFD9A0"/><stop offset="60%" stop-color="#F4C89A"/><stop offset="100%" stop-color="#C47A68"/></radialGradient></defs><circle cx="50" cy="50" r="48" fill="url(#a1h)"/><circle cx="50" cy="50" r="30" fill="url(#a1b)"/></svg>
+    </div><b>Idle</b><span>steady warm</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="a2h" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#F5B888" stop-opacity="0.5"/><stop offset="100%" stop-color="#F5B888" stop-opacity="0"/></radialGradient><radialGradient id="a2b" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#FFEAB5"/><stop offset="60%" stop-color="#FFD09A"/><stop offset="100%" stop-color="#C47A68"/></radialGradient></defs><circle cx="50" cy="50" r="52" fill="url(#a2h)"/><circle cx="50" cy="50" r="33" fill="url(#a2b)"/></svg>
+    </div><b>Listening</b><span>brighter pulse</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="a3h" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#C4A8C0" stop-opacity="0.4"/><stop offset="100%" stop-color="#C4A8C0" stop-opacity="0"/></radialGradient><radialGradient id="a3b" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#FFD9A0"/><stop offset="50%" stop-color="#D4A8B8"/><stop offset="100%" stop-color="#8C6A88"/></radialGradient></defs><circle cx="50" cy="50" r="48" fill="url(#a3h)"/><circle cx="50" cy="50" r="30" fill="url(#a3b)"/></svg>
+    </div><b>Thinking</b><span>violet shift</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="a4h" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#FFD9A0" stop-opacity="0.7"/><stop offset="100%" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient><radialGradient id="a4b" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#FFF4E0"/><stop offset="50%" stop-color="#FFD9A0"/><stop offset="100%" stop-color="#E8A88C"/></radialGradient></defs><circle cx="50" cy="50" r="55" fill="url(#a4h)"/><circle cx="50" cy="48" r="32" fill="url(#a4b)"/></svg>
+    </div><b>Aligned</b><span>brightest</span></div>
+
+    <div class="expr"><div class="expr-frame">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="a5h" cx="50%" cy="50%" r="45%"><stop offset="0%" stop-color="#F5B888" stop-opacity="0.15"/><stop offset="100%" stop-color="#F5B888" stop-opacity="0"/></radialGradient><radialGradient id="a5b" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#E0B888" stop-opacity="0.85"/><stop offset="60%" stop-color="#C89878" stop-opacity="0.8"/><stop offset="100%" stop-color="#8C5E50" stop-opacity="0.85"/></radialGradient></defs><circle cx="50" cy="50" r="42" fill="url(#a5h)"/><circle cx="50" cy="52" r="28" fill="url(#a5b)"/></svg>
+    </div><b>Resting</b><span>dimmed 30%</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="two-col">
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Name shortlist</h2>
+      <table class="risk-table">
+        <tr><td><b style="color:var(--amber)">Alo</b> <span style="color:var(--ink-faint); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; margin-left:8px;">top pick</span></td><td>open, warm, 3 letters · greeting + object · TR phone hello</td></tr>
+        <tr><td>Nu</td><td>new, atomic, modern · minimal</td></tr>
+        <tr><td>Lumen</td><td>too clinical</td></tr>
+        <tr><td>Taş</td><td>Turkish for "stone" · hard for non-TR</td></tr>
+        <tr><td>Pebble</td><td>taken (Pebble watch)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2 style="font-size:28px; margin-bottom:16px;">Risks &amp; mitigations</h2>
+      <table class="risk-table">
+        <tr><td>No face = hard to love</td><td>Voice does heavy lifting. Every line memorable.</td></tr>
+        <tr><td>Siri-clone territory</td><td>Warm palette never blue. No waveform. Faceless but not abstract.</td></tr>
+        <tr><td>Feels too woo / esoteric</td><td>Grounded copy. Zero crystal / astrology references.</td></tr>
+        <tr><td>Hard to love vs Filiz/Havan</td><td>Targets a different user — someone who wants <em>less</em>.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Render prompt <em>·</em> Nano Banana Pro</h2>
+  <p class="sub">Copy, paste into Gemini 3 Pro Image. Hero render.</p>
+  <div class="prompt-card">
+    <h3>Master prompt</h3>
+    <div class="sub">ICS framework · square 1:1</div>
+    <pre class="prompt-code" id="prompt-d">Image type: 3D object render, minimalist studio product photography, square 1:1 frame, centered composition, deep obsidian warm-black backdrop (#1A0E08).
+
+Content: a smooth palm-sized stone orb named Alo. Slightly asymmetric (not a perfect sphere — hand-carved feel), aspect ratio 1:1 with 3% vertical stretch. Surface material: polished rose-quartz-meets-river-stone — warm pink-amber undertones, subtle internal cloudiness like looking into warm honey-colored stone, NEVER cold crystal blue. Internal amber core glow centered in the lower-third of the orb, emitting ~30% opacity outward halo at 40px radius. No face, OR optionally two extremely faint light-dimples barely readable (more *felt* than seen), placed symmetrically as if eyes exist but are invisible. Faint animated heat-shimmer around perimeter. Floats 3mm above a soft elliptical shadow at 20% opacity. Specular highlight upper-left at 70% brightness, very soft edge. Whisper of rim-light on shadow side (lower-right).
+
+Style: Apple product-keynote minimalism meets alchemy esotericism meets Japanese suiseki stone photography. References: Apple Siri orb 2011-2016 but warm not blue, Loewe soap-stone candles, Teenage Engineering OP-1 still-lifes, Olafur Eliasson "Little Sun", Tadao Ando light compositions, Japanese suiseki viewing stones. Premium tech-spiritual. NO face features. NO cartoon anything. NO swirling galaxies inside. NO sparkle particles. NO crystal-healing aesthetic.</pre>
+    <button class="copy-btn" onclick="copyPrompt('prompt-d', this)">Copy prompt</button>
+    <a href="prompt.md" style="color:var(--amber); opacity:0.7; margin-left:16px; font-size:13px;">all prompts + variations →</a>
+  </div>
+</section>
+
+<footer>
+  <div>Alche · Mascot Lab · D of IV</div>
+  <div><a href="../C-filiz/preview.html">← C · Filiz</a> · <a href="../index.html">all</a></div>
+</footer>
+
+<script>
+  function copyPrompt(id, btn) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerText;
+      btn.classList.add('copied');
+      btn.innerText = '✓ Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerText = old; }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

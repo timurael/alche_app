@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — GoalSelection · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .gs-topbar {
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .gs-back {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      cursor: pointer;
+    }
+    .gs-count {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .gs-count .v { color: var(--editorial-black); font-weight: 700; }
+
+    .gs-read {
+      padding: 18px 24px 16px;
+    }
+    .gs-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 26px;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .gs-read .line em {
+      color: var(--primary);
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+
+    /* Goal rows — italic read with mono code tag, left-bar for picked */
+    .gs-list { padding: 4px 0 0; }
+    .gs-goal {
+      padding: 16px 24px;
+      border-top: 1px solid var(--divider-light);
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      align-items: baseline;
+      gap: 14px;
+      position: relative;
+      cursor: pointer;
+    }
+    .gs-goal:last-child { border-bottom: 1px solid var(--divider-light); }
+    .gs-goal .idx {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--editorial-muted);
+    }
+    .gs-goal .body { min-width: 0; }
+    .gs-goal .name {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1.2;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .gs-goal .why {
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--editorial-muted);
+      margin-top: 3px;
+    }
+    .gs-goal .tag {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      padding-top: 4px;
+    }
+    .gs-goal.picked::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--primary);
+    }
+    .gs-goal.picked .idx { color: var(--primary); font-weight: 700; }
+    .gs-goal.picked .tag { color: var(--editorial-black); font-weight: 700; }
+    .gs-goal.picked .name::after {
+      content: " ·";
+      color: var(--primary);
+    }
+
+    /* Section head for "added by you" */
+    .gs-divider-label {
+      padding: 22px 24px 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .gs-divider-label .rule { flex: 1; height: 1px; background: var(--divider-medium); }
+    .gs-divider-label .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    .gs-add {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px dashed var(--divider-medium);
+      border-bottom: 1px dashed var(--divider-medium);
+      margin-top: 4px;
+      cursor: pointer;
+    }
+    .gs-add .plus {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 14px;
+      color: var(--editorial-muted);
+      width: 24px;
+      text-align: center;
+    }
+    .gs-add .lbl {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    .gs-footnote {
+      padding: 14px 24px 8px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      display: flex;
+      justify-content: space-between;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <div class="gs-topbar">
+          <span class="gs-back">← Back</span>
+          <span class="gs-count"><span class="v">3</span> · OF · 3 FOCUS</span>
+        </div>
+
+        <!-- Previous echo — the QuickScan connection -->
+        <div class="alche-prev-echo">
+          <span class="tag">PREV · QUICKSCAN</span>
+          <span class="echo">You named sleep, stress, and the mirror.</span>
+        </div>
+
+        <!-- Voice — Alche suggests, doesn't impose -->
+        <div class="gs-read">
+          <span class="line">From what you told me,</span>
+          <span class="line">I would <em>focus here</em>.</span>
+        </div>
+
+        <!-- The three pre-selected goals, with why-lines -->
+        <div class="gs-list">
+          <div class="gs-goal picked">
+            <span class="idx">01</span>
+            <div class="body">
+              <span class="name">Restorative Sleep</span>
+              <div class="why">You said you wake wired or wake tired. Protocol: magnesium threonate, amber light, cortisol timing.</div>
+            </div>
+            <span class="tag">SLP</span>
+          </div>
+          <div class="gs-goal picked">
+            <span class="idx">02</span>
+            <div class="body">
+              <span class="name">Stress Resilience</span>
+              <div class="why">Shoulders find their way to ears. Protocol: adaptogens, vagal breath, HRV-guided recovery.</div>
+            </div>
+            <span class="tag">STR</span>
+          </div>
+          <div class="gs-goal picked">
+            <span class="idx">03</span>
+            <div class="body">
+              <span class="name">Radiant Skin</span>
+              <div class="why">The mirror tells you what the calendar won't. Protocol: collagen, niacinamide, GlowScan baseline.</div>
+            </div>
+            <span class="tag">SKN</span>
+          </div>
+        </div>
+
+        <!-- Interstitial — narrator between picks and "add your own" -->
+        <div class="alche-interstitial">
+          <p class="i-voice">These are mine. If one is <em>wrong</em>, swap it — you know yourself in ways I can't yet.</p>
+        </div>
+
+        <!-- Optional swap — member can add/replace one -->
+        <div class="gs-divider-label">
+          <span class="rule"></span>
+          <span class="label">If one of these isn't it</span>
+          <span class="rule"></span>
+        </div>
+        <div class="gs-add">
+          <span class="plus">+</span>
+          <span class="lbl">Swap a focus · Choose from 9 others</span>
+        </div>
+
+        <!-- Primary -->
+        <div style="padding-top: 20px;">
+          <button class="alche-primary-action">
+            <span>These feel right · Continue</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Start over · Ask me again</span></a>
+        </div>
+
+        <div class="gs-footnote">
+          <span>DRAFT · YOUR FIRST READ</span>
+          <span>CAP · 3</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · GOAL SELECTION</p>
+      <h1 class="alche-display-l title">A companion's suggestion, not a catalogue to shop from.</h1>
+      <p class="alche-body philosophy">
+        After QuickScan, Alche doesn't ask again — it <em>proposes</em>. The three computed focus areas arrive already chosen, each with a single-line reason tying it back to what the member actually said. The member's remaining agency is a quiet "Swap a focus" escape hatch, not a fresh menu.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>Duplicated manual goal picking (contradicts QuickScan → FocusAreaReveal). Stacked "Select / Your / Alchemy" 52pt hero with its 5 competing typographic voices. The ">_" mono configuration box + "ACTIVE" pill. Black-fill row selection.</div></li>
+        <li><span class="label">KEPT</span><div>Up-to-3 cap (demoted to "CAP · 3" footnote). The 3-letter code tag (now functional). The index numbering (became a mono prefix). Navigation intent (continue, back).</div></li>
+        <li><span class="label">ADDED</span><div>(1) `.alche-prev-echo` that carries the QuickScan answers forward. (2) One-sentence <em>reason</em> per goal wired to the member's own language ("You said you wake wired or wake tired"). (3) `.alche-interstitial` letting Alche invite a swap without being pushy. (4) Dashed-border "Swap a focus" area so the override path feels like an exception, not the default.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: members who want to pick goals from a blank slate feel gently steered. The swap path exists, but it's tucked behind an interstitial rather than presented equally.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

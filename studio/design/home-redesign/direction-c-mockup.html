@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche — Direction C · Dialog-first</title>
+<link rel="stylesheet" href="alche-figma-tokens.css">
+<style>
+  /* ---------- Direction C specifics ---------- */
+
+  /* Top context band */
+  .c-context-band {
+    padding: 8px 24px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .c-context-band .ctx-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .c-context-band .ctx-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--editorial-black);
+    border-radius: 999px;
+    opacity: 0.8;
+  }
+
+  /* Alche read label */
+  .c-read-label {
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .c-stamp {
+    display: inline-grid;
+    grid-template-columns: 3px 3px;
+    grid-template-rows: 3px 3px;
+    gap: 1px;
+  }
+  .c-stamp span {
+    width: 3px;
+    height: 3px;
+    background: var(--editorial-black);
+    display: block;
+  }
+  .c-stamp span:nth-child(3) { background: var(--primary); }
+
+  /* The read — the soul of the screen */
+  .c-read {
+    padding: 0 24px;
+    margin-bottom: 28px;
+  }
+  .c-read .line {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: var(--editorial-black);
+    display: block;
+  }
+  .c-read .line + .line { margin-top: 4px; }
+  .c-read .line.dim { color: var(--editorial-muted); }
+  .c-read .line em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+  }
+
+  /* Data strip */
+  .c-data-strip {
+    padding: 0 24px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--editorial-muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .c-data-strip .sep {
+    width: 3px;
+    height: 3px;
+    background: var(--editorial-muted);
+    border-radius: 999px;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+  .c-data-strip .k { color: var(--editorial-muted); }
+  .c-data-strip .v { color: var(--editorial-black); font-weight: 700; margin-left: 4px; }
+
+  /* Primary action — full width underlined mono button */
+  .c-primary-action {
+    margin: 0 24px 14px;
+    width: calc(100% - 48px);
+    background: var(--editorial-black);
+    color: var(--bg-white);
+    font-family: 'Space Mono', Menlo, monospace;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 16px 18px;
+    border: 1px solid var(--editorial-black);
+    border-radius: var(--radius-sharp);
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .c-primary-action .arrow {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  /* Secondary action — ghost mono link */
+  .c-secondary-action {
+    display: block;
+    text-align: center;
+    padding: 10px 0 22px;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .c-secondary-action .u {
+    border-bottom: 1px solid var(--editorial-muted);
+    padding-bottom: 2px;
+  }
+
+  /* Hairline divider inside frame */
+  .c-divider {
+    margin: 0 24px;
+    height: 1px;
+    background: var(--divider-medium);
+  }
+
+  /* Previous echo */
+  .c-previous {
+    padding: 18px 24px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .c-previous .tag {
+    flex-shrink: 0;
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    padding-top: 2px;
+  }
+  .c-previous .echo {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--editorial-muted);
+  }
+
+  /* Booking row */
+  .c-booking-row {
+    margin: 4px 24px 0;
+    padding: 14px 16px;
+    border: 1px solid var(--divider-medium);
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: var(--radius-sharp);
+  }
+  .c-booking-row .b-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .c-booking-row .b-kicker {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+  }
+  .c-booking-row .b-title {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--editorial-black);
+  }
+  .c-booking-row .b-title .when {
+    color: var(--editorial-muted);
+    font-weight: 400;
+  }
+  .c-booking-row .b-arrow {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 13px;
+    color: var(--editorial-black);
+  }
+
+  /* Browse instead escape hatch */
+  .c-browse {
+    padding: 18px 24px 8px;
+    text-align: center;
+  }
+  .c-browse a {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-weight: 400;
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--editorial-muted);
+    padding-bottom: 2px;
+  }
+
+  /* Subtle inset container to mark "the card" without borders */
+  .c-dialog-frame {
+    position: relative;
+    padding-top: 4px;
+  }
+  .c-dialog-frame::before,
+  .c-dialog-frame::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--editorial-black);
+  }
+  .c-dialog-frame::before {
+    top: 0;
+    left: 16px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .c-dialog-frame::after {
+    top: 0;
+    right: 16px;
+    border-left: none;
+    border-bottom: none;
+  }
+  .c-dialog-frame .close-marks {
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+  .c-dialog-frame .close-marks::before,
+  .c-dialog-frame .close-marks::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--editorial-black);
+    bottom: 0;
+  }
+  .c-dialog-frame .close-marks::before {
+    left: 16px;
+    border-right: none;
+    border-top: none;
+  }
+  .c-dialog-frame .close-marks::after {
+    right: 16px;
+    border-left: none;
+    border-top: none;
+  }
+
+  /* Status bar signal glyphs */
+  .signal-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 10px;
+  }
+  .signal-bars span {
+    width: 3px;
+    background: var(--editorial-black);
+    border-radius: 1px;
+  }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery {
+    width: 24px;
+    height: 11px;
+    border: 1.2px solid var(--editorial-black);
+    border-radius: 2.5px;
+    position: relative;
+    padding: 1px;
+  }
+  .battery::after {
+    content: "";
+    position: absolute;
+    right: -3px;
+    top: 3px;
+    width: 2px;
+    height: 5px;
+    background: var(--editorial-black);
+    border-radius: 0 1px 1px 0;
+  }
+  .battery .fill {
+    display: block;
+    height: 100%;
+    width: 80%;
+    background: var(--editorial-black);
+    border-radius: 1px;
+  }
+
+  /* Tab icons — minimal square/line treatment */
+  .tab-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <!-- Status bar -->
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <!-- Frame content -->
+    <div class="frame-content">
+
+      <!-- Top context band -->
+      <div class="c-context-band">
+        <div class="ctx-left">
+          <span class="alche-overline-tiny">08:42 · MONDAY · SESSION 41</span>
+        </div>
+        <span class="alche-overline-tiny" style="opacity:0.65;">BERLIN · 7°C</span>
+      </div>
+
+      <!-- Dialog card (visually anchored with corner marks) -->
+      <div class="c-dialog-frame">
+
+        <!-- Alche read label with stamp -->
+        <div class="c-read-label">
+          <span class="c-stamp" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-overline-tiny" style="color:var(--editorial-black); letter-spacing:0.22em;">ALCHE · YOUR READ TODAY</span>
+        </div>
+
+        <!-- The read — the soul of the screen -->
+        <div class="c-read">
+          <span class="line">You slept 6h 42m.</span>
+          <span class="line">HRV is 8% below baseline.</span>
+          <span class="line">Today is a <em>recovery day</em>, not a push.</span>
+        </div>
+
+        <!-- Data strip -->
+        <div class="c-data-strip">
+          <span><span class="k">SLEEP</span><span class="v">6H 42M</span></span>
+          <span class="sep"></span>
+          <span><span class="k">HRV</span><span class="v">52MS</span></span>
+          <span class="sep"></span>
+          <span><span class="k">LOAD</span><span class="v">620</span></span>
+          <span class="sep"></span>
+          <span><span class="k">REC</span><span class="v">64%</span></span>
+        </div>
+
+        <!-- Primary action -->
+        <button class="c-primary-action">
+          <span>Begin Recovery Breath · 12 min</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <!-- Secondary action -->
+        <a class="c-secondary-action">
+          <span class="u">Suggest another &nbsp;→</span>
+        </a>
+
+        <div class="close-marks" style="height:0;"></div>
+      </div>
+
+      <!-- Hairline divider -->
+      <div class="c-divider" style="margin-top:4px;"></div>
+
+      <!-- Previous echo -->
+      <div class="c-previous">
+        <span class="tag">PREV · SUN</span>
+        <span class="echo">Your body signaled push-day readiness. You took the HIIT ritual.</span>
+      </div>
+
+      <!-- Booking row -->
+      <div class="c-booking-row">
+        <div class="b-left">
+          <span class="b-kicker">NEXT · LED SESSION</span>
+          <span class="b-title">Suite 2 <span class="when">· 15:00 today</span></span>
+        </div>
+        <span class="b-arrow">→</span>
+      </div>
+
+      <!-- Browse instead escape hatch -->
+      <div class="c-browse">
+        <a>Browse instead &nbsp;→</a>
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- iOS tab bar -->
+    <div class="ios-tab-bar">
+      <div class="tab active">
+        <div class="tab-dot"></div>
+        <span>HOME</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>DISCOVER</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>BOOK</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>SHOP</span>
+      </div>
+      <div class="tab">
+        <div class="tab-dot"></div>
+        <span>PROFILE</span>
+      </div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+  <!-- Direction caption -->
+  <div class="direction-caption">
+    <p class="alche-overline overline">DIRECTION C — DIALOG-FIRST</p>
+    <h1 class="alche-display-l title">Your longevity companion has already read the night — and has an opinion.</h1>
+    <p class="alche-body philosophy">
+      The home is not a dashboard. It is a short, declarative letter from Alche — a read on your body, delivered every morning like an editorial column. One primary action. One redirect. No widgets competing for attention. Everything else feeds the dialog or lives behind an escape hatch.
+    </p>
+
+    <ul class="decisions">
+      <li>
+        <span class="label">ADDED</span>
+        <span class="alche-body">A single italic three-line <em>read</em> authored by Alche — observational, never motivational — anchored by corner-marked dialog card, a Space Mono data strip, and one continuity echo from yesterday so the conversation feels ongoing rather than ephemeral.</span>
+      </li>
+      <li>
+        <span class="label">REMOVED</span>
+        <span class="alche-body">Editorial hero with empty poetry, the menstrual cycle band (AMAB/queer exclusion), the vanity Bio Age card, the standalone ritual card, the 2×2 quick grid, and the "functional stack" divider-confession. All their data now feeds the read, instead of fighting it.</span>
+      </li>
+      <li>
+        <span class="label">REPRIORITIZED</span>
+        <span class="alche-body">A single recovery action takes the spot once held by twelve widgets. The secondary button is a <em>redirect</em> ("Suggest another"), not a dismiss. Browsing is demoted to a tiny mono escape hatch — present, but never the default surface.</span>
+      </li>
+    </ul>
+
+    <blockquote class="tradeoff">
+      Trade-off: users who open the app wanting to <em>do</em> — scroll, shop, scan — now wait one extra tap. Alche's opinion arrives first, always.
+    </blockquote>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alche · Doctor Sessions — Dialog-first</title>
+<link rel="stylesheet" href="../../shared-tokens.css">
+<link rel="stylesheet" href="../../shared-components.css">
+<style>
+  /* ---------- DoctorSessions specifics ---------- */
+
+  /* Disclaimer interstitial (top, voice-framed) */
+  .ds-disclaimer-voice {
+    padding: 4px 24px 16px;
+    border-bottom: 1px solid var(--divider-medium);
+    margin-bottom: 4px;
+  }
+  .ds-disclaimer-voice .tag {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .ds-disclaimer-voice .line {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--editorial-muted);
+  }
+  .ds-disclaimer-voice .line em {
+    color: var(--editorial-black);
+    font-style: italic;
+  }
+
+  /* Practitioner recommendation rows */
+  .ds-prac {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--divider-medium);
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .ds-prac .num {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--editorial-muted);
+    padding-top: 5px;
+  }
+  .ds-prac .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .ds-prac .name {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--editorial-black);
+    letter-spacing: -0.01em;
+  }
+  .ds-prac .role {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--editorial-black);
+    line-height: 1.35;
+  }
+  .ds-prac .role .spec {
+    color: var(--editorial-muted);
+    font-weight: 400;
+  }
+  .ds-prac .quote {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--editorial-muted);
+    padding: 6px 0 0;
+    border-left: 2px solid var(--divider-medium);
+    padding-left: 10px;
+    margin-top: 4px;
+  }
+  .ds-prac .meta {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--editorial-muted);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
+  }
+  .ds-prac .meta .sep {
+    width: 3px; height: 3px; background: var(--editorial-muted);
+    border-radius: 999px; opacity: 0.6;
+  }
+  .ds-prac .meta .comp {
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .ds-prac .chev {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 13px;
+    color: var(--editorial-black);
+    padding-top: 8px;
+  }
+
+  /* Filter footer — mono link, no pills */
+  .ds-filter-row {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--divider-light);
+  }
+  .ds-filter-row a {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--editorial-black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--editorial-black);
+    padding-bottom: 2px;
+  }
+  .ds-filter-row .count {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: var(--editorial-muted);
+  }
+
+  /* Full disclaimer tag at bottom */
+  .ds-legal {
+    margin: 16px 24px;
+    padding: 12px 14px;
+    border: 1px solid var(--editorial-black);
+    background: var(--bg-warm);
+  }
+  .ds-legal .title {
+    font-family: 'Space Mono', Menlo, monospace;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--editorial-black);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .ds-legal .body {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--editorial-black);
+  }
+
+  /* Signal bars */
+  .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+  .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 3px; }
+  .signal-bars span:nth-child(2) { height: 5px; }
+  .signal-bars span:nth-child(3) { height: 7px; }
+  .signal-bars span:nth-child(4) { height: 9px; }
+  .battery {
+    width: 24px; height: 11px; border: 1.2px solid var(--editorial-black);
+    border-radius: 2.5px; position: relative; padding: 1px;
+  }
+  .battery::after {
+    content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px;
+    background: var(--editorial-black); border-radius: 0 1px 1px 0;
+  }
+  .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+</style>
+</head>
+<body>
+
+<div class="figma-canvas">
+
+  <div class="figma-frame">
+
+    <div class="ios-status-bar">
+      <span>9:41</span>
+      <span class="right">
+        <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+        <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+      </span>
+    </div>
+
+    <div class="frame-content">
+
+      <!-- Context band -->
+      <div class="alche-context-band">
+        <div class="ctx-left">
+          <span>09:18 · MONDAY</span>
+        </div>
+        <div class="ctx-right">
+          <span>LONGEVITY+ MEMBER</span>
+        </div>
+      </div>
+
+      <!-- Read stamp -->
+      <div class="alche-read-stamp">
+        <span class="alche-stamp-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="alche-read-stamp-label">ALCHE · INTRODUCTIONS</span>
+      </div>
+
+      <!-- The read — introductory, warm -->
+      <div class="alche-read">
+        <span class="line">Three practitioners</span>
+        <span class="line">I'd <em>introduce you to</em> —</span>
+        <span class="line dim">based on what you're working on.</span>
+      </div>
+
+      <!-- Disclaimer framed as voice (not frantic) -->
+      <div class="ds-disclaimer-voice">
+        <span class="tag">BEFORE YOU CHOOSE</span>
+        <span class="line">These are <em>wellness conversations</em>, not medical consultations. Choose who you'd like to meet.</span>
+      </div>
+
+      <!-- Practitioner list — 3 recommended -->
+      <div class="ds-prac">
+        <span class="num">01</span>
+        <div class="body">
+          <span class="name">Dr. Ada Mensah</span>
+          <span class="role">Longevity practitioner <span class="spec">· sleep &amp; recovery</span></span>
+          <p class="quote">"She caught my sleep rhythm on the first session — shifted the week in a way I hadn't managed on my own."</p>
+          <div class="meta">
+            <span class="comp">FIRST SESSION COMPLIMENTARY</span><span class="sep"></span>
+            <span>NEXT · WED 14:00</span>
+          </div>
+        </div>
+        <span class="chev">→</span>
+      </div>
+
+      <div class="ds-prac">
+        <span class="num">02</span>
+        <div class="body">
+          <span class="name">Dr. Marco Riedel</span>
+          <span class="role">Wellness practitioner <span class="spec">· metabolic health</span></span>
+          <p class="quote">"He asked about my breakfast before my bloodwork — that told me everything."</p>
+          <div class="meta">
+            <span class="comp">FIRST SESSION COMPLIMENTARY</span><span class="sep"></span>
+            <span>NEXT · THU 11:30</span>
+          </div>
+        </div>
+        <span class="chev">→</span>
+      </div>
+
+      <div class="ds-prac">
+        <span class="num">03</span>
+        <div class="body">
+          <span class="name">Sophie Laurent</span>
+          <span class="role">Wellness practitioner <span class="spec">· hormonal balance, perimenopause</span></span>
+          <p class="quote">"First hour felt like being heard. Second felt like a plan."</p>
+          <div class="meta">
+            <span>NEXT · FRI 10:00</span>
+          </div>
+        </div>
+        <span class="chev">→</span>
+      </div>
+
+      <!-- Filter escape — mono, no pills -->
+      <div class="ds-filter-row">
+        <a>Filter by specialty &nbsp;→</a>
+        <span class="count">12 PRACTITIONERS</span>
+      </div>
+
+      <!-- Primary action -->
+      <div style="height:14px;"></div>
+      <button class="alche-primary-action">
+        <span>Book with Dr. Mensah · Wed 14:00</span>
+        <span class="arrow">→</span>
+      </button>
+      <a class="alche-secondary-action"><span class="u">See all practitioners &nbsp;→</span></a>
+
+      <!-- Full disclaimer — REQ-026 -->
+      <div class="ds-legal">
+        <span class="title">WELLNESS, NOT MEDICAL</span>
+        <span class="body">Sessions are for wellness guidance and lifestyle optimization. They do not constitute medical advice, diagnosis, or treatment.</span>
+      </div>
+
+      <div class="scroll-fade"></div>
+    </div>
+
+    <!-- Originating from Booking tab (Wellness Sessions CTA) -->
+    <div class="ios-tab-bar">
+      <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+      <div class="tab active"><div class="tab-dot"></div><span>BOOK</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+      <div class="tab"><div class="tab-dot"></div><span>PROFILE</span></div>
+    </div>
+
+    <div class="ios-home-indicator"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Auth · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    .au-topbar {
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .au-topbar .crumb {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .au-topbar .crumb .v { color: var(--editorial-black); font-weight: 700; }
+
+    .au-stamp {
+      padding: 20px 24px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .au-read {
+      padding: 0 24px 18px;
+    }
+    .au-read .line {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 27px;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: var(--editorial-black);
+      display: block;
+    }
+    .au-read .line + .line { margin-top: 4px; }
+    .au-read .line em {
+      color: var(--primary);
+      border-bottom: 1px solid var(--primary);
+      padding-bottom: 1px;
+    }
+
+    /* Apple sign-in — editorial container, not the system pill */
+    .au-apple {
+      margin: 4px 24px 0;
+      padding: 16px 18px;
+      background: var(--editorial-black);
+      color: var(--bg-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--editorial-black);
+      border-radius: var(--radius-sharp);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+    }
+    .au-apple .label {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .au-apple .mark {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+    .au-apple .arrow {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 13px;
+      color: var(--bg-white);
+    }
+
+    /* "or" separator — quiet, editorial */
+    .au-or {
+      padding: 14px 24px 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .au-or .rule { flex: 1; height: 1px; background: var(--divider-medium); }
+    .au-or .lbl {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Email path — expandable secondary */
+    .au-email-toggle {
+      padding: 12px 24px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--divider-light);
+      border-bottom: 1px solid var(--divider-light);
+    }
+    .au-email-toggle .u {
+      border-bottom: 1px solid var(--editorial-muted);
+      padding-bottom: 2px;
+    }
+
+    /* Consent — weaves into the read rather than popping a sheet */
+    .au-consent {
+      padding: 16px 24px 0;
+    }
+    .au-consent .head {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .au-consent .head .dot { width: 4px; height: 4px; background: var(--editorial-black); border-radius: 999px; }
+    .au-consent-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--divider-light);
+      align-items: flex-start;
+    }
+    .au-consent-row:last-child { border-bottom: 1px solid var(--divider-light); }
+    .au-consent-row .box {
+      width: 14px; height: 14px;
+      border: 1px solid var(--divider-medium);
+      border-radius: var(--radius-sharp);
+      margin-top: 2px;
+      position: relative;
+    }
+    .au-consent-row.checked .box {
+      background: var(--editorial-black);
+      border-color: var(--editorial-black);
+    }
+    .au-consent-row.checked .box::after {
+      content: "";
+      position: absolute;
+      top: 2px; left: 3px;
+      width: 4px; height: 7px;
+      border-right: 1.5px solid var(--bg-white);
+      border-bottom: 1.5px solid var(--bg-white);
+      transform: rotate(45deg);
+    }
+    .au-consent-row .copy {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--editorial-black);
+    }
+    .au-consent-row .copy .small {
+      font-family: 'Noto Sans', sans-serif;
+      font-style: normal;
+      font-size: 11.5px;
+      color: var(--editorial-muted);
+      display: block;
+      margin-top: 2px;
+    }
+    .au-consent-row .req {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    .au-footnote {
+      padding: 16px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <div class="au-topbar">
+          <span class="crumb">← Back</span>
+          <span class="crumb">STEP <span class="v">08</span> · OF · 08</span>
+        </div>
+
+        <!-- Continuity — we've been writing together -->
+        <div class="alche-prev-echo">
+          <span class="tag">PREV · TOGETHER</span>
+          <span class="echo">Four answers. Three focus areas. One stack. Now a signature.</span>
+        </div>
+
+        <!-- Stamp -->
+        <div class="au-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">Alche · Sign the Letter</span>
+        </div>
+
+        <!-- Read — opens with intent, not a tagline -->
+        <div class="au-read">
+          <span class="line">Before we begin —</span>
+          <span class="line">this is <em>mine to write</em>,</span>
+          <span class="line">not yours to remember a password for.</span>
+        </div>
+
+        <!-- Apple — primary path, editorial treatment -->
+        <button class="au-apple">
+          <span class="label"><span class="mark">●</span><span>Continue with Apple</span></span>
+          <span class="arrow">→</span>
+        </button>
+
+        <!-- Or — quiet editorial rule -->
+        <div class="au-or">
+          <span class="rule"></span>
+          <span class="lbl">Or</span>
+          <span class="rule"></span>
+        </div>
+
+        <!-- Email — demoted to a secondary, collapsible path -->
+        <div class="au-email-toggle">
+          <span class="u">Use an email instead</span>
+          <span>↓</span>
+        </div>
+
+        <!-- Consent — woven in, not a sheet that pops later -->
+        <div class="au-consent">
+          <div class="head"><span class="dot"></span>CONSENT · Before I listen</div>
+
+          <div class="au-consent-row checked">
+            <span class="box"></span>
+            <div>
+              <span class="copy">
+                Store my answers and focus areas on EU servers, so you can read me across devices.
+                <span class="small">Frankfurt · Supabase · retained 24 mo · deletable anytime.</span>
+              </span>
+            </div>
+          </div>
+          <div class="au-consent-row">
+            <span class="box"></span>
+            <div>
+              <span class="copy">
+                Learn from my biomarkers anonymously, so future members get a better read.
+                <span class="small">Optional · you can say no — the product still works.</span>
+              </span>
+            </div>
+          </div>
+          <div class="au-consent-row">
+            <span class="box"></span>
+            <div>
+              <span class="copy">
+                Send me one letter a week, never more.
+                <span class="small">Optional · one-tap unsubscribe.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interstitial -->
+        <div class="alche-interstitial" style="margin-top:14px;">
+          <p class="i-voice">Only the first is <em>required</em>. The rest you can change your mind about later.</p>
+        </div>
+
+        <!-- Primary CTA — completing the letter -->
+        <div style="padding-top: 6px;">
+          <button class="alche-primary-action">
+            <span>Sign · Open my first read</span>
+            <span class="arrow">→</span>
+          </button>
+          <a class="alche-secondary-action"><span class="u">Welcome back · Sign me in</span></a>
+        </div>
+
+        <div class="au-footnote">
+          <span>GDPR · EU · DE</span>
+          <span>V · 1.04</span>
+        </div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar" style="display:none;"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · AUTH</p>
+      <h1 class="alche-display-l title">Signing the letter, not signing up for a product.</h1>
+      <p class="alche-body philosophy">
+        Auth is the final page of onboarding: the member signs their name to what Alche just drafted together. Apple becomes the only primary path, wrapped in editorial chrome (black 2px-sharp, hard shadow, trailing arrow). Email collapses into a secondary expandable row. GDPR consent — previously a sheet that surfaced after submit — moves inline as three italic statements in Alche's voice, with one required and two optional. Returning members see a one-tap "Welcome back" line.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>System Apple black pill button. Separate rounded-md blue "Create Account" primary. "Your longevity, daily." tagline duplicating Welcome. GDPR `.sheet` triggered on email submit. Sign-in/sign-up toggle caption. `alcheSurface`-filled email/password inputs shown by default.</div></li>
+        <li><span class="label">KEPT</span><div>Apple Sign In as primary option. Email/password path (demoted to collapsible secondary). Returning-user detection. GDPR consent content (reworded into Alche's voice). Loading and error-state hooks.</div></li>
+        <li><span class="label">ADDED</span><div>(1) `.alche-prev-echo` "PREV · TOGETHER · Four answers. Three focus areas. One stack. Now a signature." (2) Editorial wrapper around Apple button (2px sharp, black, hard shadow, trailing →) so it shares grammar with other onboarding primaries. (3) GDPR consent rewritten as three italic Newsreader statements with a plain-language sublabel. (4) `.alche-interstitial` clarifying which consents are required. (5) Primary CTA "SIGN · OPEN MY FIRST READ →" framing account creation as completing the letter, not signing up for a product.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: we override the system-provided Apple button visual with a custom container. Apple's HIG allows this within tolerance — but legal should sign off on the rewritten GDPR statements. The italic consent copy must mirror the legal substance exactly.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

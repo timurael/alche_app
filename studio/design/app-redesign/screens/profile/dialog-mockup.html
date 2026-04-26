@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alche — Profile · Dialog-first</title>
+  <link rel="stylesheet" href="../../shared-tokens.css">
+  <link rel="stylesheet" href="../../shared-components.css">
+  <style>
+    /* Profile — retrospective letter + a quiet settings list */
+
+    /* Quiet identity line at top */
+    .p-identity {
+      padding: 0 24px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .p-identity .id-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .p-identity .id-initials {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--editorial-black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--editorial-black);
+    }
+    .p-identity .id-name {
+      color: var(--editorial-black);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+    }
+    .p-identity .id-right {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Data strip specific for profile — memory of days together */
+    .p-history-strip {
+      padding: 0 24px;
+      margin-bottom: 26px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--editorial-muted);
+      text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+    .p-history-strip .sep {
+      width: 3px; height: 3px;
+      background: var(--editorial-muted);
+      border-radius: 999px;
+      opacity: 0.5;
+    }
+    .p-history-strip .v {
+      color: var(--editorial-black);
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    /* Personalization offer — italic single line */
+    .p-offer {
+      margin: 0 24px 12px;
+      padding: 18px 18px;
+      border: 1px solid var(--editorial-black);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-sharp);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      cursor: pointer;
+    }
+    .p-offer .offer-text {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.25;
+      color: var(--editorial-black);
+      letter-spacing: -0.005em;
+    }
+    .p-offer .offer-arrow {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 13px;
+      color: var(--editorial-black);
+    }
+
+    /* Body tracking — prominent row */
+    .p-body-tracking {
+      margin: 0 24px 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--divider-strong);
+      background: var(--bg-warm);
+      border-radius: var(--radius-sharp);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .p-body-tracking .bt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .p-body-tracking .bt-kicker {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .p-body-tracking .bt-title {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--editorial-black);
+      margin-top: 2px;
+    }
+    .p-body-tracking .bt-sub {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--editorial-muted);
+    }
+    .p-body-tracking .bt-arrow {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 13px;
+      color: var(--editorial-black);
+    }
+    .p-body-tracking .bt-options {
+      display: flex;
+      gap: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--divider-medium);
+      margin-top: 2px;
+    }
+    .p-body-tracking .bt-opt {
+      flex: 1;
+      text-align: center;
+      padding: 8px 4px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sharp);
+      cursor: pointer;
+    }
+    .p-body-tracking .bt-opt.active {
+      border-color: var(--editorial-black);
+      color: var(--editorial-black);
+      background: var(--bg-white);
+      font-weight: 700;
+    }
+
+    /* Settings — mono list, no cards */
+    .p-settings-head {
+      padding: 18px 24px 8px;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+    .p-settings {
+      padding: 0 24px 18px;
+    }
+    .p-settings .s-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--divider-light);
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--editorial-black);
+    }
+    .p-settings .s-row:last-child { border-bottom: none; }
+    .p-settings .s-row .s-label .u {
+      border-bottom: 1px solid var(--editorial-black);
+      padding-bottom: 2px;
+    }
+    .p-settings .s-row .s-val {
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--editorial-muted);
+    }
+    .p-settings .s-row.danger .s-label { color: var(--error); }
+    .p-settings .s-row.danger .s-label .u { border-bottom-color: var(--error); }
+
+    /* Footer */
+    .p-footer {
+      padding: 20px 24px 12px;
+      text-align: center;
+      font-family: 'Space Mono', Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--editorial-muted);
+    }
+
+    /* Status bar glyphs */
+    .signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 10px; }
+    .signal-bars span { width: 3px; background: var(--editorial-black); border-radius: 1px; }
+    .signal-bars span:nth-child(1) { height: 3px; }
+    .signal-bars span:nth-child(2) { height: 5px; }
+    .signal-bars span:nth-child(3) { height: 7px; }
+    .signal-bars span:nth-child(4) { height: 9px; }
+    .battery { width: 24px; height: 11px; border: 1.2px solid var(--editorial-black); border-radius: 2.5px; position: relative; padding: 1px; }
+    .battery::after { content: ""; position: absolute; right: -3px; top: 3px; width: 2px; height: 5px; background: var(--editorial-black); }
+    .battery .fill { display: block; height: 100%; width: 80%; background: var(--editorial-black); }
+  </style>
+</head>
+<body>
+  <div class="figma-canvas">
+    <div class="figma-frame">
+
+      <div class="ios-status-bar">
+        <span>9:41</span>
+        <span class="right">
+          <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span style="font-size:10px; letter-spacing:0.05em;">5G</span>
+          <span class="battery" aria-hidden="true"><span class="fill"></span></span>
+        </span>
+      </div>
+
+      <div class="frame-content">
+
+        <!-- Context -->
+        <div class="alche-context-band">
+          <div class="ctx-left">
+            <span class="ctx-dot"></span>
+            <span>MEMBER SINCE MARCH</span>
+          </div>
+          <div class="ctx-right"><span>LONGEVITY+ · TIER II</span></div>
+        </div>
+
+        <!-- Quiet identity line -->
+        <div class="p-identity">
+          <div class="id-left">
+            <span class="id-initials">M</span>
+            <span class="id-name">MARLENE K.</span>
+          </div>
+          <div class="id-right">SESSION 41</div>
+        </div>
+
+        <!-- Read stamp -->
+        <div class="alche-read-stamp">
+          <span class="alche-stamp-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="alche-read-stamp-label">ALCHE · WHAT WE'VE DONE TOGETHER</span>
+        </div>
+
+        <!-- The read -->
+        <div class="alche-read">
+          <span class="line">We've been reading together</span>
+          <span class="line">since March — <em>41 days</em>,</span>
+          <span class="line dim">12 sessions, 3 goals on the wall.</span>
+        </div>
+
+        <!-- History strip -->
+        <div class="p-history-strip">
+          <span><span class="k">CHECKINS</span><span class="v">41</span></span>
+          <span class="sep"></span>
+          <span><span class="k">LED</span><span class="v">12</span></span>
+          <span class="sep"></span>
+          <span><span class="k">SCANS</span><span class="v">3</span></span>
+          <span class="sep"></span>
+          <span><span class="k">GOALS</span><span class="v">3 LIVE</span></span>
+        </div>
+
+        <!-- Personalization offer -->
+        <div class="p-offer">
+          <span class="offer-text">Want me to read you <em>more closely</em>?</span>
+          <span class="offer-arrow">→</span>
+        </div>
+
+        <!-- Narrator interstitial -->
+        <div class="alche-interstitial">
+          <p class="i-voice">One thing worth deciding: <em>how</em> I track your body.</p>
+        </div>
+
+        <!-- Body tracking preference — prominent -->
+        <div class="p-body-tracking">
+          <div class="bt-row">
+            <div>
+              <div class="bt-kicker">BODY TRACKING</div>
+              <div class="bt-title">How I read your cycle</div>
+            </div>
+            <span class="bt-arrow">→</span>
+          </div>
+          <div class="bt-sub">Menstrual phase, androgen rhythm, or off — off is the default because not every body is a cycle.</div>
+          <div class="bt-options" role="radiogroup" aria-label="Body tracking mode">
+            <span class="bt-opt">Menstrual</span>
+            <span class="bt-opt">Androgen</span>
+            <span class="bt-opt active">Off</span>
+          </div>
+        </div>
+
+        <!-- Settings head -->
+        <div class="p-settings-head">SETTINGS</div>
+
+        <!-- Settings list — mono -->
+        <div class="p-settings">
+          <a class="s-row">
+            <span class="s-label"><span class="u">Membership</span></span>
+            <span class="s-val">LONGEVITY+ · RENEWS MAR 27</span>
+          </a>
+          <a class="s-row">
+            <span class="s-label"><span class="u">Notifications</span></span>
+            <span class="s-val">DAILY READ · ON</span>
+          </a>
+          <a class="s-row">
+            <span class="s-label"><span class="u">Privacy & Data</span></span>
+            <span class="s-val">GDPR</span>
+          </a>
+          <a class="s-row">
+            <span class="s-label"><span class="u">Language</span></span>
+            <span class="s-val">EN</span>
+          </a>
+          <a class="s-row">
+            <span class="s-label"><span class="u">Refer a friend</span></span>
+            <span class="s-val">1 MONTH FREE</span>
+          </a>
+          <a class="s-row danger">
+            <span class="s-label"><span class="u">Sign out</span></span>
+            <span class="s-val"></span>
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-footer">ALCHE · BERLIN · V1.0</div>
+
+        <div class="scroll-fade"></div>
+      </div>
+
+      <div class="ios-tab-bar">
+        <div class="tab"><div class="tab-dot"></div><span>HOME</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>DISCOVER</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>BOOK</span></div>
+        <div class="tab"><div class="tab-dot"></div><span>SHOP</span></div>
+        <div class="tab active"><div class="tab-dot"></div><span>PROFILE</span></div>
+      </div>
+
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <div class="direction-caption">
+      <p class="alche-overline overline">SCREEN · PROFILE</p>
+      <h1 class="alche-display-l title">A retrospective letter, then a quiet list of doors.</h1>
+      <p class="alche-body philosophy">
+        Profile opens with identity reduced to a mono bar, then Alche's read of what you've done together — days, sessions, scans, goals. Personalization becomes a single italic offer. Body tracking (menstrual / androgen / off, default off) sits prominently with its three-option radio and an explanatory italic sub. Settings demote to a mono underlined list with values shown on the right. Sign out is a danger-red mono row at the foot, not a full-width red button.
+      </p>
+      <ul class="decisions">
+        <li><span class="label">CUT</span><div>96pt circle avatar + large italic name header, the Wellness Snapshot mini-checkin grid (that belongs on Home), the `PersonalizationLevelView` card chrome, five equally-weighted card-row settings, and the full-width red Sign Out button.</div></li>
+        <li><span class="label">KEPT</span><div>Every setting row (Membership, Notifications, Privacy, Language, Refer a Friend, Sign Out), the member-since footer, personalization destination, and the ViewModel's checkin-history + membership data.</div></li>
+        <li><span class="label">ADDED</span><div>The history data strip (days, LED, scans, goals), the italic personalization offer card, and most importantly — a prominent Body tracking preference (Menstrual / Androgen / Off, default Off) with a plain-language italic explanation. This is the AMAB/queer-inclusion fix: cycle is opt-in, not assumed.</div></li>
+      </ul>
+      <blockquote class="tradeoff">Trade-off: members used to a "tap my avatar for identity" instinct now see their initials at mono size — but the companion reads them back more than their face.</blockquote>
+    </div>
+  </div>
+</body>
+</html>

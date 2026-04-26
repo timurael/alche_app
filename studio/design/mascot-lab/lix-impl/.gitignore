@@ -1,0 +1,14 @@
+# Secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+*.secret
+
+# Wrangler local state
+.wrangler/
+.dev.vars
+
+# Node / build artifacts (if later)
+node_modules/
+dist/
+.DS_Store
